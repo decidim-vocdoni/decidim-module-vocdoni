@@ -10,9 +10,13 @@ module Decidim
       isolate_namespace Decidim::Vocdoni
 
       routes do
-        # Add engine routes here
-        # resources :vocdoni
-        # root to: "vocdoni#index"
+        resources :elections, only: [:index, :show]
+        root to: "elections#index"
+      end
+
+      initializer "decidim.vocdoni.add_cells_view_paths" do
+        Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Vocdoni::Engine.root}/app/cells")
+        Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Vocdoni::Engine.root}/app/views") # for partials
       end
 
       initializer "decidim_vocdoni.webpacker.assets_path" do
