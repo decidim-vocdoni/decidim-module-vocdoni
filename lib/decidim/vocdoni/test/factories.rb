@@ -5,7 +5,7 @@ require "decidim/core/test/factories"
 FactoryBot.define do
   factory :vocdoni_component, parent: :component do
     name { Decidim::Components::Namer.new(participatory_space.organization.available_locales, :vocdoni).i18n_name }
-    manifest_name :vocdoni
+    manifest_name { :vocdoni }
     participatory_space { create(:participatory_process, :with_steps) }
   end
 
