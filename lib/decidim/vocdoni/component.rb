@@ -5,7 +5,7 @@ require_dependency "decidim/components/namer"
 Decidim.register_component(:vocdoni) do |component|
   component.engine = Decidim::Vocdoni::Engine
   component.admin_engine = Decidim::Vocdoni::AdminEngine
-  component.icon = "decidim/vocdoni/icon.svg"
+  component.icon = "media/images/decidim_vocdoni.svg"
 
   # component.on(:before_destroy) do |instance|
   #   # Code executed before removing the component

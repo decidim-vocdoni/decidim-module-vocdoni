@@ -15,8 +15,8 @@ module Decidim
         # root to: "vocdoni#index"
       end
 
-      initializer "decidim_vocdoni.assets" do |app|
-        app.config.assets.precompile += %w[decidim_vocdoni_manifest.js decidim_vocdoni_manifest.css]
+      initializer "decidim_vocdoni.webpacker.assets_path" do
+        Decidim.register_assets_path File.expand_path("app/packs", root)
       end
     end
   end
