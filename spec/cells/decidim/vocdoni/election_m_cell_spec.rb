@@ -42,11 +42,6 @@ describe Decidim::Vocdoni::ElectionMCell, type: :cell do
       expect(subject).to have_css(".card__text", text: description)
     end
 
-    it "renders the badge name" do
-      expect(subject).to have_css(".card__text--status", text: "Active")
-      expect(subject).to have_css(".success")
-    end
-
     context "when election end less than 12 hours away" do
       let(:end_time) { 10.hours.from_now }
 
