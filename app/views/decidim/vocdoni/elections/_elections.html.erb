@@ -1,0 +1,9 @@
+<% if elections.none? %>
+  <div class="callout warning">
+    <%= t("decidim.vocdoni.warnings.no_elections_warning") %>
+  </div>
+<% end %>
+
+<div class="row small-up-1 medium-up-2 card-grid">
+  <%= render elections %>
+</div>

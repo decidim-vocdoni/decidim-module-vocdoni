@@ -1,0 +1,51 @@
+<% add_decidim_meta_tags(
+  title: translated_attribute(election.title),
+  description: translated_attribute(election.description)
+) %>
+
+<%
+edit_link(
+  resource_locator(election).edit,
+  :update,
+  :election,
+  election: election
+)
+%>
+
+<%= render partial: "decidim/shared/component_announcement" %>
+
+<div class="row">
+  <div class="columns">
+
+    <% unless single? %>
+      <%= link_to :elections, class: "small hollow" do %>
+        <%= icon "caret-left", class: "icon--small" %>
+        <%= t(".back") %>
+      <% end %>
+    <% end %>
+
+    <h2 class="heading3">
+      <%== present(election).title %>
+    </h2>
+    <div class="card__callout">
+      <%= cell "decidim/vocdoni/remaining_time_callout", election %>
+    </div>
+    <p>
+      <%= t(".voting_period_status.#{election.voting_period_status}",
+            start_time: "<strong>#{l election.start_time, format: :long}</strong>",
+            end_time: "<strong>#{l election.end_time, format: :long}</strong>").html_safe %>
+    </p>
+  </div>
+</div>
+<div class="row section">
+  <% if election.attachments.first.present? && election.attachments.first.image? %>
+    <div class="columns medium-4 mediumlarge-5">
+      <img src="<%= election.attachments.first.url %>" alt="">
+    </div>
+  <% end %>
+  <div class="columns medium-8 mediumlarge-7">
+    <div class="section">
+      <p><%= decidim_sanitize_editor(simple_format(translated_attribute(election.description)), strip_tags: true) %></p>
+    </div>
+  </div>
+</div>
