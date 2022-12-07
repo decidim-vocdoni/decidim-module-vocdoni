@@ -797,7 +797,7 @@ DEPENDENCIES
   listen (~> 3.1)
   puma (~> 5.6.2)
   spring (~> 2.0)
-  spring-watcher-listen (~> 2.0)
+  spring-watcher-listen (~> 2.0.0)
   web-console (~> 4.2)
 
 RUBY VERSION
