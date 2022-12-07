@@ -9,6 +9,11 @@ module Decidim
           return permission_action unless user&.admin?
 
           case permission_action.subject
+          when :question, :answer
+            case permission_action.action
+            when :create, :update, :delete
+              allow!
+            end
           when :election
             case permission_action.action
             when :create, :read, :update, :publish, :unpublish, :delete
