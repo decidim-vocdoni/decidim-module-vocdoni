@@ -21,12 +21,32 @@ en:
         confirm_destroy: Are you sure?
         destroy: Delete
         edit: Edit
-        new: New election
+        manage_answers: Manage answers
+        manage_questions: Manage questions
+        new: New %{name}
         preview: Preview
         publish: Publish
         title: Actions
         unpublish: Unpublish
       admin:
+        answers:
+          create:
+            invalid: There was a problem creating this answer
+            success: Answer successfully created
+          destroy:
+            invalid: There was a problem deleting this answer
+            success: Answer successfully deleted
+          edit:
+            title: Edit answer
+            update: Update answer
+          index:
+            title: Answers
+          new:
+            create: Create answer
+            title: New answer
+          update:
+            invalid: There was a problem updating this answer
+            success: Answer successfully updated
         elections:
           create:
             invalid: There was a problem creating this election
@@ -50,11 +70,34 @@ en:
             invalid: There was a problem updating this election
             success: Election successfully updated
         models:
+          answer:
+            name: answer
           election:
-            name: Election
+            name: election
+          question:
+            name: question
         steps:
           ready:
             title: Ready
+        questions:
+          create:
+            election_started: The election has already started
+            invalid: There was a problem creating this question
+            success: Question successfully created
+          destroy:
+            invalid: There was a problem deleting this question
+            success: Question successfully deleted
+          edit:
+            title: Edit question
+            update: Update question
+          index:
+            title: Questions
+          new:
+            create: Create question
+            title: New question
+          update:
+            invalid: There was a problem updating this question
+            success: Question successfully updated
       admin_log:
         election:
           create: "%{user_name} created the election %{resource_name} of %{space_name}"
@@ -106,11 +149,19 @@ en:
             ongoing: 'Active voting until: %{end_time}'
             upcoming: Voting begins on %{start_time}
       models:
+        answer:
+          fields:
+            proposals: Proposals
+            title: Title
         election:
           fields:
             end_time: End time
             start_time: Start time
             status: Status
+            title: Title
+        question:
+          fields:
+            answers: Answers
             title: Title
       warnings:
         no_elections_warning: There isn't any election scheduled.
