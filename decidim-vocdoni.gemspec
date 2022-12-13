@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.summary = "A decidim vocdoni module"
   s.description = "An elections component for decidim's participatory spaces based on the Vocdoni SDK."
 
-  s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
+  s.files = Dir["{app,db,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 
   s.add_dependency "decidim-core", Decidim::Vocdoni.version
 end
