@@ -7,6 +7,12 @@ en:
         end_time: End time
         start_time: Start time
         title: Title
+    errors:
+      models:
+        election:
+          attributes:
+            attachment:
+              needs_to_be_reattached: Needs to be reattached
   decidim:
     components:
       vocdoni:

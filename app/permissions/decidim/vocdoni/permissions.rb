@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "byebug"
-
 module Decidim
   module Vocdoni
     class Permissions < Decidim::DefaultPermissions

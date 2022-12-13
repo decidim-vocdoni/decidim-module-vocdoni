@@ -3,7 +3,7 @@
 module Decidim
   module Vocdoni
     # Exposes the elections resources so users can participate on them
-    class ElectionsController < Decidim::Elections::ApplicationController
+    class ElectionsController < Decidim::Vocdoni::ApplicationController
       helper_method :elections, :election, :single?
 
       def index
