@@ -19,6 +19,11 @@ module Decidim
             when :create, :read, :update, :publish, :unpublish, :delete
               allow!
             end
+          when :steps
+            case permission_action.action
+            when :read
+              allow!
+            end
           end
 
           permission_action

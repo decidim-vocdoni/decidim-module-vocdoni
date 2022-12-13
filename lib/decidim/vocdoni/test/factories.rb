@@ -54,6 +54,12 @@ FactoryBot.define do
       end
     end
 
+    trait :ready_for_setup do
+      upcoming
+      published
+      complete
+    end
+
     trait :with_photos do
       transient do
         photos_number { 2 }
