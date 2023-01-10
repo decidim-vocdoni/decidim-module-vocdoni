@@ -1,0 +1,17 @@
+<%= render("focus_header", header_title: t("decidim.vocdoni.votes.header.confirmed")) %>
+
+<div class="focus__content evote ballot_confirmed">
+  <div class="row">
+    <h1 class="heading2">
+      <%= t("decidim.vocdoni.votes.confirmed.header") %>
+    </h1>
+
+    <h2 class="h4"><%= t("decidim.vocdoni.votes.confirmed.lead") %></h2>
+    <div class="evote__content">
+      <%= t("decidim.vocdoni.votes.confirmed.text", e_vote_poll_id: h(params[:id])).html_safe %>
+      <p>
+        <%= t("decidim.vocdoni.votes.confirmed.verify_link", link: election_vote_verify_path(election, vote_id: params[:id])).html_safe %>
+      </p>
+    </div>
+  </div>
+</div>

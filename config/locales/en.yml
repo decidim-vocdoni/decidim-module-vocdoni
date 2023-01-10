@@ -194,6 +194,40 @@ en:
           fields:
             answers: Answers
             title: Title
+      votes:
+        ballot_decision:
+          audit: "( Audit ballot )"
+          back: Start voting process again
+          ballot_hash: 'Your ballot identifier is:'
+          cast: Cast ballot to finish your vote
+          description: Here, you have the options to cast your ballot so that it's properly counted or, alternatively, you can audit that your ballot was correctly encrypted. For security reasons, auditing your ballot will spoil it. That means, to cast your vote, you will need to restart the voting process.
+          header: 'Ballot is encrypted: cast it or audit it'
+        confirm:
+          answer: Answer
+          answer_number: answer %{number}
+          confirm: Confirm
+          edit: edit
+          header: Confirm your vote
+          intro: Here is a summary of the vote you are about to cast. <br> Please confirm your vote or edit your answers.
+          question: Question %{count}
+        encrypting:
+          header: Encrypting the vote...
+          text: Your ballot is being encrypted to ensure the secret of your vote.
+        header:
+          ballot_decision: Cast or audit your vote
+          confirm: Confirm your vote
+          encrypting: Encrypting the vote
+        modal:
+          close: Close
+        new:
+          answer_choices: You can select up to %{choices} answers
+          more_information: More information
+          preview_alert: This is a preview of the voting booth.
+          question_steps: Question %{current_step} of %{total_steps}
+          selections: "%{selected} of %{max_selections}<br> selections"
+        voting_step:
+          back: Back
+          continue: Next
       warnings:
         no_elections_warning: There isn't any election scheduled.
     events:
@@ -203,3 +237,7 @@ en:
           email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
           email_subject: The %{resource_title} election is now active for %{participatory_space_title}.
           notification_title: The <a href="%{resource_path}">%{resource_title}</a> election is now active for %{participatory_space_title}.
+  layouts:
+    decidim:
+      vocdoni_votes_header:
+        exit: Exit

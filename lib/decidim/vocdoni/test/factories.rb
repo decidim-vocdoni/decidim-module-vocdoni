@@ -36,6 +36,10 @@ FactoryBot.define do
       started
     end
 
+    trait :vote do
+      ongoing
+    end
+
     trait :finished do
       started
       end_time { 1.day.ago }

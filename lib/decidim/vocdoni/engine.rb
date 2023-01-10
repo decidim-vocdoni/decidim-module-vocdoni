@@ -10,7 +10,13 @@ module Decidim
       isolate_namespace Decidim::Vocdoni
 
       routes do
-        resources :elections, only: [:index, :show]
+        resources :elections, only: [:index, :show] do
+          resources :votes, only: [:new, :create, :update, :show] do
+            get :verify
+            match "new", action: :new, via: :post, as: :login, on: :collection
+          end
+        end
+
         root to: "elections#index"
       end
 
