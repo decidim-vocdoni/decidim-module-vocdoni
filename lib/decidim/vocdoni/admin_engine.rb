@@ -15,6 +15,7 @@ module Decidim
             put :publish
             put :unpublish
           end
+          resources :steps, only: [:index]
           resources :questions do
             resources :answers
           end

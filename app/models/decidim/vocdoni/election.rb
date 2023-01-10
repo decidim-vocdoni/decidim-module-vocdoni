@@ -22,10 +22,6 @@ module Decidim::Vocdoni
       Decidim::Vocdoni::AdminLog::ElectionPresenter
     end
 
-    def status
-      "ready"
-    end
-
     # Public: Checks if the election started
     #
     # Returns a boolean.
@@ -52,6 +48,13 @@ module Decidim::Vocdoni
     # Returns a boolean.
     def blocked?
       blocked_at.present?
+    end
+
+    # Public: Checks if the number of answers are minimum 2 for each question
+    #
+    # Returns a boolean.
+    def minimum_answers?
+      questions.any? && questions.all? { |question| question.answers.size > 1 }
     end
 
     # Public: Gets the voting period status of the election
