@@ -16,7 +16,7 @@ describe Decidim::Vocdoni::Admin::CreateWallet do
     )
   end
   let(:invalid) { false }
-  let(:private_key) { "0x12345678" }
+  let(:private_key) { Faker::Blockchain::Ethereum.address }
   let(:wallet) { Decidim::Vocdoni::Wallet.last }
 
   it "creates the wallet" do
@@ -25,7 +25,7 @@ describe Decidim::Vocdoni::Admin::CreateWallet do
 
   it "stores the given data" do
     subject.call
-    expect(wallet.private_key).to eq "0x12345678"
+    expect(wallet.private_key).to eq private_key
     expect(wallet.organization).to eq organization
   end
 

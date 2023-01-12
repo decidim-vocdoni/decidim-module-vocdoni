@@ -10,7 +10,7 @@ module Decidim
         attribute :private_key, String
 
         validates :private_key, presence: true
-        validates :private_key, length: { is: 66 }
+        validates :private_key, length: { in: 40..70 }
         validates :private_key, format: /\A0x[a-zA-Z0-9]*\z/
       end
     end
