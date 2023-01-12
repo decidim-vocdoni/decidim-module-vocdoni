@@ -3,6 +3,14 @@
 require "decidim/core/test/factories"
 
 FactoryBot.define do
+  factory :wallet, class: "Decidim::Vocdoni::Wallet" do
+    transient do
+      organization { build(:organization) }
+    end
+
+    private_key { Faker::Blockchain::Ethereum.address }
+  end
+
   factory :vocdoni_component, parent: :component do
     name { Decidim::Components::Namer.new(participatory_space.organization.available_locales, :vocdoni).i18n_name }
     manifest_name { :vocdoni }
