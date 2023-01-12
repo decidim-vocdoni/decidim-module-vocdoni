@@ -24,6 +24,11 @@ module Decidim
             when :read
               allow!
             end
+          when :wallet
+            case permission_action.action
+            when :create
+              allow!
+            end
           end
 
           permission_action
