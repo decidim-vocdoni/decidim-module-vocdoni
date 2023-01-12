@@ -10,6 +10,7 @@ module Decidim
       paths["lib/tasks"] = nil
 
       routes do
+        resources :wallets, only: [:new, :create]
         resources :elections do
           member do
             put :publish

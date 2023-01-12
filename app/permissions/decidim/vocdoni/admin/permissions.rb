@@ -24,9 +24,20 @@ module Decidim
             when :read
               allow!
             end
+          when :wallet
+            case permission_action.action
+            when :create
+              allow! if current_vocdoni_wallet.nil?
+            end
           end
 
           permission_action
+        end
+
+        private
+
+        def current_vocdoni_wallet
+          @current_vocdoni_wallet ||= Decidim::Vocdoni::Wallet.find_by(decidim_organization_id: user.organization.id)
         end
       end
     end

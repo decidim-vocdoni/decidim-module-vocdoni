@@ -81,4 +81,18 @@ describe Decidim::Vocdoni::Admin::Permissions do
 
     it { is_expected.to be true }
   end
+
+  describe "wallet creation" do
+    let(:action) do
+      { scope: :admin, action: :create, subject: :wallet }
+    end
+
+    it { is_expected.to be true }
+
+    context "when there's already a wallet for this organization" do
+      let(:wallet) { create :wallet, organization: elections_component.organization }
+
+      it { is_expected.to be true }
+    end
+  end
 end
