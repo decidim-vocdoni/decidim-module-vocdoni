@@ -40,6 +40,7 @@ describe "Decidim::Api::QueryType" do
           end,
           "id" => q.id.to_s,
           "title" => { "translation" => q.title[locale] },
+          "description" => { "translation" => q.description[locale] },
           "versions" => [],
           "versionsCount" => 0,
           "weight" => q.weight
@@ -109,6 +110,9 @@ describe "valid connection query" do
                   title {
                     translation(locale: "en")
                   }
+                  description {
+                    translation(locale: "en")
+                  }
                   versions {
                     id
                   }
@@ -176,6 +180,9 @@ describe "valid query" do
             }
             id
             title {
+              translation(locale: "en")
+            }
+            description {
               translation(locale: "en")
             }
             versions {
