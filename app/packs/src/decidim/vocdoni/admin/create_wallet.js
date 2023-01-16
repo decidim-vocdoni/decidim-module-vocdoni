@@ -26,5 +26,5 @@ const initializeCreateWalletForm = () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  reinitializeCreateWalletForm();
+  initializeCreateWalletForm();
 });
