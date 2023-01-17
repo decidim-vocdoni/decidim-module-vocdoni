@@ -2,4 +2,10 @@
   <div class="card-divider">
     <h2 class="card-title"><%= t(".title") %></h2>
   </div>
+
+  <div class="card-section">
+    <p><%= t(".message") %></p>
+
+    <p><%= t(".url_html", explorer_vote_url: election.explorer_vote_url) %></p>
+  </div>
 </div>

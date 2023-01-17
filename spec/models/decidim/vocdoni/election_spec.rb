@@ -37,4 +37,12 @@ describe Decidim::Vocdoni::Election do
     it { is_expected.not_to be_ongoing }
     it { is_expected.to be_finished }
   end
+
+  describe "#explorer_vote_url" do
+    subject(:election) { build :election, vocdoni_election_id: "12345"}
+
+    it "returns the URL" do
+      expect(subject.explorer_vote_url).to eq "https://dev.explorer.vote/processes/show/#/12345"
+    end
+  end
 end

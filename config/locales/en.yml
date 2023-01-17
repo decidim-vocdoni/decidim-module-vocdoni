@@ -89,6 +89,9 @@ en:
               minimum_answers: Questions must have <strong>at least two answers</strong>.
               minimum_questions: The election <strong>must have at least one question</strong>.
               published: The election is <strong>not published</strong>.
+            failed:
+              title: The election has an error and couldn't be created
+              message: Check the Web Development console log error message, fix the problem and retry.
             invalid: There was a problem setting up this election
             requirements:
               component_published: The election component is <strong>published</strong>.
@@ -96,9 +99,12 @@ en:
               minimum_questions: The election has <strong>at least 1 question</strong>.
               published: The election is <strong>published</strong>.
             submit: Setup election
+            success: Election successfully sent to the Vocdoni API
             title: Setup election
           created:
+            message: The election has been created. We're waiting for the start date time to arrive.
             title: Election created
+            url_html: You can watch it out at the <a href="%{explorer_vote_url}" target="_blank" rel="noopener noreferrer">Vocdoni Explorer</a>.
           processing: Processing...
           results_published:
             title: Results published
