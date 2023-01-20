@@ -24,6 +24,11 @@ Decidim.register_component(:vocdoni) do |component|
     settings.attribute :announcement, type: :text, translated: true, editor: true
   end
 
+  component.register_stat :elections_count, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
+    elections = Decidim::Vocdoni::FilteredElections.for(components, start_at, end_at)
+    elections.published.count
+  end
+
   component.register_resource(:election) do |resource|
     resource.model_class_name = "Decidim::Vocdoni::Election"
     resource.card = "decidim/vocdoni/election"
