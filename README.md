@@ -2,7 +2,7 @@
 
 :warning: This module is under development and is not ready to be used in production.
 
-An elections component for decidim's participatory spaces based on the [Vocdoni][vocdoni-app-url].
+An elections component for decidim's participatory spaces based on the [Vocdoni][https://vocdoni.app].
 
 Vocdoni is a secure digital voting solution using decentralized technologies.
 The voting protocol which powers the platform is designed to be universally verifiable,
@@ -30,6 +30,8 @@ And then execute:
 
 ```bash
 bundle
+bin/rails decidim_vocdoni:install:migrations
+bin/rails db:migrate
 ```
 
 ## Contributing
@@ -64,7 +66,7 @@ Then to test how the module works in Decidim, start the development server:
 $ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bin/rails s
 ```
 
-Note that `bin/rails` is a convinient wrapper around the command `cd development_app; bundle exec rails`.
+Note that `bin/rails` is a convenient wrapper around the command `cd development_app; bundle exec rails`.
 
 In case you are using [rbenv](https://github.com/rbenv/rbenv) and have the
 [rbenv-vars](https://github.com/rbenv/rbenv-vars) plugin installed for it, you
@@ -74,8 +76,8 @@ defining these in the commands shown above.
 
 #### Webpacker notes
 
-As latests versions of Decidim, this repository uses Webpacker for Rails. This means that compilation
-of assets is required everytime a Javascript or CSS file is modified. Usually, this happens
+As latest versions of Decidim, this repository uses Webpacker for Rails. This means that compilation
+of assets is required every time a Javascript or CSS file is modified. Usually, this happens
 automatically, but in some cases (specially when actively changes that type of files) you want to 
 speed up the process. 
 
@@ -145,8 +147,17 @@ the code coverage report.
 firefox coverage/index.html
 ```
 
+### Localization
+
+If you would like to see this module in your own language, you can help with its
+translation at Crowdin:
+
+https://crowdin.com/project/decidim-module-vocdoni
+
 ## License
 
 This engine is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
+See [LICENSE-AGPLv3.txt](LICENSE-AGPLv3.txt).
 
-[vocdoni-app-url]: https://vocdoni.app/
+As this module works with the Vocdoni App, see https://vocdoni.app/ for more information about their open source licenses.
+
