@@ -16,7 +16,7 @@ en:
   decidim:
     components:
       vocdoni:
-        name: Vocdoni
+        name: Elections (Vocdoni)
         settings:
           global:
             announcement: Announcement
