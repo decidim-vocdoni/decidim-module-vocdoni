@@ -22,6 +22,17 @@ en:
             announcement: Announcement
           step:
             announcement: Announcement
+    events:
+      vocdoni:
+        election_published:
+          email_intro: 'The %{resource_title} election is now active for %{participatory_space_title}.
+            You can see it from this page:'
+          email_outro: You have received this notification because you are following
+            %{participatory_space_title}. You can stop receiving notifications following
+            the previous link.
+          email_subject: The %{resource_title} election is now active for %{participatory_space_title}.
+          notification_title: The <a href="%{resource_path}">%{resource_title}</a>
+            election is now active for %{participatory_space_title}.
     vocdoni:
       actions:
         confirm_destroy: Are you sure?
@@ -65,13 +76,19 @@ en:
         election:
           create: "%{user_name} created the election %{resource_name} of %{space_name}"
           delete: "%{user_name} deleted the election %{resource_name} of %{space_name}"
-          end_vote: "%{user_name} ended the voting period for the election %{resource_name} of %{space_name} on the Vocdoni API"
+          end_vote: "%{user_name} ended the voting period for the election %{resource_name}
+            of %{space_name} on the Vocdoni API"
           publish: "%{user_name} published the election %{resource_name} of %{space_name}"
-          publish_results: "%{user_name} published the results for the election %{resource_name} of %{space_name} on the Vocdoni API"
-          setup: "%{user_name} created the election %{resource_name} of %{space_name} on the Vocdoni API"
-          start_tally: "%{user_name} started the tally for the election %{resource_name} of %{space_name} on the Vocdoni API"
-          start_vote: "%{user_name} started the voting period for the election %{resource_name} of %{space_name} on the Vocdoni API"
-          unpublish: "%{user_name} unpublished the %{resource_name} of %{space_name} election"
+          publish_results: "%{user_name} published the results for the election %{resource_name}
+            of %{space_name} on the Vocdoni API"
+          setup: "%{user_name} created the election %{resource_name} of %{space_name}
+            on the Vocdoni API"
+          start_tally: "%{user_name} started the tally for the election %{resource_name}
+            of %{space_name} on the Vocdoni API"
+          start_vote: "%{user_name} started the voting period for the election %{resource_name}
+            of %{space_name} on the Vocdoni API"
+          unpublish: "%{user_name} unpublished the %{resource_name} of %{space_name}
+            election"
           update: "%{user_name} updated the election %{resource_name} of %{space_name}"
       election_m:
         badge_name:
@@ -82,7 +99,8 @@ en:
         footer:
           remaining_time:
             one: "<strong>%{count} hour %{minutes} minutes</strong> remaining to vote."
-            other: "<strong>%{count} hours %{minutes} minutes</strong> remaining to vote."
+            other: "<strong>%{count} hours %{minutes} minutes</strong> remaining to
+              vote."
             zero: "<strong>%{minutes} minutes</strong> remaining to vote."
           view: View
           vote: Vote
@@ -106,7 +124,8 @@ en:
           verify:
             already_voted: Already voted?
             verify_here: Check your vote here.
-            will_verify: You will be able to verify your vote once the election is started.
+            will_verify: You will be able to verify your vote once the election is
+              started.
           voting_period_status:
             finished: Voting began on %{start_time} and ended on %{end_time}
             ongoing: 'Active voting until: %{end_time}'
@@ -120,10 +139,3 @@ en:
             title: Title
       warnings:
         no_elections_warning: There isn't any election scheduled.
-    events:
-      vocdoni:
-        election_published:
-          email_intro: 'The %{resource_title} election is now active for %{participatory_space_title}. You can see it from this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
-          email_subject: The %{resource_title} election is now active for %{participatory_space_title}.
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> election is now active for %{participatory_space_title}.
