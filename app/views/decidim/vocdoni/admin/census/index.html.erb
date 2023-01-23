@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title">
+      <%= t("index.title", scope: "decidim.vocdoni.admin.census") %>
+    </h2>
+  </div>
+  <div class="card-section">
+    <% if @status.count > 0 %>
+      <p><%= t("decidim.vocdoni.admin.census.index.data", count: @status.count,
+        due_date: l(@status.last_import_at, format: :long)) %>
+      </p>
+      <%= link_to t("decidim.vocdoni.admin.census.destroy.title"),
+        destroy_all_election_census_path(election),
+        method: :delete,
+        class: "button alert",
+        data: { confirm: t("decidim.vocdoni.admin.census.destroy.confirm") } %>
+      <% else %>
+        <p><%= t("index.empty", scope: "decidim.vocdoni.admin.census") %></p>
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title">
+      <%= t("new.title", scope: "decidim.vocdoni.admin.census") %>
+    </h2>
+  </div>
+  <div class="card-section">
+    <p><%= t("decidim.vocdoni.admin.census.new.info") %></p>
+    <pre class="code-block">
+email;born_at
+user@example.org;1984-01-25
+user2@example.org;2000-12-15</pre>
+    <%= decidim_form_for @form, url: election_census_path(election), multipart: true do |form| %>
+      <%= label_tag :file, t("new.file", scope: "decidim.vocdoni.admin.census") %>
+      <%= form.file_field :file, required: true %>
+      <%= submit_tag t("new.submit", scope: "decidim.vocdoni.admin.census"), class: "button" %>
+    <% end %>
+  </div>
+</div>

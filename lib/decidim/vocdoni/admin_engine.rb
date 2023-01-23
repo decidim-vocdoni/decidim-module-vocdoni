@@ -20,6 +20,9 @@ module Decidim
           resources :questions do
             resources :answers
           end
+          resources :census, only: [:index, :create] do
+            delete :destroy_all, on: :collection, as: :destroy_all
+          end
         end
         root to: "elections#index"
       end
