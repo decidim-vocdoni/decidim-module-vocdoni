@@ -3,4 +3,4 @@
 
 Dir.chdir("development_app")
 
-load "bin/rails"
+load "bin/webpack"

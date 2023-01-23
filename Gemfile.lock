@@ -133,6 +133,8 @@ GEM
     chef-utils (18.0.185)
       concurrent-ruby
     childprocess (4.1.0)
+    codecov (0.6.0)
+      simplecov (>= 0.15, < 0.22)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     coffee-rails (5.0.0)
@@ -789,6 +791,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (~> 1.4)
   byebug (~> 11.0)
+  codecov
   decidim (= 0.27)
   decidim-dev (= 0.27)
   decidim-vocdoni!
@@ -801,7 +804,7 @@ DEPENDENCIES
   web-console (~> 4.2)
 
 RUBY VERSION
-   ruby 3.0.2p107
+   ruby 3.0.5p211
 
 BUNDLED WITH
    2.3.20
