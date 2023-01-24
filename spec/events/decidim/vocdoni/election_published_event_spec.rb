@@ -6,7 +6,7 @@ describe Decidim::Vocdoni::ElectionPublishedEvent do
   include_context "when a simple event"
 
   let(:event_name) { "decidim.events.vocdoni.election_published" }
-  let(:resource) { create(:election) }
+  let(:resource) { create(:vocdoni_election) }
   let(:participatory_space_title) { resource.participatory_space.title["en"] }
   let(:resource_title) { resource.title["en"] }
 

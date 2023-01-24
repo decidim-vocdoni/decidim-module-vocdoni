@@ -2,21 +2,22 @@
 
 require "spec_helper"
 
-describe Decidim::Vocdoni::Admin::DestroyElection do
-  subject { described_class.new(election, user) }
+describe Decidim::Vocdoni::Admin::DestroyQuestion do
+  subject { described_class.new(question, user) }
 
-  let!(:election) { create :vocdoni_election }
+  let(:election) { create :vocdoni_election }
+  let!(:question) { create :vocdoni_question, election: election }
   let(:organization) { election.component.organization }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
 
-  it "destroys the election" do
-    expect { subject.call }.to change(Decidim::Vocdoni::Election, :count).by(-1)
+  it "destroys the question" do
+    expect { subject.call }.to change(Decidim::Vocdoni::Question, :count).by(-1)
   end
 
   it "traces the action", versioning: true do
     expect(Decidim.traceability)
       .to receive(:perform_action!)
-      .with(:delete, election, user, visibility: "all")
+      .with(:delete, question, user, visibility: "all")
       .and_call_original
 
     expect { subject.call }.to change(Decidim::ActionLog, :count)
@@ -30,15 +31,6 @@ describe Decidim::Vocdoni::Admin::DestroyElection do
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:invalid)
-    end
-  end
-
-  context "with attachments" do
-    let(:command) { described_class.new(election, user) }
-    let!(:image) { create(:attachment, :with_image, attached_to: election) }
-
-    it_behaves_like "admin destroys resource gallery" do
-      let(:resource) { election }
     end
   end
 end
