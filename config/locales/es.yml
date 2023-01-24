@@ -1,0 +1,179 @@
+---
+es:
+  activemodel:
+    attributes:
+      election:
+        description: Description
+        end_time: End time
+        start_time: Start time
+        title: Title
+    errors:
+      models:
+        election:
+          attributes:
+            attachment:
+              needs_to_be_reattached: Needs to be reattached
+  decidim:
+    components:
+      vocdoni:
+        name: Elections (Vocdoni)
+        settings:
+          global:
+            announcement: Announcement
+          step:
+            announcement: Announcement
+    vocdoni:
+      actions:
+        confirm_destroy: Are you sure?
+        destroy: Delete
+        edit: Edit
+        manage_answers: Manage answers
+        manage_questions: Manage questions
+        new: New %{name}
+        preview: Preview
+        publish: Publish
+        title: Actions
+        unpublish: Unpublish
+      admin:
+        answers:
+          create:
+            invalid: There was a problem creating this answer
+            success: Answer successfully created
+          destroy:
+            invalid: There was a problem deleting this answer
+            success: Answer successfully deleted
+          edit:
+            title: Edit answer
+            update: Update answer
+          index:
+            title: Answers
+          new:
+            create: Create answer
+            title: New answer
+          update:
+            invalid: There was a problem updating this answer
+            success: Answer successfully updated
+        elections:
+          create:
+            invalid: There was a problem creating this election
+            success: Election successfully created
+          destroy:
+            invalid: There was a problem deleting this election
+            success: Election successfully deleted
+          edit:
+            title: Edit election
+            update: Update
+          index:
+            title: Elections
+          new:
+            create: Create
+            title: New election
+          publish:
+            success: The election has been successfully published.
+          unpublish:
+            success: The election has been successfully unpublished.
+          update:
+            invalid: There was a problem updating this election
+            success: Election successfully updated
+        models:
+          answer:
+            name: answer
+          election:
+            name: election
+          question:
+            name: question
+        steps:
+          ready:
+            title: Ready
+        questions:
+          create:
+            election_started: The election has already started
+            invalid: There was a problem creating this question
+            success: Question successfully created
+          destroy:
+            invalid: There was a problem deleting this question
+            success: Question successfully deleted
+          edit:
+            title: Edit question
+            update: Update question
+          index:
+            title: Questions
+          new:
+            create: Create question
+            title: New question
+          update:
+            invalid: There was a problem updating this question
+            success: Question successfully updated
+      admin_log:
+        election:
+          create: "%{user_name} created the election %{resource_name} of %{space_name}"
+          delete: "%{user_name} deleted the election %{resource_name} of %{space_name}"
+          end_vote: "%{user_name} ended the voting period for the election %{resource_name} of %{space_name} on the Vocdoni API"
+          publish: "%{user_name} published the election %{resource_name} of %{space_name}"
+          publish_results: "%{user_name} published the results for the election %{resource_name} of %{space_name} on the Vocdoni API"
+          setup: "%{user_name} created the election %{resource_name} of %{space_name} on the Vocdoni API"
+          start_tally: "%{user_name} started the tally for the election %{resource_name} of %{space_name} on the Vocdoni API"
+          start_vote: "%{user_name} started the voting period for the election %{resource_name} of %{space_name} on the Vocdoni API"
+          unpublish: "%{user_name} unpublished the %{resource_name} of %{space_name} election"
+          update: "%{user_name} updated the election %{resource_name} of %{space_name}"
+      election_m:
+        badge_name:
+          finished: Finished
+          ongoing: Active
+          upcoming: Upcoming
+        end_date: Ends
+        footer:
+          remaining_time:
+            one: "<strong>%{count} hour %{minutes} minutes</strong> remaining to vote."
+            other: "<strong>%{count} hours %{minutes} minutes</strong> remaining to vote."
+          view: View
+          vote: Vote
+        label:
+          date: Dates
+        questions: Questions %{count}
+        start_date: Starts
+        unspecified: Not specified
+      elections:
+        count:
+          elections_count:
+            one: "%{count} election"
+            other: "%{count} elections"
+        show:
+          action_button:
+            change_vote: Change your vote
+            vote: Start voting
+            vote_again: Vote again
+          back: Available elections
+          preview: Preview
+          verify:
+            already_voted: Already voted?
+            verify_here: Check your vote here.
+            will_verify: You will be able to verify your vote once the election is started.
+          voting_period_status:
+            finished: Voting began on %{start_time} and ended on %{end_time}
+            ongoing: 'Active voting until: %{end_time}'
+            upcoming: Voting begins on %{start_time}
+      models:
+        answer:
+          fields:
+            proposals: Proposals
+            title: Title
+        election:
+          fields:
+            end_time: End time
+            start_time: Start time
+            status: Status
+            title: Title
+        question:
+          fields:
+            answers: Answers
+            title: Title
+      warnings:
+        no_elections_warning: There isn't any election scheduled.
+    events:
+      vocdoni:
+        election_published:
+          email_intro: 'The %{resource_title} election is now active for %{participatory_space_title}. You can see it from this page:'
+          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
+          email_subject: The %{resource_title} election is now active for %{participatory_space_title}.
+          notification_title: The <a href="%{resource_path}">%{resource_title}</a> election is now active for %{participatory_space_title}.
