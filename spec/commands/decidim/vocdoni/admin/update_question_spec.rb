@@ -47,7 +47,7 @@ describe Decidim::Vocdoni::Admin::UpdateQuestion do
   end
 
   context "when the election has started" do
-    let(:election) { create :election, :started }
+    let(:election) { create :vocdoni_election, :started }
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:invalid)
