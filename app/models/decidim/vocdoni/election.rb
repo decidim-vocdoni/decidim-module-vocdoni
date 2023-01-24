@@ -15,6 +15,7 @@ module Decidim::Vocdoni
     component_manifest_name "vocdoni"
 
     has_many :questions, foreign_key: "decidim_vocdoni_election_id", class_name: "Decidim::Vocdoni::Question", inverse_of: :election, dependent: :destroy
+    has_many :csv_datum, foreign_key: "decidim_vocdoni_election_id", class_name: "Decidim::Vocdoni::CsvDatum", inverse_of: :election, dependent: :destroy
 
     translatable_fields :title, :description
 
