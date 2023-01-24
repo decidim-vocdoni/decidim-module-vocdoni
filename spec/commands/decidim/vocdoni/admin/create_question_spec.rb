@@ -8,7 +8,7 @@ describe Decidim::Vocdoni::Admin::CreateQuestion do
   let(:organization) { current_component.organization }
   let(:participatory_process) { current_component.participatory_space }
   let(:current_component) { election.component }
-  let(:election) { create :election }
+  let(:election) { create :vocdoni_election }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
   let(:form) do
     double(
