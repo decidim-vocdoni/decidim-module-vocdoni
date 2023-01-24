@@ -68,7 +68,7 @@ FactoryBot.define do
       answers { 3 }
     end
 
-    election
+    association :election, factory: :vocdoni_election
     title { generate_localized_title }
     weight { Faker::Number.number(digits: 1) }
 
@@ -95,7 +95,7 @@ FactoryBot.define do
   end
 
   factory :vocdoni_election_answer, class: "Decidim::Vocdoni::Answer" do
-    question
+    association :question, factory: :vocdoni_question
     title { generate_localized_title }
     description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }
