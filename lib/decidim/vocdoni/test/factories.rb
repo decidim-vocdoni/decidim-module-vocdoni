@@ -9,7 +9,7 @@ FactoryBot.define do
     participatory_space { create(:participatory_process, :with_steps) }
   end
 
-  factory :election, class: "Decidim::Vocdoni::Election" do
+  factory :vocdoni_election, class: "Decidim::Vocdoni::Election" do
     transient do
       organization { build(:organization) }
     end
