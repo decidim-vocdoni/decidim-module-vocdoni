@@ -9,7 +9,7 @@ FactoryBot.define do
     participatory_space { create(:participatory_process, :with_steps) }
   end
 
-  factory :election, class: "Decidim::Vocdoni::Election" do
+  factory :vocdoni_election, class: "Decidim::Vocdoni::Election" do
     transient do
       organization { build(:organization) }
     end
@@ -104,6 +104,60 @@ FactoryBot.define do
 
   factory :election_answer, class: "Decidim::Vocdoni::Answer" do
     question
+    title { generate_localized_title }
+    description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
+    weight { Faker::Number.number(digits: 1) }
+
+    trait :with_photos do
+      transient do
+        photos_number { 2 }
+      end
+
+      after :create do |election, evaluator|
+        evaluator.photos_number.times do
+          election.attachments << create(
+            :attachment,
+            :with_image,
+            attached_to: election
+          )
+        end
+      end
+    end
+  end
+
+  factory :vocdoni_question, class: "Decidim::Vocdoni::Question" do
+    transient do
+      answers { 3 }
+    end
+
+    association :election, factory: :vocdoni_election
+    title { generate_localized_title }
+    weight { Faker::Number.number(digits: 1) }
+
+    trait :complete do
+      after(:build) do |question, evaluator|
+        overrides = { question: question }
+        question.answers = build_list(:vocdoni_election_answer, evaluator.answers, overrides)
+      end
+    end
+
+    trait :yes_no do
+      complete
+    end
+
+    trait :candidates do
+      complete
+      answers { 10 }
+    end
+
+    trait :projects do
+      complete
+      answers { 6 }
+    end
+  end
+
+  factory :vocdoni_election_answer, class: "Decidim::Vocdoni::Answer" do
+    association :question, factory: :vocdoni_question
     title { generate_localized_title }
     description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }

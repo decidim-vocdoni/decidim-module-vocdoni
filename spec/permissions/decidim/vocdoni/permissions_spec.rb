@@ -14,7 +14,7 @@ describe Decidim::Vocdoni::Permissions do
     }
   end
   let(:elections_component) { create :vocdoni_component }
-  let(:election) { create :election, :published, component: elections_component }
+  let(:election) { create :vocdoni_election, :published, component: elections_component }
   let(:permission_action) { Decidim::PermissionAction.new(**action) }
 
   context "when scope is admin" do
@@ -57,7 +57,7 @@ describe Decidim::Vocdoni::Permissions do
     it { is_expected.to be_truthy }
 
     context "when election is not published" do
-      let(:election) { create :election, :upcoming, component: elections_component }
+      let(:election) { create :vocdoni_election, :upcoming, component: elections_component }
 
       it { is_expected.to be_falsey }
 

@@ -23,7 +23,7 @@ This module is only compatible with Decidim v0.27.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "decidim-vocdoni", github: "andreslucena/decidim-module-vocdoni"
+gem "decidim-vocdoni", github: "decidim-vocdoni/decidim-module-vocdoni"
 ```
 
 And then execute:

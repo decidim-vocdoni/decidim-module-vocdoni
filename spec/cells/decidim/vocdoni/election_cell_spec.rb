@@ -8,7 +8,7 @@ describe Decidim::Vocdoni::ElectionCell, type: :cell do
   subject { my_cell.call }
 
   let(:my_cell) { cell("decidim/vocdoni/election", model) }
-  let!(:election) { create(:election, :published, :ongoing) }
+  let!(:election) { create(:vocdoni_election, :published, :ongoing) }
   let!(:current_user) { create(:user, :confirmed, organization: model.participatory_space.organization) }
 
   before do
