@@ -9,7 +9,9 @@ describe Decidim::Vocdoni::Election do
 
   include_examples "has component"
   include_examples "resourceable"
-  include_examples "publicable"
+  include_examples "publicable" do
+    let(:factory_name) { :vocdoni_election }
+  end
 
   describe "check the log result" do
     it "overwrites the log presenter" do
