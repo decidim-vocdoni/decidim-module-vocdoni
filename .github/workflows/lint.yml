@@ -8,10 +8,11 @@ on:
 
 env:
   RUBY_VERSION: 3.0.5
+  NODE_VERSION: 16.9.1
 
 jobs:
   lint-report:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
         with:
