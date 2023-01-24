@@ -5,7 +5,7 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::DestroyAnswer do
   subject(:command) { described_class.new(answer, user) }
 
-  let(:election) { create : vocdoni_election }
+  let(:election) { create :vocdoni_election }
   let(:question) { create :vocdoni_question, election: election }
   let!(:answer) { create :vocdoni_election_answer, question: question }
   let(:component) { election.component }
