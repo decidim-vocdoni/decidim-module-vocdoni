@@ -75,7 +75,7 @@ FactoryBot.define do
     trait :complete do
       after(:build) do |question, evaluator|
         overrides = { question: question }
-        question.answers = build_list(:election_answer, evaluator.answers, overrides)
+        question.answers = build_list(:vocdoni_election_answer, evaluator.answers, overrides)
       end
     end
 
