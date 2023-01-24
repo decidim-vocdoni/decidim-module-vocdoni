@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Decidim::Vocdoni::Election do
-  subject(:election) { build(:election) }
+  subject(:election) { build :vocdoni_election }
 
   it { is_expected.to be_valid }
 
@@ -23,7 +23,7 @@ describe Decidim::Vocdoni::Election do
   it { is_expected.not_to be_finished }
 
   context "when it is ongoing" do
-    subject(:election) { build :election, :ongoing }
+    subject(:election) { build :vocdoni_election, :ongoing }
 
     it { is_expected.to be_started }
     it { is_expected.to be_ongoing }
@@ -31,7 +31,7 @@ describe Decidim::Vocdoni::Election do
   end
 
   context "when it is finished" do
-    subject(:election) { build :election, :finished }
+    subject(:election) { build :vocdoni_election, :finished }
 
     it { is_expected.to be_started }
     it { is_expected.not_to be_ongoing }
