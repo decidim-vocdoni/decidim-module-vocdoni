@@ -78,6 +78,10 @@ FactoryBot.define do
   end
 
   factory :vocdoni_question, class: "Decidim::Vocdoni::Question" do
+    transient do
+      answers { 3 }
+    end
+
     association :election, factory: :vocdoni_election
     title { generate_localized_title }
     weight { Faker::Number.number(digits: 1) }
