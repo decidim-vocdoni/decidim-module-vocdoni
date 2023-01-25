@@ -46,6 +46,14 @@ FactoryBot.define do
       published_at { Time.current }
     end
 
+    trait :complete do
+      after(:build) do |election, _evaluator|
+        election.questions << build(:vocdoni_question, :yes_no, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :candidates, election: election, weight: 3)
+        election.questions << build(:vocdoni_question, :projects, election: election, weight: 2)
+      end
+    end
+
     trait :with_photos do
       transient do
         photos_number { 2 }

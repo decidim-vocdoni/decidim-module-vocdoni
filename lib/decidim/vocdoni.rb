@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "decidim/vocdoni/admin"
+require "decidim/vocdoni/api"
 require "decidim/vocdoni/engine"
 require "decidim/vocdoni/admin_engine"
 require "decidim/vocdoni/component"
