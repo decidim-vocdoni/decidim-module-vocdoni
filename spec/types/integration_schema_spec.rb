@@ -58,7 +58,7 @@ let(:elections_data) do
   {
     "__typename" => "VocdoniElections",
     "id" => current_component.id.to_s,
-    "name" => { "translation" => "Vocdoni" },
+    "name" => { "translation" => "Elections (Vocdoni)" },
     "elections" => {
       "edges" => [
         {
