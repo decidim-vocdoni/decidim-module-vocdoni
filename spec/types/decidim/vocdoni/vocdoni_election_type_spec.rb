@@ -14,7 +14,7 @@ module Decidim
     describe VocdoniElectionType, type: :graphql do
       include_context "with a graphql class type"
 
-      let(:model) { create(:election, :published) }
+      let(:model) { create(:vocdoni_election, :published) }
 
       it_behaves_like "attachable interface"
 
@@ -82,7 +82,7 @@ module Decidim
         let(:query) { "{ blocked }" }
 
         context "when the election's parameters are blocked" do
-          let!(:model) { create(:election, :finished) }
+          let!(:model) { create(:vocdoni_election, :finished) }
 
           it "returns true" do
             expect(response["blocked"]).to be true
@@ -90,7 +90,7 @@ module Decidim
         end
 
         context "when the election's parameters are not blocked" do
-          let(:model) { create(:election) }
+          let(:model) { create(:vocdoni_election) }
 
           it "returns false" do
             expect(response["blocked"]).to be_falsey
@@ -107,7 +107,7 @@ module Decidim
       end
 
       describe "questions" do
-        let!(:election2) { create(:election, :complete) }
+        let!(:election2) { create(:vocdoni_election, :complete) }
         let(:query) { "{ questions { id } }" }
 
         it "returns the election questions" do
