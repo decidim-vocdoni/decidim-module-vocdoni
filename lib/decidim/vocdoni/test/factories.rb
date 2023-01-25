@@ -71,7 +71,7 @@ FactoryBot.define do
     end
   end
 
-  factory :question, class: "Decidim::Vocdoni::Question" do
+  factory :vocdoni_question, class: "Decidim::Vocdoni::Question" do
     transient do
       answers { 3 }
     end
@@ -102,7 +102,7 @@ FactoryBot.define do
     end
   end
 
-  factory :election_answer, class: "Decidim::Vocdoni::Answer" do
+  factory :vocdoni_election_answer, class: "Decidim::Vocdoni::Answer" do
     question
     title { generate_localized_title }
     description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
