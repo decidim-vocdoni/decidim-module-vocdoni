@@ -83,6 +83,33 @@ es:
           question:
             name: question
         steps:
+          create_election:
+            errors:
+              component_published: The election component is <strong>not published</strong>.
+              minimum_answers: Questions must have <strong>at least two answers</strong>.
+              minimum_questions: The election <strong>must have at least one question</strong>.
+              published: The election is <strong>not published</strong>.
+            invalid: There was a problem setting up this election
+            requirements:
+              component_published: The election component is <strong>published</strong>.
+              minimum_answers: Each question has <strong>at least 2 answers</strong>.
+              minimum_questions: The election has <strong>at least 1 question</strong>.
+              published: The election is <strong>published</strong>.
+            submit: Setup election
+            title: Setup election
+          created:
+            title: Election created
+          processing: Processing...
+          results_published:
+            title: Results published
+          tally_ended:
+            title: Calculated results
+          tally_started:
+            title: Tally process
+          vote:
+            title: Vote period
+          vote_ended:
+            title: Vote period ended
           ready:
             title: Ready
         questions:
