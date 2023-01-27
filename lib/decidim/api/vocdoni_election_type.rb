@@ -27,6 +27,7 @@ module Decidim
       field :status, GraphQL::Types::String, "The status for this election", null: true, camelize: false
 
       field :questions, [Decidim::Vocdoni::VocdoniQuestionType, { null: true }], "The questions for this election", null: false
+      field :voters, [Decidim::Vocdoni::VocdoniVoterType, { null: true }], "The voters for this election", null: false
     end
   end
 end

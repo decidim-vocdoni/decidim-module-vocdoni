@@ -47,6 +47,12 @@ describe "Decidim::Api::QueryType" do
         }
       end,
 
+      "voters" => election.voters.order(:id).map do |v|
+        {
+          "wallet_public_key" => v.wallet_public_key
+        }
+      end,
+
       "startTime" => election.start_time.iso8601.to_s.gsub("Z", "+00:00"),
       "title" => { "translation" => election.title[locale] },
       "updatedAt" => election.updated_at.iso8601.to_s.gsub("Z", "+00:00"),
@@ -119,6 +125,9 @@ describe "valid connection query" do
                   versionsCount
                   weight
                 }
+                voters {
+                  wallet_public_key
+                }
                 startTime
                 title {
                   translation(locale: "en")
@@ -190,6 +199,9 @@ describe "valid query" do
             }
             versionsCount
             weight
+          }
+          voters {
+            wallet_public_key
           }
           startTime
           title {
