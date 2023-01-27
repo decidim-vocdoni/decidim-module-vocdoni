@@ -16,7 +16,7 @@ en:
   decidim:
     components:
       vocdoni:
-        name: Vocdoni
+        name: Elections (Vocdoni)
         settings:
           global:
             announcement: Announcement
@@ -110,6 +110,8 @@ en:
             title: Vote period
           vote_ended:
             title: Vote period ended
+          ready:
+            title: Ready
         questions:
           create:
             election_started: The election has already started

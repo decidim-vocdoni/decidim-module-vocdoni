@@ -8,8 +8,8 @@ describe Decidim::Vocdoni::Admin::CreateAnswer do
   let(:organization) { component.organization }
   let(:participatory_process) { component.participatory_space }
   let(:component) { election.component }
-  let(:question) { create :question, election: election }
-  let(:election) { create :election }
+  let(:question) { create :vocdoni_question, election: election }
+  let(:election) { create :vocdoni_election }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
   let(:form) do
     double(
@@ -65,7 +65,7 @@ describe Decidim::Vocdoni::Admin::CreateAnswer do
   end
 
   context "when the election has started" do
-    let(:election) { create :election, :started }
+    let(:election) { create :vocdoni_election, :started }
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:invalid)

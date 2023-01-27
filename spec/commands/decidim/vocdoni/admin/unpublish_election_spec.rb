@@ -9,7 +9,7 @@ module Decidim::Vocdoni::Admin
     let!(:user) { create(:user, :admin, :confirmed, organization: participatory_process.organization) }
     let!(:participatory_process) { create(:participatory_process, :with_steps) }
     let(:step) { participatory_process.steps.first }
-    let!(:election) { create(:election, :published) }
+    let!(:election) { create(:vocdoni_election, :published) }
 
     it "unpublishes the election" do
       expect { subject.call }.to change(election, :published?).from(true).to(false)
