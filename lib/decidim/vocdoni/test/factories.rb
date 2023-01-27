@@ -59,10 +59,21 @@ FactoryBot.define do
       end
     end
 
+    trait :with_census do
+      after(:build) do |election, _evaluator|
+        election.voters << build(:voter, :with_credentials, election: election)
+        election.voters << build(:voter, :with_credentials, election: election)
+        election.voters << build(:voter, :with_credentials, election: election)
+        election.voters << build(:voter, :with_credentials, election: election)
+        election.voters << build(:voter, :with_credentials, election: election)
+      end
+    end
+
     trait :ready_for_setup do
       upcoming
       published
       complete
+      with_census
     end
 
     trait :with_photos do
