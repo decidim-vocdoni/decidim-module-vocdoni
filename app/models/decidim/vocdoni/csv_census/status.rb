@@ -13,8 +13,30 @@ module Decidim
           @last ? @last.created_at : nil
         end
 
-        def count
-          @count ||= CsvDatum.inside(@election).distinct.count(:email)
+        def count(attribute = :email)
+          CsvDatum.inside(@election).distinct.count(attribute)
+        end
+
+        def name
+          if pending_upload?
+            "pending_upload"
+          elsif pending_generation?
+            "pending_generation"
+          else
+            "ready"
+          end
+        end
+
+        def pending_upload?
+          count.zero?
+        end
+
+        def pending_generation?
+          count.positive? && count(:wallet_public_key).zero?
+        end
+
+        def ready_to_setup?
+          count(:wallet_public_key).positive? && count == count(:wallet_public_key)
         end
       end
     end

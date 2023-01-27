@@ -9,48 +9,80 @@ describe "Admin manages census", :slow, type: :system do
 
   include_context "when managing a component as an admin"
 
-  context "when uploading the census CSV" do
-    it "has the form" do
+  context "when there isn't any census" do
+    it "uploads the census" do
       visit_census_page
 
-      expect(page).to have_content("Must be a file in CSV format with only two columns")
-    end
+      expect(page).to have_content("1. Upload a new census")
 
-    context "and the census is valid" do
-      it "uploads the census" do
-        visit_census_page
+      attach_file("census_data[file]", valid_census_file)
+      click_button "Upload file"
 
-        attach_file("census_data[file]", valid_census_file)
-        click_button "Upload file"
-
-        expect(page).to have_content("Successfully imported 1 items")
-        expect(page).to have_content("There are 1 records loaded in total")
-      end
+      expect(page).to have_content("Successfully imported 1 items")
+      expect(page).to have_content("There are 1 records loaded in total")
     end
   end
 
-  context "when deleting the census CSV" do
-    let!(:csv_datum) { create(:csv_datum, election: election) }
+  context "when there's already a census" do
+    context "without the credentials" do
+      let!(:csv_data) { create_list(:csv_datum, 5, election: election) }
 
-    it "deletes it" do
-      visit_census_page
+      it "generates the credentials" do
+        visit_census_page
 
-      click_link "Delete all census data"
+        expect(page).to have_content("2. Generate credentials for the participants")
 
-      within ".confirm-content" do
-        expect(page).to have_content("Are you sure you want to continue?")
+        click_button "Generate credentials"
+
+        expect(page).to have_content("The census data is uploaded, the credentials generated, and its ready to setup")
+        expect(csv_data.map(&:reload).pluck(:wallet_public_key)).to all(start_with("0x"))
       end
 
-      within ".confirm-modal-footer" do
-        click_link "OK"
+      describe "and we want to delete it" do
+        it "deletes it" do
+          visit_census_page
+
+          deletes_the_census
+        end
+      end
+    end
+
+    context "with the credentials" do
+      let!(:csv_data) { create_list(:csv_datum, 5, :with_credentials, election: election) }
+
+      it "doesn't have any form" do
+        visit_census_page
+
+        expect(page).not_to have_content("1. Upload a new census")
+        expect(page).not_to have_content("2. Generate credentials for the participants")
       end
 
-      expect(page).to have_content("All census data have been deleted")
-      expect(page).to have_content("There are no census data")
+      describe "and we want to delete it" do
+        it "deletes it" do
+          visit_census_page
+
+          deletes_the_census
+        end
+      end
     end
   end
 
   private
+
+  def deletes_the_census
+    click_link "Delete all census data"
+
+    within ".confirm-content" do
+      expect(page).to have_content("Are you sure you want to continue?")
+    end
+
+    within ".confirm-modal-footer" do
+      click_link "OK"
+    end
+
+    expect(page).to have_content("All census data have been deleted")
+    expect(page).to have_content("There are no census data")
+  end
 
   def visit_census_page
     election

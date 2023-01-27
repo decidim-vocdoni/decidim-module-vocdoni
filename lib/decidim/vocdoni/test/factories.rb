@@ -142,5 +142,9 @@ FactoryBot.define do
     born_at { Faker::Date.between(from: 110.years.ago, to: 16.years.ago) }
 
     election
+
+    trait :with_credentials do
+      wallet_public_key { Faker::Blockchain::Ethereum.address }
+    end
   end
 end

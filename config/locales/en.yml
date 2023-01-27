@@ -64,22 +64,38 @@ en:
             success: Answer successfully updated
         census:
           create:
-            error: There was an error importing census.
-            success: Successfully imported %{count} items (%{errors} errors)
+            error: There was an error importing or generating the census.
+            success:
+              generate: Successfully generated the census
+              import: Successfully imported %{count} items (%{errors} errors)
           destroy_all:
             success: All census data have been deleted
           destroy:
             confirm: Delete all the census can not be undone. Are you sure you want to continue?
             title: Delete all census data
+          generate:
+            info: You can generate the credentials for all the participants with the following action.
+            title: 2. Generate credentials for the participants
+            submit: Generate credentials
           index:
-            data: There are %{count} records loaded in total. Last upload date was on %{due_date}
-            empty: There are no census data. Use the form below to import it using a CSV file.
-            title: Current census data
+            info_html: | 
+              For setting up the census for a Vocdoni Election, you need to follow two steps:
+                <ol>
+                  <li>To upload the CSV file with the correct information</li>
+                  <li>To generate the credentials for the participants</li>
+                </ol>
+                You can do both of these steps in this page.
+            title: Census for a Vocdoni election
           new:
             file: ".csv file with emails data"
             info: 'Must be a file in CSV format with only two columns, one with the email address and another with the date of birth (format YYYY-MM-DD). It must be separated with a semicolon (;):'
             submit: Upload file
-            title: Upload a new census
+            title: 1. Upload a new census
+          status:
+            data: There are %{count} records loaded in total. Last upload date was on %{due_date}. If you want to change the census (for instance, adding more participants), its necessary to first delete all census data.
+            empty: There are no census data. Use the form below to import it using a CSV file.
+            ready_to_setup: The census data is uploaded, the credentials generated, and its ready to setup.
+            title: Current census data
         elections:
           create:
             invalid: There was a problem creating this election

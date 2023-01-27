@@ -9,18 +9,20 @@ module Decidim
         def index
           enforce_permission_to :index, :census, election: election
 
-          @form = form(CensusDataForm).instance
-          @status = CsvCensus::Status.new(election)
+          @form = current_step_form_instance
         end
 
         def create
           enforce_permission_to :create, :census, election: election
-          @form = form(CensusDataForm).from_params(params)
-          @status = CsvCensus::Status.new(election)
+          @form = form(current_step_form_class).from_params(params)
 
-          CreateCensusData.call(@form, election) do
+          current_step_command_class.call(@form, election) do
             on(:ok) do
-              flash[:notice] = t(".success", count: @form.data.values.count, errors: @form.data.errors.count)
+              flash[:notice] = if @form.respond_to?(:data)
+                                 t(".success.import", count: @form.data.values.count, errors: @form.data.errors.count)
+                               else
+                                 t(".success.generate")
+                               end
               redirect_to election_census_path(election)
             end
 
@@ -39,6 +41,41 @@ module Decidim
         end
 
         private
+
+        def current_step_form_instance
+          @current_step_form_instance ||= case current_step
+                                          when "pending_upload"
+                                            form(current_step_form_class).instance
+                                          when "pending_generation"
+                                            form(current_step_form_class).from_model(
+                                              OpenStruct.new(credentials: CsvDatum.where(election: election))
+                                            )
+                                          when "ready"
+                                            nil
+                                          end
+        end
+
+        def current_step_form_class
+          @current_step_form_class ||= {
+            "pending_upload" => CensusDataForm,
+            "pending_generation" => CensusCredentialsForm
+          }[current_step]
+        end
+
+        def current_step_command_class
+          @current_step_command_class ||= {
+            "pending_upload" => CreateCensusData,
+            "pending_generation" => CreateCensusCredentials
+          }[current_step]
+        end
+
+        def status
+          @status = CsvCensus::Status.new(election)
+        end
+
+        def current_step
+          @current_step ||= status.name
+        end
 
         def elections
           @elections ||= Election.where(component: current_component)
