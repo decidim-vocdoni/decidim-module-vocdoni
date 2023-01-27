@@ -35,7 +35,7 @@ module Decidim
 
         def destroy_all
           enforce_permission_to :destroy, :census, election: election
-          CsvDatum.clear(election)
+          Voter.clear(election)
 
           redirect_to election_census_path(election), notice: t(".success")
         end
@@ -48,7 +48,7 @@ module Decidim
                                             form(current_step_form_class).instance
                                           when "pending_generation"
                                             form(current_step_form_class).from_model(
-                                              OpenStruct.new(credentials: CsvDatum.where(election: election))
+                                              OpenStruct.new(credentials: Voter.where(election: election))
                                             )
                                           when "ready"
                                             nil

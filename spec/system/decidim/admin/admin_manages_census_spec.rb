@@ -25,7 +25,7 @@ describe "Admin manages census", :slow, type: :system do
 
   context "when there's already a census" do
     context "without the credentials" do
-      let!(:csv_data) { create_list(:csv_datum, 5, election: election) }
+      let!(:voters) { create_list(:voter, 5, election: election) }
 
       it "generates the credentials" do
         visit_census_page
@@ -35,7 +35,7 @@ describe "Admin manages census", :slow, type: :system do
         click_button "Generate credentials"
 
         expect(page).to have_content("The census data is uploaded, the credentials generated, and its ready to setup")
-        expect(csv_data.map(&:reload).pluck(:wallet_public_key)).to all(start_with("0x"))
+        expect(voters.map(&:reload).pluck(:wallet_public_key)).to all(start_with("0x"))
       end
 
       describe "and we want to delete it" do
@@ -48,7 +48,7 @@ describe "Admin manages census", :slow, type: :system do
     end
 
     context "with the credentials" do
-      let!(:csv_data) { create_list(:csv_datum, 5, :with_credentials, election: election) }
+      let!(:voters) { create_list(:voter, 5, :with_credentials, election: election) }
 
       it "doesn't have any form" do
         visit_census_page

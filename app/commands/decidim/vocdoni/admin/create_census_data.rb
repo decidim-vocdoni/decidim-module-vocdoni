@@ -23,7 +23,7 @@ module Decidim
           return broadcast(:invalid) unless data
 
           # rubocop:disable Rails/SkipsModelValidations
-          CsvDatum.insert_all(@election, data.values)
+          Voter.insert_all(@election, data.values)
           # rubocop:enable Rails/SkipsModelValidations
 
           broadcast(:ok)

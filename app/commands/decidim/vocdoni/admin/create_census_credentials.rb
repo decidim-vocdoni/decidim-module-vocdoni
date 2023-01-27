@@ -16,7 +16,7 @@ module Decidim
 
           ActiveRecord::Base.transaction do
             @form.credentials.each do |credential|
-              CsvDatum
+              Voter
                 .find_by(election: @election, email: credential.email)
                 .update(wallet_public_key: credential.wallet_public_key)
             end

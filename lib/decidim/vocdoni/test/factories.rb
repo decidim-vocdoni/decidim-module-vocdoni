@@ -137,7 +137,7 @@ FactoryBot.define do
     end
   end
 
-  factory :csv_datum, class: "Decidim::Vocdoni::CsvDatum" do
+  factory :voter, class: "Decidim::Vocdoni::Voter" do
     email { generate(:email) }
     born_at { Faker::Date.between(from: 110.years.ago, to: 16.years.ago) }
 

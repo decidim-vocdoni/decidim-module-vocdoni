@@ -9,12 +9,12 @@ module Decidim
         end
 
         def last_import_at
-          @last ||= CsvDatum.inside(@election).order(created_at: :desc).first
+          @last ||= Voter.inside(@election).order(created_at: :desc).first
           @last ? @last.created_at : nil
         end
 
         def count(attribute = :email)
-          CsvDatum.inside(@election).distinct.count(attribute)
+          Voter.inside(@election).distinct.count(attribute)
         end
 
         def name

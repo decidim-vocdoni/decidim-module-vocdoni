@@ -6,7 +6,7 @@ module Decidim
       # A form to save the public key for a wallet from the Census
       # To be used with CensusCredentialsForm
       class CensusCredentialForm < Form
-        mimic :csv_datum
+        mimic :voter
 
         attribute :email
         attribute :born_at
