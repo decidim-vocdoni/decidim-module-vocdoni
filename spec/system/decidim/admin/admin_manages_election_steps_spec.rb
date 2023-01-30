@@ -22,7 +22,6 @@ describe "Admin manages election steps", :slow, type: :system do
         expect(page).to have_content("The election component is published.")
         expect(page).to have_content("The census is ready")
         expect(find("input#setup_wallet_private_key", visible: false).value).to eq wallet.private_key
-        expect(find("textarea#setup_demo_census").value.split(/\n/).length).to eq 5
 
         click_button "Setup election"
       end

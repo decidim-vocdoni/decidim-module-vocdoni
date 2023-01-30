@@ -1,14 +1,13 @@
-import { VocdoniSDKClient, Election } from "@vocdoni/sdk";
+import { VocdoniSDKClient, Election, PlainCensus } from "@vocdoni/sdk";
 import { Wallet } from "@ethersproject/wallet";
 
 /*
- * Creates an Election in the Vocdoni API 
+ * Creates an Election in the Vocdoni API
  * Instantiates the Vocdoni SDK client using the Wallet's private key given as parameter.
  * Based on the TypeScript example provided in the GitHub repository.
  *
  * @param {object} options All the different options that interact with setting up an Election.
  * @property {string} options.walletPrivateKey The private key from the wallet that will create the Election
- * @property {array} options.census An array with all the public keys of the census participants
  * @property {string} options.graphqlApiUrl The URL for the GraphQL API where to extract the Election metadata
  * @property {number|string} options.componentId The ID of the Vocdoni Component in Decidim
  * @property {string} options.environment The name of the Vocdoni environment that we'll use. Possible values STG or DEV.
@@ -21,7 +20,6 @@ import { Wallet } from "@ethersproject/wallet";
 export default class SetupElection {
   constructor(options = {}, onSuccess, onFailure) {
     this.walletPrivateKey = options.walletPrivateKey;
-    this.census = options.census;
     this.graphqlApiUrl = options.graphqlApiUrl;
     this.componentId = options.componentId;
     this.environment = options.environment;
@@ -93,7 +91,6 @@ export default class SetupElection {
     }
 
     console.group("Election");
-    console.log("CENSUS => ", this.census);
     console.log("ELECTION => ", election);
     console.log("RESULT => ", result);
     console.groupEnd();
@@ -128,10 +125,12 @@ export default class SetupElection {
       }, {});
     }
 
-    const census = this.census;
     let electionMetadata = await this._getElectionMetadata();
     electionMetadata = electionMetadata.data.component.elections.nodes[0];
     const header = electionMetadata.attachments[0].url;
+
+    const walletsAddresses = electionMetadata.voters.map((voter) => voter.wallet_public_key);
+    const census = this._initializeCensus(walletsAddresses);
 
     const election = Election.from({
       title: transformLocales(electionMetadata.title.translations, defaultLocale),
@@ -183,12 +182,15 @@ export default class SetupElection {
                 streamUri
                 startTime
                 endTime
+                voters {
+                  wallet_public_key
+                }
                 questions {
                   title { translations { text locale } }
                   description { translations { text locale } }
                   answers {
                     id
-                    title { translations { text locale } } 
+                    title { translations { text locale } }
                   }
                 }
               }
@@ -214,5 +216,20 @@ export default class SetupElection {
         .then(r => r.json())
         .then(data => resolve(data));
     });
+  }
+
+  /*
+   * Initializes a Census object
+   *
+   * @param {string[]} voters An array with all the wallets public keys
+   *
+   * @returns {<object>} census The PlainCensus object initialized with all the wallets public keys
+   */
+  _initializeCensus(voters) {
+    const census = new PlainCensus();
+    for (const voter of voters) {
+      census.add(voter);
+    }
+    return census;
   }
 }
