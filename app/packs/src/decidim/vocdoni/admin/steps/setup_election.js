@@ -32,12 +32,13 @@ const setupElectionStep = async () => {
     const setupElectionButton = createElectionForm.querySelector(".form-general-submit button");
     showLoadingSpinner(setupElectionButton);
 
-    new SetupElection({
+    const election = new SetupElection({
       walletPrivateKey: createElectionForm.querySelector("#setup_wallet_private_key").value,
       graphqlApiUrl: `${window.location.origin}/api`,
       componentId: window.location.pathname.split("/")[5],
-      environment: EnvOptions.DEV,
+      environment: EnvOptions.DEV
     }, onSuccess, onFailure);
+    election.run();
   });
 }
 

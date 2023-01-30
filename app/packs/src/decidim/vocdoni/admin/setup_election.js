@@ -33,8 +33,6 @@ export default class SetupElection {
     console.log("VOCDONI COMPONENT ID => ", options.componentId);
     console.log("ENVIRONMENT => ", options.environment);
     console.groupEnd();
-
-    this.run();
   }
 
   /*
