@@ -62,7 +62,6 @@ en:
           update:
             invalid: There was a problem updating this answer
             success: Answer successfully updated
-<<<<<<< HEAD
         census:
           create:
             error: There was an error importing or generating the census.
@@ -79,7 +78,7 @@ en:
             title: 2. Generate credentials for the participants
             submit: Generate credentials
           index:
-            info_html: | 
+            info_html: |
               For setting up the census for a Vocdoni Election, you need to follow two steps:
                 <ol>
                   <li>To upload the CSV file with the correct information</li>
@@ -128,7 +127,6 @@ en:
             name: election
           question:
             name: question
-<<<<<<< HEAD
         questions:
           create:
             election_started: The election has already started
@@ -152,43 +150,30 @@ en:
           create_election:
             errors:
               census_ready: The census is <strong>not ready</strong>.
-=======
-        steps:
-          create_election:
-            errors:
->>>>>>> main
               component_published: The election component is <strong>not published</strong>.
               minimum_answers: Questions must have <strong>at least two answers</strong>.
               minimum_questions: The election <strong>must have at least one question</strong>.
               published: The election is <strong>not published</strong>.
-<<<<<<< HEAD
             failed:
               message: Check the Web Development console log error message, fix the problem and retry.
               title: The election has an error and couldn't be created
             invalid: There was a problem setting up this election
             requirements:
               census_ready: The census is <strong>ready</strong>.
-=======
-            invalid: There was a problem setting up this election
-            requirements:
->>>>>>> main
               component_published: The election component is <strong>published</strong>.
               minimum_answers: Each question has <strong>at least 2 answers</strong>.
               minimum_questions: The election has <strong>at least 1 question</strong>.
               published: The election is <strong>published</strong>.
             submit: Setup election
-<<<<<<< HEAD
             success: Election successfully sent to the Vocdoni API
             title: Setup election
           created:
             message: The election has been created. We're waiting for the start date time to arrive.
             title: Election created
             url_html: You can watch it out at the <a href="%{explorer_vote_url}" target="_blank" rel="noopener noreferrer">Vocdoni Explorer</a>.
-=======
             title: Setup election
           created:
             title: Election created
->>>>>>> main
           processing: Processing...
           results_published:
             title: Results published
@@ -200,7 +185,6 @@ en:
             title: Vote period
           vote_ended:
             title: Vote period ended
-<<<<<<< HEAD
         wallet:
           create:
             invalid: There was a problem creating the wallet
@@ -214,7 +198,6 @@ en:
           new:
             create: Create
             title: New organization wallet
-=======
           ready:
             title: Ready
         questions:
@@ -236,7 +219,6 @@ en:
           update:
             invalid: There was a problem updating this question
             success: Question successfully updated
->>>>>>> main
       admin_log:
         election:
           create: "%{user_name} created the election %{resource_name} of %{space_name}"

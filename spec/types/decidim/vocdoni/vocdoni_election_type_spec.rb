@@ -82,11 +82,7 @@ module Decidim
         let(:query) { "{ blocked }" }
 
         context "when the election's parameters are blocked" do
-<<<<<<< HEAD
-          let!(:model) { create(:election, :finished) }
-=======
           let!(:model) { create(:vocdoni_election, :finished) }
->>>>>>> main
 
           it "returns true" do
             expect(response["blocked"]).to be true
