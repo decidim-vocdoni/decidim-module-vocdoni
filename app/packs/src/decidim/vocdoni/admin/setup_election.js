@@ -127,7 +127,7 @@ export default class SetupElection {
     electionMetadata = electionMetadata.data.component.elections.nodes[0];
     const header = electionMetadata.attachments[0].url;
 
-    const walletsAddresses = electionMetadata.voters.map((voter) => voter.wallet_public_key);
+    const walletsAddresses = electionMetadata.voters.map((voter) => voter.wallet_address);
     const census = this._initializeCensus(walletsAddresses);
 
     const election = Election.from({
@@ -181,7 +181,7 @@ export default class SetupElection {
                 startTime
                 endTime
                 voters {
-                  wallet_public_key
+                  wallet_address
                 }
                 questions {
                   title { translations { text locale } }

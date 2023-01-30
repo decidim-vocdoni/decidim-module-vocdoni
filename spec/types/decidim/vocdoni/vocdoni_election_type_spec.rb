@@ -119,12 +119,12 @@ module Decidim
 
       describe "voters" do
         let!(:election3) { create(:election, :complete) }
-        let(:query) { "{ voters { wallet_public_key } }" }
+        let(:query) { "{ voters { wallet_address } }" }
 
         it "returns the election voters" do
-          wallets = response["voters"].map { |voter| voter["wallet_public_key"] }
-          expect(wallets).to include(*model.voters.map(&:wallet_public_key).map(&:to_s))
-          expect(wallets).not_to include(*election3.voters.map(&:wallet_public_key).map(&:to_s))
+          wallets = response["voters"].map { |voter| voter["wallet_address"] }
+          expect(wallets).to include(*model.voters.map(&:wallet_address).map(&:to_s))
+          expect(wallets).not_to include(*election3.voters.map(&:wallet_address).map(&:to_s))
         end
       end
     end

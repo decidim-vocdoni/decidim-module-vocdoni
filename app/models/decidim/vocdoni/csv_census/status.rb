@@ -32,11 +32,11 @@ module Decidim
         end
 
         def pending_generation?
-          count.positive? && count(:wallet_public_key).zero?
+          count.positive? && count(:wallet_address).zero?
         end
 
         def ready_to_setup?
-          count(:wallet_public_key).positive? && count == count(:wallet_public_key)
+          count(:wallet_address).positive? && count == count(:wallet_address)
         end
       end
     end

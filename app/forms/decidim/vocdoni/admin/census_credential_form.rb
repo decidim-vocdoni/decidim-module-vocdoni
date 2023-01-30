@@ -10,9 +10,9 @@ module Decidim
 
         attribute :email, String
         attribute :born_at, String
-        attribute :wallet_public_key, String
+        attribute :wallet_address, String
 
-        validates :wallet_public_key, presence: true
+        validates :wallet_address, presence: true
       end
     end
   end

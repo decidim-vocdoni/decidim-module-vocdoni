@@ -10,11 +10,11 @@ module Decidim
 
       let(:model) { create(:voter, :with_credentials) }
 
-      describe "wallet_public_key" do
-        let(:query) { "{ wallet_public_key }" }
+      describe "wallet_address" do
+        let(:query) { "{ wallet_address }" }
 
         it "returns all the required fields" do
-          expect(response).to include("wallet_public_key" => model.wallet_public_key.to_s)
+          expect(response).to include("wallet_address" => model.wallet_address.to_s)
         end
       end
     end

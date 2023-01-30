@@ -18,7 +18,7 @@ module Decidim
             @form.credentials.each do |credential|
               Voter
                 .find_by(election: @election, email: credential.email)
-                .update(wallet_public_key: credential.wallet_public_key)
+                .update(wallet_address: credential.wallet_address)
             end
           end
 

@@ -49,7 +49,7 @@ describe "Decidim::Api::QueryType" do
 
       "voters" => election.voters.order(:id).map do |v|
         {
-          "wallet_public_key" => v.wallet_public_key
+          "wallet_address" => v.wallet_address
         }
       end,
 
@@ -126,7 +126,7 @@ describe "valid connection query" do
                   weight
                 }
                 voters {
-                  wallet_public_key
+                  wallet_address
                 }
                 startTime
                 title {
@@ -201,7 +201,7 @@ describe "valid query" do
             weight
           }
           voters {
-            wallet_public_key
+            wallet_address
           }
           startTime
           title {

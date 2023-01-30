@@ -155,7 +155,7 @@ FactoryBot.define do
     election
 
     trait :with_credentials do
-      wallet_public_key { Faker::Blockchain::Ethereum.address }
+      wallet_address { Faker::Blockchain::Ethereum.address }
     end
   end
 end

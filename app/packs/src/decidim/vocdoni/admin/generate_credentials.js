@@ -24,10 +24,10 @@ const initializeGenerateCredentialsForm = () => {
   const generateWalletOnForm = async (credential) => {
     const email = credential.querySelector(".credential_email").value;
     const bornAt = credential.querySelector(".credential_born_at").value;
-    const walletPublicKeyField = credential.querySelector(".credential_wallet_public_key");
-    const walletPublicKey = await generateDeterministicWallet(email, bornAt);
+    const walletAddressField = credential.querySelector(".credential_wallet_address");
+    const walletAddress = await generateDeterministicWallet(email, bornAt);
 
-    walletPublicKeyField.value = walletPublicKey;
+    walletAddressField.value = walletAddress;
   }
 
   const generateWalletsOnForm = async (form, onSuccess) => {

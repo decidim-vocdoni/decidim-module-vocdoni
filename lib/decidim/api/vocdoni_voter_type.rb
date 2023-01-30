@@ -6,7 +6,7 @@ module Decidim
     class VocdoniVoterType < Decidim::Api::Types::BaseObject
       description "A voter for an election"
 
-      field :wallet_public_key, GraphQL::Types::String, "The wallet's public key of this voter", null: false, camelize: false
+      field :wallet_address, GraphQL::Types::String, "The wallet's public key of this voter", null: false, camelize: false
     end
   end
 end
