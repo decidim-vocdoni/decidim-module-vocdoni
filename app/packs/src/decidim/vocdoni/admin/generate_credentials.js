@@ -14,19 +14,26 @@ const initializeGenerateCredentialsForm = () => {
   }
 
   // TODO: actually generate a deterministic Wallet and not a random one xD
-  const generateDeterministicWallet = (email, bornAt) => {
-    const wallet = Wallet.createRandom();
-    return wallet.publicKey;
+  const generateDeterministicWallet = async (email, bornAt) => {
+    const address = await Wallet.createRandom().getAddress();
+    return new Promise((resolve) => {
+      resolve(address);
+    });
   }
 
-  const generateWalletsOnForm = (form, onSuccess) => {
-    for (const credential of form.querySelectorAll("ul.credentials li")) {
-      const email = credential.querySelector(".credential_email").value;
-      const bornAt = credential.querySelector(".credential_born_at").value;
-      const walletPublicKeyField = credential.querySelector(".credential_wallet_public_key");
-      const walletPublicKey = generateDeterministicWallet(email, bornAt);
+  const generateWalletOnForm = async (credential) => {
+    const email = credential.querySelector(".credential_email").value;
+    const bornAt = credential.querySelector(".credential_born_at").value;
+    const walletPublicKeyField = credential.querySelector(".credential_wallet_public_key");
+    const walletPublicKey = await generateDeterministicWallet(email, bornAt);
 
-      walletPublicKeyField.value = walletPublicKey;
+    walletPublicKeyField.value = walletPublicKey;
+  }
+
+  const generateWalletsOnForm = async (form, onSuccess) => {
+    const credentials = form.querySelectorAll("ul.credentials li");
+    for (const credential of credentials) {
+      await generateWalletOnForm(credential);
     }
 
     onSuccess();
