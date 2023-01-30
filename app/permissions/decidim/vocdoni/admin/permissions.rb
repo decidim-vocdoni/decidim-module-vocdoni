@@ -36,6 +36,11 @@ module Decidim
             when :create
               allow! if current_vocdoni_wallet.nil?
             end
+          when :steps
+            case permission_action.action
+            when :read
+              allow!
+            end
           end
 
           permission_action

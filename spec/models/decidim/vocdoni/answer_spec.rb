@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Decidim::Vocdoni::Answer do
-  subject(:answer) { build(:election_answer) }
+  subject(:answer) { build(:vocdoni_election_answer) }
 
   it { is_expected.to be_valid }
 

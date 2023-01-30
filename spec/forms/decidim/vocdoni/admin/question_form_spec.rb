@@ -12,7 +12,7 @@ describe Decidim::Vocdoni::Admin::QuestionForm do
       election: election
     }
   end
-  let(:election) { create :election }
+  let(:election) { create :vocdoni_election }
   let(:component) { election.component }
   let(:title) { Decidim::Faker::Localized.sentence(word_count: 3) }
   let(:description) { Decidim::Faker::Localized.sentence(word_count: 3) }

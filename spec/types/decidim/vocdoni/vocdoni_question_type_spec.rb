@@ -9,7 +9,7 @@ module Decidim
     describe VocdoniQuestionType, type: :graphql do
       include_context "with a graphql class type"
 
-      let(:model) { create(:question) }
+      let(:model) { create(:vocdoni_question) }
 
       it_behaves_like "traceable interface" do
         let(:author) { create(:user, :admin, organization: model.component.organization) }
@@ -48,7 +48,7 @@ module Decidim
       end
 
       describe "answers" do
-        let!(:question2) { create(:question, :complete) }
+        let!(:question2) { create(:vocdoni_question, :complete) }
         let(:query) { "{ answers { id } }" }
 
         it "returns the question answers" do

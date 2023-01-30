@@ -5,7 +5,7 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::UpdateElection do
   subject { described_class.new(form, election) }
 
-  let(:election) { create :election }
+  let(:election) { create :vocdoni_election }
   let(:organization) { election.component.organization }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
   let(:form) do
