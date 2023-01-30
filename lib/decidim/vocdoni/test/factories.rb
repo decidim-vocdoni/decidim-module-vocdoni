@@ -61,11 +61,11 @@ FactoryBot.define do
 
     trait :with_census do
       after(:build) do |election, _evaluator|
-        election.voters << build(:voter, :with_credentials, election: election)
-        election.voters << build(:voter, :with_credentials, election: election)
-        election.voters << build(:voter, :with_credentials, election: election)
-        election.voters << build(:voter, :with_credentials, election: election)
-        election.voters << build(:voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
       end
     end
 
@@ -147,7 +147,7 @@ FactoryBot.define do
     end
   end
 
-  factory :voter, class: "Decidim::Vocdoni::Voter" do
+  factory :vocdoni_voter, class: "Decidim::Vocdoni::Voter" do
     email { generate(:email) }
     born_at { Faker::Date.between(from: 110.years.ago, to: 16.years.ago) }
 

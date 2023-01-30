@@ -25,7 +25,7 @@ describe "Admin manages census", :slow, type: :system do
 
   context "when there's already a census" do
     context "without the credentials" do
-      let!(:voters) { create_list(:voter, 5, election: election) }
+      let!(:voters) { create_list(:vocdoni_voter, 5, election: election) }
 
       it "generates the credentials" do
         visit_census_page
@@ -48,7 +48,7 @@ describe "Admin manages census", :slow, type: :system do
     end
 
     context "with the credentials" do
-      let!(:voters) { create_list(:voter, 5, :with_credentials, election: election) }
+      let!(:voters) { create_list(:vocdoni_voter, 5, :with_credentials, election: election) }
 
       it "doesn't have any form" do
         visit_census_page

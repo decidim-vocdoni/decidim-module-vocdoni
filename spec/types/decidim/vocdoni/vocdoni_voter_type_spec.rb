@@ -8,7 +8,7 @@ module Decidim
     describe VocdoniVoterType, type: :graphql do
       include_context "with a graphql class type"
 
-      let(:model) { create(:voter, :with_credentials) }
+      let(:model) { create(:vocdoni_voter, :with_credentials) }
 
       describe "wallet_address" do
         let(:query) { "{ wallet_address }" }
