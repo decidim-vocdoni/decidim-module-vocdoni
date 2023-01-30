@@ -8,9 +8,11 @@ module Decidim
       class CensusCredentialForm < Form
         mimic :voter
 
-        attribute :email
-        attribute :born_at
-        attribute :wallet_public_key
+        attribute :email, String
+        attribute :born_at, String
+        attribute :wallet_public_key, String
+
+        validates :wallet_public_key, presence: true
       end
     end
   end
