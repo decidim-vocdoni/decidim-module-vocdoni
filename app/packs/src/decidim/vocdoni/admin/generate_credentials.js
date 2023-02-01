@@ -5,7 +5,7 @@
  * @returns {void}
  */
 
-import { Wallet } from "@ethersproject/wallet";
+import { VocdoniSDKClient } from "@vocdoni/sdk";
 
 const initializeGenerateCredentialsForm = () => {
   const newCensusCredentialsForm = document.querySelector("form.new_census_credentials");
@@ -13,27 +13,19 @@ const initializeGenerateCredentialsForm = () => {
     return;
   }
 
-  // TODO: actually generate a deterministic Wallet and not a random one xD
-  const generateDeterministicWallet = async (email, bornAt) => {
-    const address = await Wallet.createRandom().getAddress();
-    return new Promise((resolve) => {
-      resolve(address);
-    });
-  }
-
-  const generateWalletOnForm = async (credential) => {
+  const generateWalletOnForm = (credential) => {
     const email = credential.querySelector(".credential_email").value;
     const bornAt = credential.querySelector(".credential_born_at").value;
     const walletAddressField = credential.querySelector(".credential_wallet_address");
-    const walletAddress = await generateDeterministicWallet(email, bornAt);
+    const wallet = VocdoniSDKClient.generateWalletFromData(email, bornAt);
 
-    walletAddressField.value = walletAddress;
+    walletAddressField.value = wallet.address;
   }
 
-  const generateWalletsOnForm = async (form, onSuccess) => {
+  const generateWalletsOnForm = (form, onSuccess) => {
     const credentials = form.querySelectorAll("ul.credentials li");
     for (const credential of credentials) {
-      await generateWalletOnForm(credential);
+      generateWalletOnForm(credential);
     }
 
     onSuccess();
