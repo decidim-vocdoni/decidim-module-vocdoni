@@ -14,7 +14,7 @@ describe Decidim::Vocdoni::Admin::AnswerForm do
     }
   end
   let(:election) { question.election }
-  let(:question) { create :question }
+  let(:question) { create :vocdoni_question }
   let(:component) { election.component }
   let(:title) { Decidim::Faker::Localized.sentence(word_count: 3) }
   let(:description) { Decidim::Faker::Localized.sentence(word_count: 3) }

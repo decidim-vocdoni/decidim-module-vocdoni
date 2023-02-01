@@ -5,8 +5,8 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::DestroyQuestion do
   subject { described_class.new(question, user) }
 
-  let(:election) { create :election }
-  let!(:question) { create :question, election: election }
+  let(:election) { create :vocdoni_election }
+  let!(:question) { create :vocdoni_question, election: election }
   let(:organization) { election.component.organization }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
 
@@ -27,7 +27,7 @@ describe Decidim::Vocdoni::Admin::DestroyQuestion do
   end
 
   context "when the election has started" do
-    let(:election) { create :election, :started }
+    let(:election) { create :vocdoni_election, :started }
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:invalid)

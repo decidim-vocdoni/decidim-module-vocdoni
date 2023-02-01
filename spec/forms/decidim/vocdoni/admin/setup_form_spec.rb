@@ -13,7 +13,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       current_step: "create_election"
     }
   end
-  let(:election) { create :election, :ready_for_setup }
+  let(:election) { create :vocdoni_election, :ready_for_setup }
   let(:component) { election.component }
   let(:attributes) { {} }
 
@@ -30,7 +30,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   end
 
   context "when the election is not ready for the setup" do
-    let(:election) { create :election }
+    let(:election) { create :vocdoni_election }
 
     it { is_expected.to be_invalid }
 
@@ -45,8 +45,8 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   end
 
   context "when there are no answers created" do
-    let(:election) { create :election, :published }
-    let!(:question) { create :question, election: election, weight: 1 }
+    let(:election) { create :vocdoni_election, :published }
+    let!(:question) { create :vocdoni_question, election: election, weight: 1 }
 
     it { is_expected.to be_invalid }
 

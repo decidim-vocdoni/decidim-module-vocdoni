@@ -9,7 +9,7 @@ module Decidim::Vocdoni::Admin
     let!(:user) { create(:user, :admin, :confirmed, organization: participatory_process.organization) }
     let!(:participatory_process) { election.component.participatory_space }
     let(:step) { participatory_process.steps.first }
-    let!(:election) { create(:election) }
+    let!(:election) { create(:vocdoni_election) }
 
     it "publishes the election" do
       expect { subject.call }.to change(election, :published?).from(false).to(true)

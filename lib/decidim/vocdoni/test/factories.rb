@@ -14,7 +14,7 @@ FactoryBot.define do
     participatory_space { create(:participatory_process, :with_steps) }
   end
 
-  factory :election, class: "Decidim::Vocdoni::Election" do
+  factory :vocdoni_election, class: "Decidim::Vocdoni::Election" do
     transient do
       organization { build(:organization) }
     end
@@ -53,9 +53,9 @@ FactoryBot.define do
 
     trait :complete do
       after(:build) do |election, _evaluator|
-        election.questions << build(:question, :yes_no, election: election, weight: 1)
-        election.questions << build(:question, :candidates, election: election, weight: 3)
-        election.questions << build(:question, :projects, election: election, weight: 2)
+        election.questions << build(:vocdoni_question, :yes_no, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :candidates, election: election, weight: 3)
+        election.questions << build(:vocdoni_question, :projects, election: election, weight: 2)
       end
     end
 
@@ -82,12 +82,12 @@ FactoryBot.define do
     end
   end
 
-  factory :question, class: "Decidim::Vocdoni::Question" do
+  factory :vocdoni_question, class: "Decidim::Vocdoni::Question" do
     transient do
       answers { 3 }
     end
 
-    election
+    association :election, factory: :vocdoni_election
     title { generate_localized_title }
     description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }
@@ -95,7 +95,7 @@ FactoryBot.define do
     trait :complete do
       after(:build) do |question, evaluator|
         overrides = { question: question }
-        question.answers = build_list(:election_answer, evaluator.answers, overrides)
+        question.answers = build_list(:vocdoni_election_answer, evaluator.answers, overrides)
       end
     end
 
@@ -114,8 +114,8 @@ FactoryBot.define do
     end
   end
 
-  factory :election_answer, class: "Decidim::Vocdoni::Answer" do
-    question
+  factory :vocdoni_election_answer, class: "Decidim::Vocdoni::Answer" do
+    association :question, factory: :vocdoni_question
     title { generate_localized_title }
     description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }

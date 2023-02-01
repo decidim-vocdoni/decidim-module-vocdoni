@@ -16,7 +16,7 @@ en:
   decidim:
     components:
       vocdoni:
-        name: Vocdoni
+        name: Elections (Vocdoni)
         settings:
           global:
             announcement: Announcement
@@ -143,6 +143,27 @@ en:
             title: Vote period
           vote_ended:
             title: Vote period ended
+          ready:
+            title: Ready
+        questions:
+          create:
+            election_started: The election has already started
+            invalid: There was a problem creating this question
+            success: Question successfully created
+          destroy:
+            invalid: There was a problem deleting this question
+            success: Question successfully deleted
+          edit:
+            title: Edit question
+            update: Update question
+          index:
+            title: Questions
+          new:
+            create: Create question
+            title: New question
+          update:
+            invalid: There was a problem updating this question
+            success: Question successfully updated
         wallet:
           create:
             invalid: There was a problem creating the wallet
