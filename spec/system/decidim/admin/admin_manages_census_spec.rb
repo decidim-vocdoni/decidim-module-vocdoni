@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Admin manages census", :slow, type: :system do
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create :vocdoni_component }
-  let(:election) { create :election, :upcoming, :published, :complete, component: current_component, title: { en: "English title" } }
+  let(:election) { create :vocdoni_election, :upcoming, :published, :complete, component: current_component, title: { en: "English title" } }
 
   include_context "when managing a component as an admin"
 
