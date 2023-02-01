@@ -96,8 +96,6 @@ en:
             empty: There are no census data. Use the form below to import it using a CSV file.
             ready_to_setup: The census data is uploaded, the credentials generated, and its ready to setup.
             title: Current census data
-=======
->>>>>>> main
         elections:
           create:
             invalid: There was a problem creating this election
