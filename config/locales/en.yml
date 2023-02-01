@@ -202,6 +202,21 @@ en:
           cast: Cast ballot to finish your vote
           description: Here, you have the options to cast your ballot so that it's properly counted or, alternatively, you can audit that your ballot was correctly encrypted. For security reasons, auditing your ballot will spoil it. That means, to cast your vote, you will need to restart the voting process.
           header: 'Ballot is encrypted: cast it or audit it'
+        login:
+          check_status: Check status
+          description: To vote, we'll need to check that you're on the census
+          form_title: Enter your data
+          title: Verify your identity
+        login_fields:
+          born_at: Date of birth
+          day: Day
+          day_placeholder: DD
+          email: Email
+          email_placeholder: user@example.org
+          month: Month
+          month_placeholder: MM
+          year: Year
+          year_placeholder: YYYY
         confirm:
           answer: Answer
           answer_number: answer %{number}
@@ -217,6 +232,7 @@ en:
           ballot_decision: Cast or audit your vote
           confirm: Confirm your vote
           encrypting: Encrypting the vote
+          login: Identification
         modal:
           close: Close
         new:

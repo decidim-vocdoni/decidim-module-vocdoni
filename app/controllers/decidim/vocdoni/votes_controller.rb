@@ -16,6 +16,8 @@ module Decidim
 
       def new
         return unless vote_allowed?
+
+        @form = form(LoginForm).instance
       end
 
       def show
