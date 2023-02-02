@@ -151,7 +151,6 @@ export default class SetupElection {
       census
     });
 
-    // TODO: add multiple questions support
     electionMetadata.questions.forEach((question) => {
       election.addQuestion(
         transformLocales(question.title.translations, defaultLocale),
