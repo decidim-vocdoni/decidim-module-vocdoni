@@ -11,6 +11,7 @@ import { Wallet } from "@ethersproject/wallet";
  * @property {array} options.census An array with all the public keys of the census participants
  * @property {string} options.graphqlApiUrl The URL for the GraphQL API where to extract the Election metadata
  * @property {number|string} options.componentId The ID of the Vocdoni Component in Decidim
+ * @property {number|string} options.electionId The ID of the Vocdoni Election in Decidim
  * @property {string} options.environment The name of the Vocdoni environment that we'll use. Possible values STG or DEV.
  * @param {function} onSuccess A callback function to be run when the Election is successfully sent to the API
  * @param {function} onFailure A callback function to be run when the Election sent to the API has a failure
@@ -24,6 +25,7 @@ export default class SetupElection {
     this.census = options.census;
     this.graphqlApiUrl = options.graphqlApiUrl;
     this.componentId = options.componentId;
+    this.electionId = options.electionId;
     this.environment = options.environment;
     this.onSuccess = onSuccess;
     this.onFailure = onFailure;
@@ -133,7 +135,7 @@ export default class SetupElection {
 
     const census = this.census;
     let electionMetadata = await this._getElectionMetadata();
-    electionMetadata = electionMetadata.data.component.elections.nodes[0];
+    electionMetadata = electionMetadata.data.component.election;
     let header = electionMetadata.attachments[0].url;
     if (!header.startsWith("http")) {
       header = `${window.location.origin}${header}`
@@ -173,14 +175,13 @@ export default class SetupElection {
    */
   async _getElectionMetadata() {
     const query = `
-      query getElectionMetadata($componentId: ID!) {
+      query getElectionMetadata($componentId: ID!, $electionId: ID!) {
         component(id: $componentId) {
           id
           name { translations { text locale } }
           ... on VocdoniElections {
             name { translations { text locale } }
-            elections {
-              nodes {
+            election(id: $electionId) {
                 status
                 id
                 title { translations { text locale } }
@@ -198,12 +199,12 @@ export default class SetupElection {
                   }
                 }
               }
-            }
           }
         }
       }
     `
     const componentId = Number(this.componentId);
+    const electionId = Number(this.electionId);
 
     return new Promise((resolve) => {
       fetch(this.graphqlApiUrl, {
@@ -214,7 +215,10 @@ export default class SetupElection {
         },
         body: JSON.stringify({
           query,
-          variables: { componentId }
+          variables: {
+            componentId,
+            electionId
+          }
         })
       }).
         then((response) => response.json()).

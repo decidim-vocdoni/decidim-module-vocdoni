@@ -67,7 +67,8 @@ const setupElectionStep = async () => {
       census: census,
       graphqlApiUrl: `${window.location.origin}/api`,
       componentId: window.location.pathname.split("/")[5],
-      environment: EnvOptions.DEV,
+      electionId: window.location.pathname.split("/")[8],
+      environment: EnvOptions.DEV
     }, onSuccess, onFailure);
   });
 }
