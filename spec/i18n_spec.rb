@@ -15,8 +15,7 @@ RSpec.describe I18n do
 
   it 'does not have unused keys' do
     expect(unused_keys).to be_empty,
-                           "#{unused_keys.leaves.count} unused i18n keys, run `i18n-tasks unused' to show them.\n" \
-                           "The unused keys are: #{unused_keys.to_hash}"
+                           "#{unused_keys.leaves.count} unused i18n keys, run `i18n-tasks unused' to show them"
   end
 
   it 'files are normalized' do
