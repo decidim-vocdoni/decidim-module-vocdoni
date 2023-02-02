@@ -118,7 +118,7 @@ module Decidim
       end
 
       describe "voters" do
-        let!(:election3) { create(:election, :complete) }
+        let!(:election3) { create(:vocdoni_election, :complete) }
         let(:query) { "{ voters { wallet_address } }" }
 
         it "returns the election voters" do
