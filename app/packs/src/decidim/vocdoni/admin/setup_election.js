@@ -2,7 +2,7 @@ import { VocdoniSDKClient, Election } from "@vocdoni/sdk";
 import { Wallet } from "@ethersproject/wallet";
 
 /*
- * Creates an Election in the Vocdoni API 
+ * Creates an Election in the Vocdoni API
  * Instantiates the Vocdoni SDK client using the Wallet's private key given as parameter.
  * Based on the TypeScript example provided in the GitHub repository.
  *
@@ -81,7 +81,7 @@ export default class SetupElection {
   async _createElection() {
 
     const election = await this._initializeElection();
-    let result;
+    let result = null;
 
     try {
       const electionId = await this.client.createElection(election);
@@ -115,15 +115,18 @@ export default class SetupElection {
      *
      * @param {array} array An array with the following format:
      *    [{"text": "Nom", "locale": "ca"}, {"text": "Name","locale": "en"}]
-     * @param {string} defaultLocale A string with the value of the default locale (for instance "en")
-     *    Required by Vocdoni
      *
      * @returns {object} An object with the following format:
      *    {ca: "Nom", default: "Name"}
      */
-    const transformLocales = (array, defaultLocale) => {
+    const transformLocales = (array) => {
       return array.reduce((obj, elem) => {
-        obj[defaultLocale == elem.locale ? "default" : elem.locale] = elem.text;
+        let localeName = elem.locale;
+        if (elem.locale === defaultLocale) {
+          localeName = "default";
+        }
+
+        obj[localeName] = elem.text;
         return obj;
       }, {});
     }
@@ -131,16 +134,19 @@ export default class SetupElection {
     const census = this.census;
     let electionMetadata = await this._getElectionMetadata();
     electionMetadata = electionMetadata.data.component.elections.nodes[0];
-    const header = electionMetadata.attachments[0].url;
+    let header = electionMetadata.attachments[0].url;
+    if (!header.startsWith("http")) {
+      header = `${window.location.origin}${header}`
+    }
 
     const election = Election.from({
       title: transformLocales(electionMetadata.title.translations, defaultLocale),
       description: transformLocales(electionMetadata.description.translations, defaultLocale),
-      header: header.startsWith("http") ? header : `${window.location.origin}${header}`,
+      header: header,
       streamUri: electionMetadata.streamUri,
       startDate: Date.parse(electionMetadata.startTime),
       endDate: Date.parse(electionMetadata.endTime),
-      census,
+      census
     });
 
     // TODO: add multiple questions support
@@ -151,7 +157,7 @@ export default class SetupElection {
         question.answers.map((answer) => {
           return {
             title: transformLocales(answer.title.translations, defaultLocale),
-            value: parseInt(answer.id)
+            value: Number(answer.id)
           }
         })
       );
@@ -188,7 +194,7 @@ export default class SetupElection {
                   description { translations { text locale } }
                   answers {
                     id
-                    title { translations { text locale } } 
+                    title { translations { text locale } }
                   }
                 }
               }
@@ -197,22 +203,22 @@ export default class SetupElection {
         }
       }
     `
-    const componentId = parseInt(this.componentId);
+    const componentId = Number(this.componentId);
 
     return new Promise((resolve) => {
       fetch(this.graphqlApiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
+          "Accept": "application/json"
         },
         body: JSON.stringify({
           query,
-          variables: { componentId },
+          variables: { componentId }
         })
-      })
-        .then(r => r.json())
-        .then(data => resolve(data));
+      }).
+        then((response) => response.json()).
+        then((data) => resolve(data));
     });
   }
 }
