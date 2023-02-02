@@ -10,7 +10,7 @@ describe Decidim::Vocdoni::Admin::SetupElection do
   let(:participatory_process) { create :participatory_process, organization: organization }
   let(:current_component) { create :component, participatory_space: participatory_process, manifest_name: "elections" }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
-  let!(:election) { create :election, :complete }
+  let!(:election) { create :vocdoni_election, :complete }
   let(:vocdoni_election_id) { "12345" }
   let(:form) do
     double(
