@@ -10,6 +10,7 @@ import { Wallet } from "@ethersproject/wallet";
  * @property {string} options.walletPrivateKey The private key from the wallet that will create the Election
  * @property {string} options.graphqlApiUrl The URL for the GraphQL API where to extract the Election metadata
  * @property {number|string} options.componentId The ID of the Vocdoni Component in Decidim
+ * @property {number|string} options.electionId The ID of the Vocdoni Election in Decidim
  * @property {string} options.environment The name of the Vocdoni environment that we'll use. Possible values STG or DEV.
  * @param {function} onSuccess A callback function to be run when the Election is successfully sent to the API
  * @param {function} onFailure A callback function to be run when the Election sent to the API has a failure
@@ -22,6 +23,7 @@ export default class SetupElection {
     this.walletPrivateKey = options.walletPrivateKey;
     this.graphqlApiUrl = options.graphqlApiUrl;
     this.componentId = options.componentId;
+    this.electionId = options.electionId;
     this.environment = options.environment;
     this.onSuccess = onSuccess;
     this.onFailure = onFailure;
@@ -77,7 +79,7 @@ export default class SetupElection {
   async _createElection() {
 
     const election = await this._initializeElection();
-    let result;
+    let result = null;
 
     try {
       const electionId = await this.client.createElection(election);
@@ -110,22 +112,28 @@ export default class SetupElection {
      *
      * @param {array} array An array with the following format:
      *    [{"text": "Nom", "locale": "ca"}, {"text": "Name","locale": "en"}]
-     * @param {string} defaultLocale A string with the value of the default locale (for instance "en")
-     *    Required by Vocdoni
      *
      * @returns {object} An object with the following format:
      *    {ca: "Nom", default: "Name"}
      */
-    const transformLocales = (array, defaultLocale) => {
+    const transformLocales = (array) => {
       return array.reduce((obj, elem) => {
-        obj[defaultLocale == elem.locale ? "default" : elem.locale] = elem.text;
+        let localeName = elem.locale;
+        if (elem.locale === defaultLocale) {
+          localeName = "default";
+        }
+
+        obj[localeName] = elem.text;
         return obj;
       }, {});
     }
 
     let electionMetadata = await this._getElectionMetadata();
-    electionMetadata = electionMetadata.data.component.elections.nodes[0];
-    const header = electionMetadata.attachments[0].url;
+    electionMetadata = electionMetadata.data.component.election;
+    let header = electionMetadata.attachments[0].url;
+    if (!header.startsWith("http")) {
+      header = `${window.location.origin}${header}`
+    }
 
     const walletsAddresses = electionMetadata.voters.map((voter) => voter.wallet_address);
     const census = this._initializeCensus(walletsAddresses);
@@ -133,14 +141,13 @@ export default class SetupElection {
     const election = Election.from({
       title: transformLocales(electionMetadata.title.translations, defaultLocale),
       description: transformLocales(electionMetadata.description.translations, defaultLocale),
-      header: header.startsWith("http") ? header : `${window.location.origin}${header}`,
+      header: header,
       streamUri: electionMetadata.streamUri,
       startDate: Date.parse(electionMetadata.startTime),
       endDate: Date.parse(electionMetadata.endTime),
-      census,
+      census
     });
 
-    // TODO: add multiple questions support
     electionMetadata.questions.forEach((question) => {
       election.addQuestion(
         transformLocales(question.title.translations, defaultLocale),
@@ -148,7 +155,7 @@ export default class SetupElection {
         question.answers.map((answer) => {
           return {
             title: transformLocales(answer.title.translations, defaultLocale),
-            value: parseInt(answer.id)
+            value: Number(answer.id)
           }
         })
       );
@@ -164,14 +171,13 @@ export default class SetupElection {
    */
   async _getElectionMetadata() {
     const query = `
-      query getElectionMetadata($componentId: ID!) {
+      query getElectionMetadata($componentId: ID!, $electionId: ID!) {
         component(id: $componentId) {
           id
           name { translations { text locale } }
           ... on VocdoniElections {
             name { translations { text locale } }
-            elections {
-              nodes {
+            election(id: $electionId) {
                 status
                 id
                 title { translations { text locale } }
@@ -192,27 +198,30 @@ export default class SetupElection {
                   }
                 }
               }
-            }
           }
         }
       }
     `
-    const componentId = parseInt(this.componentId);
+    const componentId = Number(this.componentId);
+    const electionId = Number(this.electionId);
 
     return new Promise((resolve) => {
       fetch(this.graphqlApiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
+          "Accept": "application/json"
         },
         body: JSON.stringify({
           query,
-          variables: { componentId },
+          variables: {
+            componentId,
+            electionId
+          }
         })
-      })
-        .then(r => r.json())
-        .then(data => resolve(data));
+      }).
+        then((response) => response.json()).
+        then((data) => resolve(data));
     });
   }
 
