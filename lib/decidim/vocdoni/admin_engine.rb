@@ -14,9 +14,10 @@ module Decidim
           member do
             put :publish
             put :unpublish
-            # resource :questions do
-            #   resources :answers
-            # end
+          end
+          resources :steps, only: [:index]
+          resources :questions do
+            resources :answers
           end
         end
         root to: "elections#index"

@@ -12,16 +12,14 @@ module Decidim::Vocdoni
 
     enum status: [:created, :vote, :vote_ended, :tally_started, :tally_ended, :results_published].index_with(&:to_s)
 
+    component_manifest_name "vocdoni"
+
+    has_many :questions, foreign_key: "decidim_vocdoni_election_id", class_name: "Decidim::Vocdoni::Question", inverse_of: :election, dependent: :destroy
+
     translatable_fields :title, :description
 
     def self.log_presenter_class_for(_log)
       Decidim::Vocdoni::AdminLog::ElectionPresenter
-    end
-
-    component_manifest_name "vocdoni"
-
-    def status
-      "ready"
     end
 
     # Public: Checks if the election started
@@ -50,6 +48,13 @@ module Decidim::Vocdoni
     # Returns a boolean.
     def blocked?
       blocked_at.present?
+    end
+
+    # Public: Checks if the number of answers are minimum 2 for each question
+    #
+    # Returns a boolean.
+    def minimum_answers?
+      questions.any? && questions.all? { |question| question.answers.size > 1 }
     end
 
     # Public: Gets the voting period status of the election

@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title"><%= t(".title") %></h2>
+  </div>
+
+  <div class="card-section">
+    <ul class="no-bullet-indented">
+      <% form.messages.each do |key, value| %>
+        <% if form.errors.include?(key) %>
+          <li><%= icon "x", class: "text-alert", role: "img", "aria-hidden": true %>&nbsp;<%= form.errors.messages[key][0].html_safe %></li>
+        <% else %>
+          <li><%= icon "check", class: "text-success", role: "img", "aria-hidden": true %>&nbsp;<%= value.html_safe %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>

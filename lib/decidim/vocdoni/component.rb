@@ -7,6 +7,7 @@ Decidim.register_component(:vocdoni) do |component|
   component.admin_engine = Decidim::Vocdoni::AdminEngine
   component.icon = "media/images/decidim_vocdoni.svg"
   component.permissions_class_name = "Decidim::Vocdoni::Permissions"
+  component.query_type = "Decidim::Vocdoni::VocdoniElectionsType"
 
   # component.on(:before_destroy) do |instance|
   #   # Code executed before removing the component

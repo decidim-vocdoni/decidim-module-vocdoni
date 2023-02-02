@@ -39,7 +39,11 @@
               <td class="table-list__actions">
                 <%= icon_link_to "eye", resource_locator(election).path, t("actions.preview", scope: "decidim.vocdoni"), class: "action-icon--preview", target: :blank %>
 
-                <%# icon_link_to "list", election_questions_path(election), t("actions.manage_questions", scope: "decidim.vocdoni"), class: "action-icon--manage-questions" %>
+                <%= icon_link_to "list", election_questions_path(election), t("actions.manage_questions", scope: "decidim.vocdoni"), class: "action-icon--manage-questions" %>
+
+                <% if allowed_to? :read, :steps, election: election %>
+                  <%= icon_link_to "project", election_steps_path(election), t("actions.manage_steps", scope: "decidim.elections"), class: "action-icon--manage-steps" %>
+                <% end %>
 
                 <% if allowed_to? :update, :election, election: election %>
                   <%= icon_link_to "pencil", edit_election_path(election), t("actions.edit", scope: "decidim.vocdoni"), class: "action-icon--edit" %>
