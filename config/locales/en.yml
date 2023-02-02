@@ -108,10 +108,6 @@ en:
             ready_to_setup: The census data is uploaded, the credentials generated,
               and its ready to setup.
             title: Current census data
-        census_wallet:
-          create:
-            error: Error
-            success: Success
         elections:
           create:
             invalid: There was a problem creating this election
