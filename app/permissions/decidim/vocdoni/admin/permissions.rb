@@ -49,6 +49,10 @@ module Decidim
         def allow_if_not_blocked
           toggle_allow(election && !election.blocked?)
         end
+
+        def current_vocdoni_wallet
+          @current_vocdoni_wallet ||= Decidim::Vocdoni::Wallet.find_by(decidim_organization_id: user.organization.id)
+        end
       end
     end
   end

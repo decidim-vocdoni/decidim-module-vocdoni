@@ -31,14 +31,11 @@ module Decidim
         private
 
         def redirect_location
-          if session[:redirect_back]
-            location = EngineRouter.admin_proxy(current_component).election_steps_path(session[:redirect_back])
-            session[:redirect_back] = nil
+          if location = session.delete(:redirect_back)
+            EngineRouter.admin_proxy(current_component).election_steps_path(location)
           else
-            location = EngineRouter.admin_proxy(current_component).root_path
+            EngineRouter.admin_proxy(current_component).root_path
           end
-
-          location
         end
       end
     end
