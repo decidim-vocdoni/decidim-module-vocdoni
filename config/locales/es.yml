@@ -131,6 +131,19 @@ es:
           update:
             invalid: There was a problem updating this question
             success: Question successfully updated
+        wallet:
+          create:
+            invalid: There was a problem creating the wallet
+            pending: It's necessary to create a wallet for this organization
+            success: Wallet successfully created
+        wallets:
+          form:
+            help:
+              p1: As this is the first time that this organization is creating an Election with Vocdoni, it's necessary to create a Wallet for using the Vocdoni API. This is only necessary to do the first time.
+              p2: You don't need to do anything, just click on the "Create" button.
+          new:
+            create: Create
+            title: New organization wallet
       admin_log:
         election:
           create: "%{user_name} created the election %{resource_name} of %{space_name}"
@@ -143,6 +156,8 @@ es:
           start_vote: "%{user_name} started the voting period for the election %{resource_name} of %{space_name} on the Vocdoni API"
           unpublish: "%{user_name} unpublished the %{resource_name} of %{space_name} election"
           update: "%{user_name} updated the election %{resource_name} of %{space_name}"
+        wallet:
+          create: "%{user_name} created the Organization wallet for the Vocdoni API"
       election_m:
         badge_name:
           finished: Finished
