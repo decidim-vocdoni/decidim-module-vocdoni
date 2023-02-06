@@ -3,13 +3,18 @@
 require "decidim/core/test/factories"
 
 FactoryBot.define do
+  factory :wallet, class: "Decidim::Vocdoni::Wallet" do
+    organization
+    private_key { Faker::Blockchain::Ethereum.address }
+  end
+
   factory :vocdoni_component, parent: :component do
     name { Decidim::Components::Namer.new(participatory_space.organization.available_locales, :vocdoni).i18n_name }
     manifest_name { :vocdoni }
     participatory_space { create(:participatory_process, :with_steps) }
   end
 
-  factory :election, class: "Decidim::Vocdoni::Election" do
+  factory :vocdoni_election, class: "Decidim::Vocdoni::Election" do
     transient do
       organization { build(:organization) }
     end
@@ -52,9 +57,19 @@ FactoryBot.define do
 
     trait :complete do
       after(:build) do |election, _evaluator|
-        election.questions << build(:question, :yes_no, election: election, weight: 1)
-        election.questions << build(:question, :candidates, election: election, weight: 3)
-        election.questions << build(:question, :projects, election: election, weight: 2)
+        election.questions << build(:vocdoni_question, :yes_no, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :candidates, election: election, weight: 3)
+        election.questions << build(:vocdoni_question, :projects, election: election, weight: 2)
+      end
+    end
+
+    trait :with_census do
+      after(:build) do |election, _evaluator|
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
       end
     end
 
@@ -62,6 +77,7 @@ FactoryBot.define do
       upcoming
       published
       complete
+      with_census
     end
 
     trait :with_photos do
@@ -81,19 +97,20 @@ FactoryBot.define do
     end
   end
 
-  factory :question, class: "Decidim::Vocdoni::Question" do
+  factory :vocdoni_question, class: "Decidim::Vocdoni::Question" do
     transient do
       answers { 3 }
     end
 
-    election
+    association :election, factory: :vocdoni_election
     title { generate_localized_title }
+    description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }
 
     trait :complete do
       after(:build) do |question, evaluator|
         overrides = { question: question }
-        question.answers = build_list(:election_answer, evaluator.answers, overrides)
+        question.answers = build_list(:vocdoni_election_answer, evaluator.answers, overrides)
       end
     end
 
@@ -112,8 +129,8 @@ FactoryBot.define do
     end
   end
 
-  factory :election_answer, class: "Decidim::Vocdoni::Answer" do
-    question
+  factory :vocdoni_election_answer, class: "Decidim::Vocdoni::Answer" do
+    association :question, factory: :vocdoni_question
     title { generate_localized_title }
     description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }
@@ -132,6 +149,16 @@ FactoryBot.define do
           )
         end
       end
+    end
+  end
+
+  factory :vocdoni_voter, class: "Decidim::Vocdoni::Voter" do
+    email { generate(:email) }
+    born_at { Faker::Date.between(from: 110.years.ago, to: 16.years.ago) }
+    association :election, factory: :vocdoni_election
+
+    trait :with_credentials do
+      wallet_address { Faker::Blockchain::Ethereum.address }
     end
   end
 end

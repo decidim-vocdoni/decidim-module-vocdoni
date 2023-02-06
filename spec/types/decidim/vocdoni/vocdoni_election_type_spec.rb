@@ -14,7 +14,7 @@ module Decidim
     describe VocdoniElectionType, type: :graphql do
       include_context "with a graphql class type"
 
-      let(:model) { create(:election, :published) }
+      let(:model) { create(:vocdoni_election, :published) }
 
       it_behaves_like "attachable interface"
 
@@ -82,7 +82,7 @@ module Decidim
         let(:query) { "{ blocked }" }
 
         context "when the election's parameters are blocked" do
-          let!(:model) { create(:election, :finished) }
+          let!(:model) { create(:vocdoni_election, :finished) }
 
           it "returns true" do
             expect(response["blocked"]).to be true
@@ -90,7 +90,7 @@ module Decidim
         end
 
         context "when the election's parameters are not blocked" do
-          let(:model) { create(:election) }
+          let(:model) { create(:vocdoni_election) }
 
           it "returns false" do
             expect(response["blocked"]).to be_falsey
@@ -107,13 +107,24 @@ module Decidim
       end
 
       describe "questions" do
-        let!(:election2) { create(:election, :complete) }
+        let!(:election2) { create(:vocdoni_election, :complete) }
         let(:query) { "{ questions { id } }" }
 
         it "returns the election questions" do
           ids = response["questions"].map { |question| question["id"] }
           expect(ids).to include(*model.questions.map(&:id).map(&:to_s))
           expect(ids).not_to include(*election2.questions.map(&:id).map(&:to_s))
+        end
+      end
+
+      describe "voters" do
+        let!(:election3) { create(:vocdoni_election, :complete) }
+        let(:query) { "{ voters { wallet_address } }" }
+
+        it "returns the election voters" do
+          wallets = response["voters"].map { |voter| voter["wallet_address"] }
+          expect(wallets).to include(*model.voters.map(&:wallet_address).map(&:to_s))
+          expect(wallets).not_to include(*election3.voters.map(&:wallet_address).map(&:to_s))
         end
       end
     end

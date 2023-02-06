@@ -10,7 +10,7 @@ secure, and resistant to attack and censorship through the use of blockchain tec
 together with decentralized technologies and cryptographic mechanisms, such as zero-knowledge proofs.
 
 This will allow administrators to set-up elections in the Vocdoni blockchain (aka Vochain),
-using the Vocdoni SDK.
+using the [Vocdoni SDK][vocdoni-sdk-url].
 
 ## Usage
 
@@ -29,7 +29,20 @@ gem "decidim-vocdoni", github: "decidim-vocdoni/decidim-module-vocdoni"
 And then execute:
 
 ```bash
-bundle
+bundle install
+bin/rails decidim_vocdoni:install:migrations db:migrate
+```
+
+For some of the Elections status changes, you'll need to add a task to the schedule tasks
+configuration of your hosting provider.
+
+In a GNU/Linux server, can configure it with `crontab -e`, for instance if you've created
+your Decidim application on /home/user/decidim_application and you want that the Elections
+status are checked every 15 minutes, you can do it with this configuration:
+
+```crontab
+# Change Elections status on decidim-vocdoni
+0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status
 ```
 
 ## Contributing
@@ -41,3 +54,4 @@ See [Decidim](https://github.com/decidim/decidim).
 This engine is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 
 [vocdoni-app-url]: https://vocdoni.app/
+[vocdoni-sdk-url]: https://vocdoni.io/

@@ -8,12 +8,13 @@ describe Decidim::Vocdoni::Admin::CreateQuestion do
   let(:organization) { current_component.organization }
   let(:participatory_process) { current_component.participatory_space }
   let(:current_component) { election.component }
-  let(:election) { create :election }
+  let(:election) { create :vocdoni_election }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
   let(:form) do
     double(
       invalid?: invalid,
       title: { en: "title" },
+      description: { en: "description" },
       weight: 10,
       current_user: user,
       current_component: current_component,
@@ -32,6 +33,7 @@ describe Decidim::Vocdoni::Admin::CreateQuestion do
   it "stores the given data" do
     subject.call
     expect(translated(question.title)).to eq "title"
+    expect(translated(question.description)).to eq "description"
     expect(question.weight).to eq(10)
   end
 
@@ -41,7 +43,7 @@ describe Decidim::Vocdoni::Admin::CreateQuestion do
       .with(
         Decidim::Vocdoni::Question,
         user,
-        hash_including(:title, :weight),
+        hash_including(:title, :description, :weight),
         visibility: "all"
       )
       .and_call_original
@@ -61,7 +63,7 @@ describe Decidim::Vocdoni::Admin::CreateQuestion do
   end
 
   context "when the election has started" do
-    let(:election) { create :election, :started }
+    let(:election) { create :vocdoni_election, :started }
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:election_started)

@@ -4,6 +4,14 @@
   </div>
 
   <div class="card-section">
+    <%= f.hidden_field :wallet_private_key, value: @current_vocdoni_wallet.private_key %>
+    <%= f.hidden_field :vocdoni_election_id %>
+
+    <div class="js-election-create-error-message callout alert hide">
+      <h3 class="h5"><%= t("failed.title", scope: "decidim.vocdoni.admin.steps.create_election") %></h2>
+      <p><%= t("failed.message", scope: "decidim.vocdoni.admin.steps.create_election") %></p>
+    </div>
+
     <ul class="no-bullet-indented">
       <% form.messages.each do |key, value| %>
         <% if form.errors.include?(key) %>

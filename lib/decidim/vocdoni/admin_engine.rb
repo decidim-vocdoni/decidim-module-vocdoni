@@ -10,14 +10,18 @@ module Decidim
       paths["lib/tasks"] = nil
 
       routes do
+        resources :wallets, only: [:new, :create]
         resources :elections do
           member do
             put :publish
             put :unpublish
           end
-          resources :steps, only: [:index]
+          resources :steps, only: [:index, :update]
           resources :questions do
             resources :answers
+          end
+          resources :census, only: [:index, :create] do
+            delete :destroy_all, on: :collection, as: :destroy_all
           end
         end
         root to: "elections#index"

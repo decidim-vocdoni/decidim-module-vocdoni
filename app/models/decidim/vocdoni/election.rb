@@ -15,6 +15,7 @@ module Decidim::Vocdoni
     component_manifest_name "vocdoni"
 
     has_many :questions, foreign_key: "decidim_vocdoni_election_id", class_name: "Decidim::Vocdoni::Question", inverse_of: :election, dependent: :destroy
+    has_many :voters, foreign_key: "decidim_vocdoni_election_id", class_name: "Decidim::Vocdoni::Voter", inverse_of: :election, dependent: :destroy
 
     translatable_fields :title, :description
 
@@ -68,6 +69,13 @@ module Decidim::Vocdoni
       else
         :upcoming
       end
+    end
+
+    # Public: the Vocdoni's Explorer Vote platform URL
+    #
+    # Returns a string with the full URL
+    def explorer_vote_url
+      "https://dev.explorer.vote/processes/show/#/#{vocdoni_election_id}"
     end
   end
 end

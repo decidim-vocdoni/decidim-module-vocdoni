@@ -5,8 +5,8 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::UpdateQuestion do
   subject { described_class.new(form, question) }
 
-  let(:election) { create :election }
-  let(:question) { create :question, election: election }
+  let(:election) { create :vocdoni_election }
+  let(:question) { create :vocdoni_question, election: election }
   let(:organization) { election.component.organization }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
   let(:form) do
@@ -14,6 +14,7 @@ describe Decidim::Vocdoni::Admin::UpdateQuestion do
       invalid?: invalid,
       current_user: user,
       title: { en: "title" },
+      description: { en: "description" },
       weight: 10,
       election: election
     )
@@ -23,6 +24,7 @@ describe Decidim::Vocdoni::Admin::UpdateQuestion do
   it "updates the question" do
     subject.call
     expect(translated(question.title)).to eq "title"
+    expect(translated(question.description)).to eq "description"
     expect(question.weight).to eq(10)
   end
 
@@ -47,7 +49,7 @@ describe Decidim::Vocdoni::Admin::UpdateQuestion do
   end
 
   context "when the election has started" do
-    let(:election) { create :election, :started }
+    let(:election) { create :vocdoni_election, :started }
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:invalid)

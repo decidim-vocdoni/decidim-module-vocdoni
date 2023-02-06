@@ -13,7 +13,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       current_step: "create_election"
     }
   end
-  let(:election) { create :election, :ready_for_setup }
+  let(:election) { create :vocdoni_election, :ready_for_setup }
   let(:component) { election.component }
   let(:attributes) { {} }
 
@@ -24,13 +24,14 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       hash_including({
                        minimum_answers: "Each question has <strong>at least 2 answers</strong>.",
                        minimum_questions: "The election has <strong>at least 1 question</strong>.",
-                       published: "The election is <strong>published</strong>."
+                       published: "The election is <strong>published</strong>.",
+                       census_ready: "The census is <strong>ready</strong>."
                      })
     )
   end
 
   context "when the election is not ready for the setup" do
-    let(:election) { create :election }
+    let(:election) { create :vocdoni_election }
 
     it { is_expected.to be_invalid }
 
@@ -39,22 +40,25 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       expect(subject.errors.messages).to eq({
                                               minimum_questions: ["The election <strong>must have at least one question</strong>."],
                                               minimum_answers: ["Questions must have <strong>at least two answers</strong>."],
-                                              published: ["The election is <strong>not published</strong>."]
+                                              published: ["The election is <strong>not published</strong>."],
+                                              census_ready: ["The census is <strong>not ready</strong>."]
                                             })
     end
   end
 
   context "when there are no answers created" do
-    let(:election) { create :election, :published }
-    let!(:question) { create :question, election: election, weight: 1 }
+    let(:election) { create :vocdoni_election, :published }
+    let!(:question) { create :vocdoni_question, election: election, weight: 1 }
 
     it { is_expected.to be_invalid }
 
     it "shows errors" do
       subject.valid?
-      expect(subject.errors.messages).to eq({
-                                              minimum_answers: ["Questions must have <strong>at least two answers</strong>."]
-                                            })
+      expect(subject.errors.messages).to match(
+        hash_including({
+                         minimum_answers: ["Questions must have <strong>at least two answers</strong>."]
+                       })
+      )
     end
   end
 end

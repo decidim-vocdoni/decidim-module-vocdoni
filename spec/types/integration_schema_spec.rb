@@ -7,7 +7,7 @@ describe "Decidim::Api::QueryType" do
   include_context "with a graphql decidim component"
   let(:component_type) { "Vocdoni" }
   let!(:current_component) { create :vocdoni_component, participatory_space: participatory_process }
-  let!(:election) { create(:election, :published, :finished, component: current_component) }
+  let!(:election) { create(:vocdoni_election, :published, :finished, component: current_component) }
 
   let(:election_single_result) do
     {
@@ -40,9 +40,16 @@ describe "Decidim::Api::QueryType" do
           end,
           "id" => q.id.to_s,
           "title" => { "translation" => q.title[locale] },
+          "description" => { "translation" => q.description[locale] },
           "versions" => [],
           "versionsCount" => 0,
           "weight" => q.weight
+        }
+      end,
+
+      "voters" => election.voters.order(:id).map do |v|
+        {
+          "wallet_address" => v.wallet_address
         }
       end,
 
@@ -58,7 +65,7 @@ let(:elections_data) do
   {
     "__typename" => "VocdoniElections",
     "id" => current_component.id.to_s,
-    "name" => { "translation" => "Vocdoni" },
+    "name" => { "translation" => "Elections (Vocdoni)" },
     "elections" => {
       "edges" => [
         {
@@ -109,11 +116,17 @@ describe "valid connection query" do
                   title {
                     translation(locale: "en")
                   }
+                  description {
+                    translation(locale: "en")
+                  }
                   versions {
                     id
                   }
                   versionsCount
                   weight
+                }
+                voters {
+                  wallet_address
                 }
                 startTime
                 title {
@@ -178,11 +191,17 @@ describe "valid query" do
             title {
               translation(locale: "en")
             }
+            description {
+              translation(locale: "en")
+            }
             versions {
               id
             }
             versionsCount
             weight
+          }
+          voters {
+            wallet_address
           }
           startTime
           title {

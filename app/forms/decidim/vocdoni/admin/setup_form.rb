@@ -7,7 +7,7 @@ module Decidim
       class SetupForm < Decidim::Form
         mimic :setup
 
-        attribute :trustee_ids, Array[Integer]
+        attribute :vocdoni_election_id, String
 
         validate do
           validations.each do |message, t_args, valid|
@@ -17,14 +17,13 @@ module Decidim
 
         def current_step; end
 
-        def pending_action; end
-
         def validations
           @validations ||= [
             [:minimum_questions, {}, election.questions.any?],
             [:minimum_answers, {}, election.minimum_answers?],
             [:published, {}, election.published_at.present?],
-            [:component_published, {}, election.component.published?]
+            [:component_published, {}, election.component.published?],
+            [:census_ready, {}, census.ready_to_setup?]
           ].freeze
         end
 
@@ -36,6 +35,10 @@ module Decidim
 
         def election
           @election ||= context[:election]
+        end
+
+        def census
+          @census ||= CsvCensus::Status.new(election)
         end
 
         def main_button?

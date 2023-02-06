@@ -25,6 +25,11 @@ Decidim.register_component(:vocdoni) do |component|
     settings.attribute :announcement, type: :text, translated: true, editor: true
   end
 
+  component.register_stat :elections_count, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
+    elections = Decidim::Vocdoni::FilteredElections.for(components, start_at, end_at)
+    elections.published.count
+  end
+
   component.register_resource(:election) do |resource|
     resource.model_class_name = "Decidim::Vocdoni::Election"
     resource.card = "decidim/vocdoni/election"
@@ -61,15 +66,61 @@ Decidim.register_component(:vocdoni) do |component|
           Decidim::Faker::Localized.paragraph(sentence_count: 3)
         end,
         start_time: 3.weeks.from_now,
-        end_time: 3.weeks.from_now + 4.hours
+        end_time: 3.weeks.from_now + 4.hours,
+        published_at: Faker::Boolean.boolean(true_ratio: 0.5) ? 1.week.ago : nil
       }
 
-      Decidim.traceability.create!(
+      election = Decidim.traceability.create!(
         Decidim::Vocdoni::Election,
         admin_user,
         params,
         visibility: "all"
       )
+
+      Decidim::Attachment.create!(
+        title: Decidim::Faker::Localized.sentence(word_count: 2),
+        description: Decidim::Faker::Localized.sentence(word_count: 5),
+        attached_to: election,
+        content_type: "image/jpeg",
+        file: ActiveStorage::Blob.create_and_upload!(
+          io: File.open(File.join(__dir__, "seeds", "city.jpeg")),
+          filename: "city.jpeg",
+          content_type: "image/jpeg",
+          metadata: nil
+        ) # Keep after attached_to
+      )
+
+      rand(1...4).times do
+        question = Decidim.traceability.create!(
+          Decidim::Vocdoni::Question,
+          admin_user,
+          {
+            election: election,
+            title: Decidim::Faker::Localized.sentence(word_count: 2),
+            description: Decidim::Faker::Localized.wrapped("<p>", "</p>") do
+              Decidim::Faker::Localized.paragraph(sentence_count: 3)
+            end,
+            weight: Faker::Number.number(digits: 1)
+          },
+          visibility: "all"
+        )
+
+        rand(1...5).times do
+          answer = Decidim.traceability.create!(
+            Decidim::Vocdoni::Answer,
+            admin_user,
+            {
+              question: question,
+              title: Decidim::Faker::Localized.sentence(word_count: 2),
+              description: Decidim::Faker::Localized.wrapped("<p>", "</p>") do
+                Decidim::Faker::Localized.paragraph(sentence_count: 3)
+              end,
+              weight: Faker::Number.number(digits: 1)
+            },
+            visibility: "all"
+          )
+        end
+      end
     end
   end
 end

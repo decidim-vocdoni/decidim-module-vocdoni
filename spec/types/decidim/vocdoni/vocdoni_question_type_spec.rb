@@ -9,7 +9,7 @@ module Decidim
     describe VocdoniQuestionType, type: :graphql do
       include_context "with a graphql class type"
 
-      let(:model) { create(:question) }
+      let(:model) { create(:vocdoni_question) }
 
       it_behaves_like "traceable interface" do
         let(:author) { create(:user, :admin, organization: model.component.organization) }
@@ -31,6 +31,14 @@ module Decidim
         end
       end
 
+      describe "description" do
+        let(:query) { '{ description { translation(locale: "en")}}' }
+
+        it "returns all the required fields" do
+          expect(response["description"]["translation"]).to eq(model.description["en"])
+        end
+      end
+
       describe "weight" do
         let(:query) { "{ weight }" }
 
@@ -40,7 +48,7 @@ module Decidim
       end
 
       describe "answers" do
-        let!(:question2) { create(:question, :complete) }
+        let!(:question2) { create(:vocdoni_question, :complete) }
         let(:query) { "{ answers { id } }" }
 
         it "returns the question answers" do

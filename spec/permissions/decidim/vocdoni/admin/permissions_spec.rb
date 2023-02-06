@@ -13,7 +13,7 @@ describe Decidim::Vocdoni::Admin::Permissions do
     }
   end
   let(:elections_component) { create :vocdoni_component }
-  let(:election) { create :election, component: elections_component }
+  let(:election) { create :vocdoni_election, component: elections_component }
   let(:permission_action) { Decidim::PermissionAction.new(**action) }
 
   context "when scope is not admin" do
@@ -58,7 +58,7 @@ describe Decidim::Vocdoni::Admin::Permissions do
   end
 
   describe "election publish" do
-    let(:election) { create :election, component: elections_component }
+    let(:election) { create :vocdoni_election, component: elections_component }
     let(:action) do
       { scope: :admin, action: :publish, subject: :election }
     end
@@ -80,5 +80,19 @@ describe Decidim::Vocdoni::Admin::Permissions do
     end
 
     it { is_expected.to be true }
+  end
+
+  describe "wallet creation" do
+    let(:action) do
+      { scope: :admin, action: :create, subject: :wallet }
+    end
+
+    it { is_expected.to be true }
+
+    context "when there's already a wallet for this organization" do
+      let(:wallet) { create :wallet, organization: elections_component.organization }
+
+      it { is_expected.to be true }
+    end
   end
 end
