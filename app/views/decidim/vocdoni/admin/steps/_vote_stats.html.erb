@@ -1,16 +1,16 @@
-<div class="card" data-vote-status="<%= election.bb_status %>">
+<div class="card">
   <div class="card-divider">
     <h2 class="card-title">
       <%= t(".title") %>
     </h2>
   </div>
   <div class="table-scroll">
-    <% if vote_stats.values.sum == 0 %>
-      <div class="card-section">
-        <p><%= t(".no_vote_statistics_yet") %></p>
-      </div>
-    <% else %>
-    <table class="table-list users_count">
+    <div class="card-section js-no-vote-stats-message">
+      <p><%= t(".no_vote_statistics_yet") %></p>
+    </div>
+    <table class="table-list js-votes-count hide"
+       data-wallet="<%= @current_vocdoni_wallet.private_key %>"
+       data-election-unique-id="<%= @election.vocdoni_election_id %>">
       <thead>
         <tr>
           <th></th>
@@ -21,11 +21,10 @@
       <tbody>
         <tr>
           <td></td>
-          <td><%= vote_stats[:votes] %></td>
-          <td><%= vote_stats[:voters] %></td>
+          <td class="js-vote-stats"></td>
+          <td class="js-voters-stats"></td>
         </tr>
       </tbody>
     </table>
-    <% end %>
   </div>
 </div>

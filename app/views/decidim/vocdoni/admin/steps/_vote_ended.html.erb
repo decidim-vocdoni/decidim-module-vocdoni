@@ -5,14 +5,6 @@
 
   <div class="card-section">
     <p><%= t(".text") %></p>
-
-    <% form.messages.each do |key, value| %>
-      <% if form.errors.include?(key) %>
-        <p><%= form.errors.messages[key][0].html_safe %></p>
-      <% else %>
-        <p><%= value.html_safe %></p>
-      <% end %>
-    <% end %>
   </div>
 </div>
 
