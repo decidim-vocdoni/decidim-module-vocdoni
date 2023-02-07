@@ -2,11 +2,7 @@
 
 require "spec_helper"
 
-<<<<<<< HEAD
 describe "Admin manages election steps", :slow, type: :system do
-=======
-describe "Admin manages election steps", :slow, type: :system, billy: true do
->>>>>>> main
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create :vocdoni_component }
   let!(:wallet) { create :wallet, organization: current_component.organization, private_key: "0x42a1c49e5b72a2fb146b9aa7c4c520eadc7e97dd885ce857141ba7f2e2d58051" }
