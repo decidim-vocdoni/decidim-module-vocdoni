@@ -22,11 +22,13 @@
     <% if @form.main_button? %>
       <div class="button--double form-general-submit">
         <%= f.button type: :submit, class: "button", disabled: @form.invalid? do %>
-          <% if @form.pending_action %>
-            <span class='loading-spinner'></span> <%= t("steps.processing", scope: "decidim.vocdoni.admin") %>
-          <% else %>
+          <span class="hide loading">
+            <span class="loading-spinner"></span>
+            <%= t("steps.processing", scope: "decidim.vocdoni.admin") %>
+          </span>
+          <span class="text">
             <%= t("steps.#{current_step}.submit", scope: "decidim.vocdoni.admin") %>
-          <% end %>
+          </span>
         <% end %>
       </div>
     <% end %>

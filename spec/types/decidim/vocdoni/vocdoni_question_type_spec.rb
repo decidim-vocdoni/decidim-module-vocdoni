@@ -31,6 +31,14 @@ module Decidim
         end
       end
 
+      describe "description" do
+        let(:query) { '{ description { translation(locale: "en")}}' }
+
+        it "returns all the required fields" do
+          expect(response["description"]["translation"]).to eq(model.description["en"])
+        end
+      end
+
       describe "weight" do
         let(:query) { "{ weight }" }
 

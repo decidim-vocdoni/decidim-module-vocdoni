@@ -14,6 +14,7 @@ describe Decidim::Vocdoni::Admin::CreateQuestion do
     double(
       invalid?: invalid,
       title: { en: "title" },
+      description: { en: "description" },
       weight: 10,
       current_user: user,
       current_component: current_component,
@@ -32,6 +33,7 @@ describe Decidim::Vocdoni::Admin::CreateQuestion do
   it "stores the given data" do
     subject.call
     expect(translated(question.title)).to eq "title"
+    expect(translated(question.description)).to eq "description"
     expect(question.weight).to eq(10)
   end
 
@@ -41,7 +43,7 @@ describe Decidim::Vocdoni::Admin::CreateQuestion do
       .with(
         Decidim::Vocdoni::Question,
         user,
-        hash_including(:title, :weight),
+        hash_including(:title, :description, :weight),
         visibility: "all"
       )
       .and_call_original

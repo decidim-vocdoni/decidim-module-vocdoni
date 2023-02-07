@@ -69,5 +69,12 @@ module Decidim::Vocdoni
         :upcoming
       end
     end
+
+    # Public: the Vocdoni's Explorer Vote platform URL
+    #
+    # Returns a string with the full URL
+    def explorer_vote_url
+      "https://dev.explorer.vote/processes/show/#/#{vocdoni_election_id}"
+    end
   end
 end

@@ -14,6 +14,7 @@ describe Decidim::Vocdoni::Admin::UpdateQuestion do
       invalid?: invalid,
       current_user: user,
       title: { en: "title" },
+      description: { en: "description" },
       weight: 10,
       election: election
     )
@@ -23,6 +24,7 @@ describe Decidim::Vocdoni::Admin::UpdateQuestion do
   it "updates the question" do
     subject.call
     expect(translated(question.title)).to eq "title"
+    expect(translated(question.description)).to eq "description"
     expect(question.weight).to eq(10)
   end
 
