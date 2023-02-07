@@ -336,14 +336,11 @@ en:
           header: Confirm your vote
           intro: Here is a summary of the vote you are about to cast. <br> Please confirm your vote or edit your answers.
           question: Question %{count}
-        encrypting:
-          header: Encrypting the vote...
-          text: Your ballot is being encrypted to ensure the secret of your vote.
         header:
           ballot_decision: Cast or audit your vote
           confirm: Confirm your vote
-          encrypting: Encrypting the vote
           login: Identification
+          submitting: Subtmitting the vote
         modal:
           close: Close
         new:
@@ -352,6 +349,9 @@ en:
           preview_alert: This is a preview of the voting booth.
           question_steps: Question %{current_step} of %{total_steps}
           selections: "%{selected} of %{max_selections}<br> selections"
+        submitting:
+          header: Submitting the vote...
+          text: Your ballot is being submitted to the Vocdoni API.
         voting_step:
           back: Back
           continue: Next
