@@ -1,58 +1,85 @@
-/* eslint-disable require-jsdoc */
+// A vote component, to send the real votes to the Vocdoni API, using the Vocdoni SDK
 
-// show a message to the user if comunication is lost
-import "src/decidim/elections/broken_promises_handler";
-import { VoteComponent } from "@decidim/decidim-bulletin_board";
+import { EnvOptions, VocdoniSDKClient, Vote } from "@vocdoni/sdk";
 
-import * as VotingSchemesDummy from "@decidim/voting_schemes-dummy";
-const DummyVoterWrapperAdapter = VotingSchemesDummy.VoterWrapperAdapter;
-import * as VotingSchemesElectionGuard from "@decidim/voting_schemes-electionguard";
-const ElectionGuardVoterWrapperAdapter =
-  VotingSchemesElectionGuard.VoterWrapperAdapter;
+/*
+ * Submit a vote to the Vocdoni API
+ *
+ * @param {string} electionId - The election ID to vote in
+ * @param {object} wallet - The wallet to use to sign the vote
+ * @param {array} voteValue - The values of the votes to submit
+ *
+ * @return {Promise<object>} A Promise of an object with two possible reposnses, depending if the
+ *   vote was successfull or not.
+ *   - If it was sucessful, the format will be `{status: "OK", voteHash: voteHash}`
+ *   - If it was a failure, the format will be `{status: "ERROR", message: error}`
+ */
+export const submitVote = (electionId, wallet, voteValue) => {
+  const client = new VocdoniSDKClient({
+    env: EnvOptions.DEV,
+    wallet: wallet
+  });
+  client.setElectionId(electionId);
 
-export default function setupVoteComponent($voteWrapper) {
-  // Data
-  const bulletinBoardClientParams = {
-    apiEndpointUrl: $voteWrapper.data("apiEndpointUrl")
-  };
-  const electionUniqueId = $voteWrapper.data("electionUniqueId");
-  const authorityPublicKeyJSON = JSON.stringify(
-    $voteWrapper.data("authorityPublicKey")
-  );
-  const voterUniqueId = $voteWrapper.data("voterId");
-  const schemeName = $voteWrapper.data("schemeName");
-
-  // Use the correct voter wrapper adapter
-  let voterWrapperAdapter = null;
-
-  if (schemeName === "dummy") {
-    voterWrapperAdapter = new DummyVoterWrapperAdapter({
-      voterId: voterUniqueId
-    });
-  } else if (schemeName === "vocdoni") {
-    voterWrapperAdapter = new VocdoniVoterWrapperAdapter({
-      voterId: voterUniqueId,
-      workerUrl: "/assets/electionguard/webworker.js"
-    });
-  } else if (schemeName === "electionguard") {
-    voterWrapperAdapter = new ElectionGuardVoterWrapperAdapter({
-      voterId: voterUniqueId,
-      workerUrl: "/assets/electionguard/webworker.js"
-    });
-  } else {
-    throw new Error(`Voting scheme ${schemeName} not supported.`);
-  }
-
-  // Returns the vote component
-  return new VoteComponent({
-    bulletinBoardClientParams,
-    authorityPublicKeyJSON,
-    electionUniqueId,
-    voterUniqueId,
-    voterWrapperAdapter
+  console.log("Voting...");
+  const vote = new Vote(voteValue);
+  return new Promise((resolve) => {
+    client.submitVote(vote).
+      then((voteHash) => {
+        console.log("Vote sent! CONFIRMATION ID => ", voteHash);
+        resolve({status: "OK", voteHash: voteHash});
+      }).
+      catch((error) => {
+        resolve({status: "ERROR", message: error});
+      });
   });
 }
 
-window.Decidim = window.Decidim || {};
-window.Decidim.setupVoteComponent = setupVoteComponent;
+export class VoteComponent {
+  constructor({ electionUniqueId, wallet }) {
+    this.electionUniqueId = electionUniqueId;
+    this.wallet = wallet;
+  }
 
+  async bindEvents({
+    onBindSubmitButton,
+    onStart,
+    onBallotSubmission,
+    onFinish,
+    onBindVerifyBallotButton,
+    onVerifyBallot,
+    onVerifyComplete,
+    onClose,
+    onInvalid
+  }) {
+    onBindSubmitButton(async () => {
+      onStart();
+      onBallotSubmission(
+        (vote) => {
+          console.log(vote);
+          this.submit(vote).then((ballot) => {
+            console.log(ballot);
+
+            if (ballot.status === "OK") {
+              onFinish(ballot.voteId);
+            } else {
+              onInvalid();
+            }
+          });
+        },
+        () => {
+          onInvalid();
+        }
+      );
+    });
+  }
+  async submit(vote) {
+    console.log("Submiting vote to Vocdoni API with:");
+    console.log("- ELECTION ID => ", this.electionUniqueId);
+    console.log("- WALLET => ", this.wallet);
+    console.log("- VALUE => ", vote);
+    const response = await submitVote(this.electionUniqueId, this.wallet, vote);
+
+    return response;
+  }
+}

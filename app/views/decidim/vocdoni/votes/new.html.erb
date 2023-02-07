@@ -1,7 +1,7 @@
 <div class="vote-wrapper"
   data-election-unique-id="<%== election_unique_id %>"
-  data-voter-id="<%== voter_id %>"
   data-scheme-name="vocdoni"
+  data-preview="<%= preview_mode? %>"
   >
 
   <div id="login" class="focus__step" data-toggler=".hide">
@@ -64,11 +64,5 @@
 </div>
 
 <% content_for :js_content do %>
-  <% if preview_mode? %>
-    <%= javascript_pack_tag "decidim_vocdoni_voter_setup_preview" %>
-  <% else %>
-    <%= javascript_pack_tag "decidim_vocdoni_voter_setup_vote" %>
-  <% end %>
-
   <%= javascript_pack_tag "decidim_vocdoni_voter_new_vote" %>
 <% end %>
