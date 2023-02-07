@@ -3,6 +3,11 @@
 require "decidim/core/test/factories"
 
 FactoryBot.define do
+  factory :wallet, class: "Decidim::Vocdoni::Wallet" do
+    organization
+    private_key { Faker::Blockchain::Ethereum.address }
+  end
+
   factory :vocdoni_component, parent: :component do
     name { Decidim::Components::Namer.new(participatory_space.organization.available_locales, :vocdoni).i18n_name }
     manifest_name { :vocdoni }
@@ -84,6 +89,7 @@ FactoryBot.define do
 
     association :election, factory: :vocdoni_election
     title { generate_localized_title }
+    description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }
 
     trait :complete do

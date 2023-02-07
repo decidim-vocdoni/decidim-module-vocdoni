@@ -1,0 +1,9 @@
+<%= decidim_form_for(@form, html: { class: "form new_wallet" }) do |f| %>
+  <%= render partial: "form", object: f, locals: { title: t(".title") } %>
+
+  <div class="button--double form-general-submit">
+    <%= f.submit t(".create") %>
+  </div>
+<% end %>
+
+<%= javascript_pack_tag "decidim_vocdoni_admin" %>

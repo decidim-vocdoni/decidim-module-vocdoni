@@ -7,7 +7,8 @@ module Decidim
       class SetupForm < Decidim::Form
         mimic :setup
 
-        attribute :trustee_ids, Array[Integer]
+        attribute :demo_census, String
+        attribute :vocdoni_election_id, String
 
         validate do
           validations.each do |message, t_args, valid|
@@ -16,8 +17,6 @@ module Decidim
         end
 
         def current_step; end
-
-        def pending_action; end
 
         def validations
           @validations ||= [

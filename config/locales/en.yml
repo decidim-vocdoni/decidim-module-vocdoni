@@ -40,6 +40,7 @@ en:
         edit: Edit
         manage_answers: Manage answers
         manage_questions: Manage questions
+        manage_steps: Manage steps
         new: New %{name}
         preview: Preview
         publish: Publish
@@ -93,6 +94,25 @@ en:
             name: election
           question:
             name: question
+        questions:
+          create:
+            election_started: The election has already started
+            invalid: There was a problem creating this question
+            success: Question successfully created
+          destroy:
+            invalid: There was a problem deleting this question
+            success: Question successfully deleted
+          edit:
+            title: Edit question
+            update: Update question
+          index:
+            title: Questions
+          new:
+            create: Create question
+            title: New question
+          update:
+            invalid: There was a problem updating this question
+            success: Question successfully updated
         steps:
           create_election:
             errors:
@@ -100,6 +120,9 @@ en:
               minimum_answers: Questions must have <strong>at least two answers</strong>.
               minimum_questions: The election <strong>must have at least one question</strong>.
               published: The election is <strong>not published</strong>.
+            failed:
+              message: Check the Web Development console log error message, fix the problem and retry.
+              title: The election has an error and couldn't be created
             invalid: There was a problem setting up this election
             requirements:
               component_published: The election component is <strong>published</strong>.
@@ -107,9 +130,12 @@ en:
               minimum_questions: The election has <strong>at least 1 question</strong>.
               published: The election is <strong>published</strong>.
             submit: Setup election
+            success: Election successfully sent to the Vocdoni API
             title: Setup election
           created:
+            message: The election has been created. We're waiting for the start date time to arrive.
             title: Election created
+            url_html: You can watch it out at the <a href="%{explorer_vote_url}" target="_blank" rel="noopener noreferrer">Vocdoni Explorer</a>.
           processing: Processing...
           results_published:
             title: Results published
@@ -142,6 +168,19 @@ en:
           update:
             invalid: There was a problem updating this question
             success: Question successfully updated
+        wallet:
+          create:
+            invalid: There was a problem creating the wallet
+            pending: It's necessary to create a wallet for this organization
+            success: Wallet successfully created
+        wallets:
+          form:
+            help:
+              p1: As this is the first time that this organization is creating an Election with Vocdoni, it's necessary to create a Wallet for using the Vocdoni API. This is only necessary to do the first time.
+              p2: You don't need to do anything, just click on the "Create" button.
+          new:
+            create: Create
+            title: New organization wallet
       admin_log:
         election:
           create: "%{user_name} created the election %{resource_name} of %{space_name}"
@@ -160,6 +199,8 @@ en:
           unpublish: "%{user_name} unpublished the %{resource_name} of %{space_name}
             election"
           update: "%{user_name} updated the election %{resource_name} of %{space_name}"
+        wallet:
+          create: "%{user_name} created the Organization wallet for the Vocdoni API"
       election_m:
         badge_name:
           finished: Finished

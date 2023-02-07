@@ -33,6 +33,7 @@ module Decidim
         def update_question!
           attributes = {
             title: form.title,
+            description: form.description,
             weight: form.weight
           }
 

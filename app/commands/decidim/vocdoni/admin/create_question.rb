@@ -30,6 +30,7 @@ module Decidim
           attributes = {
             election: form.election,
             title: form.title,
+            description: form.description,
             weight: form.weight
           }
 

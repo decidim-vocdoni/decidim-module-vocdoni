@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/decidim-vocdoni/decidim-module-vocdoni#readme",
   "dependencies": {
-    "@vocdoni/sdk": "^0.0.1-alpha"
+    "@ethersproject/wallet": "^5.7.0",
+    "@vocdoni/sdk": "^0.0.2-alpha"
   }
 }
