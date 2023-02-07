@@ -18,24 +18,24 @@ jobs:
         with:
           fetch-depth: 1
 
-      # - uses: actions/setup-node@master
-      #   with:
-      #     node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/setup-node@master
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
-      # - name: Get npm cache directory path
-      #   id: npm-cache-dir-path
-      #   run: echo "::set-output name=dir::$(npm get cache)-vocdoni"
+      - name: Get npm cache directory path
+        id: npm-cache-dir-path
+        run: echo "::set-output name=dir::$(npm get cache)-vocdoni"
 
-      # - uses: actions/cache@v2
-      #   id: npm-cache
-      #   with:
-      #     path: ${{ steps.npm-cache-dir-path.outputs.dir }}
-      #     key: npm-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       npm-
+      - uses: actions/cache@v2
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir-path.outputs.dir }}
+          key: npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-
 
-      # - run: npm run lint
-      #   name: Lint JS files
+      - run: npm run lint
+        name: Lint JS files
 
       - run: npm run stylelint
         name: Lint SCSS files
