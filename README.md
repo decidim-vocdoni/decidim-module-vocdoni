@@ -31,6 +31,7 @@ And then execute:
 ```bash
 bundle
 bin/rails decidim_vocdoni:install:migrations
+bundle exec rails decidim_vocdoni:webpacker:install
 bin/rails db:migrate
 ```
 

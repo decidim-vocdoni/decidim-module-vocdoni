@@ -791,6 +791,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (~> 1.4)
   byebug (~> 11.0)
+  codecov
   decidim (= 0.27.1)
   decidim-dev (= 0.27.1)
   decidim-vocdoni!
