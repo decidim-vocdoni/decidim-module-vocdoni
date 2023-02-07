@@ -33,6 +33,7 @@ export default class SetupElection {
     console.log("WALLET PRIVATE KEY => ", options.walletPrivateKey);
     console.log("GRAPHQL API URL => ", options.graphqlApiUrl);
     console.log("VOCDONI COMPONENT ID => ", options.componentId);
+    console.log("ELECTION ID => ", options.electionId);
     console.log("ENVIRONMENT => ", options.environment);
     console.groupEnd();
   }
