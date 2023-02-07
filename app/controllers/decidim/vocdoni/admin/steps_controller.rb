@@ -46,8 +46,6 @@ module Decidim
           redirect_to new_wallet_path
         end
 
-        private
-
         def current_step_form_class
           @current_step_form_class ||= {
             "create_election" => SetupForm
