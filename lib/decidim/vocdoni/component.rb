@@ -105,7 +105,7 @@ Decidim.register_component(:vocdoni) do |component|
         )
 
         rand(1...5).times do
-          answer = Decidim.traceability.create!(
+          Decidim.traceability.create!(
             Decidim::Vocdoni::Answer,
             admin_user,
             {

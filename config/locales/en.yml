@@ -121,7 +121,8 @@ en:
               minimum_questions: The election <strong>must have at least one question</strong>.
               published: The election is <strong>not published</strong>.
             failed:
-              message: Check the Web Development console log error message, fix the problem and retry.
+              message: Check the Web Development console log error message, fix the
+                problem and retry.
               title: The election has an error and couldn't be created
             invalid: There was a problem setting up this election
             requirements:
@@ -133,10 +134,14 @@ en:
             success: Election successfully sent to the Vocdoni API
             title: Setup election
           created:
-            message: The election has been created. We're waiting for the start date time to arrive.
+            message: The election has been created. We're waiting for the start date
+              time to arrive.
             title: Election created
-            url_html: You can watch it out at the <a href="%{explorer_vote_url}" target="_blank" rel="noopener noreferrer">Vocdoni Explorer</a>.
+            url_html: You can watch it out at the <a href="%{explorer_vote_url}" target="_blank"
+              rel="noopener noreferrer">Vocdoni Explorer</a>.
           processing: Processing...
+          ready:
+            title: Ready
           results_published:
             title: Results published
           tally_ended:
@@ -147,27 +152,6 @@ en:
             title: Vote period
           vote_ended:
             title: Vote period ended
-          ready:
-            title: Ready
-        questions:
-          create:
-            election_started: The election has already started
-            invalid: There was a problem creating this question
-            success: Question successfully created
-          destroy:
-            invalid: There was a problem deleting this question
-            success: Question successfully deleted
-          edit:
-            title: Edit question
-            update: Update question
-          index:
-            title: Questions
-          new:
-            create: Create question
-            title: New question
-          update:
-            invalid: There was a problem updating this question
-            success: Question successfully updated
         wallet:
           create:
             invalid: There was a problem creating the wallet
@@ -176,7 +160,9 @@ en:
         wallets:
           form:
             help:
-              p1: As this is the first time that this organization is creating an Election with Vocdoni, it's necessary to create a Wallet for using the Vocdoni API. This is only necessary to do the first time.
+              p1: As this is the first time that this organization is creating an
+                Election with Vocdoni, it's necessary to create a Wallet for using
+                the Vocdoni API. This is only necessary to do the first time.
               p2: You don't need to do anything, just click on the "Create" button.
           new:
             create: Create
