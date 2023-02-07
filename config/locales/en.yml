@@ -164,7 +164,8 @@ en:
               minimum_answers: Questions must have <strong>at least two answers</strong>.
               minimum_questions: The election <strong>must have at least one question</strong>.
               published: The election is <strong>not published</strong>.
-              time_before: The setup is not being done <strong>at least %{minutes} minutes</strong> before the election starts.
+              time_before: The setup is not being done <strong>at least %{minutes}
+                minutes</strong> before the election starts.
             failed:
               message: Check the Web Development console log error message, fix the
                 problem and retry.
@@ -176,7 +177,8 @@ en:
               minimum_answers: Each question has <strong>at least 2 answers</strong>.
               minimum_questions: The election has <strong>at least 1 question</strong>.
               published: The election is <strong>published</strong>.
-              time_before: The setup is being done <strong>at least %{minutes} minutes</strong> before the election starts.
+              time_before: The setup is being done <strong>at least %{minutes} minutes</strong>
+                before the election starts.
             submit: Setup election
             success: Election successfully sent to the Vocdoni API
             title: Setup election
