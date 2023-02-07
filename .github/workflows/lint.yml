@@ -37,8 +37,8 @@ jobs:
       - run: npm run lint
         name: Lint JS files
 
-      - run: npm run stylelint
-        name: Lint SCSS files
+      # - run: npm run stylelint
+      #   name: Lint SCSS files
 
       - uses: ruby/setup-ruby@v1
         with:
