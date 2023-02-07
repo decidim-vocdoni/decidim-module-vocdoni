@@ -14,10 +14,5 @@
     <%= link_to new_election_vote_path(election), class: "button" do %>
       <%= t("decidim.vocdoni.votes.failed.try_again") %>
     <% end %>
-
-    <div>
-      <%= t("decidim.vocdoni.votes.confirmed.experience") %>
-      <%= link_to t("decidim.vocdoni.votes.confirmed.feedback"), election_feedback_path(election, hash: vote.encrypted_vote_hash, token: params[:token]) %>
-    </div>
   </div>
 </div>

@@ -53,9 +53,14 @@
     <%= render("new_submitting_step") %>
   </div>
 
-  <div id="ballot_decision" class="hide focus__step" data-redirect_url=".hide">
-    <%= render("new_ballot_decision_step") %>
+  <div id="vote_sent" class="hide focus__step" data-redirect_url=".hide">
+    <%= render("show_vote_sent_step") %>
   </div>
+
+  <div id="vote_failed" class="hide focus__step" data-redirect_url=".hide">
+    <%= render("show_failed") %>
+  </div>
+
 </div>
 
 <% content_for :js_content do %>
