@@ -1,6 +1,4 @@
 import { EnvOptions } from "@vocdoni/sdk";
-import { Wallet } from "@ethersproject/wallet";
->>>>>>> main
 import SetupElection from "src/decidim/vocdoni/admin/setup_election";
 
 const setupElectionStep = async () => {

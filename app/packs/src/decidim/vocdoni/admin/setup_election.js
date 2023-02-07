@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { VocdoniSDKClient, Election, PlainCensus } from "@vocdoni/sdk";
-=======
 import { VocdoniSDKClient, Election } from "@vocdoni/sdk";
->>>>>>> main
 import { Wallet } from "@ethersproject/wallet";
 
 /*
@@ -12,10 +8,6 @@ import { Wallet } from "@ethersproject/wallet";
  *
  * @param {object} options All the different options that interact with setting up an Election.
  * @property {string} options.walletPrivateKey The private key from the wallet that will create the Election
-<<<<<<< HEAD
-=======
- * @property {array} options.census An array with all the public keys of the census participants
->>>>>>> main
  * @property {string} options.graphqlApiUrl The URL for the GraphQL API where to extract the Election metadata
  * @property {number|string} options.componentId The ID of the Vocdoni Component in Decidim
  * @property {number|string} options.electionId The ID of the Vocdoni Election in Decidim
@@ -29,10 +21,6 @@ import { Wallet } from "@ethersproject/wallet";
 export default class SetupElection {
   constructor(options = {}, onSuccess, onFailure) {
     this.walletPrivateKey = options.walletPrivateKey;
-<<<<<<< HEAD
-=======
-    this.census = options.census;
->>>>>>> main
     this.graphqlApiUrl = options.graphqlApiUrl;
     this.componentId = options.componentId;
     this.electionId = options.electionId;
@@ -47,11 +35,6 @@ export default class SetupElection {
     console.log("VOCDONI COMPONENT ID => ", options.componentId);
     console.log("ENVIRONMENT => ", options.environment);
     console.groupEnd();
-<<<<<<< HEAD
-=======
-
-    this.run();
->>>>>>> main
   }
 
   /*
@@ -108,10 +91,6 @@ export default class SetupElection {
     }
 
     console.group("Election");
-<<<<<<< HEAD
-=======
-    console.log("CENSUS => ", this.census);
->>>>>>> main
     console.log("ELECTION => ", election);
     console.log("RESULT => ", result);
     console.groupEnd();
@@ -149,10 +128,6 @@ export default class SetupElection {
       }, {});
     }
 
-<<<<<<< HEAD
-=======
-    const census = this.census;
->>>>>>> main
     let electionMetadata = await this._getElectionMetadata();
     electionMetadata = electionMetadata.data.component.election;
     let header = electionMetadata.attachments[0].url;
@@ -160,12 +135,9 @@ export default class SetupElection {
       header = `${window.location.origin}${header}`
     }
 
-<<<<<<< HEAD
     const walletsAddresses = electionMetadata.voters.map((voter) => voter.wallet_address);
     const census = this._initializeCensus(walletsAddresses);
 
-=======
->>>>>>> main
     const election = Election.from({
       title: transformLocales(electionMetadata.title.translations, defaultLocale),
       description: transformLocales(electionMetadata.description.translations, defaultLocale),
