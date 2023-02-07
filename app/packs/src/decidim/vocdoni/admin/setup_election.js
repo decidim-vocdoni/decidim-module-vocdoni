@@ -1,4 +1,4 @@
-import { VocdoniSDKClient, Election } from "@vocdoni/sdk";
+import { VocdoniSDKClient, Election, PlainCensus } from "@vocdoni/sdk";
 import { Wallet } from "@ethersproject/wallet";
 
 /*
