@@ -9,7 +9,8 @@ DECIDIM_VERSION = "0.27.1"
 gem "decidim", DECIDIM_VERSION
 gem "decidim-vocdoni", path: "."
 
-gem "bootsnap", "~> 1.4"
+gem "bootsnap", "~> 1.7"
+gem "faker", "~> 2.14"
 gem "puma", "~> 5.6.2"
 
 group :development, :test do
@@ -19,9 +20,9 @@ group :development, :test do
 end
 
 group :development do
-  gem "faker", "~> 2.14"
   gem "letter_opener_web", "~> 2.0"
   gem "listen", "~> 3.1"
+  gem "rubocop-faker"
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console", "~> 4.2"
