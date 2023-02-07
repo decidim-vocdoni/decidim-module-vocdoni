@@ -22,6 +22,13 @@ ca:
             announcement: Announcement
           step:
             announcement: Announcement
+    events:
+      vocdoni:
+        election_published:
+          email_intro: 'The %{resource_title} election is now active for %{participatory_space_title}. You can see it from this page:'
+          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
+          email_subject: The %{resource_title} election is now active for %{participatory_space_title}.
+          notification_title: The <a href="%{resource_path}">%{resource_title}</a> election is now active for %{participatory_space_title}.
     vocdoni:
       actions:
         confirm_destroy: Are you sure?
@@ -29,6 +36,7 @@ ca:
         edit: Edit
         manage_answers: Manage answers
         manage_questions: Manage questions
+        manage_steps: Manage steps
         new: New %{name}
         preview: Preview
         publish: Publish
@@ -82,36 +90,6 @@ ca:
             name: election
           question:
             name: question
-        steps:
-          create_election:
-            errors:
-              component_published: The election component is <strong>not published</strong>.
-              minimum_answers: Questions must have <strong>at least two answers</strong>.
-              minimum_questions: The election <strong>must have at least one question</strong>.
-              published: The election is <strong>not published</strong>.
-            invalid: There was a problem setting up this election
-            requirements:
-              component_published: The election component is <strong>published</strong>.
-              minimum_answers: Each question has <strong>at least 2 answers</strong>.
-              minimum_questions: The election has <strong>at least 1 question</strong>.
-              published: The election is <strong>published</strong>.
-            submit: Setup election
-            title: Setup election
-          created:
-            title: Election created
-          processing: Processing...
-          results_published:
-            title: Results published
-          tally_ended:
-            title: Calculated results
-          tally_started:
-            title: Tally process
-          vote:
-            title: Vote period
-          vote_ended:
-            title: Vote period ended
-          ready:
-            title: Ready
         questions:
           create:
             election_started: The election has already started
@@ -131,6 +109,42 @@ ca:
           update:
             invalid: There was a problem updating this question
             success: Question successfully updated
+        steps:
+          create_election:
+            errors:
+              component_published: The election component is <strong>not published</strong>.
+              minimum_answers: Questions must have <strong>at least two answers</strong>.
+              minimum_questions: The election <strong>must have at least one question</strong>.
+              published: The election is <strong>not published</strong>.
+            failed:
+              message: Check the Web Development console log error message, fix the problem and retry.
+              title: The election has an error and couldn't be created
+            invalid: There was a problem setting up this election
+            requirements:
+              component_published: The election component is <strong>published</strong>.
+              minimum_answers: Each question has <strong>at least 2 answers</strong>.
+              minimum_questions: The election has <strong>at least 1 question</strong>.
+              published: The election is <strong>published</strong>.
+            submit: Setup election
+            success: Election successfully sent to the Vocdoni API
+            title: Setup election
+          created:
+            message: The election has been created. We're waiting for the start date time to arrive.
+            title: Election created
+            url_html: You can watch it out at the <a href="%{explorer_vote_url}" target="_blank" rel="noopener noreferrer">Vocdoni Explorer</a>.
+          processing: Processing...
+          results_published:
+            title: Results published
+          tally_ended:
+            title: Calculated results
+          tally_started:
+            title: Tally process
+          vote:
+            title: Vote period
+          vote_ended:
+            title: Vote period ended
+          ready:
+            title: Ready
         wallet:
           create:
             invalid: There was a problem creating the wallet
@@ -212,10 +226,3 @@ ca:
             title: Title
       warnings:
         no_elections_warning: There isn't any election scheduled.
-    events:
-      vocdoni:
-        election_published:
-          email_intro: 'The %{resource_title} election is now active for %{participatory_space_title}. You can see it from this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
-          email_subject: The %{resource_title} election is now active for %{participatory_space_title}.
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> election is now active for %{participatory_space_title}.
