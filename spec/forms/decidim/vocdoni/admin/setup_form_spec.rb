@@ -25,13 +25,14 @@ describe Decidim::Vocdoni::Admin::SetupForm do
                        minimum_answers: "Each question has <strong>at least 2 answers</strong>.",
                        minimum_questions: "The election has <strong>at least 1 question</strong>.",
                        published: "The election is <strong>published</strong>.",
+                       time_before: "The setup is being done <strong>at least 10 minutes</strong> before the election starts.",
                        census_ready: "The census is <strong>ready</strong>."
                      })
     )
   end
 
   context "when the election is not ready for the setup" do
-    let(:election) { create :vocdoni_election }
+    let(:election) { create :vocdoni_election, start_time: 10.days.ago }
 
     it { is_expected.to be_invalid }
 
@@ -41,6 +42,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
                                               minimum_questions: ["The election <strong>must have at least one question</strong>."],
                                               minimum_answers: ["Questions must have <strong>at least two answers</strong>."],
                                               published: ["The election is <strong>not published</strong>."],
+                                              time_before: ["The setup is not being done <strong>at least 10 minutes</strong> before the election starts."],
                                               census_ready: ["The census is <strong>not ready</strong>."]
                                             })
     end

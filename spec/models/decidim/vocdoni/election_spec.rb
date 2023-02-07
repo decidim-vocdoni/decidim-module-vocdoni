@@ -40,6 +40,26 @@ describe Decidim::Vocdoni::Election do
     it { is_expected.to be_finished }
   end
 
+  describe "start time checks" do
+    subject(:election) { build(:vocdoni_election, start_time: start_time) }
+
+    let(:start_time) { 40.minutes.from_now }
+
+    it { is_expected.to be_minimum_minutes_before_start }
+
+    context "when the election is about to start" do
+      let(:start_time) { 5.minutes.from_now }
+
+      it { is_expected.not_to be_minimum_minutes_before_start }
+    end
+
+    context "when the election is not near to start" do
+      let(:start_time) { 10.days.from_now }
+
+      it { is_expected.to be_minimum_minutes_before_start }
+    end
+  end
+
   describe "#explorer_vote_url" do
     subject(:election) { build :vocdoni_election, vocdoni_election_id: "12345"}
 
