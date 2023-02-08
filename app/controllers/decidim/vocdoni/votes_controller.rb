@@ -10,7 +10,7 @@ module Decidim
 
       helper VotesHelper
       helper_method :exit_path, :elections, :election, :questions, :questions_count, :vote,
-                    :preview_mode?, :voter_id, :election_unique_id
+                    :preview_mode?, :election_unique_id
 
       delegate :count, to: :questions, prefix: true
 
@@ -30,12 +30,6 @@ module Decidim
 
       private
 
-      # Needed for voting preview
-      def voter_id
-        SecureRandom.uuid.delete("-")
-      end
-
-      # Needed for voting preview
       def election_unique_id
         SecureRandom.uuid.delete("-")
       end
