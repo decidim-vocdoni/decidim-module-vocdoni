@@ -117,20 +117,25 @@ const voteComponentGenerator = async (userWallet, electionUniqueId) => {
  *
  * @param {object} $loginForm The jQuery Element with the form for logging in
  *
- * @return userWallet the Wallet object generated or an empty object
+ * @returns {object} the Wallet object generated or an empty object
  */
 export const walletFromLoginForm = ($loginForm) => {
   if ($loginForm === null) {
     return {};
   }
 
-  const email = $loginForm.find("#login_email").value;
-  const bornAtDay = $loginForm.find("#login_day").value;
-  const bornAtMonth = $loginForm.find("#login_month").value;
-  const bornAtYear = $loginForm.find("#login_year").value;
+  const email = $loginForm.find("#login_email").val();
+  const bornAtDay = $loginForm.find("#login_day").val();
+  const bornAtMonth = $loginForm.find("#login_month").val();
+  const bornAtYear = $loginForm.find("#login_year").val();
   const bornAt = `${bornAtYear}-${bornAtMonth}-${bornAtDay}`;
 
-  const userWallet = VocdoniSDKClient.generateWalletFromData([email, bornAt]);
+  console.group("Wallet data");
+  console.log("EMAIL => ", email);
+  console.log("BORN AT => ", bornAt);
+  console.groupEnd();
+
+  const userWallet = VocdoniSDKClient.generateWalletFromData(email, bornAt);
 
   return userWallet;
 }
