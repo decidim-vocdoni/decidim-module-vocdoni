@@ -1,3 +1,15 @@
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title"><%= t(".title") %></h2>
+  </div>
+
+  <div class="card-section">
+    <p><%= t(".message", end_time: election.end_time) %></p>
+
+    <p><%= t("url_html", explorer_vote_url: election.explorer_vote_url, scope: "decidim.vocdoni.admin.steps.created") %></p>
+  </div>
+</div>
+
 <div id="vote-stats">
   <%= render(partial: "vote_stats") %>
 </div>
