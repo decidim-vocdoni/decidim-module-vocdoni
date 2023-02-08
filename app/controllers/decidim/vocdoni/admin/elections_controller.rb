@@ -96,7 +96,7 @@ module Decidim
         private
 
         def elections
-          @elections ||= Election.where(component: current_component).order(start_time: :desc)
+          @elections ||= Decidim::Vocdoni::Election.where(component: current_component).order(start_time: :desc)
         end
 
         def election

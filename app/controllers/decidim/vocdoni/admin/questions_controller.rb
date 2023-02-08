@@ -75,7 +75,7 @@ module Decidim
         private
 
         def election
-          @election ||= Election.where(component: current_component).find_by(id: params[:election_id])
+          @election ||= Decidim::Vocdoni::Election.where(component: current_component).find_by(id: params[:election_id])
         end
 
         def questions

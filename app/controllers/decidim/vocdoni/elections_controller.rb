@@ -19,13 +19,13 @@ module Decidim
       private
 
       def elections
-        @elections ||= Election.where(component: current_component).published
+        @elections ||= Decidim::Vocdoni::Election.where(component: current_component).published
       end
 
       def election
         # The single election is searched from non-published records on purpose
         # to allow previewing for admins.
-        @election ||= Election.where(component: current_component).find(params[:id])
+        @election ||= Decidim::Vocdoni::Election.where(component: current_component).find(params[:id])
       end
 
       # Public: Checks if the component has only one election resource.

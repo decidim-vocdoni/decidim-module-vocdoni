@@ -63,7 +63,7 @@ module Decidim
         end
 
         def elections
-          @elections ||= Election.where(component: current_component)
+          @elections ||= Decidim::Vocdoni::Election.where(component: current_component)
         end
 
         def election
