@@ -330,6 +330,7 @@ en:
         login:
           check_status: Check status
           description: To vote, we'll need to check that you're on the census
+          failed: Check that the provided data is correct and try again
           form_title: Enter your data
           title: Verify your identity
         login_fields:

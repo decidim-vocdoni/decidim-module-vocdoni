@@ -16,6 +16,9 @@
                 <div class="card__content">
                   <form>
                     <div>
+                      <div class="callout alert hide js-login_error"><%= t(".failed") %></div>
+                    </div>
+                    <div>
                       <%= render partial: "login_fields", locals: { f: f } %>
                     </div>
                     <%= f.submit t(".check_status"), class: "button expanded mt-s mb-none" %>
@@ -26,10 +29,6 @@
           </div>
         <% end %>
       </div>
-      <p>
-        <%# t("votings.login.dont_have_access_code", scope: "decidim.votings") %>
-        <%# link_to t("votings.login.ask_for_a_new_one", scope: "decidim.votings"), voting_check_census_path %>
-      </p>
     </div>
   </div>
 </div>
