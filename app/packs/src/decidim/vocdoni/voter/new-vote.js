@@ -100,7 +100,7 @@ const voteComponentGenerator = async (userWallet, electionUniqueId) => {
 
   if (isInCensus) {
     console.log("OK!! Wallet is in census");
-    voteComponent = new VoteComponent({electionUniqueId, wallet: userWallet});
+    voteComponent = new VoteComponent({electionUniqueId: electionUniqueId, wallet: userWallet});
     nextStep = true;
   } else {
     console.log("KO -> Wallet is not in census");

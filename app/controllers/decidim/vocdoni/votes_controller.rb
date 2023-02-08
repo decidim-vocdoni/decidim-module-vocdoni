@@ -31,7 +31,7 @@ module Decidim
       private
 
       def election_unique_id
-        SecureRandom.uuid.delete("-")
+        election.vocdoni_election_id
       end
 
       def exit_path
