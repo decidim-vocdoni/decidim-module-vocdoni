@@ -36,6 +36,7 @@ const setupElectionStep = async () => {
       walletPrivateKey: createElectionForm.querySelector("#setup_wallet_private_key").value,
       graphqlApiUrl: `${window.location.origin}/api`,
       componentId: window.location.pathname.split("/")[5],
+      electionId: window.location.pathname.split("/")[8],
       environment: EnvOptions.DEV
     }, onSuccess, onFailure);
     election.run();

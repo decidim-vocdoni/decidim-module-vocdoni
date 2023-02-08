@@ -204,8 +204,8 @@ en:
           tally_started:
             title: Tally process
           vote:
-            title: Vote period
             message: We're on the vote period until %{end_time}.
+            title: Vote period
           vote_ended:
             text: Text
             title: Vote period ended
@@ -358,20 +358,13 @@ en:
           check: "( Check my vote )"
           description: You can check your vote using the Vocdoni Explorer portal.
           exit: Exit the voting booth
-          header: 'Vote sent successfully!'
+          header: Vote sent successfully!
           vote_id: 'Your vote identifier is:'
         voting_step:
           back: Back
           continue: Next
       warnings:
         no_elections_warning: There isn't any election scheduled.
-    events:
-      vocdoni:
-        election_published:
-          email_intro: 'The %{resource_title} election is now active for %{participatory_space_title}. You can see it from this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
-          email_subject: The %{resource_title} election is now active for %{participatory_space_title}.
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> election is now active for %{participatory_space_title}.
   layouts:
     decidim:
       vocdoni_votes_header:
