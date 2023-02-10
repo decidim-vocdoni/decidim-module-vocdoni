@@ -80,8 +80,8 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
  * @param {string} electionUniqueId The unique ID of the election in the Vocdoni API
  *
  * @return {array} An array with two elements:
- *  - The VoteComponent object
- *  - A boolean indicating if we should show the next step or not
+ *  - The VoteComponent object or null if the wallet is not in the census
+ *  - A boolean with true if we should show the next step or false if not
  */
 const voteComponentGenerator = async (userWallet, electionUniqueId) => {
   const checkIfWalletIsInCensus = async (wallet, electionId) => {
@@ -94,18 +94,19 @@ const voteComponentGenerator = async (userWallet, electionUniqueId) => {
     return isInCensus;
   }
 
-  const isInCensus = await checkIfWalletIsInCensus(userWallet, electionUniqueId);
   let voteComponent = null;
-  let nextStep = null;
+  let nextStep = false;
 
+  if (userWallet === {}) {
+    return [voteComponent, nextStep];
+  }
+
+  const isInCensus = await checkIfWalletIsInCensus(userWallet, electionUniqueId);
+  console.log("IS IN CENSUS => ", isInCensus);
   if (isInCensus) {
     console.log("OK!! Wallet is in census");
     voteComponent = new VoteComponent({electionUniqueId: electionUniqueId, wallet: userWallet});
     nextStep = true;
-  } else {
-    console.log("KO -> Wallet is not in census");
-    nextStep = false;
-    $(".js-login_error").removeClass("hide");
   }
 
   return [voteComponent, nextStep];
@@ -135,7 +136,13 @@ export const walletFromLoginForm = ($loginForm) => {
   console.log("BORN AT => ", bornAt);
   console.groupEnd();
 
-  const userWallet = VocdoniSDKClient.generateWalletFromData(email, bornAt);
+  for (const value of [email, bornAtDay, bornAtMonth, bornAtYear]) {
+    if (value === "") {
+      return {};
+    }
+  }
+
+  const userWallet = VocdoniSDKClient.generateWalletFromData([email, bornAt]);
 
   return userWallet;
 }
@@ -162,6 +169,11 @@ $(() => {
   $loginForm.on("submit", async (event) => {
     event.preventDefault();
 
+    const showErrorMessage = () => {
+      console.log("KO -> Wallet is not in census");
+      $(".js-login_error").removeClass("hide");
+    }
+
     const electionUniqueId = $voteWrapper.data("electionUniqueId");
     let voteComponent = null;
     let nextStep = null;
@@ -173,6 +185,10 @@ $(() => {
     } else {
       const userWallet = walletFromLoginForm($loginForm);
       [voteComponent, nextStep] = await voteComponentGenerator(userWallet, electionUniqueId);
+    }
+
+    if (!nextStep) {
+      showErrorMessage();
     }
 
     if (nextStep) {
