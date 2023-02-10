@@ -5,7 +5,7 @@
 <div class="evote__options" data-max-selection="1" data-min-selection="1">
   <% ordered_answers(question).each do |answer| %>
     <%= label_tag nil, data: { "disabled-by": "#check-nota" }, class: "evote__check evote__card" do %>
-      <%= check_box_tag question.slug, answer.slug, false, class: "answer_input" %>
+      <%= radio_button_tag question.slug, answer.slug, false, class: "answer_input" %>
 
       <span class="evote__check-label">
         <%= translated_attribute(answer.title) %>
