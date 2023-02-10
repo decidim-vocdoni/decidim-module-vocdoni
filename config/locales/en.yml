@@ -344,7 +344,7 @@ en:
           year: Year
           year_placeholder: YYYY
         messages:
-          not_allowed: "You are not allowed to vote on this election at this moment."
+          not_allowed: You are not allowed to vote on this election at this moment.
         modal:
           close: Close
         new:
