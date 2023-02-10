@@ -20,16 +20,19 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
     },
     onStart() {},
     onBallotSubmission(validVoteFn) {
+
+      /*
+       * @param {object} formData The jQuery object with the selected answers
+       *
+       * @return {array} An array with the selected answers
+       */
       const getFormData = (formData) => {
-        return formData.serializeArray().reduce((acc, { name, value }) => {
-          if (!acc[name]) {
-            acc[name] = [];
-          }
-          acc[name] = [...acc[name], `${name}_${value}`];
-          return acc;
-        }, {});
+        return formData.map(function() {
+          return Number($(this).val().split("-")[1]);
+        }).get();
       };
-      const formData = getFormData($voteWrapper.find(".answer_input"));
+      const formData = getFormData($voteWrapper.find(".answer_input:checked"));
+
       validVoteFn(formData);
       questionsComponent.voteCasted = true;
     },
