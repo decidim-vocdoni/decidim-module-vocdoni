@@ -33,6 +33,8 @@ en:
           email_subject: The %{resource_title} election is now active for %{participatory_space_title}.
           notification_title: The <a href="%{resource_path}">%{resource_title}</a>
             election is now active for %{participatory_space_title}.
+    statistics:
+      elections_count: Elections (Vocdoni)
     vocdoni:
       actions:
         confirm_destroy: Are you sure?

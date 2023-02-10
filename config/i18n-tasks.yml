@@ -9,6 +9,7 @@ ignore_unused:
   - "decidim.components.vocdoni.settings.{global,step}.announcement"
   - "decidim.components.vocdoni.name"
   - "decidim.events.vocdoni.election_published.{email_intro,email_outro,email_subject,notification_title}"
+  - "decidim.statistics.elections_count"
   - "decidim.vocdoni.admin.wallets.ready.title"
   - "decidim.vocdoni.admin_log.election.{create,delete,end_vote,publish,publish_results,setup,start_tally,start_vote,unpublish,update}"
   - "decidim.vocdoni.admin_log.wallet.create"
