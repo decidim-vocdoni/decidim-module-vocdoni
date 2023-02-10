@@ -6,7 +6,7 @@
   <div class="card-section">
     <p><%= t(".message", end_time: election.end_time) %></p>
 
-    <p><%= t("url_html", explorer_vote_url: election.explorer_vote_url, scope: "decidim.vocdoni.admin.steps.created") %></p>
+    <p><%= t("url_html", scope: "decidim.vocdoni.admin.steps.created", explorer_vote_url: election.explorer_vote_url) %></p>
   </div>
 </div>
 
