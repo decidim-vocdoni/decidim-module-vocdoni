@@ -14,7 +14,7 @@ import { EnvOptions, VocdoniSDKClient, Vote } from "@vocdoni/sdk";
  *   - If it was sucessful, the format will be `{status: "OK", voteHash: voteHash}`
  *   - If it was a failure, the format will be `{status: "ERROR", message: error}`
  */
-export const submitVote = (electionId, wallet, voteValue) => {
+const submitVote = (electionId, wallet, voteValue) => {
   const client = new VocdoniSDKClient({
     env: EnvOptions.DEV,
     wallet: wallet
@@ -35,7 +35,7 @@ export const submitVote = (electionId, wallet, voteValue) => {
   });
 }
 
-export class VoteComponent {
+export default class VoteComponent {
   constructor({ electionUniqueId, wallet }) {
     this.electionUniqueId = electionUniqueId;
     this.wallet = wallet;

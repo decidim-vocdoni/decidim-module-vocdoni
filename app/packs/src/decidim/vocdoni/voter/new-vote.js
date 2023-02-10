@@ -120,7 +120,7 @@ const voteComponentGenerator = async (userWallet, electionUniqueId) => {
  *
  * @returns {object} the Wallet object generated or an empty object
  */
-export const walletFromLoginForm = ($loginForm) => {
+const walletFromLoginForm = ($loginForm) => {
   if ($loginForm === null) {
     return {};
   }
