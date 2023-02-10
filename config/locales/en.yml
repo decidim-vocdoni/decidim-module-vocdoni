@@ -343,6 +343,8 @@ en:
           month_placeholder: MM
           year: Year
           year_placeholder: YYYY
+        messages:
+          not_allowed: "You are not allowed to vote on this election at this moment."
         modal:
           close: Close
         new:
@@ -358,7 +360,7 @@ en:
           check: "( Check my vote )"
           description: You can check your vote using the Vocdoni Explorer portal.
           exit: Exit the voting booth
-          header: Vote sent successfully!
+          header: Vote confirmed
           vote_id: 'Your vote identifier is:'
         voting_step:
           back: Back

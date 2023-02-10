@@ -23,7 +23,7 @@ shared_examples "allows admins to preview the voting booth" do
     click_link "Preview"
   end
 
-  it { uses_the_voting_booth }
+  it { uses_the_voting_booth({ email: admin.email, born_at: "2000-01-01" }) }
 
   it "shows the preview alert" do
     expect(page).to have_content("This is a preview of the voting booth.")
@@ -46,9 +46,11 @@ shared_examples "doesn't allow admins to preview the voting booth" do
   end
 end
 
-def uses_the_voting_booth
+def uses_the_voting_booth(census_data)
   selected_answers = []
   non_selected_answers = []
+
+  login_step(census_data)
 
   # shows a yes/no/abstention question: radio buttons, no random order, no extra information
   question_step(1) do |question|
@@ -57,56 +59,25 @@ def uses_the_voting_booth
     select_answers(question, 1, selected_answers, non_selected_answers)
   end
 
-  # shows a projects question: checkboxes, 6 maximum selections, random order with extra information
-  question_step(2) do |question|
-    select_answers(question, 3, selected_answers, non_selected_answers)
-
-    expect_valid
-
-    check(translated(non_selected_answers.last.title), allow_label_click: true)
-
-    expect_not_valid
-
-    uncheck(translated(non_selected_answers.last.title), allow_label_click: true)
-  end
-
-  # shows a candidates question: checkboxes, random order without extra information
-  question_step(3) do |question|
-    select_answers(question, 5, selected_answers, non_selected_answers)
-  end
-
-  # shows a nota question: checkboxes, random order without extra information, nota checked
-  question_step(4) do |_question|
-    check(I18n.t("decidim.elections.votes.new.nota_option"), allow_label_click: true)
-
-    expect(page).to have_selector("label.is-disabled").exactly(8).times
-
-    expect_valid
-  end
-
   # confirm step
-  non_question_step("#step-4") do
+  non_question_step("#step-1") do
     expect(page).to have_content("CONFIRM YOUR VOTE")
 
     selected_answers.each { |answer| expect(page).to have_i18n_content(answer.title) }
     non_selected_answers.each { |answer| expect(page).not_to have_i18n_content(answer.title) }
 
-    within "#edit-step-2" do
+    within "#edit-step-1" do
       click_link("edit")
     end
   end
 
   # edit step 2
-  question_step(2) do |question|
+  question_step(1) do |question|
     change_answer(question, selected_answers, non_selected_answers)
   end
 
-  question_step(3)
-
-  question_step(4)
-
   # confirm step
-  non_question_step("#step-4") do
+  non_question_step("#step-1") do
     expect(page).to have_content("CONFIRM YOUR VOTE")
 
     selected_answers.each { |answer| expect(page).to have_i18n_content(answer.title) }
@@ -115,14 +86,22 @@ def uses_the_voting_booth
     click_link("Confirm")
   end
 
-  # cast ballot
-  non_question_step(".ballot_decision") do
-    click_button("Cast ballot")
-  end
-
   # confirmed vote page
   expect(page).to have_content("Vote confirmed")
-  expect(page).to have_content("Your vote has been cast!")
+  expect(page).to have_content("You can check your vote using the Vocdoni Explorer portal")
+end
+
+def login_step(census_data)
+  year, month, day = census_data.fetch(:born_at).split("-")
+
+  within "#login" do
+    fill_in :login_email, with: census_data.fetch(:email)
+    fill_in :login_day, with: day
+    fill_in :login_month, with: month
+    fill_in :login_year, with: year
+
+    click_button "Check status"
+  end
 end
 
 def question_step(number)
@@ -130,7 +109,7 @@ def question_step(number)
   within "#step-#{number - 1}" do
     question = election.questions[number - 1]
 
-    expect(page).to have_content("QUESTION #{number} OF 4")
+    expect(page).to have_content("QUESTION #{number} OF 1")
     expect(page).to have_i18n_content(question.title)
 
     yield question if block_given?
@@ -165,11 +144,9 @@ def change_answer(question, selected, non_selected)
   old_answer = question.answers.select { |answer| selected.member?(answer) }.first
 
   selected.delete(old_answer)
-  uncheck(translated(old_answer.title), allow_label_click: true)
   non_selected << old_answer
-
   non_selected.delete(new_answer)
-  check(translated(new_answer.title), allow_label_click: true)
+  choose(translated(new_answer.title), allow_label_click: true)
   selected << new_answer
 end
 
