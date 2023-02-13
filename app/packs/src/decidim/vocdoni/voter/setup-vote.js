@@ -1,28 +1,30 @@
 // A vote component, to send the real votes to the Vocdoni API, using the Vocdoni SDK
 
-import { EnvOptions, VocdoniSDKClient, Vote } from "@vocdoni/sdk";
+import { VocdoniSDKClient, Vote } from "@vocdoni/sdk";
 
 /*
  * Submit a vote to the Vocdoni API
  *
- * @param {string} electionId - The election ID to vote in
- * @param {object} wallet - The wallet to use to sign the vote
- * @param {array} voteValue - The values of the votes to submit
+ * @param {object} options All the different options that interact with Submitting a vote
+ * @property {string} options.vocdoniEnv - The environment of the Vocdoni API
+ * @property {string} options.electionId - The election ID to vote in
+ * @property {object} options.wallet - The wallet to use to sign the vote
+ * @property {array} options.voteValue - The values of the votes to submit
  *
  * @return {Promise<object>} A Promise of an object with two possible reposnses, depending if the
  *   vote was successfull or not.
  *   - If it was sucessful, the format will be `{status: "OK", voteId: voteId}`
  *   - If it was a failure, the format will be `{status: "ERROR", message: error}`
  */
-const submitVote = (electionId, wallet, voteValue) => {
+const submitVote = (options) => {
   const client = new VocdoniSDKClient({
-    env: EnvOptions.DEV,
-    wallet: wallet
+    env: options.env,
+    wallet: options.wallet
   });
-  client.setElectionId(electionId);
+  client.setElectionId(options.electionId);
 
   console.log("Voting...");
-  const vote = new Vote(voteValue);
+  const vote = new Vote(options.voteValue);
   return new Promise((resolve) => {
     client.submitVote(vote).
       then((voteId) => {
@@ -36,7 +38,8 @@ const submitVote = (electionId, wallet, voteValue) => {
 }
 
 export default class VoteComponent {
-  constructor({ electionUniqueId, wallet }) {
+  constructor({ vocdoniEnv, electionUniqueId, wallet }) {
+    this.vocdoniEnv = vocdoniEnv;
     this.electionUniqueId = electionUniqueId;
     this.wallet = wallet;
   }
@@ -75,10 +78,16 @@ export default class VoteComponent {
   }
   async submit(vote) {
     console.log("Submiting vote to Vocdoni API with:");
+    console.log("- ENV => ", this.vocdoniEnv);
     console.log("- ELECTION ID => ", this.electionUniqueId);
     console.log("- WALLET => ", this.wallet);
     console.log("- VALUE => ", vote);
-    const response = await submitVote(this.electionUniqueId, this.wallet, vote);
+    const response = await submitVote({
+      env: this.vocdoniEnv,
+      electionId: this.electionUniqueId,
+      wallet: this.wallet,
+      voteValue: vote
+    });
 
     return response;
   }

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { EnvOptions, VocdoniSDKClient } from "@vocdoni/sdk";
+import { VocdoniSDKClient } from "@vocdoni/sdk";
 
 import VoteQuestionsComponent from "./vote_questions.component";
 import VoteComponent from "./setup-vote";
@@ -79,6 +79,7 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
  * Generate the VoteComponent object in case the Wallet is in the census
  * or show an error message if it is not.
  *
+ * @param {string} vocdoniEnv The environment of the Vocdoni API
  * @param {object} userWallet The Wallet object generated from the login form
  * @param {string} electionUniqueId The unique ID of the election in the Vocdoni API
  *
@@ -86,10 +87,10 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
  *  - The VoteComponent object or null if the wallet is not in the census
  *  - A boolean with true if we should show the next step or false if not
  */
-const voteComponentGenerator = async (userWallet, electionUniqueId) => {
+const voteComponentGenerator = async (vocdoniEnv, userWallet, electionUniqueId) => {
   const checkIfWalletIsInCensus = async (wallet, electionId) => {
     const client = new VocdoniSDKClient({
-      env: EnvOptions.DEV,
+      env: vocdoniEnv,
       wallet: wallet
     })
     client.setElectionId(electionId);
@@ -108,7 +109,7 @@ const voteComponentGenerator = async (userWallet, electionUniqueId) => {
   console.log("IS IN CENSUS => ", isInCensus);
   if (isInCensus) {
     console.log("OK!! Wallet is in census");
-    voteComponent = new VoteComponent({electionUniqueId: electionUniqueId, wallet: userWallet});
+    voteComponent = new VoteComponent({vocdoniEnv: vocdoniEnv, electionUniqueId: electionUniqueId, wallet: userWallet});
     nextStep = true;
   }
 
@@ -204,7 +205,8 @@ $(() => {
       nextStep = true;
     } else {
       const userWallet = walletFromLoginForm($loginForm);
-      [voteComponent, nextStep] = await voteComponentGenerator(userWallet, electionUniqueId);
+      const vocdoniEnv = $voteWrapper.data("vocdoniEnv");
+      [voteComponent, nextStep] = await voteComponentGenerator(vocdoniEnv, userWallet, electionUniqueId);
     }
 
     if (!nextStep) {

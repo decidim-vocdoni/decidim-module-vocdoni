@@ -8,6 +8,10 @@ module Decidim
     module HasVoteFlow
       extend ActiveSupport::Concern
 
+      def vocdoni_api_endpoint_env
+        Decidim::Vocdoni.config.api_endpoint_env
+      end
+
       def preview_mode?
         return @preview_mode if defined?(@preview_mode)
 
@@ -26,4 +30,3 @@ module Decidim
     end
   end
 end
-
