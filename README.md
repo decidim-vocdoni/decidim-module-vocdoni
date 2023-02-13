@@ -36,7 +36,7 @@ And then execute:
 ```bash
 bundle
 bin/rails decidim_vocdoni:install:migrations
-bundle exec rails decidim_vocdoni:webpacker:install
+bin/rails decidim_vocdoni:webpacker:install
 bin/rails db:migrate
 ```
 
@@ -165,5 +165,5 @@ https://crowdin.com/project/decidim-module-vocdoni
 This engine is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 See [LICENSE-AGPLv3.txt](LICENSE-AGPLv3.txt).
 
-As this module works with the Vocdoni App, see https://vocdoni.app/ for more information about their open source licenses.
+As this module works with the Vocdoni App, see https://vocdoni.io/ for more information about their open source licenses.
 
