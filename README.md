@@ -45,6 +45,21 @@ status are checked every 15 minutes, you can do it with this configuration:
 0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status
 ```
 
+## Configuration
+
+It's possible to change the Environment of the Vocdoni API that's being used through an initializer. By default is "dev".
+
+It should be one of the available in the Vocdoni SDK. Currently the supported values are "dev" or "stg". Read more on
+[Vocdoni SDK Usage Environment](https://github.com/vocdoni/vocdoni-sdk#environment)
+
+You can change it on your `config/initializers/decidim.rb` file inside your application:
+
+```
+Decidim::Vocdoni.configure do |config|
+  config.api_endpoint_env = "stg"
+end
+```
+
 ## Contributing
 
 See [Decidim](https://github.com/decidim/decidim).

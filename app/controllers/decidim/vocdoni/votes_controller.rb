@@ -10,7 +10,7 @@ module Decidim
 
       helper VotesHelper
       helper_method :exit_path, :elections, :election, :questions, :questions_count, :vote,
-                    :preview_mode?, :election_unique_id
+                    :preview_mode?, :election_unique_id, :vocdoni_api_endpoint_env
 
       delegate :count, to: :questions, prefix: true
 

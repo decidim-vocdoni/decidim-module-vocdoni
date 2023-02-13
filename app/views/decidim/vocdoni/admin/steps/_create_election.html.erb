@@ -5,6 +5,7 @@
 
   <div class="card-section">
     <%= f.hidden_field :wallet_private_key, value: @current_vocdoni_wallet.private_key %>
+    <%= f.hidden_field :vocdoni_env, value: Decidim::Vocdoni.config.api_endpoint_env %>
     <%= f.hidden_field :vocdoni_election_id %>
 
     <div class="js-election-create-error-message callout alert hide">

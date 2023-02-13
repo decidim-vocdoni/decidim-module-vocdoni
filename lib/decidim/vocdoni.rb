@@ -10,5 +10,12 @@ module Decidim
   # This namespace holds the logic of the `Vocdoni` component. This component
   # allows users to create vocdoni in a participatory space.
   module Vocdoni
+    include ActiveSupport::Configurable
+
+    # Public Setting to configure the Vocdoni API enpoint
+    # It can be "dev" or "stg"
+    config_accessor :api_endpoint_env do
+      "dev"
+    end
   end
 end
