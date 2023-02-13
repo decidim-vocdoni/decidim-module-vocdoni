@@ -17,5 +17,9 @@ module Decidim
     config_accessor :api_endpoint_env do
       "dev"
     end
+
+    def self.explorer_vote_domain
+      "#{api_endpoint_env}.explorer.vote"
+    end
   end
 end

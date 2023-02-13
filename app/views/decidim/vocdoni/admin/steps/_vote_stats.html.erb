@@ -10,7 +10,7 @@
     </div>
     <table class="table-list js-votes-count hide"
        data-wallet="<%= @current_vocdoni_wallet.private_key %>"
-       data-vocdoni-env="<%= Decidim.config.api_endpoint_env %>"
+       data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>"
        data-election-unique-id="<%= @election.vocdoni_election_id %>">
       <thead>
         <tr>

@@ -33,12 +33,7 @@ module Decidim
       end
 
       def election_vote_verify_path
-        engine_router.election_vote_verify_path(
-          "#{key_participatory_space_slug}": current_participatory_space.slug,
-          component_id: current_component.id,
-          election_id: model.id,
-          vote_id: "_"
-        )
+        "https://#{Decidim::Vocdoni.explorer_vote_domain}/verify"
       end
 
       def callout_text
