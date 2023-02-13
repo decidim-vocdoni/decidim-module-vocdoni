@@ -121,6 +121,13 @@ en:
             title: Edit election
             update: Update
           index:
+            description: This component allows you to create and manage elections
+              using the Vocdoni platform. Vocdoni is a secure digital voting solution
+              using decentralized technologies. The voting protocol which powers the
+              platform is designed to be universally verifiable, secure, and resistant
+              to attack and censorship through the use of blockchain technology, together
+              with decentralized technologies and cryptographic mechanisms, such as
+              zero-knowledge proofs.
             title: Elections
           new:
             create: Create
