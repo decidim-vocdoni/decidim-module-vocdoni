@@ -21,10 +21,10 @@ const setupElectionStep = async () => {
     const textareaDemoCensus = showDemoCensus(divDemoCensus);
     textareaDemoCensus.rows = TEST_CENSUS;
     textareaDemoCensus.value = "";
-    for (let i = 1; i < TEST_CENSUS + 1; i++) {
+    for (let idx = 1; idx < TEST_CENSUS + 1; idx++) {
       const wallet = Wallet.createRandom({locale: "en"});
       const mnemonic = wallet.mnemonic.phrase;
-      console.log("VOTER ", i, " =>", mnemonic);
+      console.log("VOTER ", idx, " =>", mnemonic);
       textareaDemoCensus.value += `${mnemonic}\n`;
       census.add(await wallet.getAddress());
     };
