@@ -59,8 +59,8 @@ You can create the development app by running the following commands after
 cloning this project:
 
 ```bash
-$ bundle
-$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake development_app
+bundle
+DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake development_app
 ```
 
 Note that the database user has to have rights to create and drop a database in
@@ -69,7 +69,7 @@ order to create the dummy test app database.
 Then to test how the module works in Decidim, start the development server:
 
 ```bash
-$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bin/rails s
+DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bin/rails s
 ```
 
 Note that `bin/rails` is a convenient wrapper around the command `cd development_app; bundle exec rails`.
@@ -89,7 +89,7 @@ speed up the process.
 
 To do that, start in a separate terminal than the one with `bin/rails s`, and BEFORE it, the following command:
 
-```
+```bash
 bin/webpack-dev-server
 ```
 
@@ -104,8 +104,8 @@ project is set to follow the same rules that Decidim itself follows.
 You can run the code styling checks by running the following commands from the
 console:
 
-```
-$ bundle exec rubocop
+```bash
+bundle exec rubocop
 ```
 
 To ease up following the style guide, you should install the plugin to your
@@ -130,9 +130,9 @@ run the following commands:
 To run the tests run the following in the gem development path:
 
 ```bash
-$ bundle
-$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake test_app
-$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rspec
+bundle
+DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake test_app
+DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rspec
 ```
 
 Note that the database user has to have rights to create and drop a database in
@@ -163,5 +163,5 @@ https://crowdin.com/project/decidim-module-vocdoni
 This engine is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 See [LICENSE-AGPLv3.txt](LICENSE-AGPLv3.txt).
 
-As this module works with the Vocdoni App, see https://vocdoni.io/ for more information about their open source licenses.
+As this module works with the Vocdoni SDK, see https://vocdoni.io/ for more information about their open source licenses.
 
