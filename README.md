@@ -146,12 +146,10 @@ commands shown above.
 
 ### Test code coverage
 
-Code coverage report is generated automatically in a folder named `coverage` in the project root which contains
-the code coverage report.
-
-```bash
-firefox coverage/index.html
-```
+Code coverage report is generated automatically after running the test suite, in a folder
+named `coverage` in the project root which contains the code coverage report. It's
+available at the file ./coverage/index.html. If you're using GNU/Linux, you can open
+it with `xdg-open ./coverage/index.html`.
 
 ### Localization
 
