@@ -22,7 +22,7 @@
 <% if model.started? %>
   <%= t("verify.already_voted", scope: "decidim.vocdoni.elections.show") %>
 
-  <%= link_to t("verify.verify_here", scope: "decidim.vocdoni.elections.show"), election_vote_verify_path %>
+  <%= link_to t("verify.verify_here", scope: "decidim.vocdoni.elections.show"), election_vote_verify_path, target: "_blank", rel: "noopener noreferrer" %>
 <% else %>
   <span class="disabled"><%= t("verify.will_verify", scope: "decidim.vocdoni.elections.show") %></span>
 <% end %>

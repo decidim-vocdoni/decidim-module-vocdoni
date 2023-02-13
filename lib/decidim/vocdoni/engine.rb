@@ -12,7 +12,6 @@ module Decidim
       routes do
         resources :elections, only: [:index, :show] do
           resources :votes, only: [:new, :create, :update, :show] do
-            get :verify
             match "new", action: :new, via: :post, as: :login, on: :collection
           end
         end

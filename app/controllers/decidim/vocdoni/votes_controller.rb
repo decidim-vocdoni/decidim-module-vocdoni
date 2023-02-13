@@ -24,10 +24,6 @@ module Decidim
         enforce_permission_to :view, :election, election: election
       end
 
-      def verify
-        enforce_permission_to :view, :election, election: election
-      end
-
       private
 
       def election_unique_id

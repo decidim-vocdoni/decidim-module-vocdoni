@@ -43,8 +43,12 @@ describe Decidim::Vocdoni::Election do
   describe "#explorer_vote_url" do
     subject(:election) { build :vocdoni_election, vocdoni_election_id: "12345"}
 
+    before do
+      allow(Decidim::Vocdoni).to receive(:explorer_vote_domain).and_return("example.org")
+    end
+
     it "returns the URL" do
-      expect(subject.explorer_vote_url).to eq "https://dev.explorer.vote/processes/show/#/12345"
+      expect(subject.explorer_vote_url).to eq "https://example.org/processes/show/#/12345"
     end
   end
 end
