@@ -40,7 +40,7 @@ jobs:
         with:
           bundler-cache: true
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
 

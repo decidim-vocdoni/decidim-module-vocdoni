@@ -7,7 +7,7 @@
 
 :warning: This module is under development and is not ready to be used in production.
 
-An elections component for decidim's participatory spaces based on the [Vocdoni][https://vocdoni.app].
+An elections component for decidim's participatory spaces based on the [Vocdoni](https://vocdoni.app).
 
 Vocdoni is a secure digital voting solution using decentralized technologies.
 The voting protocol which powers the platform is designed to be universally verifiable,
