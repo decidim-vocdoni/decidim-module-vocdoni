@@ -10,7 +10,7 @@ describe "Admin manages election steps", :slow, type: :system do
   include_context "when managing a component as an admin"
 
   describe "setup an election" do
-    let(:election) { create :vocdoni_election, :with_photos, :ready_for_setup, component: current_component, title: { en: "English title", es: "" } }
+    let(:election) { create :vocdoni_election, :ready_for_setup, component: current_component, title: { en: "English title", es: "" } }
 
     it "performs the action successfully" do
       visit_steps_page
