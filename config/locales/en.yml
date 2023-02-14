@@ -183,9 +183,9 @@ en:
             requirements:
               census_ready: The census is <strong>ready</strong>.
               component_published: The election component is <strong>published</strong>.
-              minimum_answers: Each question has <strong>at least 2 answers</strong>.
+              minimum_answers: Each question has <strong>at least two answers</strong>.
               minimum_photos: The election has <strong>at least one photo</strong>.
-              minimum_questions: The election has <strong>at least 1 question</strong>.
+              minimum_questions: The election has <strong>at least one question</strong>.
               participatory_space_published: The participatory space is <strong>published</strong>.
               published: The election is <strong>published</strong>.
             submit: Setup election

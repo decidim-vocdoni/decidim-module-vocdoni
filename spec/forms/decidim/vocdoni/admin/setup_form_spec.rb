@@ -25,10 +25,10 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       hash_including({ minimum_photos: "The election has <strong>at least one photo</strong>." })
     )
     expect(subject.messages).to match(
-      hash_including({ minimum_answers: "Each question has <strong>at least 2 answers</strong>." })
+      hash_including({ minimum_answers: "Each question has <strong>at least two answers</strong>." })
     )
     expect(subject.messages).to match(
-      hash_including({ minimum_questions: "The election has <strong>at least 1 question</strong>." })
+      hash_including({ minimum_questions: "The election has <strong>at least one question</strong>." })
     )
     expect(subject.messages).to match(
       hash_including({ published: "The election is <strong>published</strong>." })
