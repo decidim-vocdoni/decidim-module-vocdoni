@@ -22,6 +22,9 @@ describe Decidim::Vocdoni::Admin::SetupForm do
 
   it "shows messages" do
     expect(subject.messages).to match(
+      hash_including({ minimum_photos: "The election has <strong>at least one photo</strong>." })
+    )
+    expect(subject.messages).to match(
       hash_including({ minimum_answers: "Each question has <strong>at least 2 answers</strong>." })
     )
     expect(subject.messages).to match(
@@ -45,6 +48,9 @@ describe Decidim::Vocdoni::Admin::SetupForm do
 
     it "shows errors" do
       subject.valid?
+      expect(subject.errors.messages).to match(
+        hash_including({ minimum_photos: ["The election <strong>must have at least one photo</strong>."] })
+      )
       expect(subject.errors.messages).to match(
         hash_including({ minimum_questions: ["The election <strong>must have at least one question</strong>."] })
       )

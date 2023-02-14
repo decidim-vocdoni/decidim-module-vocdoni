@@ -19,6 +19,7 @@ module Decidim
 
         def validations
           @validations ||= [
+            [:minimum_photos, {}, election.photos.any?],
             [:minimum_questions, {}, election.questions.any?],
             [:minimum_answers, {}, election.minimum_answers?],
             [:published, {}, election.published_at.present?],
