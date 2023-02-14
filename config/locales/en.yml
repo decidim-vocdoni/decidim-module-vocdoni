@@ -172,6 +172,7 @@ en:
               component_published: The election component is <strong>not published</strong>.
               minimum_answers: Questions must have <strong>at least two answers</strong>.
               minimum_questions: The election <strong>must have at least one question</strong>.
+              participatory_space_published: The participatory space is <strong>not published</strong>.
               published: The election is <strong>not published</strong>.
             failed:
               message: Check the Web Development console log error message, fix the
@@ -183,6 +184,7 @@ en:
               component_published: The election component is <strong>published</strong>.
               minimum_answers: Each question has <strong>at least 2 answers</strong>.
               minimum_questions: The election has <strong>at least 1 question</strong>.
+              participatory_space_published: The participatory space is <strong>published</strong>.
               published: The election is <strong>published</strong>.
             submit: Setup election
             success: Election successfully sent to the Vocdoni API

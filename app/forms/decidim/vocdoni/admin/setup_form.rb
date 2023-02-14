@@ -23,6 +23,7 @@ module Decidim
             [:minimum_answers, {}, election.minimum_answers?],
             [:published, {}, election.published_at.present?],
             [:component_published, {}, election.component.published?],
+            [:participatory_space_published, {}, election.participatory_space.published?],
             [:census_ready, {}, census.ready_to_setup?]
           ].freeze
         end
