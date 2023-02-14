@@ -42,13 +42,21 @@ module Decidim
 
         private
 
+        class CredentialCensusData
+          attr_accessor :credentials
+
+          def initialize(credentials:)
+            @credentials = credentials
+          end
+        end
+
         def current_step_form_instance
           @current_step_form_instance ||= case current_step
                                           when "pending_upload"
                                             form(current_step_form_class).instance
                                           when "pending_generation"
                                             form(current_step_form_class).from_model(
-                                              OpenStruct.new(credentials: Voter.where(election: election))
+                                              CredentialCensusData.new(credentials: Voter.where(election: election))
                                             )
                                           when "ready"
                                             nil
