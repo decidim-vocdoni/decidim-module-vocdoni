@@ -77,6 +77,7 @@ FactoryBot.define do
       published
       complete
       with_census
+      with_photos
     end
 
     trait :with_photos do
