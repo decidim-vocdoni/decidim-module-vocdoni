@@ -1,3 +1,5 @@
+/* eslint-disable no-warning-comments, no-plusplus, no-new */
+
 import { EnvOptions, PlainCensus } from "@vocdoni/sdk";
 import { Wallet } from "@ethersproject/wallet";
 import SetupElection from "src/decidim/vocdoni/admin/setup_election";
@@ -10,25 +12,27 @@ const setupElectionStep = async () => {
     // How many addresses we'll create for the Demo
     const TEST_CENSUS = 5;
 
-    const showDemoCensus = (divDemoCensus) => {
-      divDemoCensus.classList.remove("hide");
-      return divDemoCensus.querySelector("textarea");
+    const showDemoCensus = (div) => {
+      div.classList.remove("hide");
+      return div.querySelector("textarea");
     }
 
     const census = new PlainCensus();
     const textareaDemoCensus = showDemoCensus(divDemoCensus);
     textareaDemoCensus.rows = TEST_CENSUS;
     textareaDemoCensus.value = "";
-    for (let i = 1; i < TEST_CENSUS+1; i++) {
+    for (let idx = 1; idx < TEST_CENSUS + 1; idx++) {
       const wallet = Wallet.createRandom({locale: "en"});
       const mnemonic = wallet.mnemonic.phrase;
-      console.log("VOTER ", i, " =>", mnemonic);
+      console.log("VOTER ", idx, " =>", mnemonic);
       textareaDemoCensus.value += `${mnemonic}\n`;
       census.add(await wallet.getAddress());
     };
 
     return census;
   }
+
+  const createElectionForm = document.querySelector("form.create_election");
 
   const onSuccess = (electionId) => {
     createElectionForm.querySelector("#setup_vocdoni_election_id").value = electionId;
@@ -45,7 +49,6 @@ const setupElectionStep = async () => {
     setupElectionButton.querySelector(".text").classList.add("hide");
   }
 
-  const createElectionForm = document.querySelector("form.create_election");
   if (!createElectionForm) {
     return;
   }

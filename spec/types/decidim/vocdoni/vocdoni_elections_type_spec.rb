@@ -13,7 +13,7 @@ module Decidim
       it_behaves_like "a component query type"
 
       describe "elections" do
-       let!(:component_vocdoni) { create_list(:vocdoni_election, 2, :published, component: model) }
+        let!(:component_vocdoni) { create_list(:vocdoni_election, 2, :published, component: model) }
         let!(:component_vocdoni_hidden) { create_list(:vocdoni_election, 2, component: model) }
         let!(:other_elections) { create_list(:vocdoni_election, 2) }
 
