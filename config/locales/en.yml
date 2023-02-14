@@ -214,7 +214,7 @@ en:
             title: Vote period ended
           vote_stats:
             no_vote_statistics_yet: No vote statistics yet
-            title: Title
+            title: Vote statistics
             voters: Voters
             votes: Votes
         wallet:

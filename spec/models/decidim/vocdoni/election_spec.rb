@@ -61,7 +61,7 @@ describe Decidim::Vocdoni::Election do
   end
 
   describe "#explorer_vote_url" do
-    subject(:election) { build :vocdoni_election, vocdoni_election_id: "12345"}
+    subject(:election) { build :vocdoni_election, vocdoni_election_id: "12345" }
 
     it "returns the URL" do
       expect(subject.explorer_vote_url).to eq "https://dev.explorer.vote/processes/show/#/12345"

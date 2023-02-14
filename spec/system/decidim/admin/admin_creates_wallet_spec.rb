@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Admin creates wallet", :slow, type: :system do
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create :vocdoni_component }
-  let(:election) { create :vocdoni_election, :ready_for_setup, component: current_component, title: { en: "English title"} }
+  let(:election) { create :vocdoni_election, :ready_for_setup, component: current_component, title: { en: "English title" } }
 
   include_context "when managing a component as an admin"
 
