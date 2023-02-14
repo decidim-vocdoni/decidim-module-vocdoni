@@ -13,8 +13,9 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       current_step: "create_election"
     }
   end
-  let(:election) { create :vocdoni_election, :ready_for_setup }
-  let(:component) { election.component }
+  let(:election) { create :vocdoni_election, :ready_for_setup, component: component }
+  let(:component) { create :vocdoni_component, participatory_space: participatory_process }
+  let(:participatory_process) { create :participatory_process, :published }
   let(:attributes) { {} }
 
   it { is_expected.to be_valid }
@@ -28,6 +29,9 @@ describe Decidim::Vocdoni::Admin::SetupForm do
     )
     expect(subject.messages).to match(
       hash_including({ published: "The election is <strong>published</strong>." })
+    )
+    expect(subject.messages).to match(
+      hash_including({ participatory_space_published: "The participatory space is <strong>published</strong>." })
     )
     expect(subject.messages).to match(
       hash_including({ census_ready: "The census is <strong>ready</strong>."})
@@ -52,6 +56,19 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       )
       expect(subject.errors.messages).to match(
         hash_including({ census_ready: ["The census is <strong>not ready</strong>."] })
+      )
+    end
+  end
+
+  context "when the participatory space is not published" do
+    let!(:participatory_process) { create :participatory_process, :unpublished }
+
+    it { is_expected.to be_invalid }
+
+    it "shows errors" do
+      subject.valid?
+      expect(subject.errors.messages).to match(
+        hash_including({ participatory_space_published: ["The participatory space is <strong>not published</strong>."] })
       )
     end
   end
