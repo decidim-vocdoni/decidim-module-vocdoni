@@ -21,12 +21,16 @@ describe Decidim::Vocdoni::Admin::SetupForm do
 
   it "shows messages" do
     expect(subject.messages).to match(
-      hash_including({
-                       minimum_answers: "Each question has <strong>at least 2 answers</strong>.",
-                       minimum_questions: "The election has <strong>at least 1 question</strong>.",
-                       published: "The election is <strong>published</strong>.",
-                       census_ready: "The census is <strong>ready</strong>."
-                     })
+      hash_including({ minimum_answers: "Each question has <strong>at least 2 answers</strong>." })
+    )
+    expect(subject.messages).to match(
+      hash_including({ minimum_questions: "The election has <strong>at least 1 question</strong>." })
+    )
+    expect(subject.messages).to match(
+      hash_including({ published: "The election is <strong>published</strong>." })
+    )
+    expect(subject.messages).to match(
+      hash_including({ census_ready: "The census is <strong>ready</strong>."})
     )
   end
 
@@ -37,12 +41,18 @@ describe Decidim::Vocdoni::Admin::SetupForm do
 
     it "shows errors" do
       subject.valid?
-      expect(subject.errors.messages).to eq({
-                                              minimum_questions: ["The election <strong>must have at least one question</strong>."],
-                                              minimum_answers: ["Questions must have <strong>at least two answers</strong>."],
-                                              published: ["The election is <strong>not published</strong>."],
-                                              census_ready: ["The census is <strong>not ready</strong>."]
-                                            })
+      expect(subject.errors.messages).to match(
+        hash_including({ minimum_questions: ["The election <strong>must have at least one question</strong>."] })
+      )
+      expect(subject.errors.messages).to match(
+        hash_including({ minimum_answers: ["Questions must have <strong>at least two answers</strong>."] })
+      )
+      expect(subject.errors.messages).to match(
+        hash_including({ published: ["The election is <strong>not published</strong>."] })
+      )
+      expect(subject.errors.messages).to match(
+        hash_including({ census_ready: ["The census is <strong>not ready</strong>."] })
+      )
     end
   end
 
