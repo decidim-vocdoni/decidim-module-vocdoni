@@ -79,7 +79,7 @@ en:
           destroy_all:
             success: All census data have been deleted
           generate:
-            info: You can generate the credentials for all the participants with the
+            info: You must generate the credentials for all the participants with the
               following action.
             submit: Generate credentials
             title: 2. Generate credentials for the participants
