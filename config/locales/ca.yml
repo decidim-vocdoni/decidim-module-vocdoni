@@ -133,6 +133,8 @@ ca:
             title: Election created
             url_html: You can watch it out at the <a href="%{explorer_vote_url}" target="_blank" rel="noopener noreferrer">Vocdoni Explorer</a>.
           processing: Processing...
+          ready:
+            title: Ready
           results_published:
             title: Results published
           tally_ended:
@@ -143,8 +145,6 @@ ca:
             title: Vote period
           vote_ended:
             title: Vote period ended
-          ready:
-            title: Ready
         wallet:
           create:
             invalid: There was a problem creating the wallet
