@@ -63,7 +63,7 @@ export default class SetupElection {
 
     const clientInfo = await this.client.createAccount();
     if (clientInfo.balance === 0) {
-      this.client.collectFaucetTokens();
+      await this.client.collectFaucetTokens();
     }
 
     console.group("Client");
