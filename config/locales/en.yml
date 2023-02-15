@@ -229,7 +229,9 @@ en:
             message: We're on the vote period until %{end_time}.
             title: Vote period
           vote_ended:
-            text: Text
+            submit: Publish results
+            success: Results successfully published
+            text: The vote period has ended. You can publish the results.
             title: Vote period ended
           vote_stats:
             answer: Answer

@@ -48,13 +48,15 @@ module Decidim
 
         def current_step_form_class
           @current_step_form_class ||= {
-            "create_election" => SetupForm
+            "create_election" => SetupForm,
+            "vote_ended" => ResultsForm
           }[current_step]
         end
 
         def current_step_command_class
           @current_step_command_class ||= {
-            "create_election" => SetupElection
+            "create_election" => SetupElection,
+            "vote_ended" => SaveResults
           }[current_step]
         end
 

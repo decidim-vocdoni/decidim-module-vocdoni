@@ -8,4 +8,20 @@
   </div>
 </div>
 
-<%= render(partial: "vote_stats") %>
+<%= render(partial: "vote_stats", locals: { polling: "false" }) %>
+
+<div class="js-votes-results hide"
+  data-vocdoni-wallet-private-key="<%= @current_vocdoni_wallet.private_key %>"
+  data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>"
+  data-election-unique-id="<%= @election.vocdoni_election_id %>">
+
+  <% f.object.election.questions.each_with_index do |question, idx| %>
+    <% question.answers.each do |answer| %>
+      <%= f.fields_for "results[]", answer do |result_form| %>
+        <%= result_form.number_field :id %>
+        <%= result_form.number_field :votes, "data-question-idx" => idx, "data-answer-id" => answer.id, value: 0 %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+</div>
