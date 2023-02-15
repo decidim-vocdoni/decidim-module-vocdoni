@@ -1,36 +1,51 @@
 import { VocdoniSDKClient } from "@vocdoni/sdk";
 
+// Votes step
+//
+// Fetch the votes from the API and show them in the UI
 const voteStep = async () => {
-  // Setup election step
   const electionVotesMetadataTable = document.querySelector(".js-votes-count");
   if (!electionVotesMetadataTable) {
     return;
   }
 
-  // Wait for 3s
-  const WAIT_TIME_MS = 3000;
+  // Wait for 30s
+  const WAIT_TIME_MS = 30000;
 
-  const fetchVotesStats = async () => {
-    const currentVocdoniWalletPrivateKey = electionVotesMetadataTable.dataset.vocdoniWalletPrivateKey;
-    const electionUniqueId = electionVotesMetadataTable.dataset.electionUniqueId;
-    const vocdoniEnv = electionVotesMetadataTable.dataset.vocdoniEnv;
-
-    const client = new VocdoniSDKClient({
-      env: vocdoniEnv,
-      wallet: currentVocdoniWalletPrivateKey
-    })
-    client.setElectionId(electionUniqueId);
+  /*
+   * Fetch the votes stats from the Vocdoni API
+   *
+   * @param {object} client - The Vocdoni SDK client instantiated with the election ID and the wallet
+   * @returns void
+   */
+  const fetchVotesStats = async (client) => {
     const electionMetadata = await client.fetchElection();
+    console.log("ELECTION METADATA => ", electionMetadata);
+    const results = electionMetadata.results;
 
-    console.group("Election Metadata");
-    console.log("WALLET => ", currentVocdoniWalletPrivateKey);
-    console.log("ENVIRONMENT => ", vocdoniEnv);
-    console.log("ELECTION_UNIQUE_ID =>", electionUniqueId);
-    console.log("ELECTION_METADATA =>", electionMetadata);
-    console.groupEnd();
+    for (let idx = 0; idx < results.length; idx++) {
+      const $questionAnswersCells = $(`td[data-question-idx="${idx}"]`);
+      for (const answerCell of $questionAnswersCells) {
+        const answerId = $(answerCell).data("answer-id");
+        const answerVotes = results[idx][answerId];
+        answerCell.innerHTML = answerVotes;
+        console.log(`FOR QUESTION ${idx} - ANSWER ${answerId} - VOTES ${answerVotes}`);
+      }
+    }
   }
 
-  setInterval(fetchVotesStats(), WAIT_TIME_MS);
+  const currentVocdoniWalletPrivateKey = electionVotesMetadataTable.dataset.vocdoniWalletPrivateKey;
+  const electionUniqueId = electionVotesMetadataTable.dataset.electionUniqueId;
+  const vocdoniEnv = electionVotesMetadataTable.dataset.vocdoniEnv;
+
+  const client = new VocdoniSDKClient({
+    env: vocdoniEnv,
+    wallet: currentVocdoniWalletPrivateKey
+  })
+  client.setElectionId(electionUniqueId);
+
+  fetchVotesStats(client);
+  setInterval(fetchVotesStats, WAIT_TIME_MS, client);
 }
 
 document.addEventListener("DOMContentLoaded", () => {

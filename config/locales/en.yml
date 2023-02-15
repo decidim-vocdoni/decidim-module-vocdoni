@@ -227,7 +227,7 @@ en:
             answer: Answer
             question: Question
             result: Result
-            title: Title
+            title: Vote statistics
         wallet:
           create:
             invalid: There was a problem creating the wallet

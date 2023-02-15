@@ -5,27 +5,42 @@
     </h2>
   </div>
   <div class="table-scroll">
-    <div class="card-section js-no-vote-stats-message">
-      <p><%= t(".no_vote_statistics_yet") %></p>
-    </div>
-    <table class="table-list js-votes-count hide"
-       data-wallet="<%= @current_vocdoni_wallet.private_key %>"
-       data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>"
-       data-election-unique-id="<%= @election.vocdoni_election_id %>">
-      <thead>
-        <tr>
-          <th></th>
-          <th><%= t(".votes") %></th>
-          <th><%= t(".voters") %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td class="js-vote-stats"></td>
-          <td class="js-voters-stats"></td>
-        </tr>
-      </tbody>
-    </table>
+    <ul class="accordion mb-m evote__preview js-votes-count"
+        data-wallet="<%= @current_vocdoni_wallet.private_key %>"
+        data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>"
+        data-election-unique-id="<%= @election.vocdoni_election_id %>"
+        data-accordion
+        data-multi-expand="true"
+        data-allow-all-closed="true">
+        <% election.questions.each_with_index do |question, idx| %>
+          <li class="accordion-item evote__preview-question <%= " is-active" if idx == 0 %>" data-accordion-item>
+            <a href="#" class="accordion-title flex--sbc"><%= t(".question") %>: <%= translated_attribute(question.title) %></a>
+            <div class="accordion-content" data-tab-content>
+              <div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th><%= t(".answer") %></th>
+                      <th><%= t(".result") %></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% question.answers.each do |answer| %>
+                      <tr>
+                        <td><%= translated_attribute(answer.title) %></td>
+                        <td data-question-idx="<%= idx %>" data-answer-id="<%= answer.id %>"></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+        <% end %>
+    </ul>
+</div>
+
+
+
   </div>
 </div>
