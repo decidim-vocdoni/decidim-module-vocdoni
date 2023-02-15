@@ -21,7 +21,7 @@ module Decidim
 
         def action_string
           case action
-          when "publish", "unpublish", "create", "delete", "update", "setup", "start_vote", "end_vote", "start_tally", "publish_results"
+          when "publish", "unpublish", "create", "delete", "update", "setup", "start_vote", "end_vote", "publish_results"
             "decidim.vocdoni.admin_log.election.#{action}"
           else
             super

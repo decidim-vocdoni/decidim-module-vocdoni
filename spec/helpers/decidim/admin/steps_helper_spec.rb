@@ -14,8 +14,6 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
         ["created", "text-muted"],
         ["vote", "text-muted"],
         ["vote_ended", "text-muted"],
-        ["tally_started", "text-muted"],
-        ["tally_ended", "text-muted"],
         ["results_published", "text-muted"]
       ])
     }
@@ -29,8 +27,6 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
           ["created", "text-success"],
           ["vote", "text-warning"],
           ["vote_ended", "text-muted"],
-          ["tally_started", "text-muted"],
-          ["tally_ended", "text-muted"],
           ["results_published", "text-muted"]
         ])
       }
@@ -45,8 +41,6 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
           ["created", "text-success"],
           ["vote", "text-success"],
           ["vote_ended", "text-success"],
-          ["tally_started", "text-success"],
-          ["tally_ended", "text-success"],
           ["results_published", "text-warning"]
         ])
       }

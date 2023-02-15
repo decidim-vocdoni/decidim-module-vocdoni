@@ -11,7 +11,7 @@ ignore_unused:
   - "decidim.events.vocdoni.election_published.{email_intro,email_outro,email_subject,notification_title}"
   - "decidim.statistics.elections_count"
   - "decidim.vocdoni.admin.wallets.ready.title"
-  - "decidim.vocdoni.admin_log.election.{create,delete,end_vote,publish,publish_results,setup,start_tally,start_vote,unpublish,update}"
+  - "decidim.vocdoni.admin_log.election.{create,delete,end_vote,publish,publish_results,setup,start_vote,unpublish,update}"
   - "decidim.vocdoni.admin_log.wallet.create"
   - "decidim.vocdoni.election_m.badge_name.{finished,ongoing,upcoming}"
   - "decidim.vocdoni.election_m.questions"
