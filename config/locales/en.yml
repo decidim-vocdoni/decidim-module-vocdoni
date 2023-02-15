@@ -173,7 +173,8 @@ en:
               minimum_answers: Questions must have <strong>at least two answers</strong>.
               minimum_photos: The election <strong>must have at least one photo</strong>.
               minimum_questions: The election <strong>must have at least one question</strong>.
-              participatory_space_published: The participatory space is <strong>not published</strong>.
+              participatory_space_published: The participatory space is <strong>not
+                published</strong>.
               published: The election is <strong>not published</strong>.
             failed:
               message: Check the Web Development console log error message, fix the
@@ -223,10 +224,10 @@ en:
             text: Text
             title: Vote period ended
           vote_stats:
-            no_vote_statistics_yet: No vote statistics yet
+            answer: Answer
+            question: Question
+            result: Result
             title: Title
-            voters: Voters
-            votes: Votes
         wallet:
           create:
             invalid: There was a problem creating the wallet
