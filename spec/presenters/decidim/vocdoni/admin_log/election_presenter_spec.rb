@@ -82,15 +82,6 @@ module Decidim
         end
       end
 
-      context "when the tally is started" do
-        let(:action) { :start_tally }
-
-        it "shows the tally has started" do
-          expect(subject.present).to include(" started the tally for the election ")
-          expect(subject.present).to include(" on the Vocdoni API")
-        end
-      end
-
       context "when the election results are published" do
         let(:action) { :publish_results }
 
