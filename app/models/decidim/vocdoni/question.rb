@@ -14,6 +14,10 @@ module Decidim
 
       default_scope { order(weight: :asc, id: :asc) }
 
+      def total_votes
+        answers.sum(:votes)
+      end
+
       def slug
         "question-#{id}"
       end
