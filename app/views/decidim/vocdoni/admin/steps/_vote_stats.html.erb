@@ -4,7 +4,7 @@
       <%= t(".title") %>
     </h2>
   </div>
-  <div class="table-scroll">
+  <div class="card-section table-scroll">
     <ul class="accordion mb-m evote__preview js-votes-count"
         data-wallet="<%= @current_vocdoni_wallet.private_key %>"
         data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>"
@@ -38,9 +38,5 @@
           </li>
         <% end %>
     </ul>
-</div>
-
-
-
   </div>
 </div>
