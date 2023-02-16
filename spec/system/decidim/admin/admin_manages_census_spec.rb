@@ -13,7 +13,7 @@ describe "Admin manages census", :slow, type: :system do
     it "uploads the census" do
       visit_census_page
 
-      expect(page).to have_content("1. Upload a new census")
+      expect(page).to have_content("Upload a new census")
 
       attach_file("census_data[file]", valid_census_file)
       click_button "Upload file"
@@ -34,11 +34,13 @@ describe "Admin manages census", :slow, type: :system do
       it "generates the credentials" do
         visit_census_page
 
-        expect(page).to have_content("2. Generate credentials for the participants")
+        expect(page).to have_content("There are 5 records loaded in total")
+        expect(page).to have_content("Current census data")
+        expect(page).to have_content("Confirm the census data")
 
-        click_button "Generate credentials"
+        click_button "Confirm the census data"
 
-        expect(page).to have_content("The census data is uploaded, the credentials generated, and its ready to setup")
+        expect(page).to have_content("The census data is uploaded and confirmed")
         expect(voter1.reload.wallet_address).to eq("0x50a688dbB767bD3ebd93022B87B2c19cE936bd93")
         expect(voter2.reload.wallet_address).to eq("0xA7e77F2706e6981002c15B5E8d441fBC8EA0fC9E")
         expect(voter3.reload.wallet_address).to eq("0xd2d6C90A4f4daed530D9b0B7Aae3271c73610AA7")
@@ -61,8 +63,8 @@ describe "Admin manages census", :slow, type: :system do
       it "doesn't have any form" do
         visit_census_page
 
-        expect(page).not_to have_content("1. Upload a new census")
-        expect(page).not_to have_content("2. Generate credentials for the participants")
+        expect(page).not_to have_content("Upload a new census")
+        expect(page).not_to have_content("Confirm the census data")
       end
 
       describe "and we want to delete it" do
@@ -88,8 +90,7 @@ describe "Admin manages census", :slow, type: :system do
       click_link "OK"
     end
 
-    expect(page).to have_content("All census data have been deleted")
-    expect(page).to have_content("There are no census data")
+    expect(page).to have_content("Upload a new census")
   end
 
   def visit_census_page
