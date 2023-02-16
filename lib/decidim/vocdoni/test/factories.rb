@@ -59,6 +59,8 @@ FactoryBot.define do
     trait :complete do
       after(:build) do |election, _evaluator|
         election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
       end
     end
 
