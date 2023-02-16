@@ -1,0 +1,11 @@
+<p><%= t("decidim.vocdoni.admin.census.new.info") %></p>
+<pre class="code-block">
+email;born_at
+user@example.org;1984-01-25
+user2@example.org;2000-12-15</pre>
+<%= decidim_form_for form, url: election_census_path(election), multipart: true do |form| %>
+  <%= label_tag :file, t("new.file", scope: "decidim.vocdoni.admin.census") %>
+  <%= form.file_field :file, required: true %>
+  <%= submit_tag t("new.submit", scope: "decidim.vocdoni.admin.census"), class: "button" %>
+<% end %>
+
