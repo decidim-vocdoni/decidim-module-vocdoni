@@ -32,11 +32,11 @@ const setupElectionStep = async () => {
     showLoadingSpinner(setupElectionButton);
 
     const election = new SetupElection({
-      walletPrivateKey: createElectionForm.querySelector("#setup_wallet_private_key").value,
+      walletPrivateKey: createElectionForm.querySelector(".js-election-setup").dataset.vocdoniWalletPrivateKey,
       graphqlApiUrl: `${window.location.origin}/api`,
       componentId: window.location.pathname.split("/")[5],
       electionId: window.location.pathname.split("/")[8],
-      env: createElectionForm.querySelector("#setup_vocdoni_env").value
+      env: createElectionForm.querySelector(".js-election-setup").dataset.vocdoniEnv
     }, onSuccess, onFailure);
     election.run();
   });

@@ -3,24 +3,25 @@
     <h2 class="card-title"><%= t(".title") %></h2>
   </div>
 
-  <div class="card-section">
-    <%= f.hidden_field :wallet_private_key, value: @current_vocdoni_wallet.private_key %>
-    <%= f.hidden_field :vocdoni_env, value: Decidim::Vocdoni.config.api_endpoint_env %>
-    <%= f.hidden_field :vocdoni_election_id %>
+  <div class="card-section js-election-setup"
+       data-vocdoni-wallet-private-key="<%= @current_vocdoni_wallet.private_key %>"
+       data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>">
 
-    <div class="js-election-create-error-message callout alert hide">
-      <h3 class="h5"><%= t("failed.title", scope: "decidim.vocdoni.admin.steps.create_election") %></h2>
-      <p><%= t("failed.message", scope: "decidim.vocdoni.admin.steps.create_election") %></p>
-    </div>
+       <%= f.hidden_field :vocdoni_election_id %>
 
-    <ul class="no-bullet-indented">
-      <% form.messages.each do |key, value| %>
-        <% if form.errors.include?(key) %>
-          <li><%= icon "x", class: "text-alert", role: "img", "aria-hidden": true %>&nbsp;<%= form.errors.messages[key][0].html_safe %></li>
-        <% else %>
-          <li><%= icon "check", class: "text-success", role: "img", "aria-hidden": true %>&nbsp;<%= value.html_safe %></li>
-        <% end %>
-      <% end %>
-    </ul>
+       <div class="js-election-create-error-message callout alert hide">
+         <h3 class="h5"><%= t("failed.title", scope: "decidim.vocdoni.admin.steps.create_election") %></h2>
+         <p><%= t("failed.message", scope: "decidim.vocdoni.admin.steps.create_election") %></p>
+       </div>
+
+       <ul class="no-bullet-indented">
+         <% form.messages.each do |key, value| %>
+           <% if form.errors.include?(key) %>
+             <li><%= icon "x", class: "text-alert", role: "img", "aria-hidden": true %>&nbsp;<%= form.errors.messages[key][0].html_safe %></li>
+           <% else %>
+             <li><%= icon "check", class: "text-success", role: "img", "aria-hidden": true %>&nbsp;<%= value.html_safe %></li>
+           <% end %>
+         <% end %>
+       </ul>
   </div>
 </div>
