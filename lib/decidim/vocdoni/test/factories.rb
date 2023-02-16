@@ -58,6 +58,7 @@ FactoryBot.define do
     end
 
     trait :finished do
+      started
       complete
       end_time { 1.day.ago }
       blocked_at { Time.current }
