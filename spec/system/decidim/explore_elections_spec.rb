@@ -97,8 +97,6 @@ describe "Explore elections", :slow, type: :system do
     end
 
     it "shows result information" do
-      skip "Not implemented yet"
-
       expect(page).to have_i18n_content(question.title)
       expect(page).to have_content("ELECTION RESULTS")
     end

@@ -18,6 +18,12 @@ module Decidim
 
       default_scope { order(weight: :asc, id: :asc) }
 
+      # A votes percentage relative to the question
+      # Returns a Float.
+      def votes_percentage
+        @votes_percentage ||= (votes.to_f / question.total_votes * 100.0).round
+      end
+
       def slug
         "answer-#{id}"
       end
