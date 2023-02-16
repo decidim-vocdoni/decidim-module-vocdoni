@@ -288,6 +288,14 @@ en:
           available_answers: 'Available answers:'
           description: 'These are the questions you will find in the voting process:'
           title: Election questions
+        results:
+          description: 'These are the results of the voting, for each question:'
+          percentage: "%{count}%"
+          title: Election results
+          votes:
+            one: "%{count} vote"
+            other: "%{count} votes"
+            zero: "%{count} votes"
         show:
           action_button:
             change_vote: Change your vote

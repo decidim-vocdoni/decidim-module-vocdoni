@@ -44,10 +44,21 @@ FactoryBot.define do
     trait :vote do
       published
       ongoing
+      status { "vote" }
+    end
+
+    trait :results_published do
+      status { "results_published" }
+
+      after(:build) do |election, _evaluator|
+        election.questions << build(:vocdoni_question, :with_votes, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :with_votes, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :with_votes, election: election, weight: 1)
+      end
     end
 
     trait :finished do
-      started
+      complete
       end_time { 1.day.ago }
       blocked_at { Time.current }
     end
@@ -107,6 +118,7 @@ FactoryBot.define do
 
   factory :vocdoni_question, class: "Decidim::Vocdoni::Question" do
     transient do
+      more_information { false }
       answers { 3 }
     end
 
@@ -119,6 +131,14 @@ FactoryBot.define do
       after(:build) do |question, evaluator|
         overrides = { question: question }
         question.answers = build_list(:vocdoni_election_answer, evaluator.answers, overrides)
+      end
+    end
+
+    trait :with_votes do
+      after(:build) do |question, evaluator|
+        overrides = { question: question }
+        overrides[:description] = nil unless evaluator.more_information
+        question.answers = build_list(:vocdoni_election_answer, evaluator.answers, :with_votes, overrides)
       end
     end
 
@@ -147,6 +167,10 @@ FactoryBot.define do
           )
         end
       end
+    end
+
+    trait :with_votes do
+      votes { Faker::Number.number(digits: 2) }
     end
   end
 
