@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe "Preview vote online in an election", type: :system do
   let(:manifest_name) { "vocdoni" }
-  let!(:election) { create :vocdoni_election, :upcoming, :published, :complete, component: component }
+  let!(:election) { create :vocdoni_election, :upcoming, :published, :simple, component: component }
   let(:admin) { create(:user, :admin, :confirmed, organization: organization) }
   let(:organization) { component.organization }
   let!(:elections) { create_list(:vocdoni_election, 2, :vote, component: component) } # prevents redirect to single election page
@@ -65,20 +65,20 @@ describe "Preview vote online in an election", type: :system do
   end
 
   context "when the election is not published" do
-    let(:election) { create :vocdoni_election, :upcoming, :complete, component: component }
+    let(:election) { create :vocdoni_election, :upcoming, :simple, component: component }
 
     it_behaves_like "allows admins to preview the voting booth"
   end
 
   context "when the election has not started yet" do
-    let(:election) { create :vocdoni_election, :upcoming, :published, :complete, component: component }
+    let(:election) { create :vocdoni_election, :upcoming, :published, :simple, component: component }
 
     it_behaves_like "allows admins to preview the voting booth"
   end
 
   # TODO: enable when we have results/finished elections
   # context "when the election has finished" do
-  #   let(:election) { create :vocdoni_election, :finished, :published, :complete, component: component }
+  #   let(:election) { create :vocdoni_election, :finished, :published, :simple, component: component }
   #
   #   it_behaves_like "doesn't allow admins to preview the voting booth"
   # end
