@@ -166,6 +166,7 @@ en:
             success: Question successfully updated
         steps:
           create_election:
+            credits: Available credits
             errors:
               census_ready: The census is <strong>not ready</strong>.
               component_published: The election component is <strong>not published</strong>.

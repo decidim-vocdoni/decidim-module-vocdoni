@@ -44,7 +44,7 @@ export default class SetupElection {
    * @returns {void}
    */
   run() {
-    this._setVocdoniClient();
+    this.setVocdoniClient();
     this._createElection();
   }
 
@@ -54,7 +54,7 @@ export default class SetupElection {
    *
    * @returns {void}
    */
-  async _setVocdoniClient() {
+  async setVocdoniClient() {
     const creator = new Wallet(this.walletPrivateKey);
     this.client = new VocdoniSDKClient({
       env: this.env,

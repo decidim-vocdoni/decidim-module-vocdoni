@@ -42,6 +42,24 @@ const setupElectionStep = async () => {
   });
 }
 
+const showAvailableCredits = async () => {
+  const creditsSpan = document.querySelector(".js-vocdoni-balance-credits");
+  if (!creditsSpan) {
+    return;
+  }
+
+  const setupElectionData = document.querySelector(".js-election-setup");
+  const election = new SetupElection({
+    walletPrivateKey: setupElectionData.dataset.vocdoniWalletPrivateKey,
+    env: setupElectionData.dataset.vocdoniEnv
+  });
+  election.setVocdoniClient();
+  const clientInfo = await election.client.createAccount();
+
+  creditsSpan.innerHTML = clientInfo.balance;
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   setupElectionStep();
+  showAvailableCredits();
 });
