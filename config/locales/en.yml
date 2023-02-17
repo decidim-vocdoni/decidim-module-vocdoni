@@ -203,6 +203,8 @@ en:
             title: Election created
             url_html: You can watch it out at the <a href="%{explorer_vote_url}" target="_blank"
               rel="noopener noreferrer">Vocdoni Explorer</a>.
+          index:
+            title: Steps dashboard
           processing: Processing...
           ready:
             title: Ready

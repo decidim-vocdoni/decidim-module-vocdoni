@@ -1,7 +1,8 @@
 <div class="card">
   <div class="card-divider">
     <h2 class="card-title">
-      <%= translated_attribute(election.title) %>
+      <%= link_to translated_attribute(election.title), elections_path %> &gt;
+      <%= t("index.title", scope: "decidim.vocdoni.admin.steps") %>
     </h2>
   </div>
 
