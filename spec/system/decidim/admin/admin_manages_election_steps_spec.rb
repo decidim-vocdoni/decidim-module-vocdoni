@@ -19,7 +19,6 @@ describe "Admin manages election steps", :slow, type: :system do
         expect(page).to have_content("The election has at least one question.")
         expect(page).to have_content("Each question has at least two answers.")
         expect(page).to have_content("The election is published.")
-        expect(page).to have_content("The election component is published.")
         expect(page).to have_content("The census is ready")
 
         click_button "Setup election"

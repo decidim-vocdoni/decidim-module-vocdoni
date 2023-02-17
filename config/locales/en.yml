@@ -174,12 +174,9 @@ en:
             credits: Available credits
             errors:
               census_ready: The census is <strong>not ready</strong>.
-              component_published: The election component is <strong>not published</strong>.
               minimum_answers: Questions must have <strong>at least two answers</strong>.
               minimum_photos: The election <strong>must have at least one photo</strong>.
               minimum_questions: The election <strong>must have at least one question</strong>.
-              participatory_space_published: The participatory space is <strong>not
-                published</strong>.
               published: The election is <strong>not published</strong>.
               time_before: The setup is not being done <strong>at least %{minutes}
                 minutes</strong> before the election starts.
@@ -190,11 +187,9 @@ en:
             invalid: There was a problem setting up this election
             requirements:
               census_ready: The census is <strong>ready</strong>.
-              component_published: The election component is <strong>published</strong>.
               minimum_answers: Each question has <strong>at least two answers</strong>.
               minimum_photos: The election has <strong>at least one photo</strong>.
               minimum_questions: The election has <strong>at least one question</strong>.
-              participatory_space_published: The participatory space is <strong>published</strong>.
               published: The election is <strong>published</strong>.
               time_before: The setup is being done <strong>at least %{minutes} minutes</strong>
                 before the election starts.

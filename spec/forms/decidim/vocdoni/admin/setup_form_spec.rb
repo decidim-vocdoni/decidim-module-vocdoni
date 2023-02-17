@@ -14,8 +14,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
     }
   end
   let(:election) { create :vocdoni_election, :ready_for_setup, component: component }
-  let(:component) { create :vocdoni_component, participatory_space: participatory_process }
-  let(:participatory_process) { create :participatory_process, :published }
+  let(:component) { create :vocdoni_component }
   let(:attributes) { {} }
 
   before do
@@ -36,9 +35,6 @@ describe Decidim::Vocdoni::Admin::SetupForm do
     )
     expect(subject.messages).to match(
       hash_including({ published: "The election is <strong>published</strong>." })
-    )
-    expect(subject.messages).to match(
-      hash_including({ participatory_space_published: "The participatory space is <strong>published</strong>." })
     )
     expect(subject.messages).to match(
       hash_including({ census_ready: "The census is <strong>ready</strong>." })
@@ -86,19 +82,6 @@ describe Decidim::Vocdoni::Admin::SetupForm do
         hash_including({
                          time_before: "The setup is being done <strong>at least 33 minutes</strong> before the election starts."
                        })
-      )
-    end
-  end
-
-  context "when the participatory space is not published" do
-    let!(:participatory_process) { create :participatory_process, :unpublished }
-
-    it { is_expected.to be_invalid }
-
-    it "shows errors" do
-      subject.valid?
-      expect(subject.errors.messages).to match(
-        hash_including({ participatory_space_published: ["The participatory space is <strong>not published</strong>."] })
       )
     end
   end
