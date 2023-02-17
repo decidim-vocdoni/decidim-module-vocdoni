@@ -118,6 +118,10 @@ en:
           edit:
             title: Edit election
             update: Update
+          form:
+            organization_time_zone: Check that the organization time zone is correct
+              in the organization settings. The current configuration is %{time_zone}
+              (%{time}).
           index:
             title: Elections
           new:
