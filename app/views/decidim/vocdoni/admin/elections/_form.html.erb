@@ -12,10 +12,6 @@
       <%= form.translated :editor, :description %>
     </div>
 
-    <div class="row column">
-      <%= form.text_field :stream_uri %>
-    </div>
-
     <div class="row">
       <div class="callout warning">
         <p><%= t(".organization_time_zone",
@@ -31,5 +27,9 @@
     </div>
 
     <%= render partial: "decidim/admin/shared/gallery", locals: { form: form } %>
+
+    <div class="row column">
+      <%= form.text_field :stream_uri %>
+    </div>
   </div>
 </div>

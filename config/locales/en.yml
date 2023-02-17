@@ -6,6 +6,7 @@ en:
         description: Description
         end_time: End time
         start_time: Start time
+        stream_uri: Video stream link
         title: Title
     errors:
       models:
