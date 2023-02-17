@@ -15,6 +15,10 @@ en:
             attachment:
               needs_to_be_reattached: Needs to be reattached
   decidim:
+    admin:
+      shared:
+        gallery:
+          gallery_legend: Add an image gallery
     components:
       vocdoni:
         name: Elections (Vocdoni)
