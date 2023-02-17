@@ -35,6 +35,7 @@ es:
         destroy: Delete
         edit: Edit
         manage_answers: Manage answers
+        manage_census: Manage census
         manage_questions: Manage questions
         manage_steps: Manage steps
         new: New %{name}
@@ -61,6 +62,40 @@ es:
           update:
             invalid: There was a problem updating this answer
             success: Answer successfully updated
+        census:
+          create:
+            error: There was an error importing or generating the census.
+            success:
+              generate: Successfully generated the census
+              import: Successfully imported %{count} items (%{errors} errors)
+          destroy:
+            confirm: Delete all the census can not be undone. Are you sure you want to continue?
+            title: Delete all census data
+          destroy_all:
+            success: All census data have been deleted
+          generate:
+            info: You must generate the credentials for all the participants with the following action.
+            submit: Generate credentials
+            title: 2. Generate credentials for the participants
+          index:
+            info_html: |
+              For setting up the census for a Vocdoni Election, you need to follow two steps:
+                <ol>
+                  <li>To upload the CSV file with the correct information</li>
+                  <li>To generate the credentials for the participants</li>
+                </ol>
+                You can do both of these steps in this page.
+            title: Census for a Vocdoni election
+          new:
+            file: ".csv file with emails data"
+            info: 'Must be a file in CSV format with only two columns, one with the email address and another with the date of birth (format YYYY-MM-DD). It must be separated with a semicolon (;):'
+            submit: Upload file
+            title: 1. Upload a new census
+          status:
+            data: There are %{count} records loaded in total. Last upload date was on %{due_date}. If you want to change the census (for instance, adding more participants), its necessary to first delete all census data.
+            empty: There are no census data. Use the form below to import it using a CSV file.
+            ready_to_setup: The census data is uploaded, the credentials generated, and its ready to setup.
+            title: Current census data
         elections:
           create:
             invalid: There was a problem creating this election
@@ -112,19 +147,23 @@ es:
         steps:
           create_election:
             errors:
+              census_ready: The census is <strong>not ready</strong>.
               component_published: The election component is <strong>not published</strong>.
               minimum_answers: Questions must have <strong>at least two answers</strong>.
               minimum_questions: The election <strong>must have at least one question</strong>.
               published: The election is <strong>not published</strong>.
+              time_before: The setup is not being done <strong>at least %{minutes} minutes</strong> before the election starts.
             failed:
               message: Check the Web Development console log error message, fix the problem and retry.
               title: The election has an error and couldn't be created
             invalid: There was a problem setting up this election
             requirements:
+              census_ready: The census is <strong>ready</strong>.
               component_published: The election component is <strong>published</strong>.
               minimum_answers: Each question has <strong>at least 2 answers</strong>.
               minimum_questions: The election has <strong>at least 1 question</strong>.
               published: The election is <strong>published</strong>.
+              time_before: The setup is being done <strong>at least %{minutes} minutes</strong> before the election starts.
             submit: Setup election
             success: Election successfully sent to the Vocdoni API
             title: Setup election
@@ -136,15 +175,31 @@ es:
           ready:
             title: Ready
           results_published:
+            answer: Answer
+            not_selected: Not selected
+            question: Question
+            result: Result
+            selected: Selected
             title: Results published
           tally_ended:
+            answer: Answer
+            not_selected: Not selected
+            question: Question
+            result: Result
+            selected: Selected
             title: Calculated results
           tally_started:
             title: Tally process
           vote:
             title: Vote period
           vote_ended:
+            text: Text
             title: Vote period ended
+          vote_stats:
+            no_vote_statistics_yet: No vote statistics yet
+            title: Vote statistics
+            voters: Voters
+            votes: Votes
         wallet:
           create:
             invalid: There was a problem creating the wallet
@@ -158,6 +213,8 @@ es:
           new:
             create: Create
             title: New organization wallet
+          ready:
+            title: Ready
       admin_log:
         election:
           create: "%{user_name} created the election %{resource_name} of %{space_name}"
