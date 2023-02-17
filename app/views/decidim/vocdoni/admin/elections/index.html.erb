@@ -41,6 +41,12 @@
 
                 <%= icon_link_to "list", election_questions_path(election), t("actions.manage_questions", scope: "decidim.vocdoni"), class: "action-icon--manage-questions" %>
 
+                <% if allowed_to? :index, :census, election: election %>
+                  <%= icon_link_to "person", election_census_path(election), t("actions.manage_census", scope: "decidim.vocdoni"), class: "action-icon--manage-census" %>
+                <% else %>
+                  <%= icon "person", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.manage_census", scope: "decidim.vocdoni") %>
+                <% end %>
+
                 <% if allowed_to? :read, :steps, election: election %>
                   <%= icon_link_to "project", election_steps_path(election), t("actions.manage_steps", scope: "decidim.vocdoni"), class: "action-icon--manage-steps" %>
                 <% end %>

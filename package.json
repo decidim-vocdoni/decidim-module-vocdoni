@@ -46,6 +46,6 @@
   },
   "dependencies": {
     "@ethersproject/wallet": "^5.7.0",
-    "@vocdoni/sdk": "^0.0.2-alpha"
+    "@vocdoni/sdk": "^0.0.3-alpha"
   }
 }

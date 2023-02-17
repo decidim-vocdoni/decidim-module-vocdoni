@@ -21,6 +21,11 @@ module Decidim
             when :delete, :update, :unpublish, :publish
               allow_if_not_blocked
             end
+          when :census
+            case permission_action.action
+            when :index, :create, :destroy
+              allow_if_not_blocked
+            end
           when :steps
             case permission_action.action
             when :read, :update

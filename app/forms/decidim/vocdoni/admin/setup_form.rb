@@ -7,7 +7,6 @@ module Decidim
       class SetupForm < Decidim::Form
         mimic :setup
 
-        attribute :demo_census, String
         attribute :vocdoni_election_id, String
 
         validate do
@@ -23,7 +22,9 @@ module Decidim
             [:minimum_questions, {}, election.questions.any?],
             [:minimum_answers, {}, election.minimum_answers?],
             [:published, {}, election.published_at.present?],
-            [:component_published, {}, election.component.published?]
+            [:component_published, {}, election.component.published?],
+            [:time_before, { minutes: Decidim::Vocdoni.setup_minimum_minutes_before_start }, election.minimum_minutes_before_start?],
+            [:census_ready, {}, census.ready_to_setup?]
           ].freeze
         end
 
@@ -35,6 +36,10 @@ module Decidim
 
         def election
           @election ||= context[:election]
+        end
+
+        def census
+          @census ||= CsvCensus::Status.new(election)
         end
 
         def main_button?

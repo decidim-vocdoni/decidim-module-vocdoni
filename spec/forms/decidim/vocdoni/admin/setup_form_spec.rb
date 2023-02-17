@@ -17,6 +17,10 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   let(:component) { election.component }
   let(:attributes) { {} }
 
+  before do
+    allow(Decidim::Vocdoni).to receive(:setup_minimum_minutes_before_start).and_return(10)
+  end
+
   it { is_expected.to be_valid }
 
   it "shows messages" do
@@ -24,13 +28,29 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       hash_including({
                        minimum_answers: "Each question has <strong>at least 2 answers</strong>.",
                        minimum_questions: "The election has <strong>at least 1 question</strong>.",
-                       published: "The election is <strong>published</strong>."
+                       published: "The election is <strong>published</strong>.",
+                       time_before: "The setup is being done <strong>at least 10 minutes</strong> before the election starts.",
+                       census_ready: "The census is <strong>ready</strong>."
                      })
     )
   end
 
+  context "when the setup_minimum_minutes_before_start is different" do
+    before do
+      allow(Decidim::Vocdoni).to receive(:setup_minimum_minutes_before_start).and_return(33)
+    end
+
+    it "shows the message" do
+      expect(subject.messages).to match(
+        hash_including({
+                         time_before: "The setup is being done <strong>at least 33 minutes</strong> before the election starts."
+                       })
+      )
+    end
+  end
+
   context "when the election is not ready for the setup" do
-    let(:election) { create :vocdoni_election }
+    let(:election) { create :vocdoni_election, start_time: 10.days.ago }
 
     it { is_expected.to be_invalid }
 
@@ -39,7 +59,9 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       expect(subject.errors.messages).to eq({
                                               minimum_questions: ["The election <strong>must have at least one question</strong>."],
                                               minimum_answers: ["Questions must have <strong>at least two answers</strong>."],
-                                              published: ["The election is <strong>not published</strong>."]
+                                              published: ["The election is <strong>not published</strong>."],
+                                              time_before: ["The setup is not being done <strong>at least 10 minutes</strong> before the election starts."],
+                                              census_ready: ["The census is <strong>not ready</strong>."]
                                             })
     end
   end
@@ -52,9 +74,11 @@ describe Decidim::Vocdoni::Admin::SetupForm do
 
     it "shows errors" do
       subject.valid?
-      expect(subject.errors.messages).to eq({
-                                              minimum_answers: ["Questions must have <strong>at least two answers</strong>."]
-                                            })
+      expect(subject.errors.messages).to match(
+        hash_including({
+                         minimum_answers: ["Questions must have <strong>at least two answers</strong>."]
+                       })
+      )
     end
   end
 end

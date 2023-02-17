@@ -20,6 +20,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "i18n-tasks", "~> 0.9.37"
   gem "letter_opener_web", "~> 2.0"
   gem "listen", "~> 3.1"
   gem "rubocop-faker", "~> 1.1"

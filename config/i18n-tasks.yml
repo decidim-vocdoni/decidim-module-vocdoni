@@ -4,7 +4,20 @@ base_locale: en
 locales: [en]
 
 ignore_unused:
+  - "activemodel.attributes.election.{description,end_time,start_time,title}"
+  - "activemodel.errors.models.election.attributes.attachment.needs_to_be_reattached"
+  - "decidim.components.vocdoni.settings.{global,step}.announcement"
   - "decidim.components.vocdoni.name"
+  - "decidim.events.vocdoni.election_published.{email_intro,email_outro,email_subject,notification_title}"
+  - "decidim.vocdoni.admin.wallets.ready.title"
+  - "decidim.vocdoni.admin_log.election.{create,delete,end_vote,publish,publish_results,setup,start_tally,start_vote,unpublish,update}"
+  - "decidim.vocdoni.admin_log.wallet.create"
+  - "decidim.vocdoni.election_m.badge_name.{finished,ongoing,upcoming}"
+  - "decidim.vocdoni.election_m.questions"
+  - "decidim.vocdoni.elections.show.action_button.{change_vote,vote,vote_again}"
+  - "decidim.vocdoni.elections.show.preview"
+  - "decidim.vocdoni.elections.show.verify.{already_voted,verify_here,will_verify}"
+  - "decidim.vocdoni.models.answer.fields.proposals"
 
 ignore_missing:
   - decidim.participatory_processes.scopes.global

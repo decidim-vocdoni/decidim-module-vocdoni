@@ -47,6 +47,12 @@ describe "Decidim::Api::QueryType" do
         }
       end,
 
+      "voters" => election.voters.order(:id).map do |v|
+        {
+          "wallet_address" => v.wallet_address
+        }
+      end,
+
       "startTime" => election.start_time.iso8601.to_s.gsub("Z", "+00:00"),
       "title" => { "translation" => election.title[locale] },
       "updatedAt" => election.updated_at.iso8601.to_s.gsub("Z", "+00:00"),
@@ -119,6 +125,9 @@ describe "Decidim::Api::QueryType" do
                   versionsCount
                   weight
                 }
+                voters {
+                  wallet_address
+                }
                 startTime
                 title {
                   translation(locale: "en")
@@ -190,6 +199,9 @@ describe "Decidim::Api::QueryType" do
             }
             versionsCount
             weight
+          }
+          voters {
+            wallet_address
           }
           startTime
           title {

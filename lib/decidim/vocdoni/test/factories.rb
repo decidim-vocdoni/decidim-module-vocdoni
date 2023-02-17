@@ -59,10 +59,21 @@ FactoryBot.define do
       end
     end
 
+    trait :with_census do
+      after(:build) do |election, _evaluator|
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+      end
+    end
+
     trait :ready_for_setup do
       upcoming
       published
       complete
+      with_census
     end
 
     trait :with_photos do
@@ -134,6 +145,16 @@ FactoryBot.define do
           )
         end
       end
+    end
+  end
+
+  factory :vocdoni_voter, class: "Decidim::Vocdoni::Voter" do
+    email { generate(:email) }
+    born_at { Faker::Date.between(from: 110.years.ago, to: 16.years.ago) }
+    association :election, factory: :vocdoni_election
+
+    trait :with_credentials do
+      wallet_address { Faker::Blockchain::Ethereum.address }
     end
   end
 end

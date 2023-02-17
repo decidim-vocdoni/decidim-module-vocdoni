@@ -10,5 +10,11 @@ module Decidim
   # This namespace holds the logic of the `Vocdoni` component. This component
   # allows users to create vocdoni in a participatory space.
   module Vocdoni
+    include ActiveSupport::Configurable
+
+    # Public Setting that defines how many minutes should the setup be run before the election starts
+    config_accessor :setup_minimum_minutes_before_start do
+      10
+    end
   end
 end

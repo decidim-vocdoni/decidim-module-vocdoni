@@ -116,6 +116,17 @@ module Decidim
           expect(ids).not_to include(*election2.questions.map(&:id).map(&:to_s))
         end
       end
+
+      describe "voters" do
+        let!(:election3) { create(:vocdoni_election, :complete) }
+        let(:query) { "{ voters { wallet_address } }" }
+
+        it "returns the election voters" do
+          wallets = response["voters"].map { |voter| voter["wallet_address"] }
+          expect(wallets).to include(*model.voters.map(&:wallet_address).map(&:to_s))
+          expect(wallets).not_to include(*election3.voters.map(&:wallet_address).map(&:to_s))
+        end
+      end
     end
   end
 end
