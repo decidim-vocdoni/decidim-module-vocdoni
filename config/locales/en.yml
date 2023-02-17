@@ -87,11 +87,6 @@ en:
             title: Delete all census data
           destroy_all:
             success: All census data have been deleted
-          generate:
-            info: You can generate the credentials for all the participants with the
-              following action.
-            submit: Generate credentials
-            title: 2. Generate credentials for the participants
           index:
             info: For setting up the census for a Vocdoni Election, you need to upload
               the census and confirm it.
@@ -173,13 +168,13 @@ en:
           create_election:
             credits: Available credits
             errors:
-              census_ready: The census is <strong>not ready</strong>.
-              minimum_answers: Questions must have <strong>at least two answers</strong>.
-              minimum_photos: The election <strong>must have at least one photo</strong>.
-              minimum_questions: The election <strong>must have at least one question</strong>.
-              published: The election is <strong>not published</strong>.
+              census_ready: The census is <strong>not ready</strong>. <a href=%{link}>Fix it</a>.
+              minimum_answers: Questions must have <strong>at least two answers</strong>. <a href=%{link}>Fix it</a>.
+              minimum_photos: The election <strong>must have at least one photo</strong>. <a href=%{link}>Fix it</a>.
+              minimum_questions: The election <strong>must have at least one question</strong>. <a href=%{link}>Fix it</a>.
+              published: The election is <strong>not published</strong>. <a href=%{link}>Fix it</a>.
               time_before: The setup is not being done <strong>at least %{minutes}
-                minutes</strong> before the election starts.
+                minutes</strong> before the election starts. <a href=%{link}>Fix it</a>.
             failed:
               message: Check the Web Development console log error message, fix the
                 problem and retry.
