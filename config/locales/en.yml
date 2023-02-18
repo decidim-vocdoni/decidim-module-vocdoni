@@ -369,6 +369,8 @@ en:
         submitting:
           header: Submitting the vote...
           text: Your ballot is being submitted to the Vocdoni API.
+        vocdoni_logo:
+          powered_by: Powered by
         vote_sent:
           check: "( Check my vote )"
           description: You can check your vote using the Vocdoni Explorer portal.
