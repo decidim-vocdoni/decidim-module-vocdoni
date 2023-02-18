@@ -28,7 +28,7 @@
                     <% question.answers.each do |answer| %>
                       <tr>
                         <td><%= translated_attribute(answer.title) %></td>
-                        <td data-question-idx="<%= idx %>" data-answer-id="<%= answer.id %>"></td>
+                        <td data-question-idx="<%= idx %>" data-answer-id="<%= answer.id %>"><span class="loading-spinner"></span></td>
                       </tr>
                     <% end %>
                   </tbody>

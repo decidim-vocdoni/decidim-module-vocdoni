@@ -5,6 +5,7 @@ en:
       election:
         description: Description
         end_time: End time
+        secret_until_the_end: Secret until the end
         start_time: Start time
         stream_uri: Video stream link
         title: Title
@@ -194,6 +195,8 @@ en:
           created:
             message: The election has been created. We're waiting for the start date
               time to arrive.
+            secret_until_the_end: The election results will be secret until the end
+              of the voting period.
             title: Election created
             url_html: You can watch it out at the <a href="%{explorer_vote_url}" target="_blank"
               rel="noopener noreferrer">Vocdoni Explorer</a>.

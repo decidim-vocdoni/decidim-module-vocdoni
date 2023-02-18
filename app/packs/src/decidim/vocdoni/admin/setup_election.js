@@ -146,7 +146,10 @@ export default class SetupElection {
       streamUri: electionMetadata.streamUri,
       startDate: Date.parse(electionMetadata.startTime),
       endDate: Date.parse(electionMetadata.endTime),
-      census
+      census,
+      electionType: {
+        secretUntilTheEnd: electionMetadata.secretUntilTheEnd,
+      }
     });
 
     electionMetadata.questions.forEach((question) => {
@@ -187,6 +190,7 @@ export default class SetupElection {
                 streamUri
                 startTime
                 endTime
+                secretUntilTheEnd
                 voters {
                   wallet_address
                 }

@@ -31,5 +31,9 @@
     <div class="row column">
       <%= form.text_field :stream_uri %>
     </div>
+
+    <div class="row column">
+      <%= form.check_box :secret_until_the_end, { checked: election&.election_type&.fetch("secret_until_the_end", false) } %>
+    </div>
   </div>
 </div>

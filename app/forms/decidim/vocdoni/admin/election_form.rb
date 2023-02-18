@@ -15,6 +15,13 @@ module Decidim
         attribute :stream_uri, String
         attribute :attachment, AttachmentForm
 
+        # Election Type attributes
+        attribute :auto_start, Boolean, default: true
+        attribute :interruptible, Boolean, default: true
+        attribute :dynamic_census, Boolean, default: false
+        attribute :secret_until_the_end, Boolean, default: false
+        attribute :anonymous, Boolean, default: false
+
         attachments_attribute :photos
 
         validates :title, translatable_presence: true
