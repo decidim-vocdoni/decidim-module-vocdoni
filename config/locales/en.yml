@@ -199,6 +199,7 @@ en:
               rel="noopener noreferrer">Vocdoni Explorer</a>.
           index:
             title: Steps dashboard
+          powered_by: Powered by
           processing: Processing...
           ready:
             title: Ready
