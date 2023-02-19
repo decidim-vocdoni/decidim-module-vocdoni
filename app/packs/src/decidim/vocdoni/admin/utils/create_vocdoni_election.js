@@ -38,7 +38,7 @@ export default class CreateVocdoniElection {
    * @returns {void}
    */
   run() {
-    this.setVocdoniClient();
+    this._setVocdoniClient();
     this._createElection();
   }
 
@@ -48,7 +48,7 @@ export default class CreateVocdoniElection {
    *
    * @returns {void}
    */
-  async setVocdoniClient() {
+  async _setVocdoniClient() {
     this.client = new initVocdoniClient();
 
     const clientInfo = await this.client.createAccount();
