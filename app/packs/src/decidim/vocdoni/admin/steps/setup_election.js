@@ -1,4 +1,4 @@
-import SetupElection from "src/decidim/vocdoni/admin/setup_election";
+import CreateVocdoniElection from "../utils/create_vocdoni_election";
 import { initVocdoniClient } from "../utils/init_vocdoni_client";
 
 const setupElectionStep = async () => {
@@ -32,7 +32,7 @@ const setupElectionStep = async () => {
     const setupElectionButton = createElectionForm.querySelector(".form-general-submit button");
     showLoadingSpinner(setupElectionButton);
 
-    const election = new SetupElection({
+    const election = new CreateVocdoniElection({
       walletPrivateKey: createElectionForm.querySelector(".js-election-setup").dataset.vocdoniWalletPrivateKey,
       graphqlApiUrl: `${window.location.origin}/api`,
       componentId: window.location.pathname.split("/")[5],

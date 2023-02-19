@@ -1,5 +1,5 @@
 import { Election, PlainCensus } from "@vocdoni/sdk";
-import { initVocdoniClient } from "./utils/init_vocdoni_client";
+import { initVocdoniClient } from "./init_vocdoni_client";
 
 /*
  * Creates an Election in the Vocdoni API
@@ -16,7 +16,7 @@ import { initVocdoniClient } from "./utils/init_vocdoni_client";
  * @see {@link https://developer.vocdoni.io|Documentation}
  * @see {@link https://github.com/vocdoni/vocdoni-sdk/blob/ad03822f537fd8c4d43c85d447475fd38b62909c/examples/typescript/src/index.ts|TypeScript example}
  */
-export default class SetupElection {
+export default class CreateVocdoniElection {
   constructor(options = {}, onSuccess, onFailure) {
     this.graphqlApiUrl = options.graphqlApiUrl;
     this.componentId = options.componentId;
