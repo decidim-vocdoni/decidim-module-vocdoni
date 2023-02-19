@@ -3,9 +3,7 @@
     <h2 class="card-title"><%= t(".title") %></h2>
   </div>
 
-  <div class="card-section js-election-setup"
-       data-vocdoni-wallet-private-key="<%= @current_vocdoni_wallet.private_key %>"
-       data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>">
+  <div class="card-section js-election-setup">
 
        <%= f.hidden_field :vocdoni_election_id %>
 

@@ -1,4 +1,4 @@
-import { VocdoniSDKClient } from "@vocdoni/sdk";
+import { initVocdoniClient } from "../utils/init_vocdoni_client";
 
 // Votes step
 //
@@ -31,16 +31,7 @@ const voteEndedStep = async () => {
     }
   }
 
-  const vocdoniWalletPrivateKey = electionResultsForm.dataset.vocdoniWalletPrivateKey;
-  const electionUniqueId = electionResultsForm.dataset.electionUniqueId;
-  const vocdoniEnv = electionResultsForm.dataset.vocdoniEnv;
-
-  const client = new VocdoniSDKClient({
-    env: vocdoniEnv,
-    wallet: vocdoniWalletPrivateKey
-  })
-  client.setElectionId(electionUniqueId);
-
+  const client = new initVocdoniClient();
   fetchVotesStats(client);
 }
 

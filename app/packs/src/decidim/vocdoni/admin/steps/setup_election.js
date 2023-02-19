@@ -1,4 +1,5 @@
 import SetupElection from "src/decidim/vocdoni/admin/setup_election";
+import { initVocdoniClient } from "../utils/init_vocdoni_client";
 
 const setupElectionStep = async () => {
   // Setup election step
@@ -48,13 +49,8 @@ const showAvailableCredits = async () => {
     return;
   }
 
-  const setupElectionData = document.querySelector(".js-election-setup");
-  const election = new SetupElection({
-    walletPrivateKey: setupElectionData.dataset.vocdoniWalletPrivateKey,
-    env: setupElectionData.dataset.vocdoniEnv
-  });
-  election.setVocdoniClient();
-  const clientInfo = await election.client.createAccount();
+  const client = initVocdoniClient();
+  const clientInfo = await client.createAccount();
 
   creditsSpan.innerHTML = clientInfo.balance;
 };
