@@ -28,6 +28,7 @@ export default class CreateVocdoniElection {
     console.group("Options");
     console.log("GRAPHQL API URL => ", options.graphqlApiUrl);
     console.log("VOCDONI COMPONENT ID => ", options.componentId);
+    console.log("ELECTION ID => ", options.electionId);
     console.groupEnd();
   }
 
