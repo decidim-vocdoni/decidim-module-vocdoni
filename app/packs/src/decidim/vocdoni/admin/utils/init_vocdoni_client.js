@@ -12,14 +12,14 @@ export const initVocdoniClient = () => {
   }
 
   const walletPrivateKey = vocdoniClientMetadata.dataset.vocdoniWalletPrivateKey;
-  const electionUniqueId = vocdoniClientMetadata.dataset.electionUniqueId;
+  const vocdoniElectionId = vocdoniClientMetadata.dataset.vocdoniElectionId;
   const env = vocdoniClientMetadata.dataset.vocdoniEnv;
 
   const wallet = new Wallet(walletPrivateKey);
   const client = new VocdoniSDKClient({ env, wallet });
 
-  if (electionUniqueId) {
-    client.setElectionId(electionUniqueId);
+  if (vocdoniElectionId) {
+    client.setElectionId(vocdoniElectionId);
   }
 
   return client;

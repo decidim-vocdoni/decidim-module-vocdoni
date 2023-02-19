@@ -8,8 +8,8 @@ const setupElectionStep = async () => {
     return;
   }
 
-  const onSuccess = (electionId) => {
-    createElectionForm.querySelector("#setup_vocdoni_election_id").value = electionId;
+  const onSuccess = (vocdoniElectionId) => {
+    createElectionForm.querySelector("#setup_vocdoni_election_id").value = vocdoniElectionId;
     createElectionForm.submit();
   }
 

@@ -69,9 +69,9 @@ export default class CreateVocdoniElection {
     let result = null;
 
     try {
-      const electionId = await this.client.createElection(election);
-      result = `OK! ELECTION ID => ${electionId}`;
-      this.onSuccess(electionId);
+      const vocdoniElectionId = await this.client.createElection(election);
+      result = `OK! VOCDONI ELECTION ID => ${vocdoniElectionId}`;
+      this.onSuccess(vocdoniElectionId);
     } catch (error) {
       result = `ERROR! ${error}`;
       this.onFailure();
