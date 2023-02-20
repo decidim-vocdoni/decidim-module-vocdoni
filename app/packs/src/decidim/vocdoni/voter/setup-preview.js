@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 // The wait time used to simulate the submission of the vote during the preview
-const FAKE_SUBMISSION_TIME = 1000;
+const FAKE_SUBMISSION_TIME = 10000;
 
 // A preview vote component, to try out the UI without actually sending any vote.
 export default class PreviewVoteComponent {
