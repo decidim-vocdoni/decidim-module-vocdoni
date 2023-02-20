@@ -41,7 +41,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       hash_including({ participatory_space_published: "The participatory space is <strong>published</strong>." })
     )
     expect(subject.messages).to match(
-      hash_including({ census_ready: "The census is <strong>ready</strong>."})
+      hash_including({ census_ready: "The census is <strong>ready</strong>." })
     )
     expect(subject.messages).to match(
       hash_including({ time_before: "The setup is being done <strong>at least 10 minutes</strong> before the election starts." })
