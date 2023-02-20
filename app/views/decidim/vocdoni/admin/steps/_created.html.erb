@@ -6,15 +6,6 @@
   <div class="card-section">
     <p><%= t(".message") %></p>
 
-    <%= link_to resource_locator(election).path, class: "button primary" do %>
-       <%= icon "eye", role: "img", aria_label: t("actions.preview", scope: "decidim.vocdoni"), target: :blank %>
-       <%= t(".preview") %>
-    <% end %>
-
-    <%= link_to election.explorer_vote_url, class: "button primary hollow", target: :blank, rel: "noopener noreferrer" do %>
-      <%= t(".explorer_vote") %>
-    <% end %>
-
-    <span></span>
+    <%= render partial: "action_buttons", locals: { election: election } %>
   </div>
 </div>

@@ -10,7 +10,7 @@
       <p><%= t("secret_until_the_end", scope: "decidim.vocdoni.admin.steps.created") %></p>
     <% end %>
 
-    <p><%= t("url_html", scope: "decidim.vocdoni.admin.steps.created", explorer_vote_url: election.explorer_vote_url) %></p>
+    <%= render partial: "action_buttons", locals: { election: election } %>
   </div>
 </div>
 
