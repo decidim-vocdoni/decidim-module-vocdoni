@@ -1,0 +1,23 @@
+<%= render("focus_header", header_title: t("decidim.vocdoni.votes.header.vote_cast")) %>
+
+<div class="focus__content evote vote_cast">
+  <div class="row">
+    <h1 class="heading2">
+      <%= t("decidim.vocdoni.votes.vote_cast.header") %>
+    </h1>
+
+    <div class="evote__content">
+      <p><%= t("decidim.vocdoni.votes.vote_cast.description") %></p>
+      <p>
+        <%= t("decidim.vocdoni.votes.vote_cast.vote_id") %>
+        <strong class="vote-id"></strong>
+        <%= link_to t("decidim.vocdoni.votes.vote_cast.check"), "#", class: "verify_ballot", target: "_blank", rel: "noopener noreferrer" %>
+      </p>
+    </div>
+
+    <%= link_to election_path(election), class: "button" do %>
+      <%= t("decidim.vocdoni.votes.vote_cast.exit") %>
+    <% end %>
+    <%= render partial: "vocdoni_logo" %>
+  </div>
+</div>

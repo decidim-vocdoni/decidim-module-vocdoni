@@ -344,7 +344,7 @@ en:
           failed: Vote failed
           login: Identification
           submitting: Subtmitting the vote
-          vote_sent: Your vote has been sent
+          vote_cast: Your vote has been cast
         login:
           check_status: Check status
           description: To vote, we'll need to check that you're on the census
@@ -374,7 +374,7 @@ en:
           text: Your ballot is being submitted to the Vocdoni API.
         vocdoni_logo:
           powered_by: Powered by
-        vote_sent:
+        vote_cast:
           check: "( Check my vote )"
           description: You can check your vote using the Vocdoni Explorer portal.
           exit: Exit the voting booth
