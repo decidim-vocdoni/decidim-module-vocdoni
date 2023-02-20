@@ -16,8 +16,8 @@ describe "Admin manages election steps", :slow, type: :system do
       visit_steps_page
 
       within "form.create_election" do
-        expect(page).to have_content("The election has at least 1 question.")
-        expect(page).to have_content("Each question has at least 2 answers.")
+        expect(page).to have_content("The election has at least one question.")
+        expect(page).to have_content("Each question has at least two answers.")
         expect(page).to have_content("The election is published.")
         expect(page).to have_content("The election component is published.")
         expect(page).to have_content("The census is ready")
