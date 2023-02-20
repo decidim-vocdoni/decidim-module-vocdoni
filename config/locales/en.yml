@@ -346,7 +346,7 @@ en:
           submitting: Subtmitting the vote
           vote_cast: Your vote has been cast
         login:
-          check_status: Check status
+          access: Access
           description: To vote, we'll need to check that you're on the census
           failed: Check that the provided data is correct and try again
           form_title: Enter your data
