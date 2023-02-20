@@ -39,11 +39,11 @@ describe "Admin manages census", :slow, type: :system do
         click_button "Generate credentials"
 
         expect(page).to have_content("The census data is uploaded, the credentials generated, and its ready to setup")
-        expect(voter1.reload.wallet_address).to eq("0x50a688dbB767bD3ebd93022B87B2c19cE936bd93")
-        expect(voter2.reload.wallet_address).to eq("0xA7e77F2706e6981002c15B5E8d441fBC8EA0fC9E")
-        expect(voter3.reload.wallet_address).to eq("0xd2d6C90A4f4daed530D9b0B7Aae3271c73610AA7")
-        expect(voter4.reload.wallet_address).to eq("0x8a186ec407591ef7c5D000C81D99f7E174648a27")
-        expect(voter5.reload.wallet_address).to eq("0x75bA570b7135216f14B9A4C77558159793367fFb")
+        expect(voter1.reload.wallet_address).to eq("0x1ff8B8E050eF497acD7f2286ba5427155E0e0D6d")
+        expect(voter2.reload.wallet_address).to eq("0xb3395b02447f6Fb1eB60048477e9c80209b5b15f")
+        expect(voter3.reload.wallet_address).to eq("0xe8e9c6167E9AF4A6f03628FCD67B083f2f79c9c5")
+        expect(voter4.reload.wallet_address).to eq("0xf714bb3df89348b04D23BdB0fe9C334D25cd8452")
+        expect(voter5.reload.wallet_address).to eq("0xb317c554C7C52FC9e0A39aE8A4bfc019287Bb6c8")
       end
 
       describe "and we want to delete it" do

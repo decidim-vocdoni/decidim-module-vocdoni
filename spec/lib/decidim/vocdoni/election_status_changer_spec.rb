@@ -12,7 +12,7 @@ describe Decidim::Vocdoni::ElectionStatusChanger do
     let!(:finished_election) { create(:vocdoni_election, :finished, status: "vote_ended") }
 
     # A finished election that hasn't changed the status yet
-    let!(:finished_election_2) { create(:vocdoni_election, :finished, status: "vote") }
+    let!(:finished_election2) { create(:vocdoni_election, :finished, status: "vote") }
 
     before { subject.run }
 
@@ -20,7 +20,7 @@ describe Decidim::Vocdoni::ElectionStatusChanger do
       expect(upcoming_election.reload.status).to be_nil
       expect(ongoing_election.reload.status).to eq "vote"
       expect(finished_election.reload.status).to eq "vote_ended"
-      expect(finished_election_2.reload.status).to eq "vote_ended"
+      expect(finished_election2.reload.status).to eq "vote_ended"
     end
   end
 end

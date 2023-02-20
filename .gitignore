@@ -16,4 +16,9 @@ spec/decidim_dummy_app
 # default development application
 development_app
 
-/node_modules/
+.rbenv-vars
+.vscode
+.byebug_history
+*.gem
+node_modules/
+npm_debug.log
