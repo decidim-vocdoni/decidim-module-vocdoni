@@ -167,6 +167,9 @@ en:
         steps:
           create_election:
             credits: Available credits
+            description: Your voting process is secured using the advanced digital
+              voting technology of the Vocdoni Protocol. Please be patient, as the
+              set-up process may take some time.
             errors:
               census_ready: The census is <strong>not ready</strong>. <a href=%{link}>Fix
                 it</a>.
@@ -197,13 +200,13 @@ en:
             success: Election successfully sent to the Vocdoni API
             title: Setup election
           created:
+            explorer_vote: View at Explorer Vote
             message: The election has been created. We're waiting for the start date
               time to arrive.
+            preview: Preview landing page
             secret_until_the_end: The election results will be secret until the end
               of the voting period.
             title: Election created
-            url_html: You can watch it out at the <a href="%{explorer_vote_url}" target="_blank"
-              rel="noopener noreferrer">Vocdoni Explorer</a>.
           index:
             title: Steps dashboard
           powered_by_html: This module makes use of Vocdoni Protocol, an open-source voting
@@ -377,9 +380,9 @@ en:
           question_steps: Question %{current_step} of %{total_steps}
         submitting:
           header: Submitting the vote...
+          subtext: Be patient, this process can take some time
           text: Your vote is being processed using Vocdoni Protocol, a secure digital
             voting technology.
-          subtext: Be patient, this process can take some time
         vocdoni_logo:
           powered_by: Powered by
         vote_cast:

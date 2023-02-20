@@ -6,3 +6,9 @@
     margin-top: 1rem;
   }
 }
+
+// Fix for button primary colors with black links in the admin panel
+// We should fix this upstream
+.button.primary {
+  color: white;
+}
