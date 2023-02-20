@@ -1,22 +1,36 @@
 <%= render("focus_header", header_title: t("decidim.vocdoni.votes.header.vote_cast")) %>
+<% i18n_scope = "decidim.vocdoni.votes.vote_cast" %>
 
 <div class="focus__content evote vote_cast">
   <div class="row">
     <h1 class="heading2">
-      <%= t("decidim.vocdoni.votes.vote_cast.header") %>
+      <%= t("header", scope: i18n_scope) %>
     </h1>
 
     <div class="evote__content">
-      <p><%= t("decidim.vocdoni.votes.vote_cast.description") %></p>
+      <p><%= t("description", scope: i18n_scope) %></p>
       <p>
-        <%= t("decidim.vocdoni.votes.vote_cast.vote_id") %>
-        <strong class="vote-id"></strong>
-        <%= link_to t("decidim.vocdoni.votes.vote_cast.check"), "#", class: "verify_ballot", target: "_blank", rel: "noopener noreferrer" %>
+        <%= t("vote_receipt", scope: i18n_scope) %>
+
+        <div class="input-group">
+          <input id="vote-receipt" class="input-group-field" type="text" title="<%= t("vote_receipt", scope: i18n_scope) %>" readonly>
+          <div class="input-group-button">
+            <button class="button primary"
+                    data-clipboard-copy="#vote-receipt"
+                    data-clipboard-copy-label="<%= t("copy_vote_receipt_copied", scope: i18n_scope) %>"
+                    data-clipboard-copy-message="<%= t("copy_vote_receipt_message", scope: i18n_scope) %>"
+                    aria-label="<%= t("copy_vote_receipt_clarification", scope: i18n_scope) %>">
+                    <%= icon "clipboard", role: "img", "aria-hidden": true %>
+                    <%= t("copy_vote_receipt", scope: i18n_scope) %>
+            </button>
+          </div>
+        </div>
+        <%= link_to t("verify", scope: i18n_scope), "#", class: "verify_ballot", target: "_blank", rel: "noopener noreferrer" %>
       </p>
     </div>
 
     <%= link_to election_path(election), class: "button" do %>
-      <%= t("decidim.vocdoni.votes.vote_cast.exit") %>
+      <%= t("exit", scope: i18n_scope) %>
     <% end %>
     <%= render partial: "vocdoni_logo" %>
   </div>

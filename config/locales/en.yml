@@ -377,15 +377,23 @@ en:
           question_steps: Question %{current_step} of %{total_steps}
         submitting:
           header: Submitting the vote...
-          text: Your ballot is being submitted to the Vocdoni API.
+          text: Your vote is being processed using Vocdoni Protocol, a secure digital
+            voting technology.
+          subtext: Be patient, this process can take some time
         vocdoni_logo:
           powered_by: Powered by
         vote_cast:
-          check: "( Check my vote )"
-          description: You can check your vote using the Vocdoni Explorer portal.
+          copy_vote_receipt: Copy
+          copy_vote_receipt_clarification: Copy vote receipt to clipboard
+          copy_vote_receipt_copied: Copied!
+          copy_vote_receipt_message: The vote receipt was successfully copied to clipboard.
+          description: Your vote has been cast successfully! You can store the following
+            receipt as proof of your vote's inclusion at any time and check it using
+            the Vocdoni Explorer.
           exit: Exit the voting booth
           header: Vote confirmed
-          vote_id: 'Your vote identifier is:'
+          verify: "( Verify my vote )"
+          vote_receipt: 'Your vote receipt is:'
         voting_step:
           back: Back
           continue: Next
