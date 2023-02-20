@@ -121,13 +121,12 @@ en:
               in the organization settings. The current configuration is %{time_zone}
               (%{time}).
           index:
-            description: This component allows you to create and manage elections
-              using the Vocdoni platform. Vocdoni is a secure digital voting solution
-              using decentralized technologies. The voting protocol which powers the
-              platform is designed to be universally verifiable, secure, and resistant
-              to attack and censorship through the use of blockchain technology, together
-              with decentralized technologies and cryptographic mechanisms, such as
-              zero-knowledge proofs.
+            description_html: With this voting module, you can easily organize a wide
+              range of voting processes with high guarantees. The module utilizes
+              the Vocdoni Protocol, an open-source voting technology to organize elections
+              with the highest standards of security, universal verifiability, censorship-resistance,
+              and anonymity. <a href="https://vocdoni.io" target="_blank" rel="noreferrer
+              noopener">Learn more about Vocdoni</a>.
             title: Elections (Vocdoni)
           new:
             create: Create
