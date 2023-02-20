@@ -201,7 +201,9 @@ en:
               rel="noopener noreferrer">Vocdoni Explorer</a>.
           index:
             title: Steps dashboard
-          powered_by: Powered by
+          powered_by: This module makes use of Vocdoni Protocol, an open-source voting
+            technology to organize elections with the highest standards of security,
+            universal verifiability, censorship-resistance, and anonymity.
           processing: Processing...
           ready:
             title: Ready
