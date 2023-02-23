@@ -1,36 +1,35 @@
 <%= render("focus_header", header_title: t("decidim.vocdoni.votes.header.vote_cast")) %>
-<% i18n_scope = "decidim.vocdoni.votes.vote_cast" %>
 
 <div class="focus__content evote vote_cast">
   <div class="row">
     <h1 class="heading2">
-      <%= t("header", scope: i18n_scope) %>
+      <%= t("header", scope: "decidim.vocdoni.votes.vote_cast") %>
     </h1>
 
     <div class="evote__content">
-      <p><%= t("description", scope: i18n_scope) %></p>
+      <p><%= t("description", scope: "decidim.vocdoni.votes.vote_cast") %></p>
       <p>
-        <%= t("vote_receipt", scope: i18n_scope) %>
+        <%= t("vote_receipt", scope: "decidim.vocdoni.votes.vote_cast") %>
 
         <div class="input-group">
-          <input id="vote-receipt" class="input-group-field" type="text" title="<%= t("vote_receipt", scope: i18n_scope) %>" readonly>
+          <input id="vote-receipt" class="input-group-field" type="text" title="<%= t("vote_receipt", scope: "decidim.vocdoni.votes.vote_cast") %>" readonly>
           <div class="input-group-button">
             <button class="button primary"
                     data-clipboard-copy="#vote-receipt"
-                    data-clipboard-copy-label="<%= t("copy_vote_receipt_copied", scope: i18n_scope) %>"
-                    data-clipboard-copy-message="<%= t("copy_vote_receipt_message", scope: i18n_scope) %>"
-                    aria-label="<%= t("copy_vote_receipt_clarification", scope: i18n_scope) %>">
+                    data-clipboard-copy-label="<%= t("copy_vote_receipt_copied", scope: "decidim.vocdoni.votes.vote_cast") %>"
+                    data-clipboard-copy-message="<%= t("copy_vote_receipt_message", scope: "decidim.vocdoni.votes.vote_cast") %>"
+                    aria-label="<%= t("copy_vote_receipt_clarification", scope: "decidim.vocdoni.votes.vote_cast") %>">
                     <%= icon "clipboard", role: "img", "aria-hidden": true %>
-                    <%= t("copy_vote_receipt", scope: i18n_scope) %>
+                    <%= t("copy_vote_receipt", scope: "decidim.vocdoni.votes.vote_cast") %>
             </button>
           </div>
         </div>
-        <%= link_to t("verify", scope: i18n_scope), "#", class: "verify_ballot", target: "_blank", rel: "noopener noreferrer" %>
+        <%= link_to t("verify", scope: "decidim.vocdoni.votes.vote_cast"), "#", class: "verify_ballot", target: "_blank", rel: "noopener noreferrer" %>
       </p>
     </div>
 
     <%= link_to election_path(election), class: "button" do %>
-      <%= t("exit", scope: i18n_scope) %>
+      <%= t("exit", scope: "decidim.vocdoni.votes.vote_cast") %>
     <% end %>
     <%= render partial: "vocdoni_logo" %>
   </div>

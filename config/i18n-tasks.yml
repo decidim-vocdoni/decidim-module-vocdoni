@@ -4,7 +4,7 @@ base_locale: en
 locales: [en]
 
 ignore_unused:
-  - "activemodel.attributes.election.{description,end_time,start_time,title}"
+  - "activemodel.attributes.election.{description,end_time,secret_until_the_end,start_time,stream_uri,title}"
   - "activemodel.errors.models.election.attributes.attachment.needs_to_be_reattached"
   - "decidim.components.vocdoni.settings.{global,step}.announcement"
   - "decidim.components.vocdoni.name"
@@ -19,6 +19,8 @@ ignore_unused:
   - "decidim.vocdoni.elections.show.preview"
   - "decidim.vocdoni.elections.show.verify.{already_voted,verify_here,will_verify}"
   - "decidim.vocdoni.models.answer.fields.proposals"
+  # To be removed once the header image is no longer necessary by the Vocdoni SDK
+  - "decidim.admin.shared.gallery.gallery_legend"
 
 ignore_missing:
   - decidim.participatory_processes.scopes.global
