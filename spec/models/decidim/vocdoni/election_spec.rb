@@ -67,10 +67,6 @@ describe Decidim::Vocdoni::Election do
       allow(Decidim::Vocdoni).to receive(:explorer_vote_domain).and_return("example.org")
     end
 
-    before do
-      allow(Decidim::Vocdoni).to receive(:explorer_vote_domain).and_return("example.org")
-    end
-
     it "returns the URL" do
       expect(subject.explorer_vote_url).to eq "https://example.org/processes/show/#/12345"
     end
