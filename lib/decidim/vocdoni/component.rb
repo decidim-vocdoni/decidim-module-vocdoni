@@ -89,7 +89,14 @@ Decidim.register_component(:vocdoni) do |component|
         end,
         start_time: start_time,
         end_time: end_time,
-        published_at: Faker::Boolean.boolean(true_ratio: 0.5) ? 1.week.ago : nil
+        published_at: Faker::Boolean.boolean(true_ratio: 0.5) ? 1.week.ago : nil,
+        election_type: {
+          auto_start: [true, false].sample,
+          interruptible: [true, false].sample,
+          dynamic_census: [true, false].sample,
+          secret_until_the_end: [true, false].sample,
+          anonymous: [true, false].sample
+        }
       }
       params[:blocked_at] = blocked_at
       params[:status] = status unless status == "none"
