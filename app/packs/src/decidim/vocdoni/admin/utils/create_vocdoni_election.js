@@ -65,11 +65,12 @@ export default class CreateVocdoniElection {
    * @returns {void}
    */
   async _createElection() {
-
-    const election = await this._initializeElection();
     let result = null;
 
     try {
+      const election = await this._initializeElection();
+      console.log("ELECTION => ", election);
+
       const vocdoniElectionId = await this.client.createElection(election);
       result = `OK! VOCDONI ELECTION ID => ${vocdoniElectionId}`;
       this.onSuccess(vocdoniElectionId);
@@ -78,7 +79,6 @@ export default class CreateVocdoniElection {
       this.onFailure();
     }
 
-    console.log("ELECTION => ", election);
     console.log("RESULT => ", result);
   }
 
