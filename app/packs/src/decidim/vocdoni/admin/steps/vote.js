@@ -23,7 +23,7 @@ const voteStep = async () => {
     console.log("ELECTION METADATA => ", electionMetadata);
     const results = electionMetadata.results;
 
-    for (let idx = 0; idx < results.length; idx++) {
+    for (let idx = 0; idx < results.length; idx += 1) {
       const $questionAnswersCells = $(`td[data-question-idx="${idx}"]`);
       for (const answerCell of $questionAnswersCells) {
         const answerId = $(answerCell).data("answer-id");
