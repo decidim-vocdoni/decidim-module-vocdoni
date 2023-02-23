@@ -17,7 +17,7 @@ module Decidim
       end
 
       def can_preview?
-        @preview_mode ||= allowed_to?(:preview, :election, election: election)
+        @can_preview ||= allowed_to?(:preview, :election, election: election)
       end
 
       def ballot_questions
