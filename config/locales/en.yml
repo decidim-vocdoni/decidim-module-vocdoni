@@ -81,8 +81,8 @@ en:
           destroy_all:
             success: All census data have been deleted
           generate:
-            info: You can generate the credentials for all the participants with the
-              following action.
+            info: You must generate the credentials for all the participants with
+              the following action.
             submit: Generate credentials
             title: 2. Generate credentials for the participants
           index:
@@ -120,6 +120,10 @@ en:
           edit:
             title: Edit election
             update: Update
+          form:
+            organization_time_zone: Check that the organization time zone is correct
+              in the organization settings. The current configuration is %{time_zone}
+              (%{time}).
           index:
             description: This component allows you to create and manage elections
               using the Vocdoni platform. Vocdoni is a secure digital voting solution
@@ -176,6 +180,8 @@ en:
               participatory_space_published: The participatory space is <strong>not
                 published</strong>.
               published: The election is <strong>not published</strong>.
+              time_before: The setup is not being done <strong>at least %{minutes}
+                minutes</strong> before the election starts.
             failed:
               message: Check the Web Development console log error message, fix the
                 problem and retry.
@@ -189,6 +195,8 @@ en:
               minimum_questions: The election has <strong>at least one question</strong>.
               participatory_space_published: The participatory space is <strong>published</strong>.
               published: The election is <strong>published</strong>.
+              time_before: The setup is being done <strong>at least %{minutes} minutes</strong>
+                before the election starts.
             submit: Setup election
             success: Election successfully sent to the Vocdoni API
             title: Setup election
@@ -243,8 +251,6 @@ en:
           new:
             create: Create
             title: New organization wallet
-          ready:
-            title: Ready
       admin_log:
         election:
           create: "%{user_name} created the election %{resource_name} of %{space_name}"

@@ -24,6 +24,7 @@ module Decidim
             [:minimum_answers, {}, election.minimum_answers?],
             [:published, {}, election.published_at.present?],
             [:component_published, {}, election.component.published?],
+            [:time_before, { minutes: Decidim::Vocdoni.setup_minimum_minutes_before_start }, election.minimum_minutes_before_start?],
             [:participatory_space_published, {}, election.participatory_space.published?],
             [:census_ready, {}, census.ready_to_setup?]
           ].freeze

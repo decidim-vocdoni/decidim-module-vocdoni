@@ -59,27 +59,27 @@ describe "Decidim::Api::QueryType" do
       "versions" => [],
       "versionsCount" => 0
     }
-end
+  end
 
-let(:elections_data) do
-  {
-    "__typename" => "VocdoniElections",
-    "id" => current_component.id.to_s,
-    "name" => { "translation" => "Elections (Vocdoni)" },
-    "elections" => {
-      "edges" => [
-        {
-          "node" => election_single_result
-        }
-      ]
-    },
-    "weight" => 0
-  }
-end
+  let(:elections_data) do
+    {
+      "__typename" => "VocdoniElections",
+      "id" => current_component.id.to_s,
+      "name" => { "translation" => "Elections (Vocdoni)" },
+      "elections" => {
+        "edges" => [
+          {
+            "node" => election_single_result
+          }
+        ]
+      },
+      "weight" => 0
+    }
+  end
 
-describe "valid connection query" do
-  let(:component_fragment) do
-    %(
+  describe "valid connection query" do
+    let(:component_fragment) do
+      %(
         fragment fooComponent on VocdoniElections {
           elections{
             edges{
@@ -142,20 +142,20 @@ describe "valid connection query" do
           }
         }
     )
+    end
+
+    it "executes sucessfully" do
+      expect { response }.not_to raise_error
+    end
+
+    it do
+      expect(response["participatoryProcess"]["components"].first).to eq(elections_data)
+    end
   end
 
-  it "executes sucessfully" do
-    expect { response }.not_to raise_error
-  end
-
-  it do
-    expect(response["participatoryProcess"]["components"].first).to eq(elections_data)
-  end
-end
-
-describe "valid query" do
-  let(:component_fragment) do
-    %(
+  describe "valid query" do
+    let(:component_fragment) do
+      %(
       fragment fooComponent on VocdoniElections {
         election(id: #{election.id}){
           attachments {
@@ -215,14 +215,14 @@ describe "valid query" do
         }
       }
     )
-  end
+    end
 
-  it "executes sucessfully" do
-    expect { response }.not_to raise_error
-  end
+    it "executes sucessfully" do
+      expect { response }.not_to raise_error
+    end
 
-  it do
-    expect(response["participatoryProcess"]["components"].first["election"]).to eq(election_single_result)
+    it do
+      expect(response["participatoryProcess"]["components"].first["election"]).to eq(election_single_result)
+    end
   end
-end
 end

@@ -12,6 +12,11 @@ module Decidim
   module Vocdoni
     include ActiveSupport::Configurable
 
+    # Public Setting that defines how many minutes should the setup be run before the election starts
+    config_accessor :setup_minimum_minutes_before_start do
+      10
+    end
+
     # Public Setting to configure the Vocdoni API enpoint
     # It can be "dev" or "stg"
     config_accessor :api_endpoint_env do

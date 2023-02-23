@@ -58,6 +58,13 @@ module Decidim::Vocdoni
       questions.any? && questions.all? { |question| question.answers.size > 1 }
     end
 
+    # Public: Checks if the election start_time is minimum some minutes later than the present time
+    #
+    # Returns a boolean.
+    def minimum_minutes_before_start?
+      start_time > (Time.zone.at(Decidim::Vocdoni.setup_minimum_minutes_before_start.minutes.from_now))
+    end
+
     # Public: Gets the voting period status of the election
     #
     # Returns one of these symbols: upcoming, ongoing or finished

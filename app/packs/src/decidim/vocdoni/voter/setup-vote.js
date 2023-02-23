@@ -1,4 +1,4 @@
-// A vote component, to send the real votes to the Vocdoni API, using the Vocdoni SDK
+/* eslint-disable no-unused-vars */
 
 import { VocdoniSDKClient, Vote } from "@vocdoni/sdk";
 
@@ -18,7 +18,7 @@ import { VocdoniSDKClient, Vote } from "@vocdoni/sdk";
  */
 const submitVote = (options) => {
   const client = new VocdoniSDKClient({
-    env: options.env,
+    env: options.vocdoniEnv,
     wallet: options.wallet
   });
   client.setElectionId(options.electionId);
@@ -37,6 +37,7 @@ const submitVote = (options) => {
   });
 }
 
+// A vote component, to send the real votes to the Vocdoni API, using the Vocdoni SDK
 export default class VoteComponent {
   constructor({ vocdoniEnv, electionUniqueId, wallet }) {
     this.vocdoniEnv = vocdoniEnv;
@@ -50,7 +51,6 @@ export default class VoteComponent {
     onBallotSubmission,
     onFinish,
     onBindVerifyBallotButton,
-    onVerifyBallot,
     onVerifyComplete,
     onClose,
     onInvalid
@@ -92,3 +92,4 @@ export default class VoteComponent {
     return response;
   }
 }
+/* eslint-enable no-unused-vars */

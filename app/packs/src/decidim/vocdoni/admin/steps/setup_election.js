@@ -1,3 +1,4 @@
+import { EnvOptions } from "@vocdoni/sdk";
 import SetupElection from "src/decidim/vocdoni/admin/setup_election";
 
 const setupElectionStep = async () => {
@@ -36,7 +37,7 @@ const setupElectionStep = async () => {
       graphqlApiUrl: `${window.location.origin}/api`,
       componentId: window.location.pathname.split("/")[5],
       electionId: window.location.pathname.split("/")[8],
-      env: createElectionForm.querySelector("#setup_vocdoni_env").value
+      env: EnvOptions.DEV
     }, onSuccess, onFailure);
     election.run();
   });

@@ -13,15 +13,11 @@ module Decidim
       end
 
       def preview_mode?
-        return @preview_mode if defined?(@preview_mode)
-
-        @preview_mode = !election.published? || !election.started?
+        @preview_mode ||= !election.published? || !election.started?
       end
 
       def can_preview?
-        return @can_preview if defined?(@can_preview)
-
-        @preview_mode = allowed_to?(:preview, :election, election: election)
+        @can_preview ||= allowed_to?(:preview, :election, election: election)
       end
 
       def ballot_questions

@@ -27,9 +27,12 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
        * @return {array} An array with the selected answers
        */
       const getFormData = (formData) => {
+        /* eslint-disable no-invalid-this */
         return formData.map(function() {
-          return Number($(this).val().split("-")[1]);
+          const answerValue = this.value;
+          return Number(answerValue.split("-")[1]);
         }).get();
+        /* eslint-enable no-invalid-this */
       };
       const formData = getFormData($voteWrapper.find(".answer_input:checked"));
 
@@ -46,20 +49,6 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
     },
     onBindVerifyBallotButton(onEventTriggered) {
       $(".verify_ballot").on("click", onEventTriggered);
-    },
-    onVerifyBallot(auditedData, auditedDataFileName) {
-      // TODO
-      const vote = JSON.stringify(auditedData);
-      const link = document.createElement("a");
-      $voteWrapper.find(".button.cast_ballot").addClass("hide");
-      $voteWrapper.find(".button.back").removeClass("hide");
-      questionsComponent.voteCasted = true;
-
-      link.setAttribute("href", `data:text/plain;charset=utf-8,${vote}`);
-      link.setAttribute("download", auditedDataFileName);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
     },
     onVerifyComplete() {
       console.log("Verify completed");
@@ -220,3 +209,4 @@ $(() => {
     }
   });
 });
+/* eslint-enable no-console */

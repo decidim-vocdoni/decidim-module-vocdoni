@@ -11,7 +11,7 @@ import { Wallet } from "@ethersproject/wallet";
  * @property {string} options.graphqlApiUrl The URL for the GraphQL API where to extract the Election metadata
  * @property {number|string} options.componentId The ID of the Vocdoni Component in Decidim
  * @property {number|string} options.electionId The ID of the Vocdoni Election in Decidim
- * @property {string} options.env The name of the Vocdoni env that we'll use. Possible values STG or DEV.
+ * @property {string} options.env The name of the Vocdoni environment that we'll use. Possible values STG or DEV.
  * @param {function} onSuccess A callback function to be run when the Election is successfully sent to the API
  * @param {function} onFailure A callback function to be run when the Election sent to the API has a failure
  *
@@ -23,7 +23,6 @@ export default class SetupElection {
     this.walletPrivateKey = options.walletPrivateKey;
     this.graphqlApiUrl = options.graphqlApiUrl;
     this.componentId = options.componentId;
-    this.componentId = options.componentId;
     this.electionId = options.electionId;
     this.env = options.env;
     this.onSuccess = onSuccess;
@@ -34,6 +33,7 @@ export default class SetupElection {
     console.log("WALLET PRIVATE KEY => ", options.walletPrivateKey);
     console.log("GRAPHQL API URL => ", options.graphqlApiUrl);
     console.log("VOCDONI COMPONENT ID => ", options.componentId);
+    console.log("ELECTION ID => ", options.electionId);
     console.log("ENVIRONMENT => ", options.env);
     console.groupEnd();
   }
@@ -63,7 +63,7 @@ export default class SetupElection {
 
     const clientInfo = await this.client.createAccount();
     if (clientInfo.balance === 0) {
-      await this.client.collectFaucetTokens();
+      this.client.collectFaucetTokens();
     }
 
     console.group("Client");

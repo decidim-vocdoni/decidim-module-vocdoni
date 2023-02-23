@@ -18,6 +18,10 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   let(:participatory_process) { create :participatory_process, :published }
   let(:attributes) { {} }
 
+  before do
+    allow(Decidim::Vocdoni).to receive(:setup_minimum_minutes_before_start).and_return(10)
+  end
+
   it { is_expected.to be_valid }
 
   it "shows messages" do
@@ -37,12 +41,15 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       hash_including({ participatory_space_published: "The participatory space is <strong>published</strong>." })
     )
     expect(subject.messages).to match(
-      hash_including({ census_ready: "The census is <strong>ready</strong>."})
+      hash_including({ census_ready: "The census is <strong>ready</strong>." })
+    )
+    expect(subject.messages).to match(
+      hash_including({ time_before: "The setup is being done <strong>at least 10 minutes</strong> before the election starts." })
     )
   end
 
   context "when the election is not ready for the setup" do
-    let(:election) { create :vocdoni_election }
+    let(:election) { create :vocdoni_election, start_time: 10.days.ago }
 
     it { is_expected.to be_invalid }
 
@@ -62,6 +69,23 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       )
       expect(subject.errors.messages).to match(
         hash_including({ census_ready: ["The census is <strong>not ready</strong>."] })
+      )
+      expect(subject.errors.messages).to match(
+        hash_including({ time_before: ["The setup is not being done <strong>at least 10 minutes</strong> before the election starts."] })
+      )
+    end
+  end
+
+  context "when the setup_minimum_minutes_before_start is different" do
+    before do
+      allow(Decidim::Vocdoni).to receive(:setup_minimum_minutes_before_start).and_return(33)
+    end
+
+    it "shows the message" do
+      expect(subject.messages).to match(
+        hash_including({
+                         time_before: "The setup is being done <strong>at least 33 minutes</strong> before the election starts."
+                       })
       )
     end
   end
