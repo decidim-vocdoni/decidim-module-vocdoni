@@ -1,4 +1,4 @@
-import { EnvOptions, VocdoniSDKClient } from "@vocdoni/sdk";
+import { VocdoniSDKClient } from "@vocdoni/sdk";
 
 const voteStep = async () => {
   // Setup election step
@@ -13,9 +13,10 @@ const voteStep = async () => {
   const fetchVotesStats = async () => {
     const currentVocdoniWalletPrivateKey = electionVotesMetadataTable.dataset.vocdoniWalletPrivateKey;
     const electionUniqueId = electionVotesMetadataTable.dataset.electionUniqueId;
+    const vocdoniEnv = electionVotesMetadataTable.dataset.vocdoniEnv;
 
     const client = new VocdoniSDKClient({
-      env: EnvOptions.DEV,
+      env: vocdoniEnv,
       wallet: currentVocdoniWalletPrivateKey
     })
     client.setElectionId(electionUniqueId);
@@ -23,6 +24,7 @@ const voteStep = async () => {
 
     console.group("Election Metadata");
     console.log("WALLET => ", currentVocdoniWalletPrivateKey);
+    console.log("ENVIRONMENT => ", vocdoniEnv);
     console.log("ELECTION_UNIQUE_ID =>", electionUniqueId);
     console.log("ELECTION_METADATA =>", electionMetadata);
     console.groupEnd();

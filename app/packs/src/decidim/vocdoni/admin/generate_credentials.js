@@ -17,7 +17,7 @@ const initializeGenerateCredentialsForm = () => {
     const email = credential.querySelector(".credential_email").value;
     const bornAt = credential.querySelector(".credential_born_at").value;
     const walletAddressField = credential.querySelector(".credential_wallet_address");
-    const wallet = VocdoniSDKClient.generateWalletFromData(email, bornAt);
+    const wallet = VocdoniSDKClient.generateWalletFromData([email, bornAt]);
 
     walletAddressField.value = wallet.address;
   }

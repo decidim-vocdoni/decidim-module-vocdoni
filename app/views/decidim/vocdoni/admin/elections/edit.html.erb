@@ -3,5 +3,19 @@
 
   <div class="button--double form-general-submit">
     <%= f.submit t(".update") %>
+
+    <% if election.published? %>
+      <% if allowed_to?(:unpublish, :election, election: election) %>
+        <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), url_for(action: :unpublish, id: election, controller: "elections"), class: "button muted", method: :put %>
+      <% else %>
+        <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), "#", class: "button muted disabled" %>
+      <% end %>
+    <% else %>
+      <% if allowed_to?(:publish, :election, election: election) %>
+        <%= link_to t("actions.publish", scope: "decidim.vocdoni"), url_for(action: :publish, id: election, controller: "elections"), class: "button hollow", method: :put %>
+      <% else %>
+        <%= link_to t("actions.publish", scope: "decidim.vocdoni"), "#", class: "button hollow disabled" %>
+      <% end %>
+    <% end %>
   </div>
 <% end %>

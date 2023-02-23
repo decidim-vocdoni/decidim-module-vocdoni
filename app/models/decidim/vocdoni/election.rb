@@ -82,7 +82,7 @@ module Decidim::Vocdoni
     #
     # Returns a string with the full URL
     def explorer_vote_url
-      "https://dev.explorer.vote/processes/show/#/#{vocdoni_election_id}"
+      "https://#{Decidim::Vocdoni.explorer_vote_domain}/processes/show/#/#{vocdoni_election_id}"
     end
   end
 end

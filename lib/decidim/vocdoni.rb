@@ -16,5 +16,15 @@ module Decidim
     config_accessor :setup_minimum_minutes_before_start do
       10
     end
+
+    # Public Setting to configure the Vocdoni API enpoint
+    # It can be "dev" or "stg"
+    config_accessor :api_endpoint_env do
+      "dev"
+    end
+
+    def self.explorer_vote_domain
+      "#{api_endpoint_env}.explorer.vote"
+    end
   end
 end

@@ -1,0 +1,24 @@
+<h1 class="heading2">
+  <%= translated_attribute(question.title) %>
+</h1>
+
+<div class="evote__options" data-max-selection="1" data-min-selection="1">
+  <% ordered_answers(question).each do |answer| %>
+    <%= label_tag nil, data: { "disabled-by": "#check-nota" }, class: "evote__check evote__card" do %>
+      <%= radio_button_tag question.slug, answer.slug, false, class: "answer_input" %>
+
+      <span class="evote__check-label">
+        <%= translated_attribute(answer.title) %>
+        <% if more_information?(answer) %>
+          <span class="evote__check-extra">
+            <button type="button" class="link" data-toggle="show-focus-modal-<%= answer.slug %>">
+              <%= t("decidim.vocdoni.votes.new.more_information") %>
+            </button>
+          </span>
+        <% end %>
+      </span>
+    <% end %>
+
+    <%= render("new_question_modal", answer: answer) if more_information?(answer) %>
+  <% end %>
+</div>

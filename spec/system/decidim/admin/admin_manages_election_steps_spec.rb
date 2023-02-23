@@ -10,14 +10,14 @@ describe "Admin manages election steps", :slow, type: :system do
   include_context "when managing a component as an admin"
 
   describe "setup an election" do
-    let(:election) { create :vocdoni_election, :with_photos, :ready_for_setup, component: current_component, title: { en: "English title", es: "" } }
+    let(:election) { create :vocdoni_election, :ready_for_setup, component: current_component, title: { en: "English title", es: "" } }
 
     it "performs the action successfully" do
       visit_steps_page
 
       within "form.create_election" do
-        expect(page).to have_content("The election has at least 1 question.")
-        expect(page).to have_content("Each question has at least 2 answers.")
+        expect(page).to have_content("The election has at least one question.")
+        expect(page).to have_content("Each question has at least two answers.")
         expect(page).to have_content("The election is published.")
         expect(page).to have_content("The election component is published.")
         expect(page).to have_content("The census is ready")

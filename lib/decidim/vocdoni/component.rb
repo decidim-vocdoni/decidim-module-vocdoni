@@ -6,6 +6,7 @@ Decidim.register_component(:vocdoni) do |component|
   component.engine = Decidim::Vocdoni::Engine
   component.admin_engine = Decidim::Vocdoni::AdminEngine
   component.icon = "media/images/decidim_vocdoni.svg"
+  component.stylesheet = "decidim/vocdoni/vocdoni"
   component.permissions_class_name = "Decidim::Vocdoni::Permissions"
   component.query_type = "Decidim::Vocdoni::VocdoniElectionsType"
 

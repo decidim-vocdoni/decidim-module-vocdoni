@@ -36,6 +36,8 @@ export default class SetupElection {
     console.log("ELECTION ID => ", options.electionId);
     console.log("ENVIRONMENT => ", options.environment);
     console.groupEnd();
+
+    this.run();
   }
 
   /*

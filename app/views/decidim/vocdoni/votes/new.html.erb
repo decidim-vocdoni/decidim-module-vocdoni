@@ -1,0 +1,68 @@
+<div class="vote-wrapper"
+  data-vocdoni-env="<%= vocdoni_api_endpoint_env %>"
+  data-election-unique-id="<%== election_unique_id %>"
+  data-scheme-name="vocdoni"
+  data-preview="<%= preview_mode? %>">
+
+  <div id="login" class="focus__step" data-toggler=".hide">
+    <%= render("login") %>
+  </div>
+
+  <% questions.each_with_index do |step_question, step_index| %>
+    <div id="step-<%= step_index %>" class="focus__step hide"
+    data-toggler=".hide">
+      <div class="focus__header">
+        <div class="row">
+          <div class="focus__steps">
+            <strong>
+              <%= t("decidim.vocdoni.votes.new.question_steps", current_step: step_index + 1, total_steps: questions_count) %>
+            </strong>
+          </div>
+          <div class="heading5 focus__header-title">
+            <%= translated_attribute(election.title) %>
+          </div>
+        </div>
+      </div>
+
+      <div class="focus__content evote">
+        <div class="row">
+          <%= render(
+            "new_question",
+            question: step_question
+          ) %>
+        </div>
+      </div>
+
+      <%= cell(
+        "decidim/vocdoni/voting_step_navigation",
+        step_index,
+        total_steps: questions_count
+      ) %>
+
+    </div>
+  <% end %>
+
+  <div id="step-<%= questions_count %>" class="hide focus__step" data-toggler=".hide">
+    <%= render(
+      "new_confirm_step",
+      questions: questions
+    ) %>
+  </div>
+
+  <div id="submitting" class="hide focus__step" data-toggler=".hide">
+    <%= render("new_submitting_step") %>
+  </div>
+
+  <div id="vote_sent" class="hide focus__step" data-redirect_url=".hide">
+    <%= render("show_vote_sent_step") %>
+  </div>
+
+  <div id="vote_failed" class="hide focus__step" data-redirect_url=".hide">
+    <%= render("show_failed") %>
+  </div>
+
+</div>
+
+<% content_for :js_content do %>
+  <%= javascript_pack_tag "decidim_vocdoni_voter_new_vote" %>
+<% end %>

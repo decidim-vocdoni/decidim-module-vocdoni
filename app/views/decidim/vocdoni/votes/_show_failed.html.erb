@@ -1,0 +1,18 @@
+<%= render("focus_header", header_title: t("decidim.vocdoni.votes.header.failed")) %>
+
+<div class="focus__content evote">
+  <div class="row">
+    <h1 class="heading2">
+      <%= t("decidim.vocdoni.votes.failed.header") %>
+    </h1>
+    <h2 class="h4"><%= t("decidim.vocdoni.votes.failed.lead") %></h2>
+
+    <div class="evote__content">
+      <%= t("decidim.vocdoni.votes.failed.text") %>
+    </div>
+
+    <%= link_to new_election_vote_path(election), class: "button" do %>
+      <%= t("decidim.vocdoni.votes.failed.try_again") %>
+    <% end %>
+  </div>
+</div>

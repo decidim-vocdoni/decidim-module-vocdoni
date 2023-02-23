@@ -41,6 +41,11 @@ FactoryBot.define do
       started
     end
 
+    trait :vote do
+      published
+      ongoing
+    end
+
     trait :finished do
       started
       end_time { 1.day.ago }
@@ -53,9 +58,7 @@ FactoryBot.define do
 
     trait :complete do
       after(:build) do |election, _evaluator|
-        election.questions << build(:vocdoni_question, :yes_no, election: election, weight: 1)
-        election.questions << build(:vocdoni_question, :candidates, election: election, weight: 3)
-        election.questions << build(:vocdoni_question, :projects, election: election, weight: 2)
+        election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
       end
     end
 
@@ -74,6 +77,7 @@ FactoryBot.define do
       published
       complete
       with_census
+      with_photos
     end
 
     trait :with_photos do
@@ -110,18 +114,8 @@ FactoryBot.define do
       end
     end
 
-    trait :yes_no do
+    trait :simple do
       complete
-    end
-
-    trait :candidates do
-      complete
-      answers { 10 }
-    end
-
-    trait :projects do
-      complete
-      answers { 6 }
     end
   end
 
