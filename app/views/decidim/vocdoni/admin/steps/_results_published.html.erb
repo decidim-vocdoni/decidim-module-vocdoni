@@ -4,7 +4,7 @@
       <%= t(".title") %>
     </h2>
   </div>
-  <div class="table-scroll">
+  <div class="card-section table-scroll">
     <ul class="voc-accordion mb-m evote__preview"
         data-accordion
         data-multi-expand="true"
@@ -19,29 +19,19 @@
                     <tr>
                       <th><%= t(".answer") %></th>
                       <th><%= t(".result") %></th>
-                      <th><%= t(".selected") %></th>
                     </tr>
                   </thead>
                   <tbody>
                     <% question.answers.each do |answer| %>
                       <tr>
                         <td><%= translated_attribute(answer.title) %></td>
-                        <% if answer.results_total > 0 %>
-                          <td class="text-success"><%= answer.results_total %></td>
-                        <% else %>
-                          <td><%= answer.results_total %></td>
-                        <% end %>
-                        <% if answer.selected %>
-                          <td class="text-success"><%= t(".selected") %></td>
-                        <% else %>
-                          <td><%= t(".not_selected") %></td>
-                        <% end %>
+                        <td><%= answer.votes %></td>
                       </tr>
                     <% end %>
 
                     <tr>
                       <td></td>
-                      <td class="text-muted"><%= question.results_total %></td>
+                      <td class="text-muted"><%= question.total_votes %></td>
                       <td></td>
                     </tr>
                   </tbody>
@@ -50,6 +40,6 @@
             </div>
           </li>
         <% end %>
-      </ul>
+    </ul>
   </div>
 </div>
