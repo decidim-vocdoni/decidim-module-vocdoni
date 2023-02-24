@@ -8,6 +8,7 @@ import { initVocdoniClient } from "./init_vocdoni_client";
  *
  * @param {object} options All the different options that interact with setting up an Election.
  * @property {string} options.graphqlApiUrl The URL for the GraphQL API where to extract the Election metadata
+ * @property {string} options.defaultLocale The default locale of the Election
  * @property {number|string} options.componentId The ID of the Vocdoni Component in Decidim
  * @property {number|string} options.electionId The ID of the Vocdoni Election in Decidim
  * @param {function} onSuccess A callback function to be run when the Election is successfully sent to the API
@@ -19,6 +20,7 @@ import { initVocdoniClient } from "./init_vocdoni_client";
 export default class CreateVocdoniElection {
   constructor(options = {}, onSuccess, onFailure) {
     this.graphqlApiUrl = options.graphqlApiUrl;
+    this.defaultLocale = options.defaultLocale;
     this.componentId = options.componentId;
     this.electionId = options.electionId;
     this.onSuccess = onSuccess;
@@ -27,6 +29,7 @@ export default class CreateVocdoniElection {
 
     console.group("Options");
     console.log("GRAPHQL API URL => ", options.graphqlApiUrl);
+    console.log("DEFAULT LOCALE => ", options.defaultLocale);
     console.log("VOCDONI COMPONENT ID => ", options.componentId);
     console.log("ELECTION ID => ", options.electionId);
     console.groupEnd();
@@ -68,7 +71,7 @@ export default class CreateVocdoniElection {
     let result = null;
 
     try {
-      const election = await this._initializeElection();
+      const election = await this._initializeElection(this.defaultLocale);
       console.log("ELECTION => ", election);
 
       const vocdoniElectionId = await this.client.createElection(election);
