@@ -211,10 +211,8 @@ en:
             title: Ready
           results_published:
             answer: Answer
-            not_selected: Not selected
             question: Question
             result: Result
-            selected: Selected
             title: Results published
           vote:
             message: We're on the vote period until %{end_time}.
