@@ -7,7 +7,6 @@ module Decidim
       class SetupForm < Decidim::Form
         mimic :setup
 
-        attribute :demo_census, String
         attribute :vocdoni_election_id, String
 
         validate do

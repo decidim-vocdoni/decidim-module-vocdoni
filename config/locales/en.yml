@@ -232,10 +232,10 @@ en:
             text: Text
             title: Vote period ended
           vote_stats:
-            no_vote_statistics_yet: No vote statistics yet
+            answer: Answer
+            question: Question
+            result: Result
             title: Vote statistics
-            voters: Voters
-            votes: Votes
         wallet:
           create:
             invalid: There was a problem creating the wallet

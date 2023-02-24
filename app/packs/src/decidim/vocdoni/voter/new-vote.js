@@ -59,7 +59,7 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
     onInvalid() {
       console.log("Invalid vote");
       $voteWrapper.find("#submitting").addClass("hide");
-      $voteWrapper.find("#vote_fail").removeClass("hide");
+      $voteWrapper.find("#vote_failed").removeClass("hide");
     }
   });
 }

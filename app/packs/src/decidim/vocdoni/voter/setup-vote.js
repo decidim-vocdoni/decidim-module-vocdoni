@@ -78,6 +78,7 @@ export default class VoteComponent {
   }
   async submit(vote) {
     console.log("Submiting vote to Vocdoni API with:");
+    console.log("- ENV => ", this.vocdoniEnv);
     console.log("- ELECTION ID => ", this.electionUniqueId);
     console.log("- WALLET => ", this.wallet);
     console.log("- VALUE => ", vote);
