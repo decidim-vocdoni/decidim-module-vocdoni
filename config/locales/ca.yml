@@ -185,25 +185,16 @@ ca:
             title: Ready
           results_published:
             answer: Answer
-            not_selected: Not selected
             question: Question
             result: Result
-            selected: Selected
             title: Results published
-          tally_ended:
-            answer: Answer
-            not_selected: Not selected
-            question: Question
-            result: Result
-            selected: Selected
-            title: Calculated results
-          tally_started:
-            title: Tally process
           vote:
             message: We're on the vote period until %{end_time}.
             title: Vote period
           vote_ended:
-            text: Text
+            submit: Publish results
+            success: Results successfully published
+            text: The vote period has ended. You can publish the results.
             title: Vote period ended
           vote_stats:
             answer: Answer
@@ -231,7 +222,6 @@ ca:
           publish: "%{user_name} published the election %{resource_name} of %{space_name}"
           publish_results: "%{user_name} published the results for the election %{resource_name} of %{space_name} on the Vocdoni API"
           setup: "%{user_name} created the election %{resource_name} of %{space_name} on the Vocdoni API"
-          start_tally: "%{user_name} started the tally for the election %{resource_name} of %{space_name} on the Vocdoni API"
           start_vote: "%{user_name} started the voting period for the election %{resource_name} of %{space_name} on the Vocdoni API"
           unpublish: "%{user_name} unpublished the %{resource_name} of %{space_name} election"
           update: "%{user_name} updated the election %{resource_name} of %{space_name}"
