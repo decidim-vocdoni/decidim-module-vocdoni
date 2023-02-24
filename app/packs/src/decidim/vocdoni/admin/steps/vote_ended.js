@@ -20,7 +20,7 @@ const voteEndedStep = async () => {
     console.log("ELECTION METADATA => ", electionMetadata);
     const results = electionMetadata.results;
 
-    for (let idx = 0; idx < results.length; idx++) {
+    for (let idx = 0; idx < results.length; idx += 1) {
       const questionAnswersInputs = document.querySelectorAll(`*[data-question-idx="${idx}"]`);
       for (const answerInput of questionAnswersInputs) {
         const answerId = answerInput.dataset.answerId;
