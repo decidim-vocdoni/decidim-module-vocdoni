@@ -34,7 +34,7 @@ const voteStep = async () => {
     }
   }
 
-  const client = new initVocdoniClient();
+  const client = initVocdoniClient();
   fetchVotesStats(client);
   setInterval(fetchVotesStats, WAIT_TIME_MS, client);
 }

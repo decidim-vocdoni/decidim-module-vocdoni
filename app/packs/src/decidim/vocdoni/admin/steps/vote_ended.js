@@ -31,7 +31,7 @@ const voteEndedStep = async () => {
     }
   }
 
-  const client = new initVocdoniClient();
+  const client = initVocdoniClient();
   fetchVotesStats(client);
 }
 

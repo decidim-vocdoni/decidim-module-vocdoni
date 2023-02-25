@@ -49,7 +49,7 @@ export default class CreateVocdoniElection {
    * @returns {void}
    */
   async _setVocdoniClient() {
-    this.client = new initVocdoniClient();
+    this.client = initVocdoniClient();
 
     const clientInfo = await this.client.createAccount();
     if (clientInfo.balance === 0) {
@@ -133,7 +133,7 @@ export default class CreateVocdoniElection {
       endDate: Date.parse(electionMetadata.endTime),
       census,
       electionType: {
-        secretUntilTheEnd: electionMetadata.secretUntilTheEnd,
+        secretUntilTheEnd: electionMetadata.secretUntilTheEnd
       }
     });
 
