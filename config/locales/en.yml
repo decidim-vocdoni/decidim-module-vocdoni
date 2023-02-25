@@ -224,6 +224,8 @@ en:
             message: We're on the vote period until %{end_time}.
             title: Vote period
           vote_ended:
+            error:
+              invalid: There was a problem publishing the results. Try again later.
             submit: Publish results
             success: Results successfully published
             text: The vote period has ended. You can publish the results.
