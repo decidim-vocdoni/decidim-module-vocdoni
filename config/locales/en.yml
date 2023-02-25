@@ -82,11 +82,6 @@ en:
             title: Delete all census data
           destroy_all:
             success: All census data have been deleted
-          generate:
-            info: You can generate the credentials for all the participants with the
-              following action.
-            submit: Generate credentials
-            title: 2. Generate credentials for the participants
           index:
             info: For setting up the census for a Vocdoni Election, you need to upload
               the census and confirm it.
