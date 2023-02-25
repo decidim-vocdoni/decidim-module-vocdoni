@@ -20,6 +20,12 @@ const voteEndedStep = async () => {
     console.log("ELECTION METADATA => ", electionMetadata);
     const results = electionMetadata.results;
 
+    if (!results) {
+      console.log("No results yet. Wait a couple of minutes.");
+      document.querySelector(".js-votes-results-error-fetch").classList.remove("hide");
+      return;
+    }
+
     for (let idx = 0; idx < results.length; idx += 1) {
       const questionAnswersInputs = document.querySelectorAll(`*[data-question-idx="${idx}"]`);
       for (const answerInput of questionAnswersInputs) {

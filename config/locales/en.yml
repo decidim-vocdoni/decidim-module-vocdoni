@@ -225,6 +225,7 @@ en:
             title: Vote period
           vote_ended:
             error:
+              fetch: There are no results yet. Try again later.
               invalid: There was a problem publishing the results. Try again later.
             submit: Publish results
             success: Results successfully published
