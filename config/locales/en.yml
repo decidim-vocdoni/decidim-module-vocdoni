@@ -203,10 +203,10 @@ en:
             explorer_vote: View at Explorer Vote
             message: The election has been created. We're waiting for the start date
               time to arrive.
-            preview: Preview landing page
             secret_until_the_end: The election results will be secret until the end
               of the voting period.
             title: Election created
+            view: View landing page
           index:
             title: Steps dashboard
           powered_by_html: This module makes use of Vocdoni Protocol, an open-source
