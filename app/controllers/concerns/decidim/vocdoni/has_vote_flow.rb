@@ -20,6 +20,10 @@ module Decidim
         @can_preview ||= allowed_to?(:preview, :election, election: election)
       end
 
+      def can_vote?
+        @can_vote ||= allowed_to?(:vote, :election, election: election)
+      end
+
       def ballot_questions
         election.questions
       end
