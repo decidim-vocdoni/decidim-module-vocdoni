@@ -64,6 +64,14 @@ describe Decidim::Vocdoni::ElectionStatusChanger do
     end
 
     context "with an finished election" do
+      context "with created status" do
+        let(:finished_election) { create(:vocdoni_election, :finished, status: "created") }
+
+        it "changes the status" do
+          expect(finished_election.reload.status).to eq "vote_ended"
+        end
+      end
+
       context "with vote status" do
         let(:finished_election) { create(:vocdoni_election, :finished, status: "vote") }
 

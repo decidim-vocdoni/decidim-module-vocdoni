@@ -23,7 +23,7 @@ module Decidim
       def update_finished_elections!
         # rubocop:disable Rails/SkipsModelValidations
         Decidim::Vocdoni::Election
-          .where(status: "vote")
+          .where(status: ["created", "vote"])
           .where("end_time <= ?", Time.zone.now)
           &.update_all(status: "vote_ended")
         # rubocop:enable Rails/SkipsModelValidations
