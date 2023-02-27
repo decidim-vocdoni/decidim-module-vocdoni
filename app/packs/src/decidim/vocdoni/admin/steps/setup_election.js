@@ -32,7 +32,7 @@ const setupElectionStep = async () => {
     const setupElectionButton = createElectionForm.querySelector(".form-general-submit button");
     showLoadingSpinner(setupElectionButton);
 
-    const election = new SetupElection({
+    const election = new CreateVocdoniElection({
       graphqlApiUrl: `${window.location.origin}/api`,
       componentId: window.location.pathname.split("/")[5],
       electionId: window.location.pathname.split("/")[8]
