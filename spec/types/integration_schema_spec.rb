@@ -25,7 +25,6 @@ describe "Decidim::Api::QueryType" do
         {
           "answers" => q.answers.order(:id).map do |a|
             {
-              "attachments" => [],
               "description" => begin
                 { "translation" => a.description[locale] }
               rescue StandardError

@@ -57,7 +57,24 @@ Decidim.register_component(:vocdoni) do |component|
       Decidim::Component.create!(params)
     end
 
-    3.times do
+    6.times do
+      # "none" isn't actually an status, but we need something to represent
+      # the election not being created yet in the Vocodni API
+      status = %w(none created vote vote_ended results_published).sample
+
+      case status
+      when "vote"
+        start_time = rand(1...10).days.ago
+        end_time = rand(1...10).days.from_now
+      when "vote_ended", "results_published"
+        start_time = rand(1...10).weeks.ago
+        end_time = start_time + rand(1...10).days
+      else
+        # for "none" and "created"
+        start_time = rand(1...10).weeks.from_now
+        end_time = start_time + rand(1...10).days
+      end
+
       params = {
         component: component,
         title: Decidim::Faker::Localized.sentence(word_count: 2),
@@ -65,10 +82,11 @@ Decidim.register_component(:vocdoni) do |component|
         description: Decidim::Faker::Localized.wrapped("<p>", "</p>") do
           Decidim::Faker::Localized.paragraph(sentence_count: 3)
         end,
-        start_time: 3.weeks.from_now,
-        end_time: 3.weeks.from_now + 4.hours,
+        start_time: start_time,
+        end_time: end_time,
         published_at: Faker::Boolean.boolean(true_ratio: 0.5) ? 1.week.ago : nil
       }
+      params[:status] = status unless status == "none"
 
       election = Decidim.traceability.create!(
         Decidim::Vocdoni::Election,
@@ -115,7 +133,8 @@ Decidim.register_component(:vocdoni) do |component|
               description: Decidim::Faker::Localized.wrapped("<p>", "</p>") do
                 Decidim::Faker::Localized.paragraph(sentence_count: 3)
               end,
-              weight: Faker::Number.number(digits: 1)
+              weight: Faker::Number.number(digits: 1),
+              votes: status == "results_published" ? Faker::Number.number(digits: 2) : nil
             },
             visibility: "all"
           )
