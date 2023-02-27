@@ -36,7 +36,7 @@ const setupElectionStep = async () => {
       graphqlApiUrl: `${window.location.origin}/api`,
       defaultLocale: document.querySelector(".js-vocdoni-client").dataset.defaultLocale,
       componentId: window.location.pathname.split("/")[5],
-      electionId: window.location.pathname.split("/")[8],
+      electionId: window.location.pathname.split("/")[8]
     }, onSuccess, onFailure);
     election.run();
   });

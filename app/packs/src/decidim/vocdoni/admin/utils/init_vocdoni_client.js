@@ -3,12 +3,12 @@ import { Wallet } from "@ethersproject/wallet";
 
 // Initialize the Vocdoni SDK Client with the data from the DOM
 //
-// @returns {object} - The Vocdoni SDK client instantiated with the the wallet
-//                    and the election ID if it's present
+// @returns {object} - The Vocdoni SDK client instantiated with the wallet
+//                    and the election ID if it's present or an empty object
 export const initVocdoniClient = () => {
   const vocdoniClientMetadata = document.querySelector(".js-vocdoni-client");
   if (!vocdoniClientMetadata) {
-    return;
+    return {};
   }
 
   const walletPrivateKey = vocdoniClientMetadata.dataset.vocdoniWalletPrivateKey;
