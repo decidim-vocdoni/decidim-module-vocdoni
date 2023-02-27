@@ -249,6 +249,10 @@ ca:
           elections_count:
             one: "%{count} election"
             other: "%{count} elections"
+        preview:
+          available_answers: 'Available answers:'
+          description: 'These are the questions you will find in the voting process:'
+          title: Election questions
         show:
           action_button:
             change_vote: Change your vote
