@@ -56,8 +56,16 @@ FactoryBot.define do
       published_at { Time.current }
     end
 
+    trait :simple do
+      after(:build) do |election, _evaluator|
+        election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
+      end
+    end
+
     trait :complete do
       after(:build) do |election, _evaluator|
+        election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
         election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
       end
     end
