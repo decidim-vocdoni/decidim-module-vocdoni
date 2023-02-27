@@ -25,10 +25,15 @@ module Decidim
       field :published_at, Decidim::Core::DateTimeType, "When this election was published", null: true
       field :blocked, GraphQL::Types::Boolean, "Whether this election has it's parameters blocked or not", method: :blocked?, null: true
       field :status, GraphQL::Types::String, "The status for this election", null: true, camelize: false
-      field :secret_until_the_end, GraphQL::Types::Boolean, "Whether this election will have the votes secret until the end of it", null: true
+      field :interruptible, GraphQL::Types::Boolean, "Whether this election has have the 'interruptible' setting enabled", null: true
+      field :secret_until_the_end, GraphQL::Types::Boolean, "Whether this election has the 'votes secret until the end' setting enabled", null: true
 
       field :questions, [Decidim::Vocdoni::VocdoniQuestionType, { null: true }], "The questions for this election", null: false
       field :voters, [Decidim::Vocdoni::VocdoniVoterType, { null: true }], "The voters for this election", null: false
+
+      def interruptible
+        object.election_type.fetch("interruptible")
+      end
 
       def secret_until_the_end
         object.election_type.fetch("secret_until_the_end")

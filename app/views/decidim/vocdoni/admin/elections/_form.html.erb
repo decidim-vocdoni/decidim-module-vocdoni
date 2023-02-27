@@ -35,5 +35,9 @@
     <div class="row column">
       <%= form.check_box :secret_until_the_end, { checked: election&.election_type&.fetch("secret_until_the_end", false) } %>
     </div>
+
+    <div class="row column">
+      <%= form.check_box :interruptible, { checked: election&.election_type&.fetch("interruptible", true) } %>
+    </div>
   </div>
 </div>

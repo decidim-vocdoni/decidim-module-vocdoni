@@ -131,6 +131,7 @@ export default class CreateVocdoniElection {
       endDate: Date.parse(electionMetadata.endTime),
       census,
       electionType: {
+        interruptible: electionMetadata.interruptible,
         secretUntilTheEnd: electionMetadata.secretUntilTheEnd
       }
     });
@@ -181,6 +182,7 @@ export default class CreateVocdoniElection {
                 streamUri
                 startTime
                 endTime
+                interruptible
                 secretUntilTheEnd
                 voters {
                   wallet_address

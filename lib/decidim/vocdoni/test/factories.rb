@@ -29,6 +29,7 @@ FactoryBot.define do
     status { nil }
     election_type do
       {
+        "interruptible" => true,
         "secret_until_the_end" => false
       }
     end
