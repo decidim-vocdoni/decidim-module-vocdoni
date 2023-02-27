@@ -24,13 +24,11 @@ module Decidim
         # If all the votes are 0, then we probably didn't fetch
         # correctly the results, and the administrator need to retry
         def results_not_empty
-          if results_are_all_zero?
-            errors.add(:invalid_results, I18n.t("error.invalid", scope: "decidim.vocdoni.admin.steps.vote_ended"))
-          end
+          errors.add(:invalid_results, I18n.t("error.invalid", scope: "decidim.vocdoni.admin.steps.vote_ended")) if results_are_all_zero?
         end
 
         def results_are_all_zero?
-          results.map{ |questions| questions[:votes].to_i }.all? 0
+          results.map { |questions| questions[:votes].to_i }.all? 0
         end
       end
     end

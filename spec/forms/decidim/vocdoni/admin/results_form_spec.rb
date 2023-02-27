@@ -18,15 +18,14 @@ describe Decidim::Vocdoni::Admin::ResultsForm do
 
   describe "when votes are missing" do
     let(:attributes) do
-    {
-      results: [
-        { id: 1, votes: 0 },
-        { id: 2, votes: 0 }
-      ]
-    }
+      {
+        results: [
+          { id: 1, votes: 0 },
+          { id: 2, votes: 0 }
+        ]
+      }
     end
 
     it { is_expected.not_to be_valid }
   end
 end
-

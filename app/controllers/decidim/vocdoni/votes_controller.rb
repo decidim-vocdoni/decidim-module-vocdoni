@@ -58,7 +58,7 @@ module Decidim
           return false
         end
 
-        if !can_vote?
+        unless can_vote?
           redirect_to(exit_path, alert: t("votes.messages.not_allowed", scope: "decidim.vocdoni"))
           return false
         end
