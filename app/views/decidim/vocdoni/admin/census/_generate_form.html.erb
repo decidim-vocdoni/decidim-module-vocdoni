@@ -1,0 +1,22 @@
+<%= decidim_form_for form, url: election_census_path(election) do |f| %>
+  <% f.object.credentials.each do |credential| %>
+    <%= content_tag "ul", class: "credentials hide" do %>
+      <%= f.fields_for "credentials[]", credential do |credential_form| %>
+        <%= content_tag "li", data: { credential: credential.id } do %>
+          <%= credential_form.text_field :email, class: "credential_email" %>
+          <%= credential_form.text_field :born_at, class: "credential_born_at" %>
+          <%= credential_form.text_field :wallet_address, class: "credential_wallet_address" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <div class="button--double">
+    <%= f.submit t("confirm.submit", scope: "decidim.vocdoni.admin.census") %>
+
+    <%= link_to t("decidim.vocdoni.admin.census.destroy.title"),
+      destroy_all_election_census_path(election),
+      method: :delete,
+      class: "button alert",
+      data: { confirm: t("decidim.vocdoni.admin.census.destroy.confirm") } %>
+  </div>
+<% end %>
