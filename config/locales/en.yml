@@ -168,8 +168,12 @@ en:
             invalid: There was a problem updating this question
             success: Question successfully updated
         steps:
+          credits:
+            available: Available credits
+            get_more: Get more credits
+            warning: You have no credits left. You can get more credits by clicking
+              on the button below.
           create_election:
-            credits: Available credits
             description: Your voting process is secured using the advanced digital
               voting technology of the Vocdoni Protocol. Please be patient, as the
               set-up process may take some time.

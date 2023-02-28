@@ -11,6 +11,7 @@ import { initVocdoniClient } from "./init_vocdoni_client";
  * @property {string} options.defaultLocale The default locale of the Election
  * @property {number|string} options.componentId The ID of the Vocdoni Component in Decidim
  * @property {number|string} options.electionId The ID of the Vocdoni Election in Decidim
+ * @property {string} options.containerClass The class of the container where the election will be rendered. Used to show a spinner.
  * @param {function} onSuccess A callback function to be run when the Election is successfully sent to the API
  * @param {function} onFailure A callback function to be run when the Election sent to the API has a failure
  *
@@ -23,6 +24,7 @@ export default class CreateVocdoniElection {
     this.defaultLocale = options.defaultLocale;
     this.componentId = options.componentId;
     this.electionId = options.electionId;
+    this.containerClass = options.containerClass;
     this.onSuccess = onSuccess;
     this.onFailure = onFailure;
     this.client = null;
@@ -56,7 +58,10 @@ export default class CreateVocdoniElection {
 
     const clientInfo = await this.client.createAccount();
     if (clientInfo.balance === 0) {
-      await this.client.collectFaucetTokens();
+      document.querySelector(".js-vocdoni-credits-collect-faucet-tokens").classList.remove("hide");
+      document.querySelector(".js-vocdoni-credits-balance-message").classList.remove("hide");
+    } else {
+      document.querySelector(".js-vocdoni-credits-balance-message").classList.add("hide");
     }
 
     console.log("CLIENT => ", this.client);
@@ -68,17 +73,22 @@ export default class CreateVocdoniElection {
    * @returns {void}
    */
   async _createElection() {
+
     let result = null;
 
     try {
       const election = await this._initializeElection(this.defaultLocale);
       console.log("ELECTION => ", election);
 
+      document.querySelector(this.containerClass).classList.add("spinner-container");
+
       const vocdoniElectionId = await this.client.createElection(election);
       result = `OK! VOCDONI ELECTION ID => ${vocdoniElectionId}`;
+      document.querySelector(this.containerClass).classList.remove("spinner-container");
       this.onSuccess(vocdoniElectionId);
     } catch (error) {
       result = `ERROR! ${error}`;
+      document.querySelector(this.containerClass).classList.remove("spinner-container");
       this.onFailure();
     }
 

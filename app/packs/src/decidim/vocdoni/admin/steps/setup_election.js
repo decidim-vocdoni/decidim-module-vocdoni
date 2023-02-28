@@ -36,25 +36,13 @@ const setupElectionStep = async () => {
       graphqlApiUrl: `${window.location.origin}/api`,
       defaultLocale: document.querySelector(".js-vocdoni-client").dataset.defaultLocale,
       componentId: window.location.pathname.split("/")[5],
-      electionId: window.location.pathname.split("/")[8]
+      electionId: window.location.pathname.split("/")[8],
+      containerClass: ".process-content"
     }, onSuccess, onFailure);
     election.run();
   });
 }
 
-const showAvailableCredits = async () => {
-  const creditsSpan = document.querySelector(".js-vocdoni-balance-credits");
-  if (!creditsSpan) {
-    return;
-  }
-
-  const client = initVocdoniClient();
-  const clientInfo = await client.createAccount();
-
-  creditsSpan.innerHTML = clientInfo.balance;
-};
-
 document.addEventListener("DOMContentLoaded", () => {
   setupElectionStep();
-  showAvailableCredits();
 });

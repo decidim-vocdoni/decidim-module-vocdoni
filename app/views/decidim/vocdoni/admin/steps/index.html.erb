@@ -22,6 +22,8 @@
       <span class="<%= step.last %>"><%= t("steps.#{step.first}.title", scope: "decidim.vocdoni.admin") %></span>
     <% end %>
   </div>
+
+  <%= render partial: "available_credits" %>
 </div>
 
 <% if @form %>

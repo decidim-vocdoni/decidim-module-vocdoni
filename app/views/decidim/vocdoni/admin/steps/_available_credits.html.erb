@@ -1,0 +1,21 @@
+<div class="card-divider">
+  <p class="label secondary">
+  <%= icon "credit-card", role: "img", "aria-hidden": true %>&nbsp;
+  <%= t("available", scope: "decidim.vocdoni.admin.steps.credits") %>:&nbsp;
+  <span class="js-vocdoni-credits-balance">
+    <span class="loading-spinner"></span>
+  </span>
+  </p>
+</div>
+
+<div class="hide card-section js-vocdoni-credits-collect-faucet-tokens-section">
+  <div class="callout alert">
+    <p>
+    <%= t("warning", scope: "decidim.vocdoni.admin.steps.credits") %>
+    </p>
+  </div>
+  <%= link_to "#", class: "button primary js-vocdoni-credits-collect-faucet-tokens" do %>
+    <%= icon "euro", role: "img", "aria-hidden": true %>&nbsp;
+    <%= t("get_more", scope: "decidim.vocdoni.admin.steps.credits") %>
+  <% end %>
+</div>
