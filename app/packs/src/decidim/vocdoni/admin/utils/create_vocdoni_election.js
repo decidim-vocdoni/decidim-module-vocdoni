@@ -56,14 +56,6 @@ export default class CreateVocdoniElection {
   async _setVocdoniClient() {
     this.client = initVocdoniClient();
 
-    const clientInfo = await this.client.createAccount();
-    if (clientInfo.balance === 0) {
-      document.querySelector(".js-vocdoni-credits-collect-faucet-tokens").classList.remove("hide");
-      document.querySelector(".js-vocdoni-credits-balance-message").classList.remove("hide");
-    } else {
-      document.querySelector(".js-vocdoni-credits-balance-message").classList.add("hide");
-    }
-
     console.log("CLIENT => ", this.client);
   }
 

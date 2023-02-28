@@ -4,6 +4,8 @@ const CREDIT_SPAN_SELECTOR = ".js-vocdoni-credits-balance";
 const NO_TOKENS_MESSAGE_SELECTOR = ".js-vocdoni-credits-collect-faucet-tokens-section";
 const COLLECT_TOKENS_BUTTON_SELECTOR = ".js-vocdoni-credits-collect-faucet-tokens";
 const CONTAINER_SELECTOR = ".process-content";
+const ACTIONS_BUTTONS_SELECTOR = ".js-vocdoni-interruptible, #new_setup_ button[type=submit]";
+const SPINNER_CLASS = "spinner-container";
 
 const showAvailableCredits = async () => {
   const creditsSpan = document.querySelector(CREDIT_SPAN_SELECTOR);
@@ -16,7 +18,7 @@ const showAvailableCredits = async () => {
 
   if (clientInfo.balance === 0) {
     document.querySelector(NO_TOKENS_MESSAGE_SELECTOR).classList.remove("hide");
-    document.querySelectorAll(".js-vocdoni-interruptible").forEach((element) => {
+    document.querySelectorAll(ACTIONS_BUTTONS_SELECTOR).forEach((element) => {
       element.disabled = true;
     });
   }
@@ -31,14 +33,16 @@ const collectFaucetTokensListener = async () => {
   }
 
   collectFaucetTokensButton.addEventListener("click", async () => {
-    document.querySelector(CONTAINER_SELECTOR).classList.add("spinner-container");
+    document.querySelector(CONTAINER_SELECTOR).classList.add(SPINNER_CLASS);
     const client = initVocdoniClient();
     await client.collectFaucetTokens();
-    // document.reload();
     showAvailableCredits();
     document.querySelector(COLLECT_TOKENS_BUTTON_SELECTOR).classList.add("hide");
     document.querySelector(NO_TOKENS_MESSAGE_SELECTOR).classList.add("hide");
-    document.querySelector(CONTAINER_SELECTOR).classList.remove("spinner-container");
+    document.querySelector(CONTAINER_SELECTOR).classList.remove(SPINNER_CLASS);
+    document.querySelectorAll(ACTIONS_BUTTONS_SELECTOR).forEach((element) => {
+      element.disabled = false;
+    });
   });
 }
 
