@@ -45,5 +45,33 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
                               ])
       }
     end
+
+    context "when current_step is paused" do
+      let(:current_step) { "paused" }
+
+      it {
+        expect(subject).to eq([
+                                ["create_election", "text-success"],
+                                ["created", "text-success"],
+                                ["vote", "text-success"],
+                                ["paused", "text-warning"],
+                                ["vote_ended", "text-muted"],
+                                ["results_published", "text-muted"]
+                              ])
+      }
+    end
+
+    context "when current_step is canceled" do
+      let(:current_step) { "canceled" }
+
+      it {
+        expect(subject).to eq([
+                                ["create_election", "text-success"],
+                                ["created", "text-success"],
+                                ["vote", "text-success"],
+                                ["canceled", "text-warning"]
+                              ])
+      }
+    end
   end
 end

@@ -5,7 +5,6 @@ en:
       election:
         description: Description
         end_time: End time
-        interruptible: Interruptible
         secret_until_the_end: Secret until the end
         start_time: Start time
         stream_uri: Video stream link
@@ -168,6 +167,10 @@ en:
             invalid: There was a problem updating this question
             success: Question successfully updated
         steps:
+          canceled:
+            message: This election has been canceled prematurely. There aren't any
+              results.
+            title: Canceled
           credits:
             available: Available credits
             get_more: Get more credits
@@ -210,12 +213,25 @@ en:
             explorer_vote: View at Explorer Vote
             message: The election has been created. We're waiting for the start date
               time to arrive.
-            secret_until_the_end: The election results will be secret until the end
-              of the voting period.
             title: Election created
             view: View landing page
+          danger_zone:
+            action:
+              cancel: Cancel
+              continue: Continue
+              end: End
+              pause: Pause
+            confirm: Are you sure you want to do this action?
+            message: The election can be interrupted
+            title: Danger zone
+          ended:
+            title: Ended
           index:
             title: Steps dashboard
+          paused:
+            message: The election is paused
+            success: The election has been successfully continued.
+            title: Paused
           powered_by_html: This module makes use of Vocdoni Protocol, an open-source
             voting technology to organize elections<br>with the highest standards
             of security, universal verifiability, censorship-resistance, and anonymity.
@@ -229,6 +245,9 @@ en:
             title: Results published
           vote:
             message: We're on the vote period until %{end_time}.
+            secret_until_the_end: The election results will be secret until the end
+              of the voting period.
+            success: The election has been successfully paused.
             title: Vote period
           vote_ended:
             error:

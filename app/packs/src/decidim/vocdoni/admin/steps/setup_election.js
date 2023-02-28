@@ -1,5 +1,4 @@
-import CreateVocdoniElection from "../utils/create_vocdoni_election";
-import { initVocdoniClient } from "../utils/init_vocdoni_client";
+import CreateVocdoniElection from "src/decidim/vocdoni/admin/utils/create_vocdoni_election";
 
 const setupElectionStep = async () => {
   // Setup election step

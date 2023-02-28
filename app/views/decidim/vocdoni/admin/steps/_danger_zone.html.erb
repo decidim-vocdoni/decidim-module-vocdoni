@@ -1,0 +1,20 @@
+<% if election.election_type.fetch("interruptible") %>
+  <div class="card">
+    <div class="card-divider">
+      <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.steps.danger_zone") %></h2>
+    </div>
+
+    <%= f.hidden_field :status %>
+
+    <div class="card-section callout alert">
+      <p><%= t("message", scope: "decidim.vocdoni.admin.steps.danger_zone") %></p>
+
+      <% [["continue", "success"], ["pause", "warning"], ["cancel", "alert"], ["end", "alert"]].each do |action, button_class| %>
+        <%= f.submit t(action, scope: "decidim.vocdoni.admin.steps.danger_zone.action"),
+          class: "button #{button_class} js-vocdoni-interruptible hide",
+          data: { action: action, confirm: t("confirm",  scope: "decidim.vocdoni.admin.steps.danger_zone") } %>
+    <% end %>
+    <span></span>
+    </div>
+  </div>
+<% end %>

@@ -1,4 +1,4 @@
-import { initVocdoniClient } from "../utils/init_vocdoni_client";
+import { initVocdoniClient } from "src/decidim/vocdoni/admin/utils/init_vocdoni_client";
 
 // Votes step
 //

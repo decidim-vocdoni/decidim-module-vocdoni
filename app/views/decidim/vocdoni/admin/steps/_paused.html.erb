@@ -1,10 +1,12 @@
 <div class="card">
   <div class="card-divider">
-    <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.steps.vote") %></h2>
+    <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.steps.paused") %></h2>
   </div>
 
   <div class="card-section">
-    <p><%= t("message", scope: "decidim.vocdoni.admin.steps.vote", end_time: election.end_time) %></p>
+    <div class="callout warning">
+      <p><%= t("message", scope: "decidim.vocdoni.admin.steps.paused") %></p>
+    </div>
 
     <% if election.election_type.fetch("secret_until_the_end") %>
       <p><%= t("secret_until_the_end", scope: "decidim.vocdoni.admin.steps.vote") %></p>
@@ -18,4 +20,4 @@
   <%= render(partial: "vote_stats", locals: { polling: "true" }) %>
 <% end %>
 
-<%= render partial: "danger_zone", locals: { election: election, f: f } %>
+<%= render partial: "partials/danger_zone", local: { election: election, f: f } %>

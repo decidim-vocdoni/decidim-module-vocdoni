@@ -1,5 +1,5 @@
 import { Election, PlainCensus } from "@vocdoni/sdk";
-import { initVocdoniClient } from "./init_vocdoni_client";
+import { initVocdoniClient } from "src/decidim/vocdoni/admin/utils/init_vocdoni_client";
 
 /*
  * Creates an Election in the Vocdoni API
