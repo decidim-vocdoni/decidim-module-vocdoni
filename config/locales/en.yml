@@ -337,6 +337,8 @@ en:
             vote: Start voting
             vote_again: Vote again
           back: Available elections
+          canceled: This election was canceled
+          paused: This election is curently paused. Try again later.
           preview: Preview
           verify:
             already_voted: Already voted?

@@ -124,6 +124,18 @@ describe Decidim::Vocdoni::Permissions do
       end
     end
 
+    context "when election is paused" do
+      let(:election) { create :vocdoni_election, :paused, component: elections_component }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context "when election is canceled" do
+      let(:election) { create :vocdoni_election, :canceled, component: elections_component }
+
+      it { is_expected.to be_falsey }
+    end
+
     context "when election has finished" do
       let(:election) { create :vocdoni_election, :published, :finished, component: elections_component }
 

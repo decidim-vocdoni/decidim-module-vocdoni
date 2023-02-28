@@ -49,6 +49,20 @@ describe "Vote online in an election", type: :system do
       it_behaves_like "allows admins to preview the voting booth"
     end
 
+    context "when the election is paused" do
+      let(:election) { create :vocdoni_election, :paused, :simple, component: component }
+
+      it_behaves_like "doesn't allow to vote"
+      it_behaves_like "allows admins to preview the voting booth"
+    end
+
+    context "when the election was canceled" do
+      let(:election) { create :vocdoni_election, :canceled, :simple, component: component }
+
+      it_behaves_like "doesn't allow to vote"
+      it_behaves_like "allows admins to preview the voting booth"
+    end
+
     context "when the election has finished" do
       let(:election) { create :vocdoni_election, :finished, :published, :simple, component: component }
 

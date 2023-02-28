@@ -74,6 +74,18 @@ FactoryBot.define do
       published_at { Time.current }
     end
 
+    trait :paused do
+      published
+
+      status { "paused" }
+    end
+
+    trait :canceled do
+      published
+
+      status { "canceled" }
+    end
+
     trait :simple do
       after(:build) do |election, _evaluator|
         election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
