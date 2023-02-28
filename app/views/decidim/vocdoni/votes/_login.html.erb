@@ -17,6 +17,7 @@
                   <form>
                     <div>
                       <div class="callout alert hide js-login_error"><%= t(".failed") %></div>
+                      <div class="callout warning hide js-election_not_open"><%= t(".election_not_open") %></div>
                     </div>
                     <div>
                       <%= render partial: "login_fields", locals: { f: f } %>

@@ -388,6 +388,8 @@ en:
         login:
           access: Access
           description: To vote, we'll need to check that you're on the census
+          election_not_open: Currently the election is not open for voting. Try again
+            later.
           failed: Check that the provided data is correct and try again
           form_title: Enter your data
           title: Verify your identity
