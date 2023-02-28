@@ -171,11 +171,6 @@ en:
             message: This election has been canceled prematurely. There aren't any
               results.
             title: Canceled
-          credits:
-            available: Available credits
-            get_more: Get more credits
-            warning: You have no credits left. You can get more credits by clicking
-              on the button below.
           create_election:
             description: Your voting process is secured using the advanced digital
               voting technology of the Vocdoni Protocol. Please be patient, as the
@@ -215,6 +210,11 @@ en:
               time to arrive.
             title: Election created
             view: View landing page
+          credits:
+            available: Available credits
+            get_more: Get more credits
+            warning: You have no credits left. You can get more credits by clicking
+              on the button below.
           danger_zone:
             action:
               cancel: Cancel
