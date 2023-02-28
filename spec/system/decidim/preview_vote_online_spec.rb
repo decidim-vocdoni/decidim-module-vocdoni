@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Preview vote online in an election", type: :system do
   let(:manifest_name) { "vocdoni" }
   let!(:election) { create :vocdoni_election, :upcoming, :published, :simple, component: component }
-  let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+  let(:admin) { create(:user, :admin, :confirmed, organization: organization) }
   let(:organization) { component.organization }
   let!(:elections) { create_list(:vocdoni_election, 2, :vote, component: component) } # prevents redirect to single election page
   let(:router) { Decidim::EngineRouter.main_proxy(component).decidim_participatory_process_vocdoni }
@@ -13,7 +13,7 @@ describe "Preview vote online in an election", type: :system do
   before do
     switch_to_host(organization.host)
     election.reload # forces to reload the questions in the right order
-    login_as user, scope: :user
+    login_as admin, scope: :user
   end
 
   include_context "with a component"
@@ -26,7 +26,7 @@ describe "Preview vote online in an election", type: :system do
 
       expect(page).to have_content("This is a preview of the voting booth.")
 
-      uses_the_voting_booth({ email: user.email, born_at: "2000-01-01" })
+      uses_the_voting_booth({ email: admin.email, born_at: "2000-01-01" })
       page.find("a.focus__exit").click
 
       expect(page).to have_current_path router.election_path(id: election.id)
@@ -43,7 +43,7 @@ describe "Preview vote online in an election", type: :system do
         visit_component
         click_link translated(election.title)
         click_link "Preview"
-        login_step({ email: user.email, born_at: "2000-01-01" })
+        login_step({ email: admin.email, born_at: "2000-01-01" })
         expect(page).to have_content("MORE INFORMATION")
       end
     end
