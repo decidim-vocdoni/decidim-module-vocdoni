@@ -43,8 +43,8 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
       console.log("Vote finished");
       console.log("VOTE ID => ", voteId);
       $voteWrapper.find("#submitting").addClass("hide");
-      $voteWrapper.find("#vote_sent").removeClass("hide");
-      $voteWrapper.find(".vote-id").html(voteId);
+      $voteWrapper.find("#vote_cast").removeClass("hide");
+      $voteWrapper.find("#vote-receipt").val(voteId);
       $voteWrapper.find(".verify_ballot").attr("href", `https://dev.explorer.vote/verify/#/${voteId}`);
     },
     onBindVerifyBallotButton(onEventTriggered) {

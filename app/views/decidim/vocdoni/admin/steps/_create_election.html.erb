@@ -3,25 +3,34 @@
     <h2 class="card-title"><%= t(".title") %></h2>
   </div>
 
-  <div class="card-section js-election-setup"
-       data-vocdoni-wallet-private-key="<%= @current_vocdoni_wallet.private_key %>"
-       data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>">
+  <div class="card-section js-election-setup">
+    <p>
+      <%= t("description", scope: "decidim.vocdoni.admin.steps.create_election") %>
+    </p>
 
-       <%= f.hidden_field :vocdoni_election_id %>
+    <%= f.hidden_field :vocdoni_election_id %>
 
-       <div class="js-election-create-error-message callout alert hide">
-         <h3 class="h5"><%= t("failed.title", scope: "decidim.vocdoni.admin.steps.create_election") %></h2>
-         <p><%= t("failed.message", scope: "decidim.vocdoni.admin.steps.create_election") %></p>
-       </div>
+    <div class="js-election-create-error-message callout alert hide">
+      <h3 class="h5"><%= t("failed.title", scope: "decidim.vocdoni.admin.steps.create_election") %></h2>
+      <p><%= t("failed.message", scope: "decidim.vocdoni.admin.steps.create_election") %></p>
+    </div>
 
-       <ul class="no-bullet-indented">
-         <% form.messages.each do |key, value| %>
-           <% if form.errors.include?(key) %>
-             <li><%= icon "x", class: "text-alert", role: "img", "aria-hidden": true %>&nbsp;<%= form.errors.messages[key][0].html_safe %></li>
-           <% else %>
-             <li><%= icon "check", class: "text-success", role: "img", "aria-hidden": true %>&nbsp;<%= value.html_safe %></li>
-           <% end %>
-         <% end %>
-       </ul>
+    <ul class="no-bullet-indented">
+      <p class="label secondary">
+      <%= icon "credit-card", role: "img", "aria-hidden": true %>&nbsp;
+      <%= t("credits", scope: "decidim.vocdoni.admin.steps.create_election") %>:&nbsp;
+      <span class="js-vocdoni-balance-credits">
+        <span class="loading-spinner"></span>
+      </span>
+      </p>
+
+      <% form.messages.each do |key, value| %>
+        <% if form.errors.include?(key) %>
+          <li><%= icon "x", class: "text-alert", role: "img", "aria-hidden": true %>&nbsp;<%= form.errors.messages[key][0].html_safe %></li>
+        <% else %>
+          <li><%= icon "check", class: "text-success", role: "img", "aria-hidden": true %>&nbsp;<%= value.html_safe %></li>
+        <% end %>
+      <% end %>
+    </ul>
   </div>
 </div>

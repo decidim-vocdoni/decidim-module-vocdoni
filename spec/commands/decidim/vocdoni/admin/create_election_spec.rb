@@ -20,6 +20,11 @@ describe Decidim::Vocdoni::Admin::CreateElection do
       attachment: attachment_params,
       photos: photos,
       add_photos: uploaded_photos,
+      auto_start: true,
+      interruptible: true,
+      dynamic_census: false,
+      secret_until_the_end: false,
+      anonymous: false,
       current_user: user,
       current_component: current_component,
       current_organization: organization
@@ -45,6 +50,11 @@ describe Decidim::Vocdoni::Admin::CreateElection do
     expect(election.stream_uri).to eq "https://example.org/stream"
     expect(election.start_time).to be_within(1.second).of start_time
     expect(election.end_time).to be_within(1.second).of end_time
+    expect(election.election_type.fetch("auto_start")).to be_truthy
+    expect(election.election_type.fetch("interruptible")).to be_truthy
+    expect(election.election_type.fetch("dynamic_census")).to be_falsy
+    expect(election.election_type.fetch("secret_until_the_end")).to be_falsy
+    expect(election.election_type.fetch("anonymous")).to be_falsy
   end
 
   it "sets the component" do

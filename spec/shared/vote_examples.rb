@@ -87,8 +87,9 @@ def uses_the_voting_booth(census_data)
   end
 
   # confirmed vote page
+  sleep 2 # wait for the setTimeout in preview
   expect(page).to have_content("Vote confirmed")
-  expect(page).to have_content("You can check your vote using the Vocdoni Explorer portal")
+  expect(page).to have_content("Your vote has been cast successfully")
 end
 
 def login_step(census_data)
@@ -100,7 +101,7 @@ def login_step(census_data)
     fill_in :login_month, with: month
     fill_in :login_year, with: year
 
-    click_button "Check status"
+    click_button "Access"
   end
 end
 

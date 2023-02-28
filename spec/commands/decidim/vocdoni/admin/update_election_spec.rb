@@ -19,7 +19,12 @@ describe Decidim::Vocdoni::Admin::UpdateElection do
       end_time: end_time,
       attachment: attachment_params,
       photos: current_photos,
-      add_photos: uploaded_photos
+      add_photos: uploaded_photos,
+      auto_start: true,
+      interruptible: true,
+      dynamic_census: false,
+      secret_until_the_end: false,
+      anonymous: false
     )
   end
   let(:start_time) { 1.day.from_now }
@@ -35,6 +40,11 @@ describe Decidim::Vocdoni::Admin::UpdateElection do
     expect(translated(election.description)).to eq "description"
     expect(election.start_time).to be_within(1.second).of start_time
     expect(election.end_time).to be_within(1.second).of end_time
+    expect(election.election_type.fetch("auto_start")).to be_truthy
+    expect(election.election_type.fetch("interruptible")).to be_truthy
+    expect(election.election_type.fetch("dynamic_census")).to be_falsy
+    expect(election.election_type.fetch("secret_until_the_end")).to be_falsy
+    expect(election.election_type.fetch("anonymous")).to be_falsy
   end
 
   it "traces the action", versioning: true do

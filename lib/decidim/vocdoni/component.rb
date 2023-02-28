@@ -61,6 +61,7 @@ Decidim.register_component(:vocdoni) do |component|
       # "none" isn't actually an status, but we need something to represent
       # the election not being created yet in the Vocodni API
       status = %w(none created vote vote_ended results_published).sample
+      blocked_at = Time.current
 
       case status
       when "vote"
@@ -69,10 +70,14 @@ Decidim.register_component(:vocdoni) do |component|
       when "vote_ended", "results_published"
         start_time = rand(1...10).weeks.ago
         end_time = start_time + rand(1...10).days
-      else
-        # for "none" and "created"
+      when "created"
         start_time = rand(1...10).weeks.from_now
         end_time = start_time + rand(1...10).days
+      else
+        # for "none"
+        start_time = rand(1...10).weeks.from_now
+        end_time = start_time + rand(1...10).days
+        blocked_at = nil
       end
 
       params = {
@@ -84,8 +89,16 @@ Decidim.register_component(:vocdoni) do |component|
         end,
         start_time: start_time,
         end_time: end_time,
-        published_at: Faker::Boolean.boolean(true_ratio: 0.5) ? 1.week.ago : nil
+        published_at: Faker::Boolean.boolean(true_ratio: 0.5) ? 1.week.ago : nil,
+        election_type: {
+          auto_start: [true, false].sample,
+          interruptible: [true, false].sample,
+          dynamic_census: [true, false].sample,
+          secret_until_the_end: [true, false].sample,
+          anonymous: [true, false].sample
+        }
       }
+      params[:blocked_at] = blocked_at
       params[:status] = status unless status == "none"
 
       election = Decidim.traceability.create!(

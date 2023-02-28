@@ -94,7 +94,7 @@ describe "Preview vote online in an election", type: :system do
         page.find("a.focus__exit").click
       end
 
-      expect(page).to have_content("Check status")
+      expect(page).to have_content("Access")
     end
   end
 end

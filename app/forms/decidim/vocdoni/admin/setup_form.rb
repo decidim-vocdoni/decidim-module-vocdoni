@@ -19,14 +19,12 @@ module Decidim
 
         def validations
           @validations ||= [
-            [:minimum_photos, {}, election.photos.any?],
-            [:minimum_questions, {}, election.questions.any?],
-            [:minimum_answers, {}, election.minimum_answers?],
-            [:published, {}, election.published_at.present?],
-            [:component_published, {}, election.component.published?],
-            [:time_before, { minutes: Decidim::Vocdoni.setup_minimum_minutes_before_start }, election.minimum_minutes_before_start?],
-            [:participatory_space_published, {}, election.participatory_space.published?],
-            [:census_ready, {}, census.ready_to_setup?]
+            [:minimum_photos, { link: router.edit_election_path(election) }, election.photos.any?],
+            [:minimum_questions, { link: router.election_questions_path(election) }, election.questions.any?],
+            [:minimum_answers, { link: router.election_questions_path(election) }, election.minimum_answers?],
+            [:published, { link: router.edit_election_path(election) }, election.published_at.present?],
+            [:time_before, { link: router.edit_election_path(election), minutes: time_before_minutes }, election.minimum_minutes_before_start?],
+            [:census_ready, { link: router.election_census_path(election) }, census.ready_to_setup?]
           ].freeze
         end
 
@@ -46,6 +44,16 @@ module Decidim
 
         def main_button?
           true
+        end
+
+        private
+
+        def router
+          @router ||= EngineRouter.admin_proxy(election.component)
+        end
+
+        def time_before_minutes
+          Decidim::Vocdoni.setup_minimum_minutes_before_start
         end
       end
     end

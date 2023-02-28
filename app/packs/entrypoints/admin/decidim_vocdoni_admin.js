@@ -3,3 +3,6 @@ import "src/decidim/vocdoni/admin/generate_credentials"
 import "src/decidim/vocdoni/admin/steps/setup_election"
 import "src/decidim/vocdoni/admin/steps/vote"
 import "src/decidim/vocdoni/admin/steps/vote_ended"
+
+// Images
+require.context("../../images", true)

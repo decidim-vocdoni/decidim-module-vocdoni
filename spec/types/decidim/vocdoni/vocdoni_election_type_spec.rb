@@ -98,6 +98,14 @@ module Decidim
         end
       end
 
+      describe "secretUntilTheEnd" do
+        let(:query) { "{ secretUntilTheEnd }" }
+
+        it "returns the election's secret until the end setting" do
+          expect(response["secretUntilTheEnd"]).to be_falsey
+        end
+      end
+
       describe "status" do
         let(:query) { "{ status }" }
 

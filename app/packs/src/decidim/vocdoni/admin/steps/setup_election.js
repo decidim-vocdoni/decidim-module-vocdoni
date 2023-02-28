@@ -1,4 +1,5 @@
-import SetupElection from "src/decidim/vocdoni/admin/setup_election";
+import CreateVocdoniElection from "../utils/create_vocdoni_election";
+import { initVocdoniClient } from "../utils/init_vocdoni_client";
 
 const setupElectionStep = async () => {
   // Setup election step
@@ -7,8 +8,8 @@ const setupElectionStep = async () => {
     return;
   }
 
-  const onSuccess = (electionId) => {
-    createElectionForm.querySelector("#setup_vocdoni_election_id").value = electionId;
+  const onSuccess = (vocdoniElectionId) => {
+    createElectionForm.querySelector("#setup_vocdoni_election_id").value = vocdoniElectionId;
     createElectionForm.submit();
   }
 
@@ -31,17 +32,28 @@ const setupElectionStep = async () => {
     const setupElectionButton = createElectionForm.querySelector(".form-general-submit button");
     showLoadingSpinner(setupElectionButton);
 
-    const election = new SetupElection({
-      walletPrivateKey: createElectionForm.querySelector(".js-election-setup").dataset.vocdoniWalletPrivateKey,
+    const election = new CreateVocdoniElection({
       graphqlApiUrl: `${window.location.origin}/api`,
       componentId: window.location.pathname.split("/")[5],
-      electionId: window.location.pathname.split("/")[8],
-      env: createElectionForm.querySelector(".js-election-setup").dataset.vocdoniEnv
+      electionId: window.location.pathname.split("/")[8]
     }, onSuccess, onFailure);
     election.run();
   });
 }
 
+const showAvailableCredits = async () => {
+  const creditsSpan = document.querySelector(".js-vocdoni-balance-credits");
+  if (!creditsSpan) {
+    return;
+  }
+
+  const client = initVocdoniClient();
+  const clientInfo = await client.createAccount();
+
+  creditsSpan.innerHTML = clientInfo.balance;
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   setupElectionStep();
+  showAvailableCredits();
 });

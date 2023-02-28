@@ -44,7 +44,7 @@ module Decidim
             start_time: form.start_time,
             end_time: form.end_time,
             component: form.current_component
-          }
+          }.merge(election_type_attributes)
 
           @election = Decidim.traceability.create!(
             Election,
@@ -53,6 +53,18 @@ module Decidim
             visibility: "all"
           )
           @attached_to = @election
+        end
+
+        def election_type_attributes
+          {
+            election_type: {
+              auto_start: form.auto_start,
+              interruptible: form.interruptible,
+              dynamic_census: form.dynamic_census,
+              secret_until_the_end: form.secret_until_the_end,
+              anonymous: form.anonymous
+            }
+          }
         end
       end
     end

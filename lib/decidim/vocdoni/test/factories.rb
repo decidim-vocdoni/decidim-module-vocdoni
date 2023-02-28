@@ -27,6 +27,11 @@ FactoryBot.define do
     published_at { nil }
     blocked_at { nil }
     status { nil }
+    election_type do
+      {
+        "secret_until_the_end" => false
+      }
+    end
     component { create(:vocdoni_component, organization: organization) }
 
     trait :upcoming do

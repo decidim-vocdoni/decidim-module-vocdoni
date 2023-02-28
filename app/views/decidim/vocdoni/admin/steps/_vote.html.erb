@@ -6,8 +6,14 @@
   <div class="card-section">
     <p><%= t(".message", end_time: election.end_time) %></p>
 
-    <p><%= t("url_html", scope: "decidim.vocdoni.admin.steps.created", explorer_vote_url: election.explorer_vote_url) %></p>
+    <% if election.election_type.fetch("secret_until_the_end") %>
+      <p><%= t("secret_until_the_end", scope: "decidim.vocdoni.admin.steps.created") %></p>
+    <% end %>
+
+    <%= render partial: "action_buttons", locals: { election: election } %>
   </div>
 </div>
 
-<%= render(partial: "vote_stats", locals: { polling: "true" }) %>
+<% unless election.election_type.fetch("secret_until_the_end") %>
+  <%= render(partial: "vote_stats", locals: { polling: "true" }) %>
+<% end %>

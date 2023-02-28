@@ -14,6 +14,7 @@ describe "Decidim::Api::QueryType" do
       "attachments" => [],
       "status" => election.status,
       "blocked" => election.blocked?,
+      "secretUntilTheEnd" => election.election_type.fetch("secret_until_the_end"),
       "createdAt" => election.created_at.iso8601.to_s.gsub("Z", "+00:00"),
       "description" => { "translation" => election.description[locale] },
       "streamUri" => election.stream_uri,
@@ -89,6 +90,7 @@ describe "Decidim::Api::QueryType" do
                 status
                 streamUri
                 blocked
+                secretUntilTheEnd
                 createdAt
                 description {
                   translation(locale: "en")
@@ -163,6 +165,7 @@ describe "Decidim::Api::QueryType" do
           status
           streamUri
           blocked
+          secretUntilTheEnd
           createdAt
           description {
             translation(locale: "en")

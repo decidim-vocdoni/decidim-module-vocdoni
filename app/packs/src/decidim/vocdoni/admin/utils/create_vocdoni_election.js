@@ -1,5 +1,5 @@
-import { VocdoniSDKClient, Election, PlainCensus } from "@vocdoni/sdk";
-import { Wallet } from "@ethersproject/wallet";
+import { Election, PlainCensus } from "@vocdoni/sdk";
+import { initVocdoniClient } from "./init_vocdoni_client";
 
 /*
  * Creates an Election in the Vocdoni API
@@ -7,34 +7,28 @@ import { Wallet } from "@ethersproject/wallet";
  * Based on the TypeScript example provided in the GitHub repository.
  *
  * @param {object} options All the different options that interact with setting up an Election.
- * @property {string} options.walletPrivateKey The private key from the wallet that will create the Election
  * @property {string} options.graphqlApiUrl The URL for the GraphQL API where to extract the Election metadata
  * @property {number|string} options.componentId The ID of the Vocdoni Component in Decidim
  * @property {number|string} options.electionId The ID of the Vocdoni Election in Decidim
- * @property {string} options.env The name of the Vocdoni environment that we'll use. Possible values STG or DEV.
  * @param {function} onSuccess A callback function to be run when the Election is successfully sent to the API
  * @param {function} onFailure A callback function to be run when the Election sent to the API has a failure
  *
  * @see {@link https://developer.vocdoni.io|Documentation}
  * @see {@link https://github.com/vocdoni/vocdoni-sdk/blob/ad03822f537fd8c4d43c85d447475fd38b62909c/examples/typescript/src/index.ts|TypeScript example}
  */
-export default class SetupElection {
+export default class CreateVocdoniElection {
   constructor(options = {}, onSuccess, onFailure) {
-    this.walletPrivateKey = options.walletPrivateKey;
     this.graphqlApiUrl = options.graphqlApiUrl;
     this.componentId = options.componentId;
     this.electionId = options.electionId;
-    this.env = options.env;
     this.onSuccess = onSuccess;
     this.onFailure = onFailure;
     this.client = null;
 
     console.group("Options");
-    console.log("WALLET PRIVATE KEY => ", options.walletPrivateKey);
     console.log("GRAPHQL API URL => ", options.graphqlApiUrl);
     console.log("VOCDONI COMPONENT ID => ", options.componentId);
     console.log("ELECTION ID => ", options.electionId);
-    console.log("ENVIRONMENT => ", options.env);
     console.groupEnd();
   }
 
@@ -55,21 +49,14 @@ export default class SetupElection {
    * @returns {void}
    */
   async _setVocdoniClient() {
-    const creator = new Wallet(this.walletPrivateKey);
-    this.client = new VocdoniSDKClient({
-      env: this.env,
-      wallet: creator
-    })
+    this.client = initVocdoniClient();
 
     const clientInfo = await this.client.createAccount();
     if (clientInfo.balance === 0) {
-      this.client.collectFaucetTokens();
+      await this.client.collectFaucetTokens();
     }
 
-    console.group("Client");
-    console.log("CREATOR => ", creator);
     console.log("CLIENT => ", this.client);
-    console.groupEnd();
   }
 
   /*
@@ -78,23 +65,21 @@ export default class SetupElection {
    * @returns {void}
    */
   async _createElection() {
-
-    const election = await this._initializeElection();
     let result = null;
 
     try {
-      const electionId = await this.client.createElection(election);
-      result = `OK! ELECTION ID => ${electionId}`;
-      this.onSuccess(electionId);
+      const election = await this._initializeElection();
+      console.log("ELECTION => ", election);
+
+      const vocdoniElectionId = await this.client.createElection(election);
+      result = `OK! VOCDONI ELECTION ID => ${vocdoniElectionId}`;
+      this.onSuccess(vocdoniElectionId);
     } catch (error) {
       result = `ERROR! ${error}`;
       this.onFailure();
     }
 
-    console.group("Election");
-    console.log("ELECTION => ", election);
     console.log("RESULT => ", result);
-    console.groupEnd();
   }
 
   /*
@@ -146,7 +131,10 @@ export default class SetupElection {
       streamUri: electionMetadata.streamUri,
       startDate: Date.parse(electionMetadata.startTime),
       endDate: Date.parse(electionMetadata.endTime),
-      census
+      census,
+      electionType: {
+        secretUntilTheEnd: electionMetadata.secretUntilTheEnd
+      }
     });
 
     electionMetadata.questions.forEach((question) => {
@@ -187,6 +175,7 @@ export default class SetupElection {
                 streamUri
                 startTime
                 endTime
+                secretUntilTheEnd
                 voters {
                   wallet_address
                 }

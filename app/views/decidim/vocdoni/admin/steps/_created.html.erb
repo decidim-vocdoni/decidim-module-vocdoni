@@ -6,6 +6,6 @@
   <div class="card-section">
     <p><%= t(".message") %></p>
 
-    <p><%= t(".url_html", explorer_vote_url: election.explorer_vote_url) %></p>
+    <%= render partial: "action_buttons", locals: { election: election } %>
   </div>
 </div>
