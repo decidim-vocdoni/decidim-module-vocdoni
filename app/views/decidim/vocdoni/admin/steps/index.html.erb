@@ -1,4 +1,5 @@
 <div class="card js-vocdoni-client"
+  data-default-locale="<%= current_organization.default_locale %>"
   data-vocdoni-wallet-private-key="<%= @current_vocdoni_wallet.private_key %>"
   <% if @election.vocdoni_election_id %>
     data-vocdoni-election-id="<%= @election.vocdoni_election_id %>"

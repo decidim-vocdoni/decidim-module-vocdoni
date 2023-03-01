@@ -1,6 +1,6 @@
 <%= link_to resource_locator(election).path, class: "button primary" do %>
   <%= icon "eye", role: "img", aria_label: t("actions.preview", scope: "decidim.vocdoni"), target: :blank %>
-  <%= t("preview", scope: "decidim.vocdoni.admin.steps.created") %>
+  <%= t("view", scope: "decidim.vocdoni.admin.steps.created") %>
 <% end %>
 
 <%= link_to election.explorer_vote_url, class: "button primary hollow", target: :blank, rel: "noopener noreferrer" do %>

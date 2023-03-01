@@ -23,7 +23,7 @@ shared_examples "allows admins to preview the voting booth" do
     click_link "Preview"
   end
 
-  it { uses_the_voting_booth({ email: admin.email, born_at: "2000-01-01" }) }
+  it { uses_the_voting_booth({ email: user.email, born_at: "2000-01-01" }) }
 
   it "shows the preview alert" do
     expect(page).to have_content("This is a preview of the voting booth.")

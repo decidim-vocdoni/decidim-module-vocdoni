@@ -54,13 +54,16 @@ module Decidim
         if preview_mode?
           return true if can_preview?
 
-          redirect_to(
-            exit_path,
-            alert: t("votes.messages.not_allowed",
-                     scope: "decidim.vocdoni")
-          )
+          redirect_to(exit_path, alert: t("votes.messages.not_allowed", scope: "decidim.vocdoni"))
           return false
         end
+
+        unless can_vote?
+          redirect_to(exit_path, alert: t("votes.messages.not_allowed", scope: "decidim.vocdoni"))
+          return false
+        end
+
+        enforce_permission_to :vote, :election, election: election
 
         true
       end
