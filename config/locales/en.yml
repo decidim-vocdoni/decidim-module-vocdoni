@@ -206,7 +206,7 @@ en:
             secret_until_the_end: The election results will be secret until the end
               of the voting period.
             title: Election created
-            view: Preview landing page
+            view: View landing page
           index:
             title: Steps dashboard
           powered_by_html: This module makes use of Vocdoni Protocol, an open-source
