@@ -49,7 +49,13 @@ status are checked every 15 minutes, you can do it with this configuration:
 
 ```crontab
 # Change Elections status on decidim-vocdoni
-0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status
+0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status[quiet]
+```
+
+During development, if you want to see the output of the command, you can run it without the `quiet` argument:
+
+```bash
+bin/rails decidim_vocdoni:change_election_status
 ```
 
 ## Configuration
