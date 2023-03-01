@@ -12,9 +12,12 @@ module Decidim
 
         # Creates the question if valid.
         #
-        # Broadcasts :ok if successful, :invalid otherwise.
+        # Broadcasts:
+        # * :ok if successful
+        # * :election_ongoing if the election is already blocked
+        # * :invalid otherwise.
         def call
-          return broadcast(:election_started) if form.election.started?
+          return broadcast(:election_ongoing) if form.election.blocked?
           return broadcast(:invalid) if form.invalid?
 
           create_question!

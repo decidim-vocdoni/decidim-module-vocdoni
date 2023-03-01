@@ -30,6 +30,14 @@ describe Decidim::Vocdoni::Election do
     it { is_expected.to be_started }
     it { is_expected.to be_ongoing }
     it { is_expected.not_to be_finished }
+
+    context "and it doesn't have a status" do
+      subject(:election) { build :vocdoni_election, :finished, status: nil }
+
+      it { is_expected.not_to be_started }
+      it { is_expected.not_to be_ongoing }
+      it { is_expected.not_to be_finished }
+    end
   end
 
   context "when it is finished" do
@@ -38,6 +46,14 @@ describe Decidim::Vocdoni::Election do
     it { is_expected.to be_started }
     it { is_expected.not_to be_ongoing }
     it { is_expected.to be_finished }
+
+    context "and it doesn't have a status" do
+      subject(:election) { build :vocdoni_election, :finished, status: nil }
+
+      it { is_expected.not_to be_started }
+      it { is_expected.not_to be_ongoing }
+      it { is_expected.not_to be_finished }
+    end
   end
 
   describe "start time checks" do

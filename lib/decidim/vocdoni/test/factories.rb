@@ -40,10 +40,12 @@ FactoryBot.define do
     end
 
     trait :started do
+      status { "vote" }
       start_time { 2.days.ago }
     end
 
     trait :ongoing do
+      blocked_at { Time.current }
       started
     end
 
@@ -64,6 +66,7 @@ FactoryBot.define do
     end
 
     trait :finished do
+      status { "vote_ended" }
       started
       complete
       end_time { 1.day.ago }

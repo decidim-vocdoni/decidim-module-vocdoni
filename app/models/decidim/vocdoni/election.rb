@@ -27,14 +27,14 @@ module Decidim::Vocdoni
     #
     # Returns a boolean.
     def started?
-      start_time <= Time.current
+      start_time <= Time.current && !status.nil?
     end
 
     # Public: Checks if the election finished
     #
     # Returns a boolean.
     def finished?
-      end_time < Time.current
+      end_time < Time.current && !status.nil?
     end
 
     # Public: Checks if the election ongoing now
@@ -76,7 +76,11 @@ module Decidim::Vocdoni
     #
     # Returns one of these symbols: upcoming, ongoing or finished
     def voting_period_status
-      if finished?
+      if paused?
+        :paused
+      elsif canceled?
+        :canceled
+      elsif finished?
         :finished
       elsif started?
         :ongoing

@@ -149,7 +149,7 @@ en:
             name: question
         questions:
           create:
-            election_started: The election has already started
+            election_ongoing: The election has already started and it's blocked
             invalid: There was a problem creating this question
             success: Question successfully created
           destroy:
@@ -297,8 +297,10 @@ en:
           create: "%{user_name} created the Organization wallet for the Vocdoni API"
       election_m:
         badge_name:
+          canceled: Canceled
           finished: Finished
           ongoing: Active
+          paused: Paused
           upcoming: Upcoming
         end_date: Ends
         footer:
@@ -321,7 +323,7 @@ en:
             other: "%{count} elections"
         preview:
           available_answers: 'Available answers:'
-          description: 'These are the questions you will find in the voting process:'
+          description: 'These are the questions for this voting process:'
           title: Election questions
         results:
           description: 'These are the results of the voting, for each question:'
@@ -346,8 +348,10 @@ en:
             will_verify: You will be able to verify your vote once the election is
               started.
           voting_period_status:
+            canceled: Voting was canceled. It was ment to begin on %{start_time} and end on %{end_time}
             finished: Voting began on %{start_time} and ended on %{end_time}
             ongoing: 'Active voting until: %{end_time}'
+            paused: Voting is paused. It ends on %{end_time}
             upcoming: Voting begins on %{start_time}
       models:
         answer:
