@@ -10,6 +10,8 @@ module Decidim
             toggle_allow(can_preview?)
           when :view
             toggle_allow(can_view?)
+          when :vote
+            toggle_allow(can_vote?)
           end
         end
 
@@ -29,6 +31,10 @@ module Decidim
 
       def can_preview?
         user&.admin?
+      end
+
+      def can_vote?
+        election.published? && election.ongoing?
       end
 
       def election

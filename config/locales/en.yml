@@ -203,10 +203,10 @@ en:
             explorer_vote: View at Explorer Vote
             message: The election has been created. We're waiting for the start date
               time to arrive.
-            preview: Preview landing page
             secret_until_the_end: The election results will be secret until the end
               of the voting period.
             title: Election created
+            view: View landing page
           index:
             title: Steps dashboard
           powered_by_html: This module makes use of Vocdoni Protocol, an open-source
@@ -224,6 +224,9 @@ en:
             message: We're on the vote period until %{end_time}.
             title: Vote period
           vote_ended:
+            error:
+              fetch: There are no results yet. Try again later.
+              invalid: There was a problem publishing the results. Try again later.
             submit: Publish results
             success: Results successfully published
             text: The vote period has ended. You can publish the results.

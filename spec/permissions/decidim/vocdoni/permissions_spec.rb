@@ -94,4 +94,40 @@ describe Decidim::Vocdoni::Permissions do
       it { is_expected.to be_truthy }
     end
   end
+
+  describe "election vote" do
+    let(:action) do
+      { scope: :public, action: :vote, subject: :election }
+    end
+
+    context "when election is not published" do
+      let(:election) { create :vocdoni_election, :upcoming, component: elections_component }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context "when election is upcoming" do
+      let(:election) { create :vocdoni_election, :published, :upcoming, component: elections_component }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context "when election is ongoing" do
+      let(:election) { create :vocdoni_election, :published, :ongoing, component: elections_component }
+
+      it { is_expected.to be_truthy }
+
+      context "without a user" do
+        let(:user) { nil }
+
+        it { is_expected.to be_truthy }
+      end
+    end
+
+    context "when election has finished" do
+      let(:election) { create :vocdoni_election, :published, :finished, component: elections_component }
+
+      it { is_expected.to be_falsey }
+    end
+  end
 end

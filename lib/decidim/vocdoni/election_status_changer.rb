@@ -12,17 +12,20 @@ module Decidim
 
       def update_ongoing_elections!
         # rubocop:disable Rails/SkipsModelValidations
-        Decidim::Vocdoni::Election.where(
-          "start_time <= ? AND end_time >= ?", Time.zone.now, Time.zone.now
-        )&.update_all(status: "vote")
+        Decidim::Vocdoni::Election
+          .where(status: "created")
+          .where("start_time <= ?", Time.zone.now)
+          .where("end_time >= ?", Time.zone.now)
+          &.update_all(status: "vote")
         # rubocop:enable Rails/SkipsModelValidations
       end
 
       def update_finished_elections!
         # rubocop:disable Rails/SkipsModelValidations
-        Decidim::Vocdoni::Election.where(
-          "end_time <= ? AND status = ?", Time.zone.now, "vote"
-        )&.update_all(status: "vote_ended")
+        Decidim::Vocdoni::Election
+          .where(status: %w(created vote))
+          .where("end_time <= ?", Time.zone.now)
+          &.update_all(status: "vote_ended")
         # rubocop:enable Rails/SkipsModelValidations
       end
     end
