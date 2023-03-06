@@ -175,8 +175,6 @@ en:
                 it</a>.
               minimum_answers: Questions must have <strong>at least two answers</strong>.
                 <a href=%{link}>Fix it</a>.
-              minimum_photos: The election <strong>must have at least one photo</strong>.
-                <a href=%{link}>Fix it</a>.
               minimum_questions: The election <strong>must have at least one question</strong>.
                 <a href=%{link}>Fix it</a>.
               published: The election is <strong>not published</strong>. <a href=%{link}>Fix
@@ -191,7 +189,6 @@ en:
             requirements:
               census_ready: The census is <strong>ready</strong>.
               minimum_answers: Each question has <strong>at least two answers</strong>.
-              minimum_photos: The election has <strong>at least one photo</strong>.
               minimum_questions: The election has <strong>at least one question</strong>.
               published: The election is <strong>published</strong>.
               time_before: The setup is being done <strong>at least %{minutes} minutes</strong>

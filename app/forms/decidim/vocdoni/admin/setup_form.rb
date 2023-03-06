@@ -19,7 +19,6 @@ module Decidim
 
         def validations
           @validations ||= [
-            [:minimum_photos, { link: router.edit_election_path(election) }, election.photos.any?],
             [:minimum_questions, { link: router.election_questions_path(election) }, election.questions.any?],
             [:minimum_answers, { link: router.election_questions_path(election) }, election.minimum_answers?],
             [:published, { link: router.edit_election_path(election) }, election.published_at.present?],
