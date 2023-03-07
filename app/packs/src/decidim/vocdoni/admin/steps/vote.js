@@ -134,11 +134,15 @@ const handleInterruptibleElectionActions = async () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
   const client = initVocdoniClient();
-  const electionMetadata = await client.fetchElection();
-  console.log("ELECTION METADATA => ", electionMetadata);
-  console.log("ELECTION STATUS => ", ElectionStatus[electionMetadata.status]);
 
-  fetchTheVotesStats(electionMetadata);
-  handleElectionStatus(electionMetadata);
+  if (client.electionId) {
+    const electionMetadata = await client.fetchElection();
+    console.log("ELECTION METADATA => ", electionMetadata);
+    console.log("ELECTION STATUS => ", ElectionStatus[electionMetadata.status]);
+
+    fetchTheVotesStats(electionMetadata);
+    handleElectionStatus(electionMetadata);
+  }
+
   handleInterruptibleElectionActions();
 });
