@@ -173,8 +173,8 @@ en:
               voting technology of the Vocdoni Protocol. Please be patient, as the
               set-up process may take some time.
             errors:
-              answers_have_values: All the answers must have a value. <a href=%{link} data-method="post">Fix
-                it</a>.
+              answers_have_values: All the answers must have a value. <a href=%{link}
+                data-method="post">Fix it</a>.
               census_ready: The census is <strong>not ready</strong>. <a href=%{link}>Fix
                 it</a>.
               minimum_answers: Questions must have <strong>at least two answers</strong>.
