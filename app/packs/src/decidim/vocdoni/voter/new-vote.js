@@ -56,10 +56,18 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
     onClose() {
       console.log("Voting finished");
     },
-    onInvalid() {
+    onInvalid(message = "Invalid vote") {
       console.log("Invalid vote");
       $voteWrapper.find("#submitting").addClass("hide");
       $voteWrapper.find("#vote_failed").removeClass("hide");
+
+      switch (message) {
+      case "No votes left":
+        $voteWrapper.find("#vote_failed").find("#error-no_votes_left").removeClass("hide");
+        break;
+      default:
+        $voteWrapper.find("#vote_failed").find("#error-unknown").removeClass("hide");
+      }
     }
   });
 }

@@ -43,9 +43,16 @@ const submitVote = async (options) => {
     }
   }
 
-  console.log("Voting...");
-  const vote = new Vote(options.voteValue);
+  const votesLeft = await client.votesLeftCount();
+  console.log("VOTES LEFT => ", votesLeft);
+
   return new Promise((resolve) => {
+    if (votesLeft === 0) {
+      resolve({status: "ERROR", message: "No votes left"});
+    }
+
+    console.log("Voting...", options.voteValue);
+    const vote = new Vote(options.voteValue);
     client.submitVote(vote).
       then((voteId) => {
         console.log("Vote sent! CONFIRMATION ID => ", voteId);
@@ -86,7 +93,7 @@ export default class VoteComponent {
             if (ballot.status === "OK") {
               onFinish(ballot.voteId);
             } else {
-              onInvalid();
+              onInvalid(ballot.message);
             }
           });
         },
