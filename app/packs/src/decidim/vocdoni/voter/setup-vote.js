@@ -1,3 +1,4 @@
+/* eslint-disable no-warning-comments */
 /* eslint-disable no-unused-vars */
 
 import { VocdoniSDKClient, Vote } from "@vocdoni/sdk";
@@ -16,12 +17,31 @@ import { VocdoniSDKClient, Vote } from "@vocdoni/sdk";
  *   - If it was sucessful, the format will be `{status: "OK", voteId: voteId}`
  *   - If it was a failure, the format will be `{status: "ERROR", message: error}`
  */
-const submitVote = (options) => {
+const submitVote = async (options) => {
   const client = new VocdoniSDKClient({
     env: options.vocdoniEnv,
     wallet: options.wallet
   });
+  console.log("CLIENT => ", client);
   client.setElectionId(options.electionId);
+
+  // Workaround for the cases where the client.url is not set
+  // We need to set it manually, depending on the environment
+  //
+  // TODO: we should pinpoint what exactly is the culprit of this issue
+  // and if it's a bug in the SDK, we should fix it there
+  if (typeof client.url === "undefined") {
+    switch (options.vocdoniEnv) {
+    case "prd":
+      client.url = "https://api.vocdoni.net/v2";
+      break;
+    case "stg":
+      client.url = "https://api-stg.vocdoni.net/v2";
+      break;
+    default:
+      client.url = "https://api-dev.vocdoni.net/v2";
+    }
+  }
 
   console.log("Voting...");
   const vote = new Vote(options.voteValue);
@@ -93,3 +113,4 @@ export default class VoteComponent {
   }
 }
 /* eslint-enable no-unused-vars */
+/* eslint-enable no-warning-comments */
