@@ -89,11 +89,10 @@ const checkIfElectionIsOpen = async (env, wallet, electionUniqueId) => {
   const client = new VocdoniSDKClient({ env, wallet })
   client.setElectionId(electionUniqueId);
   const election = await client.fetchElection();
-  const electionStatus = ElectionStatus[election.status];
-  const isElectionOpen = electionStatus === ElectionStatus.OPEN;
+  const isElectionOpen = election.status === ElectionStatus.READY;
 
   console.log("ELECTION => ", election);
-  console.log("STATUS => ", electionStatus);
+  console.log("STATUS => ", ElectionStatus[election.status]);
 
   return isElectionOpen;
 }
