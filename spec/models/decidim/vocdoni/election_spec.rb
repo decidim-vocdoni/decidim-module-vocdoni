@@ -60,6 +60,21 @@ describe Decidim::Vocdoni::Election do
     end
   end
 
+  describe "#answers_have_values?" do
+    let(:question) { create(:vocdoni_question, election: election) }
+    let!(:answer1) { create(:vocdoni_election_answer, question: question, value: 0) }
+    let!(:answer2) { create(:vocdoni_election_answer, question: question, value: 1) }
+
+    subject { election.answers_have_values? }
+    it { is_expected.to be_truthy }
+
+    context "when there answers have no values" do
+      let!(:answer1) { create(:vocdoni_election_answer, question: question, value: nil) }
+
+      it { is_expected.to be_falsey }
+    end
+  end
+
   describe "#explorer_vote_url" do
     subject(:election) { build :vocdoni_election, vocdoni_election_id: "12345" }
 

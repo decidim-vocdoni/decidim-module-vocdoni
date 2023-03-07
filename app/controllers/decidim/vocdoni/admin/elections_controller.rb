@@ -93,6 +93,17 @@ module Decidim
           end
         end
 
+        def answers_values
+          enforce_permission_to :update, :election, election: election
+
+          UpdateAnswersValues.call(election) do
+            on(:ok) do
+              flash[:notice] = I18n.t("admin.elections.answers_values.success", scope: "decidim.vocdoni")
+              redirect_to election_steps_path(election)
+            end
+          end
+        end
+
         private
 
         def elections

@@ -30,7 +30,7 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
         /* eslint-disable no-invalid-this */
         return formData.map(function() {
           const answerValue = this.value;
-          return Number(answerValue.split("-")[1]);
+          return Number(answerValue);
         }).get();
         /* eslint-enable no-invalid-this */
       };

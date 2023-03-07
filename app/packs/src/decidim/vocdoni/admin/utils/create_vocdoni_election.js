@@ -150,7 +150,7 @@ export default class CreateVocdoniElection {
         question.answers.map((answer) => {
           return {
             title: transformLocales(answer.title.translations, defaultLocale),
-            value: Number(answer.id)
+            value: Number(answer.value)
           }
         })
       );
@@ -189,7 +189,7 @@ export default class CreateVocdoniElection {
                   title { translations { text locale } }
                   description { translations { text locale } }
                   answers {
-                    id
+                    value
                     title { translations { text locale } }
                   }
                 }
