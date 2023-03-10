@@ -40,13 +40,13 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
       validVoteFn(formData);
       questionsComponent.voteCasted = true;
     },
-    onFinish(voteId) {
+    onFinish(voteId, env) {
       console.log("Vote finished");
       console.log("VOTE ID => ", voteId);
       $voteWrapper.find("#submitting").addClass("hide");
       $voteWrapper.find("#vote_cast").removeClass("hide");
       $voteWrapper.find("#vote-receipt").val(voteId);
-      $voteWrapper.find(".verify_ballot").attr("href", `https://dev.explorer.vote/verify/#/${voteId}`);
+      $voteWrapper.find(".verify_ballot").attr("href", `https://${env}.explorer.vote/verify/#/${voteId}`);
     },
     onBindVerifyBallotButton(onEventTriggered) {
       $(".verify_ballot").on("click", onEventTriggered);

@@ -26,7 +26,7 @@ export default class PreviewVoteComponent {
           console.log("VOTE => ", vote);
           this.fakeSubmission(vote).then((ballot) => {
             console.log("BALLOT => ", ballot);
-            onFinish(ballot.voteId);
+            onFinish(ballot.voteId, "preview");
           });
         },
         () => {

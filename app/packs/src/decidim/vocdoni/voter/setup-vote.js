@@ -90,7 +90,7 @@ export default class VoteComponent {
             console.log(ballot);
 
             if (ballot.status === "OK") {
-              onFinish(ballot.voteId);
+              onFinish(ballot.voteId, this.env);
             } else {
               onInvalid(ballot.message);
             }
