@@ -5,7 +5,6 @@ require "spec_helper"
 describe "Admin manages election steps", :slow, type: :system do
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create :vocdoni_component }
-  let!(:wallet) { create :wallet, organization: current_component.organization, private_key: "0x42a1c49e5b72a2fb146b9aa7c4c520eadc7e97dd885ce857141ba7f2e2d58051" }
 
   include_context "when managing a component as an admin"
 
@@ -14,6 +13,10 @@ describe "Admin manages election steps", :slow, type: :system do
 
     it "performs the action successfully" do
       visit_steps_page
+
+      expect(page).to have_content("It's necessary to create a wallet for this organization")
+      click_button "Create"
+      expect(page).to have_admin_callout("Wallet successfully created")
 
       within "form.create_election" do
         expect(page).to have_content("The election has at least one question.")
