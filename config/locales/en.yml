@@ -348,7 +348,8 @@ en:
             will_verify: You will be able to verify your vote once the election is
               started.
           voting_period_status:
-            canceled: Voting was canceled. It was ment to begin on %{start_time} and end on %{end_time}
+            canceled: Voting was canceled. It was ment to begin on %{start_time} and
+              end on %{end_time}
             finished: Voting began on %{start_time} and ended on %{end_time}
             ongoing: 'Active voting until: %{end_time}'
             paused: Voting is paused. It ends on %{end_time}
