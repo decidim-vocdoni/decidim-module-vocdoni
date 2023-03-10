@@ -13,7 +13,7 @@ export const walletFromLoginForm = ($loginForm) => {
     return {};
   }
 
-  const email = $loginForm.find("#login_email").val();
+  const email = $loginForm.find("#login_email").val().toLowerCase();
   let bornAtDay = $loginForm.find("#login_day").val();
   let bornAtMonth = $loginForm.find("#login_month").val();
   const bornAtYear = $loginForm.find("#login_year").val();
