@@ -390,7 +390,7 @@ en:
           confirm: Confirm your vote
           failed: Vote failed
           login: Identification
-          submitting: Subtmitting the vote
+          submitting: Submitting the vote
           vote_cast: Your vote has been cast
         login:
           access: Access
