@@ -34,7 +34,7 @@ module Decidim::Vocdoni
     #
     # Returns a boolean.
     def finished?
-      end_time < Time.current && !status.nil?
+      end_time < Time.current && !status.nil? || canceled? || vote_ended? || results_published?
     end
 
     # Public: Checks if the election ongoing now
