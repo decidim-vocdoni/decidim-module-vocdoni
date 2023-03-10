@@ -7,7 +7,7 @@ import { VocdoniSDKClient, Vote } from "@vocdoni/sdk";
  * Submit a vote to the Vocdoni API
  *
  * @param {object} options All the different options that interact with Submitting a vote
- * @property {string} options.vocdoniEnv - The environment of the Vocdoni API
+ * @property {string} options.env - The environment of the Vocdoni API
  * @property {string} options.electionId - The election ID to vote in
  * @property {object} options.wallet - The wallet to use to sign the vote
  * @property {array} options.voteValue - The values of the votes to submit
@@ -18,8 +18,9 @@ import { VocdoniSDKClient, Vote } from "@vocdoni/sdk";
  *   - If it was a failure, the format will be `{status: "ERROR", message: error}`
  */
 const submitVote = async (options) => {
+  console.log("OPT", options);
   const client = new VocdoniSDKClient({
-    env: options.vocdoniEnv,
+    env: options.env,
     wallet: options.wallet
   });
   console.log("CLIENT => ", client);
@@ -30,17 +31,15 @@ const submitVote = async (options) => {
   //
   // TODO: we should pinpoint what exactly is the culprit of this issue
   // and if it's a bug in the SDK, we should fix it there
-  if (typeof client.url === "undefined") {
-    switch (options.vocdoniEnv) {
-    case "prd":
-      client.url = "https://api.vocdoni.net/v2";
-      break;
-    case "stg":
-      client.url = "https://api-stg.vocdoni.net/v2";
-      break;
-    default:
-      client.url = "https://api-dev.vocdoni.net/v2";
-    }
+  switch (options.env) {
+  case "prd":
+    client.url = "https://api.vocdoni.net/v2";
+    break;
+  case "stg":
+    client.url = "https://api-stg.vocdoni.net/v2";
+    break;
+  default:
+    client.url = "https://api-dev.vocdoni.net/v2";
   }
 
   const votesLeft = await client.votesLeftCount();
@@ -66,8 +65,8 @@ const submitVote = async (options) => {
 
 // A vote component, to send the real votes to the Vocdoni API, using the Vocdoni SDK
 export default class VoteComponent {
-  constructor({ vocdoniEnv, electionUniqueId, wallet }) {
-    this.vocdoniEnv = vocdoniEnv;
+  constructor({ env, electionUniqueId, wallet }) {
+    this.env = env;
     this.electionUniqueId = electionUniqueId;
     this.wallet = wallet;
   }
@@ -105,12 +104,12 @@ export default class VoteComponent {
   }
   async submit(vote) {
     console.log("Submiting vote to Vocdoni API with:");
-    console.log("- ENV => ", this.vocdoniEnv);
+    console.log("- ENV => ", this.env);
     console.log("- ELECTION ID => ", this.electionUniqueId);
     console.log("- WALLET => ", this.wallet);
     console.log("- VALUE => ", vote);
     const response = await submitVote({
-      env: this.vocdoniEnv,
+      env: this.env,
       electionId: this.electionUniqueId,
       wallet: this.wallet,
       voteValue: vote

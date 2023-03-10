@@ -137,14 +137,14 @@ $(() => {
       voteComponent = new PreviewVoteComponent({electionUniqueId});
     } else {
       const wallet = walletFromLoginForm($loginForm);
-      const vocdoniEnv = $voteWrapper.data("vocdoniEnv");
+      const env = $voteWrapper.data("vocdoniEnv");
 
       if (wallet === {}) {
         showLoginErrorMessage();
         return;
       }
 
-      const isInCensus = await checkIfWalletIsInCensus(vocdoniEnv, wallet, electionUniqueId);
+      const isInCensus = await checkIfWalletIsInCensus(env, wallet, electionUniqueId);
       console.log("IS IN CENSUS => ", isInCensus);
 
       if (!isInCensus) {
@@ -154,7 +154,7 @@ $(() => {
 
       console.log("OK!! Wallet is in census");
 
-      const isElectionOpen = await checkIfElectionIsOpen(vocdoniEnv, wallet, electionUniqueId);
+      const isElectionOpen = await checkIfElectionIsOpen(env, wallet, electionUniqueId);
       console.log("IS ELECTION OPEN => ", isElectionOpen);
 
       if (!isElectionOpen) {
@@ -162,7 +162,7 @@ $(() => {
         return;
       }
 
-      voteComponent = new VoteComponent({vocdoniEnv, electionUniqueId, wallet});
+      voteComponent = new VoteComponent({env, electionUniqueId, wallet});
     }
 
     $("#login").foundation("toggle");
