@@ -19,7 +19,7 @@
     <% question.answers.each do |answer| %>
       <%= f.fields_for "results[]", answer do |result_form| %>
         <%= result_form.number_field :id %>
-        <%= result_form.number_field :votes, "data-question-idx" => idx, "data-answer-id" => answer.id, value: 0 %>
+        <%= result_form.number_field :votes, "data-question-idx" => idx, "data-answer-id" => answer.id, "data-answer-value" => answer.value, value: 0 %>
       <% end %>
     <% end %>
   <% end %>

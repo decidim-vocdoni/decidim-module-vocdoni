@@ -30,6 +30,7 @@ const fetchTheVotesStats = async (electionMetadata) => {
   const fetchVotesStats = async () => {
     const results = electionMetadata.results;
 
+    console.group("Partial Results");
     for (let idx = 0; idx < results.length; idx += 1) {
       const $questionAnswersCells = $(`td[data-question-idx="${idx}"]`);
       for (const answerCell of $questionAnswersCells) {
@@ -39,6 +40,7 @@ const fetchTheVotesStats = async (electionMetadata) => {
         console.log(`FOR QUESTION ${idx} - ANSWER ${answerValue} - VOTES ${answerVotes}`);
       }
     }
+    console.groupEnd();
   }
 
   fetchVotesStats();
