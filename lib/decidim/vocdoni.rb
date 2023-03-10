@@ -20,7 +20,7 @@ module Decidim
     # Public Setting to configure the Vocdoni API enpoint
     # It can be "dev" or "stg"
     config_accessor :api_endpoint_env do
-      "dev"
+      "stg"
     end
 
     def self.explorer_vote_domain
