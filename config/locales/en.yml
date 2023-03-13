@@ -430,11 +430,11 @@ en:
           copy_vote_receipt_clarification: Copy vote receipt to clipboard
           copy_vote_receipt_copied: Copied!
           copy_vote_receipt_message: The vote receipt was successfully copied to clipboard.
-          description: Your vote has been cast successfully! You can store the following
-            receipt as proof of your vote's inclusion at any time and check it using
-            the Vocdoni Explorer.
+          description: You can store the following receipt as proof of your vote's
+            inclusion at any time and check it using the Vocdoni Explorer.
           exit: Exit the voting booth
-          header: Vote confirmed
+          header: Your vote has been cast successfully!
+          or: or
           verify: "( Verify my vote )"
           vote_receipt: 'Your vote receipt is:'
         voting_step:

@@ -24,13 +24,21 @@
             </button>
           </div>
         </div>
-        <%= link_to t("verify", scope: "decidim.vocdoni.votes.vote_cast"), "#", class: "verify_ballot", target: "_blank", rel: "noopener noreferrer" %>
+
+        <p>
+          <%= link_to t("verify", scope: "decidim.vocdoni.votes.vote_cast"), "#", class: "verify_ballot", target: "_blank", rel: "noopener noreferrer" %>
+        </p>
+
+        <p>
+          <%= t("or", scope: "decidim.vocdoni.votes.vote_cast") %>
+        </p>
+
+        <%= link_to election_path(election), class: "button" do %>
+          <%= t("exit", scope: "decidim.vocdoni.votes.vote_cast") %>
+        <% end %>
       </p>
     </div>
 
-    <%= link_to election_path(election), class: "button" do %>
-      <%= t("exit", scope: "decidim.vocdoni.votes.vote_cast") %>
-    <% end %>
     <%= render partial: "vocdoni_logo" %>
   </div>
 </div>

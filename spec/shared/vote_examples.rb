@@ -88,7 +88,6 @@ def uses_the_voting_booth(census_data)
 
   # confirmed vote page
   sleep 2 # wait for the setTimeout in preview
-  expect(page).to have_content("Vote confirmed")
   expect(page).to have_content("Your vote has been cast successfully")
 end
 
