@@ -37,7 +37,7 @@ describe "Decidim::Api::QueryType" do
               "versions" => [],
               "versionsCount" => 0,
               "weight" => a.weight.to_i,
-              "value" => a.value.to_i
+              "value" => nil
             }
           end,
           "id" => q.id.to_s,

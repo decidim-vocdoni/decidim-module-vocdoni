@@ -107,8 +107,6 @@ en:
               href="%{steps_path}">ready to setup</a>.
             title: Current census data
         elections:
-          answers_values:
-            success: The answers values have been successfully updated.
           create:
             invalid: There was a problem creating this election
             success: Election successfully created
@@ -176,8 +174,6 @@ en:
               voting technology of the Vocdoni Protocol. Please be patient, as the
               set-up process may take some time.
             errors:
-              answers_have_values: All the answers must have a value. <a href=%{link}
-                data-method="post">Fix it</a>.
               census_ready: The census is <strong>not ready</strong>. <a href=%{link}>Fix
                 it</a>.
               minimum_answers: Questions must have <strong>at least two answers</strong>.
@@ -194,7 +190,6 @@ en:
               title: The election has an error and couldn't be created
             invalid: There was a problem setting up this election
             requirements:
-              answers_have_values: All the answers have a <strong>value</strong>.
               census_ready: The census is <strong>ready</strong>.
               minimum_answers: Each question has <strong>at least two answers</strong>.
               minimum_questions: The election has <strong>at least one question</strong>.

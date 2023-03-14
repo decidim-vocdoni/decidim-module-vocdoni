@@ -21,7 +21,6 @@ module Decidim
           @validations ||= [
             [:minimum_questions, { link: router.election_questions_path(election) }, election.questions.any?],
             [:minimum_answers, { link: router.election_questions_path(election) }, election.minimum_answers?],
-            [:answers_have_values, { link: router.answers_values_election_path(election) }, election.answers_have_values?],
             [:published, { link: router.edit_election_path(election) }, election.published_at.present?],
             [:time_before, { link: router.edit_election_path(election), minutes: time_before_minutes }, election.minimum_minutes_before_start?],
             [:census_ready, { link: router.election_census_path(election) }, census.ready_to_setup?]

@@ -174,7 +174,6 @@ FactoryBot.define do
     title { generate_localized_title }
     description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }
-    value { Faker::Number.number(digits: 1) }
 
     trait :with_photos do
       transient do
