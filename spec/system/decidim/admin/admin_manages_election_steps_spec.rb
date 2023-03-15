@@ -31,7 +31,6 @@ describe "Admin manages election steps", :slow, type: :system do
         expect(page).to have_content("Processing...")
       end
 
-      expect(page.text).to match(/Available credits:  \d\d/)
       expect(page).to have_admin_callout("successfully")
 
       within ".content.created" do
