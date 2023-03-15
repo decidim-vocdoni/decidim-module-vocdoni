@@ -8,7 +8,8 @@ const setupElectionStep = async () => {
   }
 
   const createAnswersValuesOnElection = async () => {
-    const url = window.location.pathname.split('/').filter((param) => param != "steps") .join("/") + "/answers_values";
+    const urlPrefix = window.location.pathname.split("/").filter((param) => param !== "steps").join("/");
+    const url = `${urlPrefix}/answers_values`;
 
     return new Promise((resolve) => {
       fetch(url, {
@@ -16,13 +17,13 @@ const setupElectionStep = async () => {
         headers: {
           "Content-Type": "application/json",
           "X-CSRF-Token": $("meta[name=csrf-token]").attr("content")
-        } })
-        .then((response) => response.json())
-        .then((data) => {
+        } }).
+        then((response) => response.json()).
+        then((data) => {
           console.log("Successfully created the Answers values:", data);
           resolve(data);
-        })
-        .catch((error) => {
+        }).
+        catch((error) => {
           console.error("Error:", error);
         });
     });
@@ -54,7 +55,7 @@ const setupElectionStep = async () => {
 
     const answersResponse = await createAnswersValuesOnElection();
     if (answersResponse.status !== "ok") {
-      return {};
+      return;
     }
 
     const election = new CreateVocdoniElection({
