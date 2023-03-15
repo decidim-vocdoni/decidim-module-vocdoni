@@ -11,7 +11,8 @@ import { initVocdoniClient } from "src/decidim/vocdoni/admin/utils/init_vocdoni_
  * @property {string} options.defaultLocale The default locale of the Election
  * @property {number|string} options.componentId The ID of the Vocdoni Component in Decidim
  * @property {number|string} options.electionId The ID of the Vocdoni Election in Decidim
- * @property {string} options.containerClass The class of the container where the election will be rendered. Used to show a spinner.
+ * @property {string} options.containerClass The class of the container where the election will be rendered.
+ *                               Used to show a spinner and to save the electionMetadata for showing in the markup if there's any error.
  * @param {function} onSuccess A callback function to be run when the Election is successfully sent to the API
  * @param {function} onFailure A callback function to be run when the Election sent to the API has a failure
  *
@@ -121,6 +122,10 @@ export default class CreateVocdoniElection {
 
     let electionMetadata = await this._getElectionMetadata();
     electionMetadata = electionMetadata.data.component.election;
+
+    // Save the electionMetadata in the DOM to show it in the markup if there's any error
+    const errorDetails = document.querySelector(this.containerClass).querySelector(".js-election-create-error-message-details");
+    errorDetails.innerHTML = JSON.stringify(electionMetadata, null, 4);
 
     const walletsAddresses = electionMetadata.voters.map((voter) => voter.wallet_address);
     const census = this._initializeCensus(walletsAddresses);

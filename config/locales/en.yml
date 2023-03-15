@@ -185,6 +185,7 @@ en:
               time_before: The setup is not being done <strong>at least %{minutes}
                 minutes</strong> before the election starts. <a href=%{link}>Fix it</a>.
             failed:
+              details: View details
               message: Check the Web Development console log error message, fix the
                 problem and retry.
               title: The election has an error and couldn't be created

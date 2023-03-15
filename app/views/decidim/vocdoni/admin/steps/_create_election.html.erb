@@ -11,8 +11,18 @@
     <%= f.hidden_field :vocdoni_election_id %>
 
     <div class="js-election-create-error-message callout alert hide">
-      <h3 class="h5"><%= t("failed.title", scope: "decidim.vocdoni.admin.steps.create_election") %></h2>
+      <h3 class="h5"><%= t("failed.title", scope: "decidim.vocdoni.admin.steps.create_election") %></h3>
       <p><%= t("failed.message", scope: "decidim.vocdoni.admin.steps.create_election") %></p>
+      <div data-accordion data-multi-expand="true" data-allow-all-closed="true">
+        <dl class="voc-accordion accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+          <dd class="accordion-item" data-accordion-item>
+            <a href="#" class="accordion-title"><%= t("failed.details", scope: "decidim.vocdoni.admin.steps.create_election") %></a>
+            <div class="accordion-content" data-tab-content>
+              <pre class="js-election-create-error-message-details"></pre>
+            </div>
+          </dd>
+        </dl>
+      </div>
     </div>
 
     <ul class="no-bullet-indented">
