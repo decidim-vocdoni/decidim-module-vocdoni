@@ -6,7 +6,7 @@ module Decidim
       belongs_to :election, foreign_key: "decidim_vocdoni_election_id", class_name: "Decidim::Vocdoni::Election", inverse_of: :voters
 
       validates :email, format: { with: ::Devise.email_regexp }
-      validates :born_at, presence: true
+      validates :token, presence: true
 
       def self.inside(election)
         where(election: election)
@@ -20,7 +20,7 @@ module Decidim
       end
 
       def self.insert_all(election, values)
-        values.each { |value| create(email: value.first.downcase, election: election, born_at: value.second) }
+        values.each { |value| create(email: value.first.downcase, election: election, token: value.second.downcase) }
       end
 
       def self.clear(election)

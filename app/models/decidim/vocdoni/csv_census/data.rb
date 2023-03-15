@@ -30,9 +30,9 @@ module Decidim
 
         def process_row(row)
           user_mail = row.fetch("email", nil)
-          user_born_at = row.fetch("born_at", nil)
-          if mail_valid?(user_mail) && born_at_valid?(user_born_at)
-            values << [user_mail, user_born_at]
+          user_token = row.fetch("token", nil)
+          if mail_valid?(user_mail) && token_valid?(user_token)
+            values << [user_mail, user_token]
           else
             errors << row
           end
@@ -42,8 +42,8 @@ module Decidim
           user_mail.present? && user_mail.match?(::Devise.email_regexp)
         end
 
-        def born_at_valid?(user_born_at)
-          user_born_at.present? # TODO: born_at validation
+        def token_valid?(user_token)
+          user_token.present?
         end
       end
     end

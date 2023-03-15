@@ -25,11 +25,11 @@ describe "Admin manages census", :slow, type: :system do
 
   context "when there's already a census" do
     context "without the credentials" do
-      let!(:voter1) { create(:vocdoni_voter, election: election, born_at: "1923-01-01", email: "user_1@example.org") }
-      let!(:voter2) { create(:vocdoni_voter, election: election, born_at: "1977-02-23", email: "user_2@example.org") }
-      let!(:voter3) { create(:vocdoni_voter, election: election, born_at: "2000-02-23", email: "user_3@example.org") }
-      let!(:voter4) { create(:vocdoni_voter, election: election, born_at: "1992-02-23", email: "user_4@example.org") }
-      let!(:voter5) { create(:vocdoni_voter, election: election, born_at: "1954-02-23", email: "user_5@example.org") }
+      let!(:voter1) { create(:vocdoni_voter, election: election, token: "123456", email: "user_1@example.org") }
+      let!(:voter2) { create(:vocdoni_voter, election: election, token: "123abc", email: "user_2@example.org") }
+      let!(:voter3) { create(:vocdoni_voter, election: election, token: "123abc", email: "user_3@example.org") }
+      let!(:voter4) { create(:vocdoni_voter, election: election, token: "abcxyz", email: "user_4@example.org") }
+      let!(:voter5) { create(:vocdoni_voter, election: election, token: "123abc", email: "user_5@example.org") }
 
       it "generates the credentials" do
         visit_census_page
@@ -41,11 +41,11 @@ describe "Admin manages census", :slow, type: :system do
         click_button "Confirm the census data"
 
         expect(page).to have_content("The census data is uploaded and confirmed")
-        expect(voter1.reload.wallet_address).to eq("0x50a688dbB767bD3ebd93022B87B2c19cE936bd93")
-        expect(voter2.reload.wallet_address).to eq("0xA7e77F2706e6981002c15B5E8d441fBC8EA0fC9E")
-        expect(voter3.reload.wallet_address).to eq("0xd2d6C90A4f4daed530D9b0B7Aae3271c73610AA7")
-        expect(voter4.reload.wallet_address).to eq("0x8a186ec407591ef7c5D000C81D99f7E174648a27")
-        expect(voter5.reload.wallet_address).to eq("0x75bA570b7135216f14B9A4C77558159793367fFb")
+        expect(voter1.reload.wallet_address).to eq("0xFEA59AF4dD69C285f39CC6836DA2664f36A47A71")
+        expect(voter2.reload.wallet_address).to eq("0xA0A46c789F1D86a0AA04Cd18E7965C726864B991")
+        expect(voter3.reload.wallet_address).to eq("0x1A4d5529E04803054fC0338eA07083FD977cD115")
+        expect(voter4.reload.wallet_address).to eq("0xBc8dB7502067bFCc44ccCA105dD4cdfabB8DDDfb")
+        expect(voter5.reload.wallet_address).to eq("0x183f5bC91423354F7351dFC4a877a8AC75910CA1")
       end
 
       describe "and we want to delete it" do

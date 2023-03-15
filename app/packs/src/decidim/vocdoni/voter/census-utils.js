@@ -14,40 +14,24 @@ export const walletFromLoginForm = ($loginForm) => {
   }
 
   const email = $loginForm.find("#login_email").val().toLowerCase();
-  let bornAtDay = $loginForm.find("#login_day").val();
-  let bornAtMonth = $loginForm.find("#login_month").val();
-  const bornAtYear = $loginForm.find("#login_year").val();
+  const token = $loginForm.find("#login_token").val().toLowerCase();
 
   if (!email.includes("@")) {
     return {};
   }
 
-  if (bornAtYear.length !== 4) {
-    return {};
-  }
-
-  if (bornAtDay.length === 1) {
-    bornAtDay = `0${bornAtDay}`;
-  }
-
-  if (bornAtMonth.length === 1) {
-    bornAtMonth = `0${bornAtMonth}`;
-  }
-
-  const bornAt = `${bornAtYear}-${bornAtMonth}-${bornAtDay}`;
-
   console.group("Wallet data");
   console.log("EMAIL => ", email);
-  console.log("BORN AT => ", bornAt);
+  console.log("TOKEN => ", token);
   console.groupEnd();
 
-  for (const value of [email, bornAtDay, bornAtMonth, bornAtYear]) {
+  for (const value of [email, token]) {
     if (value === "") {
       return {};
     }
   }
 
-  const userWallet = VocdoniSDKClient.generateWalletFromData([email, bornAt]);
+  const userWallet = VocdoniSDKClient.generateWalletFromData([email, token]);
 
   return userWallet;
 }

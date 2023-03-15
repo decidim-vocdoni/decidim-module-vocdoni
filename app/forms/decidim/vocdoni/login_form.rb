@@ -7,9 +7,7 @@ module Decidim
     # with the SDK
     class LoginForm < Decidim::Form
       attribute :email, String
-      attribute :day, Integer
-      attribute :month, Integer
-      attribute :year, Integer
+      attribute :token, String
     end
   end
 end

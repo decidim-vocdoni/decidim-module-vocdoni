@@ -23,7 +23,7 @@ shared_examples "allows admins to preview the voting booth" do
     click_link "Preview"
   end
 
-  it { uses_the_voting_booth({ email: user.email, born_at: "2000-01-01" }) }
+  it { uses_the_voting_booth({ email: user.email, token: "123456" }) }
 
   it "shows the preview alert" do
     expect(page).to have_content("This is a preview of the voting booth.")
@@ -92,13 +92,9 @@ def uses_the_voting_booth(census_data)
 end
 
 def login_step(census_data)
-  year, month, day = census_data.fetch(:born_at).split("-")
-
   within "#login" do
     fill_in :login_email, with: census_data.fetch(:email)
-    fill_in :login_day, with: day
-    fill_in :login_month, with: month
-    fill_in :login_year, with: year
+    fill_in :login_token, with: census_data.fetch(:token)
 
     click_button "Access"
   end
