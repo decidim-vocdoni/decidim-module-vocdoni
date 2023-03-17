@@ -32,12 +32,14 @@ module Decidim
       end
 
       def update_elections_status(elections, status)
+        # rubocop:disable Rails/Output
         if elections.count.zero?
-          Rails.logger.debug { "No elections to change to '#{status}' status" } unless quiet
+          puts "No elections to change to '#{status}' status" unless quiet
           return
         end
 
-        Rails.logger.debug { "Changing #{elections.count} election to '#{status}' status" } unless quiet
+        puts "Changing #{elections.count} election to '#{status}' status" unless quiet
+        # rubocop:enable Rails/Output
         # rubocop:disable Rails/SkipsModelValidations
         elections.update_all(status: status)
         # rubocop:enable Rails/SkipsModelValidations
