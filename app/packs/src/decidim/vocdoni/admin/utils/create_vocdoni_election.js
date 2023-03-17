@@ -67,8 +67,6 @@ export default class CreateVocdoniElection {
    */
   async _createElection() {
 
-    let result = null;
-
     try {
       const election = await this._initializeElection(this.defaultLocale);
       console.log("ELECTION => ", election);
@@ -76,16 +74,14 @@ export default class CreateVocdoniElection {
       document.querySelector(this.containerClass).classList.add("spinner-container");
 
       const vocdoniElectionId = await this.client.createElection(election);
-      result = `OK! VOCDONI ELECTION ID => ${vocdoniElectionId}`;
-      document.querySelector(this.containerClass).classList.remove("spinner-container");
+      console.log("RESULT => OK! VOCDONI ELECTION ID ", vocdoniElectionId);
       this.onSuccess(vocdoniElectionId);
     } catch (error) {
-      result = `ERROR! ${error}`;
-      document.querySelector(this.containerClass).classList.remove("spinner-container");
+      console.error("RESULT => ERROR! ", error);
       this.onFailure();
+    } finally {
+      document.querySelector(this.containerClass).classList.remove("spinner-container");
     }
-
-    console.log("RESULT => ", result);
   }
 
   /*
