@@ -76,6 +76,14 @@
     }
   }
 
+  &__login{
+    width: 20rem;
+
+    @include breakpoint(large){
+      width: 30rem;
+    }
+  }
+
   &__check{
     cursor: pointer;
     display: flex;
