@@ -136,6 +136,9 @@ export default class CreateVocdoniElection {
       electionType: {
         interruptible: electionMetadata.interruptible,
         secretUntilTheEnd: electionMetadata.secretUntilTheEnd
+      },
+      voteType: {
+        maxVoteOverwrites: -1
       }
     });
 

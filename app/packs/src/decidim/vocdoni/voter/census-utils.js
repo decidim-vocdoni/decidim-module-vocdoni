@@ -35,10 +35,3 @@ export const walletFromLoginForm = ($loginForm) => {
 
   return userWallet;
 }
-
-export const checkIfWalletIsInCensus = async (env, wallet, electionId) => {
-  const client = new VocdoniSDKClient({ env, wallet })
-  client.setElectionId(electionId);
-  const isInCensus = await client.isInCensus();
-  return isInCensus;
-}

@@ -406,6 +406,8 @@ en:
         modal:
           close: Close
         new:
+          already_voted: You have already voted on this election. You can vote again.
+            The previous vote will be overwritten.
           more_information: More information
           preview_alert: This is a preview of the voting booth.
           question_steps: Question %{current_step} of %{total_steps}
