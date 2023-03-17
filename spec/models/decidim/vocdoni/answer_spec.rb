@@ -10,13 +10,28 @@ describe Decidim::Vocdoni::Answer do
   include_examples "resourceable"
 
   describe "#votes_percentage" do
-    subject(:answer) { create(:vocdoni_election_answer, question: question, votes: 5) }
+    subject(:answer1) { create(:vocdoni_election_answer, question: question, votes: 5) }
 
     let(:question) { create(:vocdoni_question) }
-    let!(:other_answer) { create(:vocdoni_election_answer, question: question, votes: 10) }
+    let!(:answer2) { create(:vocdoni_election_answer, question: question, votes: 10) }
 
     it "returns a percentage" do
-      expect(subject.votes_percentage).to eq(33)
+      expect(subject.votes_percentage).to eq(33.33)
+    end
+
+    it "sums to 100" do
+      expect(subject.votes_percentage + answer2.votes_percentage).to eq(100)
+    end
+
+    context "when there are multiple answers" do
+      let!(:answer3) { create(:vocdoni_election_answer, question: question, votes: 11) }
+      let!(:answer4) { create(:vocdoni_election_answer, question: question, votes: 22) }
+      let!(:answer5) { create(:vocdoni_election_answer, question: question, votes: 33) }
+      let!(:answer6) { create(:vocdoni_election_answer, question: question, votes: 1) }
+
+      it "sums to 100" do
+        expect(subject.question.answers.map(&:votes_percentage).sum).to eq(100)
+      end
     end
   end
 end
