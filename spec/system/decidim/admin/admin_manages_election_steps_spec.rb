@@ -18,6 +18,9 @@ describe "Admin manages election steps", :slow, type: :system do
       click_button "Create"
       expect(page).to have_admin_callout("Wallet successfully created")
 
+      # Wait to let the wallet be created
+      sleep 12
+
       within "form.create_election" do
         expect(page).to have_content("The election has at least one question.")
         expect(page).to have_content("Each question has at least two answers.")
