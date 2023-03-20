@@ -10,6 +10,7 @@ env:
   CI: "true"
   RUBY_VERSION: 3.0.5
   NODE_VERSION: 16.9.1
+  CODECOV_TOKEN: 3dc89116-a8ed-4df4-bf06-812fc0d8854d
 
 jobs:
   test-report:
@@ -65,10 +66,14 @@ jobs:
 
       - run: bundle exec rspec
         name: RSpec
+        env:
+          CODECOV: 1
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
-        
+        with:
+          token: ${{ env.CODECOV_TOKEN }}
+
       - uses: actions/upload-artifact@v2
         if: always()
         with:
