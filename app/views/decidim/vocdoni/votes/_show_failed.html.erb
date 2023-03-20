@@ -8,7 +8,14 @@
     <h2 class="h4"><%= t("decidim.vocdoni.votes.failed.lead") %></h2>
 
     <div class="evote__content">
-      <%= t("decidim.vocdoni.votes.failed.text") %>
+      <div class="callout alert">
+        <span id="error-unknown">
+          <%= t("decidim.vocdoni.votes.failed.message.unknown") %>
+        </span>
+        <span id="error-no_votes_left">
+          <%= t("decidim.vocdoni.votes.failed.message.no_votes_left") %>
+        </span>
+      </div>
     </div>
 
     <%= link_to new_election_vote_path(election), class: "button" do %>

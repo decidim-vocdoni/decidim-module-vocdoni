@@ -102,22 +102,22 @@ export default class VoteQuestionsComponent {
   // receive confirmed answers
   toggleConfirmAnswers() {
     $(".answer_input:checked").each((_index, element) => {
-      const confirmedAnswer = $(".evote__confirm").find(`#${element.value}`);
+      const confirmedAnswer = $(".evote__confirm").find(`#${element.dataset.answer}`);
       $(confirmedAnswer).removeClass("hide")
     })
 
     $(".answer_input").not(":checked").each((_index, element) => {
-      const confirmedAnswer = $(".evote__confirm").find(`#${element.value}`);
+      const confirmedAnswer = $(".evote__confirm").find(`#${element.dataset.answer}`);
       $(confirmedAnswer).addClass("hide")
     })
 
     $(".nota_input:checked").each((_index, element) => {
-      const confirmedAnswer = $(".evote__confirm").find(`.${element.value}`);
+      const confirmedAnswer = $(".evote__confirm").find(`.${element.dataset.answer}`);
       $(confirmedAnswer).removeClass("hide")
     })
 
     $(".nota_input").not(":checked").each((_index, element) => {
-      const confirmedAnswer = $(".evote__confirm").find(`.${element.value}`);
+      const confirmedAnswer = $(".evote__confirm").find(`.${element.dataset.answer}`);
       $(confirmedAnswer).addClass("hide")
     })
   }

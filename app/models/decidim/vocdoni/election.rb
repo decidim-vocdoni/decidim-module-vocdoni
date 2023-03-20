@@ -65,6 +65,13 @@ module Decidim::Vocdoni
       start_time > (Time.zone.at(Decidim::Vocdoni.setup_minimum_minutes_before_start.minutes.from_now))
     end
 
+    # Public: Checks if all the Answers related to an Election (through Questions) have a value
+    #
+    # Returns a boolean
+    def answers_have_values?
+      questions.map(&:answers).flatten.pluck(:value).none? nil
+    end
+
     # Public: Gets the voting period status of the election
     #
     # Returns one of these symbols: upcoming, ongoing or finished

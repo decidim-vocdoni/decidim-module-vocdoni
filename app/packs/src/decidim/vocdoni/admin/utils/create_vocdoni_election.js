@@ -119,10 +119,6 @@ export default class CreateVocdoniElection {
 
     let electionMetadata = await this._getElectionMetadata();
     electionMetadata = electionMetadata.data.component.election;
-    let header = electionMetadata.attachments[0].url;
-    if (!header.startsWith("http")) {
-      header = `${window.location.origin}${header}`
-    }
 
     const walletsAddresses = electionMetadata.voters.map((voter) => voter.wallet_address);
     const census = this._initializeCensus(walletsAddresses);
@@ -130,7 +126,6 @@ export default class CreateVocdoniElection {
     const election = Election.from({
       title: transformLocales(electionMetadata.title.translations, defaultLocale),
       description: transformLocales(electionMetadata.description.translations, defaultLocale),
-      header: header,
       streamUri: electionMetadata.streamUri,
       startDate: Date.parse(electionMetadata.startTime),
       endDate: Date.parse(electionMetadata.endTime),
@@ -140,6 +135,14 @@ export default class CreateVocdoniElection {
       }
     });
 
+    if (electionMetadata.attachments.length > 0) {
+      let header = electionMetadata.attachments[0].url;
+      if (!header.startsWith("http")) {
+        header = `${window.location.origin}${header}`
+      }
+      election.header = header;
+    }
+
     electionMetadata.questions.forEach((question) => {
       election.addQuestion(
         transformLocales(question.title.translations, defaultLocale),
@@ -147,7 +150,7 @@ export default class CreateVocdoniElection {
         question.answers.map((answer) => {
           return {
             title: transformLocales(answer.title.translations, defaultLocale),
-            value: Number(answer.id)
+            value: Number(answer.value)
           }
         })
       );
@@ -186,7 +189,7 @@ export default class CreateVocdoniElection {
                   title { translations { text locale } }
                   description { translations { text locale } }
                   answers {
-                    id
+                    value
                     title { translations { text locale } }
                   }
                 }

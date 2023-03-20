@@ -26,10 +26,10 @@ const voteStep = async () => {
     for (let idx = 0; idx < results.length; idx += 1) {
       const $questionAnswersCells = $(`td[data-question-idx="${idx}"]`);
       for (const answerCell of $questionAnswersCells) {
-        const answerId = $(answerCell).data("answer-id");
-        const answerVotes = results[idx][answerId];
+        const answerValue = $(answerCell).data("answer-value");
+        const answerVotes = results[idx][answerValue];
         answerCell.innerHTML = answerVotes;
-        console.log(`FOR QUESTION ${idx} - ANSWER ${answerId} - VOTES ${answerVotes}`);
+        console.log(`FOR QUESTION ${idx} - ANSWER ${answerValue} - VOTES ${answerVotes}`);
       }
     }
   }

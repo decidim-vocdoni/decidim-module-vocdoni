@@ -49,6 +49,14 @@ module Decidim
           expect(response["weight"]).to eq(model.weight)
         end
       end
+
+      describe "value" do
+        let(:query) { "{ value }" }
+
+        it "returns the answers value" do
+          expect(response["value"]).to eq(model.value)
+        end
+      end
     end
   end
 end

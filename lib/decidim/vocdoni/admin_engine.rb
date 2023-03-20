@@ -15,6 +15,7 @@ module Decidim
           member do
             put :publish
             put :unpublish
+            post :answers_values
           end
           resources :steps, only: [:index, :update]
           resources :questions do
