@@ -3,6 +3,7 @@
 [![[CI] Lint](https://github.com/decidim-vocdoni/decidim-module-vocdoni/actions/workflows/lint.yml/badge.svg)](https://github.com/decidim-vocdoni/decidim-module-vocdoni/actions/workflows/lint.yml)
 [![[CI] Tests](https://github.com/decidim-vocdoni/decidim-module-vocdoni/actions/workflows/test.yml/badge.svg)](https://github.com/decidim-vocdoni/decidim-module-vocdoni/actions/workflows/test.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/126b8ece66b8292802f3/maintainability)](https://codeclimate.com/github/decidim-vocdoni/decidim-module-vocdoni/maintainability)
+[![codecov](https://codecov.io/gh/decidim-vocdoni/decidim-module-vocdoni/branch/main/graph/badge.svg?token=LRT4MJBNVY)](https://codecov.io/gh/decidim-vocdoni/decidim-module-vocdoni)
 
 
 :warning: This module is under development and is not ready to be used in production.
