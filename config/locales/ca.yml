@@ -350,20 +350,16 @@ ca:
           form_title: Enter your data
           title: Verify your identity
         login_fields:
-          born_at: Date of birth
-          day: Day
-          day_placeholder: DD
           email: Email
           email_placeholder: user@example.org
-          month: Month
-          month_placeholder: MM
-          year: Year
-          year_placeholder: YYYY
+          token: Token
+          token_placeholder: 123456
         messages:
           not_allowed: You are not allowed to vote on this election at this moment.
         modal:
           close: Close
         new:
+          already_voted: You have already voted on this election. You can vote again. The previous vote will be overwritten.
           more_information: More information
           preview_alert: This is a preview of the voting booth.
           question_steps: Question %{current_step} of %{total_steps}
