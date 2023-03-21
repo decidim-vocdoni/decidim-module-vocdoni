@@ -4,7 +4,7 @@ import { ElectionStatus, VocdoniSDKClient } from "@vocdoni/sdk";
 import VoteQuestionsComponent from "./vote_questions.component";
 import VoteComponent from "./setup-vote";
 import PreviewVoteComponent from "./setup-preview";
-import { walletFromLoginForm, checkIfWalletIsInCensus } from "./census-utils";
+import { walletFromLoginForm } from "./census-utils";
 
 /*
  * Mount the VoteComponent object and bind the events to the UI
@@ -144,12 +144,20 @@ $(() => {
         return;
       }
 
-      const isInCensus = await checkIfWalletIsInCensus(env, wallet, electionUniqueId);
+      const client = new VocdoniSDKClient({ env, wallet })
+      client.setElectionId(electionUniqueId);
+      const isInCensus = await client.isInCensus();
       console.log("IS IN CENSUS => ", isInCensus);
 
       if (!isInCensus) {
         showLoginErrorMessage();
         return;
+      }
+
+      const hasAlreadyVoted = await client.hasAlreadyVoted();
+      if (hasAlreadyVoted) {
+        console.log("ALREADY VOTED");
+        $("#step-0").find(".js-already_voted").removeClass("hide");
       }
 
       console.log("OK!! Wallet is in census");

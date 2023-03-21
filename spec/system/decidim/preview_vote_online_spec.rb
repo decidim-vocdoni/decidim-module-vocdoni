@@ -26,7 +26,7 @@ describe "Preview vote online in an election", type: :system do
 
       expect(page).to have_content("This is a preview of the voting booth.")
 
-      uses_the_voting_booth({ email: admin.email, born_at: "2000-01-01" })
+      uses_the_voting_booth({ email: admin.email, token: "123456" })
       page.find("a.focus__exit").click
 
       expect(page).to have_current_path router.election_path(id: election.id)
@@ -43,7 +43,7 @@ describe "Preview vote online in an election", type: :system do
         visit_component
         click_link translated(election.title)
         click_link "Preview"
-        login_step({ email: admin.email, born_at: "2000-01-01" })
+        login_step({ email: admin.email, token: "123456" })
         expect(page).to have_content("MORE INFORMATION")
       end
     end

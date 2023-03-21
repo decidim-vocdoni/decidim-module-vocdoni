@@ -76,6 +76,14 @@
     }
   }
 
+  &__login{
+    width: 20rem;
+
+    @include breakpoint(large){
+      width: 30rem;
+    }
+  }
+
   &__check{
     cursor: pointer;
     display: flex;
@@ -337,7 +345,7 @@
   }
 
   &__preview-perc{
-    width: 2rem;
+    width: 3rem;
     text-align: right;
     font-weight: bold;
   }

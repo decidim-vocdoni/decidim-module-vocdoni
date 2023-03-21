@@ -198,7 +198,7 @@ FactoryBot.define do
 
   factory :vocdoni_voter, class: "Decidim::Vocdoni::Voter" do
     email { generate(:email) }
-    born_at { Faker::Date.between(from: 110.years.ago, to: 16.years.ago) }
+    token { Faker::String.random(length: 4) }
     association :election, factory: :vocdoni_election
 
     trait :with_credentials do

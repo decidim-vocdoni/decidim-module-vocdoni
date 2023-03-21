@@ -4,7 +4,7 @@
       <%= f.fields_for "credentials[]", credential do |credential_form| %>
         <%= content_tag "li", data: { credential: credential.id } do %>
           <%= credential_form.text_field :email, class: "credential_email" %>
-          <%= credential_form.text_field :born_at, class: "credential_born_at" %>
+          <%= credential_form.text_field :token, class: "credential_token" %>
           <%= credential_form.text_field :wallet_address, class: "credential_wallet_address" %>
         <% end %>
       <% end %>

@@ -21,7 +21,7 @@ module Decidim
       # A votes percentage relative to the question
       # Returns a Float.
       def votes_percentage
-        @votes_percentage ||= (votes.to_f / question.total_votes * 100.0).round
+        @votes_percentage ||= (votes.to_f / question.total_votes * 100.0).round(2)
       end
 
       def slug

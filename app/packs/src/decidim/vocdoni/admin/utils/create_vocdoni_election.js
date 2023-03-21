@@ -1,6 +1,9 @@
 import { Election, PlainCensus } from "@vocdoni/sdk";
 import { initVocdoniClient } from "src/decidim/vocdoni/admin/utils/init_vocdoni_client";
 
+// Allow the user to vote multiple times
+const MAX_VOTE_OVERWRITES = -1;
+
 /*
  * Creates an Election in the Vocdoni API
  * Instantiates the Vocdoni SDK client using the Wallet's private key given as parameter.
@@ -136,6 +139,9 @@ export default class CreateVocdoniElection {
       electionType: {
         interruptible: electionMetadata.interruptible,
         secretUntilTheEnd: electionMetadata.secretUntilTheEnd
+      },
+      voteType: {
+        maxVoteOverwrites: MAX_VOTE_OVERWRITES
       }
     });
 

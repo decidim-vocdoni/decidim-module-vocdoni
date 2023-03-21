@@ -9,7 +9,7 @@ module Decidim
         mimic :voter
 
         attribute :email, String
-        attribute :born_at, String
+        attribute :token, String
         attribute :wallet_address, String
 
         validates :wallet_address, presence: true
