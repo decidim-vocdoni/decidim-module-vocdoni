@@ -1,3 +1,6 @@
+<% add_decidim_page_title(translated_attribute(question.title)) %>
+<% add_decidim_page_title(t(".title")) %>
+
 <%= decidim_form_for([election, @form], html: { class: "form edit_question" }) do |f| %>
   <%= render partial: "form", object: f, locals: { title: t(".title") } %>
 

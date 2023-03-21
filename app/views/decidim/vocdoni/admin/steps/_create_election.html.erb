@@ -11,19 +11,21 @@
     <%= f.hidden_field :vocdoni_election_id %>
 
     <div class="js-election-create-error-message callout alert hide">
-      <h3 class="h5"><%= t("failed.title", scope: "decidim.vocdoni.admin.steps.create_election") %></h2>
+      <h3 class="h5"><%= t("failed.title", scope: "decidim.vocdoni.admin.steps.create_election") %></h3>
       <p><%= t("failed.message", scope: "decidim.vocdoni.admin.steps.create_election") %></p>
+      <div data-accordion data-multi-expand="true" data-allow-all-closed="true">
+        <dl class="voc-accordion accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+          <dd class="accordion-item" data-accordion-item>
+            <a href="#" class="accordion-title"><%= t("failed.details", scope: "decidim.vocdoni.admin.steps.create_election") %></a>
+            <div class="accordion-content" data-tab-content>
+              <pre class="js-election-create-error-message-details"></pre>
+            </div>
+          </dd>
+        </dl>
+      </div>
     </div>
 
     <ul class="no-bullet-indented">
-      <p class="label secondary">
-      <%= icon "credit-card", role: "img", "aria-hidden": true %>&nbsp;
-      <%= t("credits", scope: "decidim.vocdoni.admin.steps.create_election") %>:&nbsp;
-      <span class="js-vocdoni-balance-credits">
-        <span class="loading-spinner"></span>
-      </span>
-      </p>
-
       <% form.messages.each do |key, value| %>
         <% if form.errors.include?(key) %>
           <li><%= icon "x", class: "text-alert", role: "img", "aria-hidden": true %>&nbsp;<%= form.errors.messages[key][0].html_safe %></li>

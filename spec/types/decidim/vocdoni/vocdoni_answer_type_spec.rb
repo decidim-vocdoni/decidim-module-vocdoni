@@ -10,7 +10,7 @@ module Decidim
     describe VocdoniAnswerType, type: :graphql do
       include_context "with a graphql class type"
 
-      let(:model) { create(:vocdoni_election_answer) }
+      let(:model) { create(:vocdoni_election_answer, value: 0) }
 
       it_behaves_like "attachable interface"
 

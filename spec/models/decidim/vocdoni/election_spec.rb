@@ -30,6 +30,14 @@ describe Decidim::Vocdoni::Election do
     it { is_expected.to be_started }
     it { is_expected.to be_ongoing }
     it { is_expected.not_to be_finished }
+
+    context "and it doesn't have a status" do
+      subject(:election) { build :vocdoni_election, :finished, status: nil }
+
+      it { is_expected.not_to be_started }
+      it { is_expected.not_to be_ongoing }
+      it { is_expected.not_to be_finished }
+    end
   end
 
   context "when it is finished" do
@@ -38,6 +46,56 @@ describe Decidim::Vocdoni::Election do
     it { is_expected.to be_started }
     it { is_expected.not_to be_ongoing }
     it { is_expected.to be_finished }
+
+    context "and it has the old status" do
+      subject(:election) { build :vocdoni_election, :finished, status: "vote" }
+
+      it { is_expected.to be_started }
+      it { is_expected.not_to be_ongoing }
+      it { is_expected.to be_finished }
+    end
+
+    context "and it doesn't have a status" do
+      subject(:election) { build :vocdoni_election, :finished, status: nil }
+
+      it { is_expected.not_to be_started }
+      it { is_expected.not_to be_ongoing }
+      it { is_expected.not_to be_finished }
+    end
+  end
+
+  describe "with different status" do
+    context "when it is paused" do
+      subject(:election) { build :vocdoni_election, :started, :paused }
+
+      it { is_expected.not_to be_started }
+      it { is_expected.not_to be_ongoing }
+      it { is_expected.not_to be_finished }
+    end
+
+    context "when it is canceled" do
+      subject(:election) { build :vocdoni_election, :started, :canceled }
+
+      it { is_expected.to be_started }
+      it { is_expected.not_to be_ongoing }
+      it { is_expected.to be_finished }
+    end
+
+    context "when it is vote_ended" do
+      subject(:election) { build :vocdoni_election, :started, status: "vote_ended" }
+
+      it { is_expected.to be_started }
+      it { is_expected.not_to be_ongoing }
+      it { is_expected.to be_finished }
+    end
+
+    context "when it is results_published" do
+      subject(:election) { build :vocdoni_election, :started, status: "results_published" }
+
+      it { is_expected.to be_started }
+      it { is_expected.not_to be_ongoing }
+      it { is_expected.to be_finished }
+    end
   end
 
   describe "start time checks" do

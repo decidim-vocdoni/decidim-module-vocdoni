@@ -69,7 +69,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
 
   context "when the setup_minimum_minutes_before_start is different" do
     before do
-      allow(Decidim::Vocdoni).to receive(:setup_minimum_minutes_before_start).and_return(33)
+      allow(Decidim::Vocdoni.config).to receive(:setup_minimum_minutes_before_start).and_return(33)
     end
 
     it "shows the message" do

@@ -29,6 +29,7 @@ FactoryBot.define do
     status { nil }
     election_type do
       {
+        "interruptible" => true,
         "secret_until_the_end" => false
       }
     end
@@ -39,10 +40,12 @@ FactoryBot.define do
     end
 
     trait :started do
+      status { "vote" }
       start_time { 2.days.ago }
     end
 
     trait :ongoing do
+      blocked_at { Time.current }
       started
     end
 
@@ -63,6 +66,7 @@ FactoryBot.define do
     end
 
     trait :finished do
+      status { "vote_ended" }
       started
       complete
       end_time { 1.day.ago }
@@ -71,6 +75,18 @@ FactoryBot.define do
 
     trait :published do
       published_at { Time.current }
+    end
+
+    trait :paused do
+      published
+
+      status { "paused" }
+    end
+
+    trait :canceled do
+      published
+
+      status { "canceled" }
     end
 
     trait :simple do
@@ -158,7 +174,6 @@ FactoryBot.define do
     title { generate_localized_title }
     description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }
-    value { Faker::Number.number(digits: 1) }
 
     trait :with_photos do
       transient do

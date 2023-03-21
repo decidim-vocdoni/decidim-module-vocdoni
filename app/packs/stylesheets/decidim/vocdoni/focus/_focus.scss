@@ -126,3 +126,9 @@
     }
   }
 }
+
+// Fix for external link indicator
+a img + .external-link-indicator {
+  top: -10px;
+  right: -15px;
+}

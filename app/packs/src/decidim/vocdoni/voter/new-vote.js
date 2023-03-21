@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
-import { VocdoniSDKClient } from "@vocdoni/sdk";
+import { ElectionStatus, VocdoniSDKClient } from "@vocdoni/sdk";
 
 import VoteQuestionsComponent from "./vote_questions.component";
 import VoteComponent from "./setup-vote";
 import PreviewVoteComponent from "./setup-preview";
+import { walletFromLoginForm, checkIfWalletIsInCensus } from "./census-utils";
 
 /*
  * Mount the VoteComponent object and bind the events to the UI
@@ -39,13 +40,13 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
       validVoteFn(formData);
       questionsComponent.voteCasted = true;
     },
-    onFinish(voteId) {
+    onFinish(voteId, env) {
       console.log("Vote finished");
       console.log("VOTE ID => ", voteId);
       $voteWrapper.find("#submitting").addClass("hide");
       $voteWrapper.find("#vote_cast").removeClass("hide");
       $voteWrapper.find("#vote-receipt").val(voteId);
-      $voteWrapper.find(".verify_ballot").attr("href", `https://dev.explorer.vote/verify/#/${voteId}`);
+      $voteWrapper.find(".verify_ballot").attr("href", `https://${env}.explorer.vote/verify/#/${voteId}`);
     },
     onBindVerifyBallotButton(onEventTriggered) {
       $(".verify_ballot").on("click", onEventTriggered);
@@ -72,97 +73,28 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
   });
 }
 
-/*
- * Generate the VoteComponent object in case the Wallet is in the census
- * or show an error message if it is not.
- *
- * @param {string} vocdoniEnv The environment of the Vocdoni API
- * @param {object} userWallet The Wallet object generated from the login form
- * @param {string} electionUniqueId The unique ID of the election in the Vocdoni API
- *
- * @return {array} An array with two elements:
- *  - The VoteComponent object or null if the wallet is not in the census
- *  - A boolean with true if we should show the next step or false if not
- */
-const voteComponentGenerator = async (vocdoniEnv, userWallet, electionUniqueId) => {
-  const checkIfWalletIsInCensus = async (wallet, electionId) => {
-    const client = new VocdoniSDKClient({
-      env: vocdoniEnv,
-      wallet: wallet
-    })
-    client.setElectionId(electionId);
-    const isInCensus = await client.isInCensus();
-    return isInCensus;
-  }
-
-  let voteComponent = null;
-  let nextStep = false;
-
-  if (userWallet === {}) {
-    return [voteComponent, nextStep];
-  }
-
-  const isInCensus = await checkIfWalletIsInCensus(userWallet, electionUniqueId);
-  console.log("IS IN CENSUS => ", isInCensus);
-  if (isInCensus) {
-    console.log("OK!! Wallet is in census");
-    voteComponent = new VoteComponent({vocdoniEnv: vocdoniEnv, electionUniqueId: electionUniqueId, wallet: userWallet});
-    nextStep = true;
-  }
-
-  return [voteComponent, nextStep];
-}
 
 /*
- * Instantiate the Wallet object given a login form with the email and the date of birth
- * of the potenital voter
+ * Check if the election is open
  *
- * @param {object} $loginForm The jQuery Element with the form for logging in
+ * @param {string} env - The environment of the Vocdoni API
+ * @param {object} wallet - The Wallet object generated from the login form
+ * @param {string} electionUniqueId - The unique ID of the election in the Vocdoni API
  *
- * @returns {object} the Wallet object generated or an empty object
+ * @return {boolean} A boolean with true if the election is open or false if not
+ *   (if the election is not open, the next step is not shown)
+ *   (if the election is open, the next step is shown)
  */
-const walletFromLoginForm = ($loginForm) => {
-  if ($loginForm === null) {
-    return {};
-  }
+const checkIfElectionIsOpen = async (env, wallet, electionUniqueId) => {
+  const client = new VocdoniSDKClient({ env, wallet })
+  client.setElectionId(electionUniqueId);
+  const election = await client.fetchElection();
+  const isElectionOpen = election.status === ElectionStatus.READY;
 
-  const email = $loginForm.find("#login_email").val();
-  let bornAtDay = $loginForm.find("#login_day").val();
-  let bornAtMonth = $loginForm.find("#login_month").val();
-  const bornAtYear = $loginForm.find("#login_year").val();
+  console.log("ELECTION => ", election);
+  console.log("STATUS => ", ElectionStatus[election.status]);
 
-  if (!email.includes("@")) {
-    return {};
-  }
-
-  if (bornAtYear.length !== 4) {
-    return {};
-  }
-
-  if (bornAtDay.length === 1) {
-    bornAtDay = `0${bornAtDay}`;
-  }
-
-  if (bornAtMonth.length === 1) {
-    bornAtMonth = `0${bornAtMonth}`;
-  }
-
-  const bornAt = `${bornAtYear}-${bornAtMonth}-${bornAtDay}`;
-
-  console.group("Wallet data");
-  console.log("EMAIL => ", email);
-  console.log("BORN AT => ", bornAt);
-  console.groupEnd();
-
-  for (const value of [email, bornAtDay, bornAtMonth, bornAtYear]) {
-    if (value === "") {
-      return {};
-    }
-  }
-
-  const userWallet = VocdoniSDKClient.generateWalletFromData([email, bornAt]);
-
-  return userWallet;
+  return isElectionOpen;
 }
 
 $(() => {
@@ -187,34 +119,55 @@ $(() => {
   $loginForm.on("submit", async (event) => {
     event.preventDefault();
 
-    const showErrorMessage = () => {
+    const showLoginErrorMessage = () => {
       console.log("KO -> Wallet is not in census");
       $(".js-login_error").removeClass("hide");
     }
 
+    const showElectionClosedErrorMessage = () => {
+      console.log("Election is not open");
+      $(".vote-wrapper").find(".js-election_not_open").removeClass("hide");
+    }
+
     const electionUniqueId = $voteWrapper.data("electionUniqueId");
     let voteComponent = null;
-    let nextStep = null;
 
     if ($voteWrapper.data("preview") === true) {
       console.log("Preview mode");
       voteComponent = new PreviewVoteComponent({electionUniqueId});
-      nextStep = true;
     } else {
-      const userWallet = walletFromLoginForm($loginForm);
-      const vocdoniEnv = $voteWrapper.data("vocdoniEnv");
-      [voteComponent, nextStep] = await voteComponentGenerator(vocdoniEnv, userWallet, electionUniqueId);
+      const wallet = walletFromLoginForm($loginForm);
+      const env = $voteWrapper.data("vocdoniEnv");
+
+      if (wallet === {}) {
+        showLoginErrorMessage();
+        return;
+      }
+
+      const isInCensus = await checkIfWalletIsInCensus(env, wallet, electionUniqueId);
+      console.log("IS IN CENSUS => ", isInCensus);
+
+      if (!isInCensus) {
+        showLoginErrorMessage();
+        return;
+      }
+
+      console.log("OK!! Wallet is in census");
+
+      const isElectionOpen = await checkIfElectionIsOpen(env, wallet, electionUniqueId);
+      console.log("IS ELECTION OPEN => ", isElectionOpen);
+
+      if (!isElectionOpen) {
+        showElectionClosedErrorMessage();
+        return;
+      }
+
+      voteComponent = new VoteComponent({env, electionUniqueId, wallet});
     }
 
-    if (!nextStep) {
-      showErrorMessage();
-    }
-
-    if (nextStep) {
-      $("#login").foundation("toggle");
-      $("#step-0").foundation("toggle");
-      mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
-    }
+    $("#login").foundation("toggle");
+    $("#step-0").foundation("toggle");
+    mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
   });
 });
 /* eslint-enable no-console */

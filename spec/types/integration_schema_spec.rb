@@ -14,6 +14,7 @@ describe "Decidim::Api::QueryType" do
       "attachments" => [],
       "status" => election.status,
       "blocked" => election.blocked?,
+      "interruptible" => election.election_type.fetch("interruptible"),
       "secretUntilTheEnd" => election.election_type.fetch("secret_until_the_end"),
       "createdAt" => election.created_at.iso8601.to_s.gsub("Z", "+00:00"),
       "description" => { "translation" => election.description[locale] },
@@ -36,7 +37,7 @@ describe "Decidim::Api::QueryType" do
               "versions" => [],
               "versionsCount" => 0,
               "weight" => a.weight.to_i,
-              "value" => a.value.to_i
+              "value" => nil
             }
           end,
           "id" => q.id.to_s,
@@ -91,6 +92,7 @@ describe "Decidim::Api::QueryType" do
                 status
                 streamUri
                 blocked
+                interruptible
                 secretUntilTheEnd
                 createdAt
                 description {
@@ -167,6 +169,7 @@ describe "Decidim::Api::QueryType" do
           status
           streamUri
           blocked
+          interruptible
           secretUntilTheEnd
           createdAt
           description {

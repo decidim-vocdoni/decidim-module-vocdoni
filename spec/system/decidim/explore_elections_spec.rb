@@ -24,7 +24,7 @@ describe "Explore elections", :slow, type: :system do
 
         expect(page).to have_content("Active voting until")
         expect(page).not_to have_content("All elections")
-        expect(page).to have_content("These are the questions you will find in the voting process")
+        expect(page).to have_content("These are the questions for this voting process")
       end
     end
 

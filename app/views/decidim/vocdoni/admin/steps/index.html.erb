@@ -1,5 +1,9 @@
+<% add_decidim_page_title(translated_attribute(election.title)) %>
+<% add_decidim_page_title(t(".title")) %>
+
 <div class="card js-vocdoni-client"
   data-default-locale="<%= current_organization.default_locale %>"
+  data-answers-values-election-path="<%= answers_values_election_path(election) %>"
   data-vocdoni-wallet-private-key="<%= @current_vocdoni_wallet.private_key %>"
   <% if @election.vocdoni_election_id %>
     data-vocdoni-election-id="<%= @election.vocdoni_election_id %>"
@@ -19,6 +23,8 @@
       <span class="<%= step.last %>"><%= t("steps.#{step.first}.title", scope: "decidim.vocdoni.admin") %></span>
     <% end %>
   </div>
+
+  <%= render partial: "available_credits" %>
 </div>
 
 <% if @form %>

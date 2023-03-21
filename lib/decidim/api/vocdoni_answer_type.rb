@@ -14,7 +14,7 @@ module Decidim
       field :title, Decidim::Core::TranslatedFieldType, "The title for this answer", null: false
       field :description, Decidim::Core::TranslatedFieldType, "The description for this answer", null: true
       field :weight, GraphQL::Types::Int, "The ordering weight for this answer", null: true
-      field :value, GraphQL::Types::Int, "The internal value of this answer", null: false
+      field :value, GraphQL::Types::Int, "The internal value of this answer", null: true
 
       # field :results, [Decidim::Vocdoni::VocdoniResultType, { null: true }], "The voting results related to this answer", null: true
     end

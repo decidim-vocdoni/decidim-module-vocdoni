@@ -10,7 +10,7 @@ module Decidim::Vocdoni
     include Decidim::Publicable
     include Decidim::Traceable
 
-    enum status: [:created, :vote, :vote_ended, :results_published].index_with(&:to_s)
+    enum status: [:created, :vote, :paused, :vote_ended, :results_published, :canceled].index_with(&:to_s)
 
     component_manifest_name "vocdoni"
 
@@ -27,6 +27,9 @@ module Decidim::Vocdoni
     #
     # Returns a boolean.
     def started?
+      return false if status.nil?
+      return false if paused?
+
       start_time <= Time.current
     end
 
@@ -34,6 +37,11 @@ module Decidim::Vocdoni
     #
     # Returns a boolean.
     def finished?
+      return false if status.nil?
+      return true if canceled?
+      return true if vote_ended?
+      return true if results_published?
+
       end_time < Time.current
     end
 
@@ -62,7 +70,7 @@ module Decidim::Vocdoni
     #
     # Returns a boolean.
     def minimum_minutes_before_start?
-      start_time > (Time.zone.at(Decidim::Vocdoni.setup_minimum_minutes_before_start.minutes.from_now))
+      start_time > (Time.zone.at(Decidim::Vocdoni.config.setup_minimum_minutes_before_start.minutes.from_now))
     end
 
     # Public: Checks if all the Answers related to an Election (through Questions) have a value
@@ -76,7 +84,11 @@ module Decidim::Vocdoni
     #
     # Returns one of these symbols: upcoming, ongoing or finished
     def voting_period_status
-      if finished?
+      if paused?
+        :paused
+      elsif canceled?
+        :canceled
+      elsif finished?
         :finished
       elsif started?
         :ongoing

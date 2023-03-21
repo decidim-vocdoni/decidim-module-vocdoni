@@ -61,8 +61,10 @@ module Decidim
         case model.voting_period_status
         when :ongoing
           ["success"]
-        when :upcoming
+        when [:paused, :upcoming]
           ["warning"]
+        when :canceled
+          ["alert"]
         else
           ["muted"]
         end

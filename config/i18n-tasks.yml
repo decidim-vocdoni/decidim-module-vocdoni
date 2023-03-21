@@ -13,7 +13,7 @@ ignore_unused:
   - "decidim.vocdoni.admin.wallets.ready.title"
   - "decidim.vocdoni.admin_log.election.{create,delete,end_vote,publish,publish_results,setup,start_vote,unpublish,update}"
   - "decidim.vocdoni.admin_log.wallet.create"
-  - "decidim.vocdoni.election_m.badge_name.{finished,ongoing,upcoming}"
+  - "decidim.vocdoni.election_m.badge_name.{finished,ongoing,upcoming,paused,canceled}"
   - "decidim.vocdoni.election_m.questions"
   - "decidim.vocdoni.elections.show.action_button.{change_vote,vote,vote_again}"
   - "decidim.vocdoni.elections.show.preview"

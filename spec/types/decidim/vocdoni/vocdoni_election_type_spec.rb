@@ -98,6 +98,14 @@ module Decidim
         end
       end
 
+      describe "interruptible" do
+        let(:query) { "{ interruptible }" }
+
+        it "returns the election's interruptible setting" do
+          expect(response["interruptible"]).to be_truthy
+        end
+      end
+
       describe "secretUntilTheEnd" do
         let(:query) { "{ secretUntilTheEnd }" }
 

@@ -24,10 +24,10 @@ describe Decidim::Vocdoni::ElectionStatusChanger do
     end
 
     context "when the elections don't have any status" do
-      let(:new_election) { create(:vocdoni_election) }
-      let(:upcoming_election) { create(:vocdoni_election, :upcoming) }
-      let(:ongoing_election) { create(:vocdoni_election, :ongoing) }
-      let(:finished_election) { create(:vocdoni_election, :finished) }
+      let(:new_election) { create(:vocdoni_election, status: nil) }
+      let(:upcoming_election) { create(:vocdoni_election, :upcoming, status: nil) }
+      let(:ongoing_election) { create(:vocdoni_election, :ongoing, status: nil) }
+      let(:finished_election) { create(:vocdoni_election, :finished, status: nil) }
 
       it "don't change any status" do
         expect(new_election.reload.status).to be_nil

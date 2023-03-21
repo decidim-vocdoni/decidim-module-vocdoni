@@ -3,6 +3,7 @@
 [![[CI] Lint](https://github.com/decidim-vocdoni/decidim-module-vocdoni/actions/workflows/lint.yml/badge.svg)](https://github.com/decidim-vocdoni/decidim-module-vocdoni/actions/workflows/lint.yml)
 [![[CI] Tests](https://github.com/decidim-vocdoni/decidim-module-vocdoni/actions/workflows/test.yml/badge.svg)](https://github.com/decidim-vocdoni/decidim-module-vocdoni/actions/workflows/test.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/126b8ece66b8292802f3/maintainability)](https://codeclimate.com/github/decidim-vocdoni/decidim-module-vocdoni/maintainability)
+[![codecov](https://codecov.io/gh/decidim-vocdoni/decidim-module-vocdoni/branch/main/graph/badge.svg?token=LRT4MJBNVY)](https://codecov.io/gh/decidim-vocdoni/decidim-module-vocdoni)
 
 
 :warning: This module is under development and is not ready to be used in production.
@@ -49,7 +50,7 @@ status are checked every 15 minutes, you can do it with this configuration:
 
 ```crontab
 # Change Elections status on decidim-vocdoni
-0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status
+0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status > /dev/null
 ```
 
 ## Configuration

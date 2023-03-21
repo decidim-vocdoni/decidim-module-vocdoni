@@ -107,8 +107,6 @@ en:
               href="%{steps_path}">ready to setup</a>.
             title: Current census data
         elections:
-          answers_values:
-            success: The answers values have been successfully updated.
           create:
             invalid: There was a problem creating this election
             success: Election successfully created
@@ -149,7 +147,7 @@ en:
             name: question
         questions:
           create:
-            election_started: The election has already started
+            election_ongoing: The election has already started and it's blocked
             invalid: There was a problem creating this question
             success: Question successfully created
           destroy:
@@ -167,14 +165,15 @@ en:
             invalid: There was a problem updating this question
             success: Question successfully updated
         steps:
+          canceled:
+            message: This election has been canceled prematurely. There aren't any
+              results.
+            title: Canceled
           create_election:
-            credits: Available credits
             description: Your voting process is secured using the advanced digital
               voting technology of the Vocdoni Protocol. Please be patient, as the
               set-up process may take some time.
             errors:
-              answers_have_values: All the answers must have a value. <a href=%{link}
-                data-method="post">Fix it</a>.
               census_ready: The census is <strong>not ready</strong>. <a href=%{link}>Fix
                 it</a>.
               minimum_answers: Questions must have <strong>at least two answers</strong>.
@@ -186,12 +185,12 @@ en:
               time_before: The setup is not being done <strong>at least %{minutes}
                 minutes</strong> before the election starts. <a href=%{link}>Fix it</a>.
             failed:
+              details: View details
               message: Check the Web Development console log error message, fix the
                 problem and retry.
               title: The election has an error and couldn't be created
             invalid: There was a problem setting up this election
             requirements:
-              answers_have_values: All the answers have a <strong>value</strong>.
               census_ready: The census is <strong>ready</strong>.
               minimum_answers: Each question has <strong>at least two answers</strong>.
               minimum_questions: The election has <strong>at least one question</strong>.
@@ -205,12 +204,30 @@ en:
             explorer_vote: View at Explorer Vote
             message: The election has been created. We're waiting for the start date
               time to arrive.
-            secret_until_the_end: The election results will be secret until the end
-              of the voting period.
             title: Election created
             view: View landing page
+          credits:
+            available: Available credits
+            get_more: Get more credits
+            warning: You have no credits left. You can get more credits by clicking
+              on the button below.
+          danger_zone:
+            action:
+              cancel: Cancel
+              continue: Continue
+              end: End
+              pause: Pause
+            confirm: Are you sure you want to do this action?
+            message: The election can be interrupted
+            title: Danger zone
+          ended:
+            title: Ended
           index:
             title: Steps dashboard
+          paused:
+            message: The election is paused
+            success: The election has been successfully continued.
+            title: Paused
           powered_by_html: This module makes use of Vocdoni Protocol, an open-source
             voting technology to organize elections<br>with the highest standards
             of security, universal verifiability, censorship-resistance, and anonymity.
@@ -224,6 +241,9 @@ en:
             title: Results published
           vote:
             message: We're on the vote period until %{end_time}.
+            secret_until_the_end: The election results will be secret until the end
+              of the voting period.
+            success: The election has been successfully paused.
             title: Vote period
           vote_ended:
             error:
@@ -273,8 +293,10 @@ en:
           create: "%{user_name} created the Organization wallet for the Vocdoni API"
       election_m:
         badge_name:
+          canceled: Canceled
           finished: Finished
           ongoing: Active
+          paused: Paused
           upcoming: Upcoming
         end_date: Ends
         footer:
@@ -297,7 +319,7 @@ en:
             other: "%{count} elections"
         preview:
           available_answers: 'Available answers:'
-          description: 'These are the questions you will find in the voting process:'
+          description: 'These are the questions for this voting process:'
           title: Election questions
         results:
           description: 'These are the results of the voting, for each question:'
@@ -313,6 +335,8 @@ en:
             vote: Start voting
             vote_again: Vote again
           back: Available elections
+          canceled: This election was canceled
+          paused: This election is curently paused. Try again later.
           preview: Preview
           verify:
             already_voted: Already voted?
@@ -320,8 +344,11 @@ en:
             will_verify: You will be able to verify your vote once the election is
               started.
           voting_period_status:
+            canceled: Voting was canceled. It was ment to begin on %{start_time} and
+              end on %{end_time}
             finished: Voting began on %{start_time} and ended on %{end_time}
             ongoing: 'Active voting until: %{end_time}'
+            paused: Voting is paused. It ends on %{end_time}
             upcoming: Voting begins on %{start_time}
       models:
         answer:
@@ -359,11 +386,13 @@ en:
           confirm: Confirm your vote
           failed: Vote failed
           login: Identification
-          submitting: Subtmitting the vote
+          submitting: Submitting the vote
           vote_cast: Your vote has been cast
         login:
           access: Access
           description: To vote, we'll need to check that you're on the census
+          election_not_open: Currently the election is not open for voting. Try again
+            later.
           failed: Check that the provided data is correct and try again
           form_title: Enter your data
           title: Verify your identity
@@ -397,11 +426,11 @@ en:
           copy_vote_receipt_clarification: Copy vote receipt to clipboard
           copy_vote_receipt_copied: Copied!
           copy_vote_receipt_message: The vote receipt was successfully copied to clipboard.
-          description: Your vote has been cast successfully! You can store the following
-            receipt as proof of your vote's inclusion at any time and check it using
-            the Vocdoni Explorer.
+          description: You can store the following receipt as proof of your vote's
+            inclusion at any time and check it using the Vocdoni Explorer.
           exit: Exit the voting booth
-          header: Vote confirmed
+          header: Your vote has been cast successfully!
+          or: or
           verify: "( Verify my vote )"
           vote_receipt: 'Your vote receipt is:'
         voting_step:

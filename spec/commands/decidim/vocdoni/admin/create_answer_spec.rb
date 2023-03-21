@@ -64,8 +64,8 @@ describe Decidim::Vocdoni::Admin::CreateAnswer do
     end
   end
 
-  context "when the election has started" do
-    let(:election) { create :vocdoni_election, :started }
+  context "when the election is ongoing" do
+    let(:election) { create :vocdoni_election, :ongoing }
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:invalid)

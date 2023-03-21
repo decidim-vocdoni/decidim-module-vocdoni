@@ -6,3 +6,12 @@
 .card__block ul li:not(:first-child) strong{
   font-size: 100%;
 }
+
+// There's a bug on Decidim related with the Copy button on Share modal
+// I proposed a fix and when that's accepted, backported and released
+// We can remove this rule
+//
+// @see https://github.com/decidim/decidim/pull/10526
+.button.primary, .button.primary:hover {
+  background-color: var(--primary);
+}

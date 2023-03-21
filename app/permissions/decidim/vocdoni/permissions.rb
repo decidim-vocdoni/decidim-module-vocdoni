@@ -34,7 +34,7 @@ module Decidim
       end
 
       def can_vote?
-        election.published? && election.ongoing?
+        election.published? && election.ongoing? && !election.finished?
       end
 
       def election

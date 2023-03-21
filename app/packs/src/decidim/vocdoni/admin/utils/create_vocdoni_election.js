@@ -1,5 +1,5 @@
 import { Election, PlainCensus } from "@vocdoni/sdk";
-import { initVocdoniClient } from "./init_vocdoni_client";
+import { initVocdoniClient } from "src/decidim/vocdoni/admin/utils/init_vocdoni_client";
 
 /*
  * Creates an Election in the Vocdoni API
@@ -11,6 +11,8 @@ import { initVocdoniClient } from "./init_vocdoni_client";
  * @property {string} options.defaultLocale The default locale of the Election
  * @property {number|string} options.componentId The ID of the Vocdoni Component in Decidim
  * @property {number|string} options.electionId The ID of the Vocdoni Election in Decidim
+ * @property {string} options.containerClass The class of the container where the election will be rendered.
+ *                               Used to show a spinner and to save the electionMetadata for showing in the markup if there's any error.
  * @param {function} onSuccess A callback function to be run when the Election is successfully sent to the API
  * @param {function} onFailure A callback function to be run when the Election sent to the API has a failure
  *
@@ -23,6 +25,7 @@ export default class CreateVocdoniElection {
     this.defaultLocale = options.defaultLocale;
     this.componentId = options.componentId;
     this.electionId = options.electionId;
+    this.containerClass = options.containerClass;
     this.onSuccess = onSuccess;
     this.onFailure = onFailure;
     this.client = null;
@@ -54,11 +57,6 @@ export default class CreateVocdoniElection {
   async _setVocdoniClient() {
     this.client = initVocdoniClient();
 
-    const clientInfo = await this.client.createAccount();
-    if (clientInfo.balance === 0) {
-      await this.client.collectFaucetTokens();
-    }
-
     console.log("CLIENT => ", this.client);
   }
 
@@ -68,21 +66,22 @@ export default class CreateVocdoniElection {
    * @returns {void}
    */
   async _createElection() {
-    let result = null;
 
     try {
       const election = await this._initializeElection(this.defaultLocale);
       console.log("ELECTION => ", election);
 
+      document.querySelector(this.containerClass).classList.add("spinner-container");
+
       const vocdoniElectionId = await this.client.createElection(election);
-      result = `OK! VOCDONI ELECTION ID => ${vocdoniElectionId}`;
+      console.log("RESULT => OK! VOCDONI ELECTION ID ", vocdoniElectionId);
       this.onSuccess(vocdoniElectionId);
     } catch (error) {
-      result = `ERROR! ${error}`;
+      console.error("RESULT => ERROR! ", error);
       this.onFailure();
+    } finally {
+      document.querySelector(this.containerClass).classList.remove("spinner-container");
     }
-
-    console.log("RESULT => ", result);
   }
 
   /*
@@ -120,6 +119,10 @@ export default class CreateVocdoniElection {
     let electionMetadata = await this._getElectionMetadata();
     electionMetadata = electionMetadata.data.component.election;
 
+    // Save the electionMetadata in the DOM to show it in the markup if there's any error
+    const errorDetails = document.querySelector(this.containerClass).querySelector(".js-election-create-error-message-details");
+    errorDetails.innerHTML = JSON.stringify(electionMetadata, null, 4);
+
     const walletsAddresses = electionMetadata.voters.map((voter) => voter.wallet_address);
     const census = this._initializeCensus(walletsAddresses);
 
@@ -131,6 +134,7 @@ export default class CreateVocdoniElection {
       endDate: Date.parse(electionMetadata.endTime),
       census,
       electionType: {
+        interruptible: electionMetadata.interruptible,
         secretUntilTheEnd: electionMetadata.secretUntilTheEnd
       }
     });
@@ -181,6 +185,7 @@ export default class CreateVocdoniElection {
                 streamUri
                 startTime
                 endTime
+                interruptible
                 secretUntilTheEnd
                 voters {
                   wallet_address

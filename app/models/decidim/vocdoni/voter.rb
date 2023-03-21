@@ -20,7 +20,7 @@ module Decidim
       end
 
       def self.insert_all(election, values)
-        values.each { |value| create(email: value.first, election: election, born_at: value.second) }
+        values.each { |value| create(email: value.first.downcase, election: election, born_at: value.second) }
       end
 
       def self.clear(election)

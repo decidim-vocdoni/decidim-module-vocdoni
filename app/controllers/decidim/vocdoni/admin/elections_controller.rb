@@ -98,8 +98,9 @@ module Decidim
 
           UpdateAnswersValues.call(election) do
             on(:ok) do
-              flash[:notice] = I18n.t("admin.elections.answers_values.success", scope: "decidim.vocdoni")
-              redirect_to election_steps_path(election)
+              respond_to do |format|
+                format.json { render json: { status: :ok } }
+              end
             end
           end
         end
