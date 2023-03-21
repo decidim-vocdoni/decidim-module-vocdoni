@@ -3,18 +3,12 @@
 module Decidim
   module Vocdoni
     class ElectionStatusChanger
-      def initialize(quiet: true)
-        @quiet = quiet
-      end
-
       def run
         update_ongoing_elections!
         update_finished_elections!
       end
 
       private
-
-      attr_reader :quiet
 
       def update_ongoing_elections!
         elections = Decidim::Vocdoni::Election
@@ -34,11 +28,11 @@ module Decidim
       def update_elections_status(elections, status)
         # rubocop:disable Rails/Output
         if elections.count.zero?
-          puts "No elections to change to '#{status}' status" unless quiet
+          puts "No elections to change to '#{status}' status"
           return
         end
 
-        puts "Changing #{elections.count} election to '#{status}' status" unless quiet
+        puts "Changing #{elections.count} election to '#{status}' status"
         # rubocop:enable Rails/Output
         # rubocop:disable Rails/SkipsModelValidations
         elections.update_all(status: status)
