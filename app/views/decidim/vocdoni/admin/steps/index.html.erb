@@ -3,6 +3,7 @@
 
 <div class="card js-vocdoni-client"
   data-default-locale="<%= current_organization.default_locale %>"
+  data-answers-values-election-path=<%= answers_values_election_path(election) %>
   data-vocdoni-wallet-private-key="<%= @current_vocdoni_wallet.private_key %>"
   <% if @election.vocdoni_election_id %>
     data-vocdoni-election-id="<%= @election.vocdoni_election_id %>"

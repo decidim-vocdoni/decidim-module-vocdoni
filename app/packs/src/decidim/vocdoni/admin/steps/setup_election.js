@@ -8,8 +8,7 @@ const setupElectionStep = async () => {
   }
 
   const createAnswersValuesOnElection = async () => {
-    const urlPrefix = window.location.pathname.split("/").filter((param) => param !== "steps").join("/");
-    const url = `${urlPrefix}/answers_values`;
+    const url = document.querySelector(".js-vocdoni-client").dataset.answersValuesElectionPath;
 
     return new Promise((resolve) => {
       fetch(url, {
