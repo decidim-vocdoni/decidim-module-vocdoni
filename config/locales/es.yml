@@ -108,7 +108,7 @@ es:
           form:
             organization_time_zone: Compruebe que la zona horaria de la organización es correcta en la configuración de la organización. La configuración actual es %{time_zone} (%{time}).
           index:
-            description_html: Con este módulo de votación, usted puede organizar fácilmente una amplia gama de procesos de votación con altas garantías. El módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones con los más altos estándares de seguridad, verificación universal, resistencia a la censura y anonimato. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Más información sobre Vocdoni</a>.
+            description_html: Con este módulo de votación, puedes organizar fácilmente una amplia gama de procesos de votación con altas garantías. El módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones con los más altos estándares de seguridad, verificación universal, resistencia a la censura y anonimato. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Más información sobre Vocdoni</a>.
             title: Elecciones (Vocdoni)
           new:
             create: Crear
@@ -198,7 +198,7 @@ es:
             message: La elección está en pausa
             success: La elección se ha reanudado correctamente.
             title: Pausada
-          powered_by_html: Este módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones<br>con los más altos estándares de seguridad. verificabilidad universal, resistencia a la censura y anonimato.
+          powered_by_html: Este módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones<br>con los más altos estándares de seguridad, verificabilidad universal, resistencia a la censura y anonimato.
           processing: Procesando...
           ready:
             title: Preparada
