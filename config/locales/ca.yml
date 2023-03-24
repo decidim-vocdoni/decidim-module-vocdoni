@@ -1,0 +1,391 @@
+---
+ca:
+  activemodel:
+    attributes:
+      election:
+        description: Descripció
+        end_time: Data de finalització
+        secret_until_the_end: Secret fins al final
+        start_time: Data d'inici
+        stream_uri: Enllaç de la retransmissió en directe
+        title: Títol
+    errors:
+      models:
+        election:
+          attributes:
+            attachment:
+              needs_to_be_reattached: És necessari tornar a adjuntar l'arxiu
+  decidim:
+    admin:
+      shared:
+        gallery:
+          gallery_legend: Afegeix una galeria d'imatges
+    components:
+      vocdoni:
+        name: Eleccions (Vocdoni)
+        settings:
+          global:
+            announcement: Anunci
+          step:
+            announcement: Anunci
+    events:
+      vocdoni:
+        election_published:
+          email_intro: 'L''elecció %{resource_title} ja està activa a %{participatory_space_title}. Pots veure-la des d''aquesta pàgina:'
+          email_outro: Has rebut aquesta notificació perquè estàs seguint l'espai %{participatory_space_title}. Pots deixar de rebre notificacions seguint l'enllaç anterior.
+          email_subject: L'elecció %{resource_title} ja està activa a %{participatory_space_title}.
+          notification_title: L'elecció <a href="%{resource_path}">%{resource_title}</a> a %{participatory_space_title} ja està activa.
+    statistics:
+      elections_count: Eleccions (Vocdoni)
+    vocdoni:
+      actions:
+        confirm_destroy: Segur que vols executar aquesta acció?
+        destroy: Eliminar
+        edit: Editar
+        manage_answers: Gestionar les respostes
+        manage_census: Gestionar el cens
+        manage_questions: Gestionar les preguntes
+        manage_steps: Gestionar els pasos de la votació
+        new: Nova %{name}
+        preview: Vista prèvia
+        publish: Publicar
+        title: Accions
+        unpublish: Despublicar
+      admin:
+        answers:
+          create:
+            invalid: Hi ha hagut un problema en crear aquesta resposta
+            success: Resposta creada correctament
+          destroy:
+            invalid: Hi ha hagut un problema en eliminar aquesta resposta
+            success: Resposta eliminada correctament
+          edit:
+            title: Editar resposta
+            update: Actualitzar resposta
+          index:
+            title: Respostes
+          new:
+            create: Crear resposta
+            title: Nova resposta
+          update:
+            invalid: Hi ha hagut un problema en actualitzar la resposta
+            success: Resposta actualitzada correctament
+        census:
+          confirm:
+            submit: Confirmar les dades del cens
+          create:
+            error: Hi ha hagut un problema en importar o generar el cens.
+            success:
+              generate: Cens generat correctament
+              import: S'han importat correctament %{count} elements (%{errors} errors)
+          destroy:
+            confirm: L'eliminació del cens no es pot desfer. Segur que vols continuar?
+            title: Eliminar totes les dades del cens
+          destroy_all:
+            success: S'han eliminat totes les dades del cens
+          index:
+            info: Per configurar el cens per a una elecció de Vocdoni, has de pujar el cens i confirmar-lo.
+            title: Cens per a una elecció de Vocdoni
+          new:
+            file: "fitxer .csv amb dades de correus electrònics"
+            info: 'Ha de ser un fitxer en format CSV amb només dues columnes, una amb l''adreça de correu electrònic i una altra amb la data de naixement (format AAAA-MM-DD). Ha d''estar separat amb punt i coma (;):'
+            submit: Pujar fitxer
+            title: Pujar un nou cens
+          status:
+            data: Hi ha %{count} registres carregats en total. L'última data de pujada va ser el %{due_date}. Si vols modificar el cens (per exemple, afegir més participants), cal eliminar primer totes les dades carregades.
+            ready_to_setup_html: Les dades del cens s'han pujat i confirmat. Està <a href="%{steps_path}">tot llest per configurar l'elecció</a>.
+            title: Dades de cens actuals
+        elections:
+          create:
+            invalid: S'ha produït un error en crear l'elecció
+            success: L'elecció s'ha creat correctament
+          destroy:
+            invalid: S'ha produït un error en eliminar l'elecció
+            success: L'elecció s'ha eliminat correctament
+          edit:
+            title: Editar l'elecció
+            update: Actualitzar
+          form:
+            organization_time_zone: Comprova que la zona horària de l'organització és correcta a la configuració de l'organització. La configuració actual és %{time_zone} (%{time}).
+          index:
+            description_html: Amb aquest mòdul de votació, pots organitzar fàcilment una àmplia gamma de processos de votació amb altes garanties. El mòdul utilitza el Protocol de Vocdoni, una tecnologia de votació de codi obert per organitzar eleccions amb els estàndards més alts de seguretat, verificació universal, resistència a la censura i anonimat. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Més informació sobre Vocdoni</a>.
+            title: Eleccions (Vocdoni)
+          new:
+            create: Crear
+            title: Nova elecció
+          publish:
+            success: L'elecció s'ha publicat correctament.
+          unpublish:
+            success: L'elecció s'ha despublicat correctament.
+          update:
+            invalid: S'ha produït un error en actualitzar aquesta elecció
+            success: L'elecció s'ha actualitzat correctament
+        models:
+          answer:
+            name: resposta
+          election:
+            name: elecció
+          question:
+            name: pregunta
+        questions:
+          create:
+            election_ongoing: L'elecció ja ha començat i està bloquejada
+            invalid: S'ha produït un error en crear aquesta pregunta
+            success: La pregunta s'ha creat correctament
+          destroy:
+            invalid: S'ha produït un error en eliminar aquesta pregunta
+            success: La pregunta s'ha eliminat correctament
+          edit:
+            title: Editar pregunta
+            update: Actualitzar la pregunta
+          index:
+            title: Preguntes
+          new:
+            create: Crear una pregunta
+            title: Nova pregunta
+          update:
+            invalid: S'ha produït un error en actualitzar aquesta pregunta
+            success: La pregunta s'ha actualitzat correctament
+        steps:
+          canceled:
+            message: Aquesta elecció ha estat cancel·lada prematurament. No hi ha resultats.
+            title: Cancel·lada
+          create_election:
+            description: El procés de votació és segur utilitzant la tecnologia digital de votació avançada del Protocol de Vocdoni. Si us plau, tingues paciència, ja que el procés de configuració pot trigar algun temps.
+            errors:
+              census_ready: El cens <strong>no està llest</strong>. <a href=%{link}>Solucionar-ho</a>.
+              minimum_answers: Les preguntes han de tenir <strong>almenys dues respostes</strong>. <a href=%{link}>Solucionar-ho</a>.
+              minimum_questions: L'elecció <strong>ha de tenir com a mínim una pregunta</strong>. <a href=%{link}>Solucionar-ho</a>.
+              published: L'elecció <strong>no està publicada</strong>. <a href=%{link}>Solucionar-ho</a>.
+              time_before: La configuració no s'està fent <strong>almenys %{minutes} minuts</strong> abans que comenci l'elecció. <a href=%{link}>Solucionar-ho</a>.
+            failed:
+              details: Mostra els detalls
+              message: Comprova el missatge d'error de registre de la consola de desenvolupament web, corregeix el problema i torna-ho a provar.
+              title: L'elecció té un error i no s'ha pogut crear
+            invalid: S'ha produït un error en configurar aquesta elecció
+            requirements:
+              census_ready: El cens està <strong>llest</strong>.
+              minimum_answers: Cada pregunta té <strong>almenys 2 respostes</strong>.
+              minimum_questions: L'elecció té <strong>almenys 1 pregunta</strong>.
+              published: L'elecció està <strong>publicada</strong>.
+              time_before: La configuració s'està fent <strong>almenys %{minutes} minuts</strong> abans que comenci l'elecció.
+            submit: Configurar elecció
+            success: L'elecció s'ha enviat correctament a l'API de Vocdoni
+            title: Configurar elecció
+          created:
+            explorer_vote: Veure a l'explorador de vot
+            message: L'elecció ha estat creada. Estem esperant que arribi la data d'inici.
+            title: Elecció creada
+            view: Veure pàgina d'inici
+          credits:
+            available: Crèdits disponibles
+            get_more: Obtenir més crèdits
+            warning: No et queden crèdits. Pots obtenir més crèdits fent clic al botó de sota.
+          danger_zone:
+            action:
+              cancel: Cancel·lar
+              continue: Continuar
+              end: Finalitzar
+              pause: Pausar
+            confirm: Segur que vols realitzar aquesta acció?
+            message: L'elecció es pot interrompre
+            title: Zona de perill
+          ended:
+            title: Finalitzada
+          index:
+            title: Panell de control
+          paused:
+            message: La protecció es troba pausada
+            success: L'elecció s'ha reprès correctament.
+            title: Pausada
+          powered_by_html: Aquest mòdul utilitza el Protocol de Vocdoni, una tecnologia de votació de codi obert per organitzar eleccions<br>amb els més alts estàndards de seguretat, verificabilitat universal, resistència a la censura i anonimat.
+          processing: Processant...
+          ready:
+            title: Preparada
+          results_published:
+            answer: Resposta
+            question: Pregunta
+            result: Resultat
+            title: Resultats publicats
+          vote:
+            message: Estem en el període de votació fins a %{end_time}.
+            secret_until_the_end: Els resultats de l'elecció seran secrets fins al final del període de votació.
+            success: L'elecció s'ha pausat correctament.
+            title: Període de votació
+          vote_ended:
+            error:
+              fetch: Encara no hi ha resultats. Torna-ho a provar més tard.
+              invalid: Hi ha hagut un problema en publicar els resultats. Torna-ho a provar més tard.
+            submit: Publicar resultats
+            success: Resultats publicats correctament
+            text: El període de votació s'ha acabat. Pots publicar els resultats.
+            title: Període de votació finalitzat
+          vote_stats:
+            answer: Resposta
+            question: Pregunta
+            result: Resultat
+            title: Estadístiques de la votació
+        wallet:
+          create:
+            invalid: S'ha produït un error en crear la cartera
+            pending: És necessari crear una cartera per a aquesta organització
+            success: Cartera creada correctament
+        wallets:
+          form:
+            help:
+              p1: Com és el primer cop que aquesta organització està creant una elecció amb Vocdoni, cal crear una cartera per utilitzar l'API de Vocdoni. Això només cal la primera vegada.
+              p2: No cal fer res, simplement fes clic al botó "Crear".
+          new:
+            create: Crear
+            title: Nova cartera d'organització
+      admin_log:
+        election:
+          create: "%{user_name} ha creat l'elecció %{resource_name} a %{space_name}"
+          delete: "%{user_name} ha eliminat l'elecció %{resource_name} a %{space_name}"
+          end_vote: "%{user_name} ha tancat el període de votació per a l'elecció %{resource_name} de %{space_name} a l'API de Vocdoni"
+          publish: "%{user_name} ha publicat l'elecció %{resource_name} a %{space_name}"
+          publish_results: "%{user_name} ha publicat els resultats per a l'elecció %{resource_name} de %{space_name} a l'API de Vocdoni"
+          setup: "%{user_name} ha creat l'elecció %{resource_name} de %{space_name} a l'API de Vocdoni"
+          start_vote: "%{user_name} ha iniciat el període de votació per a l'elecció %{resource_name} de %{space_name} a l'API de Vocdoni"
+          unpublish: "%{user_name} ha despublicat l'elecció %{resource_name} a %{space_name}"
+          update: "%{user_name} ha actualitzat l'elecció %{resource_name} a %{space_name}"
+        wallet:
+          create: "%{user_name} ha creat la cartera de l'organització per a l'API de Vocdoni"
+      election_m:
+        badge_name:
+          canceled: Cancel·lada
+          finished: Finalitzada
+          ongoing: Activa
+          paused: Pausada
+          upcoming: Propera
+        end_date: Finalitza
+        footer:
+          remaining_time:
+            one: "Queda <strong>%{count} hora %{minutes} minuts</strong> per votar."
+            other: "Queden <strong>%{count} hores %{minutes} minuts</strong> per votar."
+          view: Veure
+          vote: Votar
+        label:
+          date: Dates
+        questions: Preguntes %{count}
+        start_date: Comença
+        unspecified: No especificat
+      elections:
+        count:
+          elections_count:
+            one: "%{count} elecció"
+            other: "%{count} eleccions"
+        preview:
+          available_answers: 'Respostes disponibles:'
+          description: 'Aquestes són les preguntes per aquest procés de votació:'
+          title: Preguntes de l'elecció
+        results:
+          description: 'Aquests són els resultats de la votació, per a cada pregunta:'
+          percentage: "%{count}%"
+          title: Resultats de l'elecció
+          votes:
+            one: "%{count} vot"
+            other: "%{count} vots"
+        show:
+          action_button:
+            change_vote: Canvia el teu vot
+            vote: Començar a votar
+            vote_again: Votar de nou
+          back: Eleccions disponibles
+          canceled: S'ha cancel·lat aquesta elecció
+          paused: Aquesta elecció està pausada. Torna-ho a provar més tard.
+          preview: Vista prèvia
+          verify:
+            already_voted: Ja has votat?
+            verify_here: Comprova el teu vot aquí.
+            will_verify: Podràs verificar el teu vot una vegada comenci l'elecció.
+          voting_period_status:
+            canceled: La votació ha estat cancel·lada. Anava a començar el %{start_time} i acabar el %{end_time}
+            finished: La votació va començar el %{start_time} i va acabar el %{end_time}
+            ongoing: 'Votació activa fins: %{end_time}'
+            paused: La votació està pausada. Finalitza el %{end_time}
+            upcoming: La votació comença el %{start_time}
+      models:
+        answer:
+          fields:
+            proposals: Propostes
+            title: Títol
+        election:
+          fields:
+            end_time: Hora de finalització
+            start_time: Hora d'inici
+            status: Estat
+            title: Títol
+        question:
+          fields:
+            answers: Respostes
+            title: Títol
+      votes:
+        confirm:
+          answer: Resposta
+          answer_number: resposta %{number}
+          confirm: Confirmar
+          edit: editar
+          header: Confirma el teu vot
+          intro: Aquí tens un resum del vot que estàs a punt d'emetre. <br> Si us plau, confirma el teu vot o edita les teves respostes.
+          question: Pregunta %{count}
+        failed:
+          header: Vot fallit
+          lead: El teu vot no s'ha enviat!
+          message:
+            no_votes_left: No queden vots.
+            unknown: Alguna cosa ha anat malament. Si us plau, torna-ho a provar.
+          try_again: Torna-ho a provar
+        header:
+          confirm: Confirma el teu vot
+          failed: Vot fallit
+          login: Identificació
+          submitting: Enviant el vot
+          vote_cast: El teu vot s'ha enviat
+        login:
+          access: Accedir
+          description: Per votar, haurem de comprovar que estàs al cens
+          election_not_open: Actualment l'elecció no està oberta. Torna-ho a provar més tard.
+          failed: Comprova que les dades proporcionades són correctes i torna-ho a provar
+          form_title: Introdueix les teves dades
+          title: Verifica la teva identitat
+        login_fields:
+          email: Correu electrònic
+          email_placeholder: user@example.org
+          token: Token
+          token_placeholder: 123456
+        messages:
+          not_allowed: No pots votar en aquesta elecció en aquest moment.
+        modal:
+          close: Tancar
+        new:
+          already_voted: Ja has votat en aquesta elecció. Pots tornar a votar. El vot anterior s'anul·larà.
+          more_information: Més informació
+          preview_alert: Aquesta és una vista prèvia de la cabina de votació.
+          question_steps: Pregunta %{current_step} de %{total_steps}
+        submitting:
+          header: Enviant el vot...
+          subtext: Si us plau tingues paciència, aquest procés pot trigar una mica
+          text: El teu vot està sent processat utilitzant el protocol Vocdoni, una tecnologia segura de votació digital.
+        vocdoni_logo:
+          powered_by: Amb la tecnologia de
+        vote_cast:
+          copy_vote_receipt: Copia
+          copy_vote_receipt_clarification: Copiar el rebut de vot al porta-retalls
+          copy_vote_receipt_copied: Copiat!
+          copy_vote_receipt_message: El rebut de vot s'ha copiat al porta-retalls correctament.
+          description: Pots guardar el rebut com a prova de la inclusió del teu vot i comprovar-ho en qualsevol moment usant l'explorador de Vocdoni.
+          exit: Sortir de la cabina de votació
+          header: El teu vot s'ha enviat correctament!
+          or: o
+          verify: "(Verificar el meu vot)"
+          vote_receipt: 'El teu rebut de vot és:'
+        voting_step:
+          back: Enrere
+          continue: Següent
+      warnings:
+        no_elections_warning: No hi ha cap elecció programada.
+  layouts:
+    decidim:
+      vocdoni_votes_header:
+        exit: Sortir
