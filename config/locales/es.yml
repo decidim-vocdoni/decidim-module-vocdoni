@@ -34,122 +34,122 @@ es:
           email_intro: 'La votación %{resource_title} ya está activa en %{participatory_space_title}. Puedes verla desde esta página:'
           email_outro: Has recibido esta notificación porque sigues el espacio %{participatory_space_title}. Para dejar de recibir notificaciones, haz clic en el enlace anterior.
           email_subject: Se ha activado la elección %{resource_title} para %{participatory_space_title}.
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> election is now active for %{participatory_space_title}.
+          notification_title: Se ha activado la elección <a href="%{resource_path}">%{resource_title}</a> para %{participatory_space_title}.
     statistics:
-      elections_count: Elections (Vocdoni)
+      elections_count: Elecciones (Vocdoni)
     vocdoni:
       actions:
-        confirm_destroy: Are you sure?
-        destroy: Delete
-        edit: Edit
-        manage_answers: Manage answers
-        manage_census: Manage census
-        manage_questions: Manage questions
-        manage_steps: Manage steps
-        new: New %{name}
-        preview: Preview
-        publish: Publish
-        title: Actions
-        unpublish: Unpublish
+        confirm_destroy: '¿Estás segura?'
+        destroy: Eliminar
+        edit: Editar
+        manage_answers: Gestionar respuestas
+        manage_census: Gestionar censo
+        manage_questions: Gestionar preguntas
+        manage_steps: Gestionar pasos de la votación
+        new: Nueva %{name}
+        preview: Previsualizar
+        publish: Publicar
+        title: Acciones
+        unpublish: Despublicar
       admin:
         answers:
           create:
-            invalid: There was a problem creating this answer
-            success: Answer successfully created
+            invalid: Se ha producido un problema al crear la respuesta
+            success: Respuesta creada correctamente
           destroy:
-            invalid: There was a problem deleting this answer
-            success: Answer successfully deleted
+            invalid: Se ha producido un problema al eliminar la respuesta
+            success: Respuesta eliminada correctamente
           edit:
-            title: Edit answer
-            update: Update answer
+            title: Editar respuesta
+            update: Actualizar respuesta
           index:
-            title: Answers
+            title: Respuestas
           new:
-            create: Create answer
-            title: New answer
+            create: Crear respuesta
+            title: Nueva respuesta
           update:
-            invalid: There was a problem updating this answer
-            success: Answer successfully updated
+            invalid: Se ha producido un error al actualizar esta respuesta
+            success: Respuesta actualizada correctamente
         census:
           confirm:
-            submit: Confirm the census data
+            submit: Confirmar los datos del censo
           create:
-            error: There was an error importing or generating the census.
+            error: Se ha producido un error al importar o generar el censo.
             success:
-              generate: Successfully generated the census
-              import: Successfully imported %{count} items (%{errors} errors)
+              generate: Censo generado correctamente
+              import: Se han importado correctamente %{count} elementos (%{errors} errores)
           destroy:
-            confirm: Delete all the census can not be undone. Are you sure you want to continue?
-            title: Delete all census data
+            confirm: Eliminar todo el censo no se puede deshacer. ¿Seguro que quieres continuar?
+            title: Borrar todos los datos de censo
           destroy_all:
-            success: All census data have been deleted
+            success: Se han eliminado todos los datos del censo
           index:
-            info: For setting up the census for a Vocdoni Election, you need to upload the census and confirm it.
-            title: Census for a Vocdoni election
+            info: Para crear el censo para una elección de Vocdoni, debes subir el censo y confirmarlo.
+            title: Censo para una votación de Vocdoni
           new:
-            file: ".csv file with emails data"
+            file: "Archivo .csv con los correos electrónicos"
             info: 'Must be a file in CSV format with only two columns, one with the email address and another with the date of birth (format YYYY-MM-DD). It must be separated with a semicolon (;):'
-            submit: Upload file
-            title: Upload a new census
+            submit: Subir archivo
+            title: Subir un censo nuevo
           status:
             data: There are %{count} records loaded in total. Last upload date was on %{due_date}. If you want to change the census (for instance, adding more participants), its necessary to first delete all census data.
             ready_to_setup_html: The census data is uploaded and confirmed. It's <a href="%{steps_path}">ready to setup</a>.
-            title: Current census data
+            title: Datos de censo actuales
         elections:
           create:
-            invalid: There was a problem creating this election
+            invalid: Se ha producido un error al crear la elección
             success: Election successfully created
           destroy:
             invalid: There was a problem deleting this election
             success: Election successfully deleted
           edit:
-            title: Edit election
-            update: Update
+            title: Editar elección
+            update: Actualizar
           form:
-            organization_time_zone: Check that the organization time zone is correct in the organization settings. The current configuration is %{time_zone} (%{time}).
+            organization_time_zone: Compruebe que la zona horaria de la organización es correcta en la configuración de la organización. La configuración actual es %{time_zone} (%{time}).
           index:
-            description_html: With this voting module, you can easily organize a wide range of voting processes with high guarantees. The module utilizes the Vocdoni Protocol, an open-source voting technology to organize elections with the highest standards of security, universal verifiability, censorship-resistance, and anonymity. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Learn more about Vocdoni</a>.
-            title: Elections (Vocdoni)
+            description_html: Con este módulo de votación, usted puede organizar fácilmente una amplia gama de procesos de votación con altas garantías. El módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones con los más altos estándares de seguridad, verificación universal, resistencia a la censura y anonimato. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Más información sobre Vocdoni</a>.
+            title: Elecciones (Vocdoni)
           new:
-            create: Create
-            title: New election
+            create: Crear
+            title: Nueva elección
           publish:
-            success: The election has been successfully published.
+            success: La elección se ha publicado correctamente.
           unpublish:
-            success: The election has been successfully unpublished.
+            success: La elección se ha despublicado correctamente.
           update:
-            invalid: There was a problem updating this election
-            success: Election successfully updated
+            invalid: Se ha producido un error al actualizar esta votación
+            success: Elección correctamente actualizada
         models:
           answer:
-            name: answer
+            name: respuesta
           election:
-            name: election
+            name: elección
           question:
-            name: question
+            name: pregunta
         questions:
           create:
-            election_ongoing: The election has already started and it's blocked
-            invalid: There was a problem creating this question
-            success: Question successfully created
+            election_ongoing: La elección ya ha comenzado y está bloqueada
+            invalid: Se ha producido un error al crear esta pregunta
+            success: Pregunta correctamente creada
           destroy:
-            invalid: There was a problem deleting this question
-            success: Question successfully deleted
+            invalid: Se ha producido un error al eliminar la pregunta
+            success: Pregunta correctamente eliminada
           edit:
-            title: Edit question
-            update: Update question
+            title: Editar pregunta
+            update: Actualizar pregunta
           index:
-            title: Questions
+            title: Preguntas
           new:
-            create: Create question
-            title: New question
+            create: Crear una pregunta
+            title: Nueva pregunta
           update:
-            invalid: There was a problem updating this question
-            success: Question successfully updated
+            invalid: Se ha producido un error al actualizar esta pregunta
+            success: Pregunta correctamente actualizada
         steps:
           canceled:
-            message: This election has been canceled prematurely. There aren't any results.
-            title: Canceled
+            message: Esta elección ha sido cancelada prematuramente. No hay resultados.
+            title: Cancelada
           create_election:
             description: Your voting process is secured using the advanced digital voting technology of the Vocdoni Protocol. Please be patient, as the set-up process may take some time.
             errors:
@@ -165,13 +165,13 @@ es:
             invalid: There was a problem setting up this election
             requirements:
               census_ready: The census is <strong>ready</strong>.
-              minimum_answers: Each question has <strong>at least two answers</strong>.
-              minimum_questions: The election has <strong>at least one question</strong>.
-              published: The election is <strong>published</strong>.
-              time_before: The setup is being done <strong>at least %{minutes} minutes</strong> before the election starts.
-            submit: Setup election
-            success: Election successfully sent to the Vocdoni API
-            title: Setup election
+              minimum_answers: Cada pregunta tiene <strong>al menos dos respuestas</strong>.
+              minimum_questions: La elección tiene <strong>al menos una pregunta</strong>.
+              published: La elección está <strong>publicada</strong>.
+              time_before: La configuración se está realizando <strong>al menos %{minutes} minutos</strong> antes de que comience la elección.
+            submit: Nueva elección
+            success: Elección enviada con éxito a la API de Vocdoni
+            title: Configurar elección
           created:
             explorer_vote: View at Explorer Vote
             message: The election has been created. We're waiting for the start date time to arrive.
@@ -179,14 +179,14 @@ es:
             view: View landing page
           credits:
             available: Available credits
-            get_more: Get more credits
+            get_more: Obtener más créditos
             warning: You have no credits left. You can get more credits by clicking on the button below.
           danger_zone:
             action:
-              cancel: Cancel
+              cancel: Cancelar
               continue: Continue
-              end: End
-              pause: Pause
+              end: Finalizar
+              pause: Pausar
             confirm: Are you sure you want to do this action?
             message: The election can be interrupted
             title: Danger zone
@@ -221,23 +221,23 @@ es:
             text: The vote period has ended. You can publish the results.
             title: Vote period ended
           vote_stats:
-            answer: Answer
-            question: Question
-            result: Result
-            title: Vote statistics
+            answer: Respuesta
+            question: Pregunta
+            result: Resultado
+            title: Estadísticas de votación
         wallet:
           create:
-            invalid: There was a problem creating the wallet
-            pending: It's necessary to create a wallet for this organization
-            success: Wallet successfully created
+            invalid: Hubo un problema al crear la cartera
+            pending: Es necesario crear una cartera para esta organización
+            success: Cartera creada con éxito
         wallets:
           form:
             help:
               p1: As this is the first time that this organization is creating an Election with Vocdoni, it's necessary to create a Wallet for using the Vocdoni API. This is only necessary to do the first time.
               p2: You don't need to do anything, just click on the "Create" button.
           new:
-            create: Create
-            title: New organization wallet
+            create: Crear
+            title: Nueva cartera de organización
       admin_log:
         election:
           create: "%{user_name} created the election %{resource_name} of %{space_name}"
@@ -253,23 +253,23 @@ es:
           create: "%{user_name} created the Organization wallet for the Vocdoni API"
       election_m:
         badge_name:
-          canceled: Canceled
-          finished: Finished
-          ongoing: Active
-          paused: Paused
-          upcoming: Upcoming
-        end_date: Ends
+          canceled: Cancelada
+          finished: Finalizada
+          ongoing: Activa
+          paused: Pausada
+          upcoming: Próxima
+        end_date: Finaliza el
         footer:
           remaining_time:
             one: "<strong>%{count} hour %{minutes} minutes</strong> remaining to vote."
             other: "<strong>%{count} hours %{minutes} minutes</strong> remaining to vote."
-          view: View
-          vote: Vote
+          view: Ver
+          vote: Votar
         label:
-          date: Dates
-        questions: Questions %{count}
-        start_date: Starts
-        unspecified: Not specified
+          date: Fechas
+        questions: Preguntas %{count}
+        start_date: Empieza
+        unspecified: No especificado
       elections:
         count:
           elections_count:
@@ -278,9 +278,9 @@ es:
         preview:
           available_answers: 'Available answers:'
           description: 'These are the questions for this voting process:'
-          title: Election questions
+          title: Preguntas de la elección
         results:
-          description: 'These are the results of the voting, for each question:'
+          description: 'Estos son los resultados de la votación, para cada pregunta:'
           percentage: "%{count}%"
           title: Election results
           votes:
@@ -289,14 +289,14 @@ es:
         show:
           action_button:
             change_vote: Change your vote
-            vote: Start voting
-            vote_again: Vote again
-          back: Available elections
-          canceled: This election was canceled
-          paused: This election is curently paused. Try again later.
-          preview: Preview
+            vote: Empezar a votar
+            vote_again: Votar de nuevo
+          back: Elecciones disponibles
+          canceled: Esta elección ha sido cancelada
+          paused: Esta elección está pausada. Inténtalo de nuevo más tarde.
+          preview: Previsualizar
           verify:
-            already_voted: Already voted?
+            already_voted: '¿Ya has votado?'
             verify_here: Check your vote here.
             will_verify: You will be able to verify your vote once the election is started.
           voting_period_status:
@@ -341,10 +341,10 @@ es:
           failed: Vote failed
           login: Identification
           submitting: Submitting the vote
-          vote_cast: Your vote has been cast
+          vote_cast: Tu voto ha sido emitido
         login:
-          access: Access
-          description: To vote, we'll need to check that you're on the census
+          access: Acceder
+          description: Para votar, tendremos que comprobar que estás en el censo
           election_not_open: Currently the election is not open for voting. Try again later.
           failed: Check that the provided data is correct and try again
           form_title: Enter your data
