@@ -22,85 +22,85 @@ ca:
           gallery_legend: Afegeix una galeria d'imatges
     components:
       vocdoni:
-        name: Elections (Vocdoni)
+        name: Eleccions (Vocdoni)
         settings:
           global:
-            announcement: Announcement
+            announcement: Anunci
           step:
-            announcement: Announcement
+            announcement: Anunci
     events:
       vocdoni:
         election_published:
-          email_intro: 'The %{resource_title} election is now active for %{participatory_space_title}. You can see it from this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
-          email_subject: The %{resource_title} election is now active for %{participatory_space_title}.
-          notification_title: The <a href="%{resource_path}">%{resource_title}</a> election is now active for %{participatory_space_title}.
+          email_intro: 'L''elecció %{resource_title} ja està activa a %{participatory_space_title}. Pots veure-la des d''aquesta pàgina:'
+          email_outro: Has rebut aquesta notificació perquè estàs seguint l'espai %{participatory_space_title}. Pots deixar de rebre notificacions seguint l'enllaç anterior.
+          email_subject: L'elecció %{resource_title} ja està activa a %{participatory_space_title}.
+          notification_title: L'elecció <a href="%{resource_path}">%{resource_title}</a> a %{participatory_space_title} ja està activa.
     statistics:
-      elections_count: Elections (Vocdoni)
+      elections_count: Eleccions (Vocdoni)
     vocdoni:
       actions:
-        confirm_destroy: Are you sure?
-        destroy: Delete
-        edit: Edit
-        manage_answers: Manage answers
-        manage_census: Manage census
-        manage_questions: Manage questions
-        manage_steps: Manage steps
-        new: New %{name}
-        preview: Preview
-        publish: Publish
-        title: Actions
-        unpublish: Unpublish
+        confirm_destroy: Segur que vols executar aquesta acció?
+        destroy: Eliminar
+        edit: Editar
+        manage_answers: Gestionar les respostes
+        manage_census: Gestionar el cens
+        manage_questions: Gestionar les preguntes
+        manage_steps: Gestionar els pasos de la votació
+        new: Nova %{name}
+        preview: Vista prèvia
+        publish: Publicar
+        title: Accions
+        unpublish: Despublicar
       admin:
         answers:
           create:
-            invalid: There was a problem creating this answer
-            success: Answer successfully created
+            invalid: Hi ha hagut un problema en crear aquesta resposta
+            success: Resposta creada correctament
           destroy:
-            invalid: There was a problem deleting this answer
-            success: Answer successfully deleted
+            invalid: Hi ha hagut un problema en eliminar aquesta resposta
+            success: Resposta eliminada correctament
           edit:
-            title: Edit answer
-            update: Update answer
+            title: Editar resposta
+            update: Actualitzar resposta
           index:
-            title: Answers
+            title: Respostes
           new:
-            create: Create answer
-            title: New answer
+            create: Crear resposta
+            title: Nova resposta
           update:
-            invalid: There was a problem updating this answer
-            success: Answer successfully updated
+            invalid: Hi ha hagut un problema en actualitzar la resposta
+            success: Resposta actualitzada correctament
         census:
           confirm:
-            submit: Confirm the census data
+            submit: Confirmar les dades del cens
           create:
-            error: There was an error importing or generating the census.
+            error: Hi ha hagut un problema en importar o generar el cens.
             success:
-              generate: Successfully generated the census
-              import: Successfully imported %{count} items (%{errors} errors)
+              generate: Cens generat correctament
+              import: S'han importat correctament %{count} elements (%{errors} errors)
           destroy:
-            confirm: Delete all the census can not be undone. Are you sure you want to continue?
-            title: Delete all census data
+            confirm: L'eliminació del cens no es pot desfer. Segur que vols continuar?
+            title: Eliminar totes les dades del cens
           destroy_all:
-            success: All census data have been deleted
+            success: S'han eliminat totes les dades del cens
           index:
-            info: For setting up the census for a Vocdoni Election, you need to upload the census and confirm it.
-            title: Census for a Vocdoni election
+            info: Per configurar el cens per a una elecció de Vocdoni, has de pujar el cens i confirmar-lo.
+            title: Cens per a una elecció de Vocdoni
           new:
-            file: ".csv file with emails data"
-            info: 'Must be a file in CSV format with only two columns, one with the email address and another with the date of birth (format YYYY-MM-DD). It must be separated with a semicolon (;):'
-            submit: Upload file
-            title: Upload a new census
+            file: "fitxer .csv amb dades de correus electrònics"
+            info: 'Ha de ser un fitxer en format CSV amb només dues columnes, una amb l''adreça de correu electrònic i una altra amb la data de naixement (format AAAA-MM-DD). Ha d''estar separat amb punt i coma (;):'
+            submit: Pujar fitxer
+            title: Pujar un nou cens
           status:
-            data: There are %{count} records loaded in total. Last upload date was on %{due_date}. If you want to change the census (for instance, adding more participants), its necessary to first delete all census data.
-            ready_to_setup_html: The census data is uploaded and confirmed. It's <a href="%{steps_path}">ready to setup</a>.
-            title: Current census data
+            data: Hi ha %{count} registres carregats en total. L'última data de pujada va ser el %{due_date}. Si vols modificar el cens (per exemple, afegir més participants), cal eliminar primer totes les dades carregades.
+            ready_to_setup_html: Les dades del cens s'han pujat i confirmat. Està <a href="%{steps_path}">tot llest per configurar l'elecció</a>.
+            title: Dades de cens actuals
         elections:
           create:
-            invalid: There was a problem creating this election
-            success: Election successfully created
+            invalid: S'ha produït un error en crear l'elecció
+            success: L'elecció s'ha creat correctament
           destroy:
-            invalid: There was a problem deleting this election
+            invalid: S'ha produït un error en eliminar l'elecció
             success: Election successfully deleted
           edit:
             title: Edit election
@@ -176,26 +176,26 @@ ca:
             explorer_vote: View at Explorer Vote
             message: The election has been created. We're waiting for the start date time to arrive.
             title: Election created
-            view: View landing page
+            view: Veure pàgina d'inici
           credits:
-            available: Available credits
-            get_more: Get more credits
-            warning: You have no credits left. You can get more credits by clicking on the button below.
+            available: Crèdits disponibles
+            get_more: Obtenir més crèdits
+            warning: No et queden crèdits. Pots obtenir més crèdits fent clic al botó de sota.
           danger_zone:
             action:
-              cancel: Cancel
-              continue: Continue
-              end: End
-              pause: Pause
-            confirm: Are you sure you want to do this action?
-            message: The election can be interrupted
-            title: Danger zone
+              cancel: Cancel·lar
+              continue: Continuar
+              end: Finalitzar
+              pause: Pausar
+            confirm: Segur que vols realitzar aquesta acció?
+            message: L'elecció es pot interrompre
+            title: Zona de perill
           ended:
-            title: Ended
+            title: Finalitzada
           index:
-            title: Steps dashboard
+            title: Panell de control
           paused:
-            message: The election is paused
+            message: La protecció es troba pausada
             success: The election has been successfully continued.
             title: Paused
           powered_by_html: This module makes use of Vocdoni Protocol, an open-source voting technology to organize elections<br>with the highest standards of security, universal verifiability, censorship-resistance, and anonymity.
