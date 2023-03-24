@@ -3,37 +3,37 @@ es:
   activemodel:
     attributes:
       election:
-        description: Description
-        end_time: End time
-        secret_until_the_end: Secret until the end
-        start_time: Start time
-        stream_uri: Video stream link
-        title: Title
+        description: Descripción
+        end_time: Fecha de fin
+        secret_until_the_end: Secreto hasta el final
+        start_time: Hora de inicio
+        stream_uri: Enlace del video streaming
+        title: Título
     errors:
       models:
         election:
           attributes:
             attachment:
-              needs_to_be_reattached: Needs to be reattached
+              needs_to_be_reattached: Es necesario volver a adjuntar el archivo
   decidim:
     admin:
       shared:
         gallery:
-          gallery_legend: Add an image gallery
+          gallery_legend: Añadir una galería de imágenes
     components:
       vocdoni:
-        name: Elections (Vocdoni)
+        name: Elecciones (Vocdoni)
         settings:
           global:
-            announcement: Announcement
+            announcement: Anuncio
           step:
-            announcement: Announcement
+            announcement: Anuncio
     events:
       vocdoni:
         election_published:
-          email_intro: 'The %{resource_title} election is now active for %{participatory_space_title}. You can see it from this page:'
-          email_outro: You have received this notification because you are following %{participatory_space_title}. You can stop receiving notifications following the previous link.
-          email_subject: The %{resource_title} election is now active for %{participatory_space_title}.
+          email_intro: 'La votación %{resource_title} ya está activa en %{participatory_space_title}. Puedes verla desde esta página:'
+          email_outro: Has recibido esta notificación porque sigues el espacio %{participatory_space_title}. Para dejar de recibir notificaciones, haz clic en el enlace anterior.
+          email_subject: Se ha activado la elección %{resource_title} para %{participatory_space_title}.
           notification_title: The <a href="%{resource_path}">%{resource_title}</a> election is now active for %{participatory_space_title}.
     statistics:
       elections_count: Elections (Vocdoni)
