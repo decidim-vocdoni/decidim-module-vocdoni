@@ -39,7 +39,7 @@ es:
       elections_count: Elecciones (Vocdoni)
     vocdoni:
       actions:
-        confirm_destroy: '¿Estás segura?'
+        confirm_destroy: '¿Seguro que quieres ejecutar esta acción?'
         destroy: Eliminar
         edit: Editar
         manage_answers: Gestionar respuestas
@@ -88,7 +88,7 @@ es:
             title: Censo para una votación de Vocdoni
           new:
             file: "Archivo .csv con los correos electrónicos"
-            info: 'Debe ser un archivo en formato CSV con sólo dos columnas, una con la dirección de correo electrónico y otra con la fecha de nacimiento (formato AAAY-MM-DD). Debe estar separado con punto y coma (;):'
+            info: 'Debe ser un archivo en formato CSV con sólo dos columnas, una con la dirección de correo electrónico y otra con la fecha de nacimiento (formato AAAA-MM-DD). Debe estar separado con punto y coma (;):'
             submit: Subir archivo
             title: Subir un censo nuevo
           status:
@@ -234,23 +234,23 @@ es:
           form:
             help:
               p1: Como esta es la primera vez que esta organización está creando una elección con Vocdoni, es necesario crear una cartera para usar la API de Vocdoni. Esto sólo es necesario la primera vez.
-              p2: You don't need to do anything, just click on the "Create" button.
+              p2: No necesitas hacer nada, simplemente haz clic en el botón "Crear".
           new:
             create: Crear
             title: Nueva cartera de organización
       admin_log:
         election:
-          create: "%{user_name} created the election %{resource_name} of %{space_name}"
-          delete: "%{user_name} deleted the election %{resource_name} of %{space_name}"
-          end_vote: "%{user_name} ended the voting period for the election %{resource_name} of %{space_name} on the Vocdoni API"
-          publish: "%{user_name} published the election %{resource_name} of %{space_name}"
-          publish_results: "%{user_name} published the results for the election %{resource_name} of %{space_name} on the Vocdoni API"
-          setup: "%{user_name} created the election %{resource_name} of %{space_name} on the Vocdoni API"
-          start_vote: "%{user_name} started the voting period for the election %{resource_name} of %{space_name} on the Vocdoni API"
-          unpublish: "%{user_name} unpublished the %{resource_name} of %{space_name} election"
-          update: "%{user_name} updated the election %{resource_name} of %{space_name}"
+          create: "%{user_name} creó la elección %{resource_name} en %{space_name}"
+          delete: "%{user_name} eliminó %{resource_name} en %{space_name}"
+          end_vote: "%{user_name} terminó el período de votación para la elección %{resource_name} de %{space_name} en la API de Vocdoni"
+          publish: "%{user_name} publicó la elección %{resource_name} en %{space_name}"
+          publish_results: "%{user_name} publicó los resultados para la elección %{resource_name} de %{space_name} en la API de Vocdoni"
+          setup: "%{user_name} creó la elección %{resource_name} de %{space_name} en la API de Vocdoni"
+          start_vote: "%{user_name} comenzó el período de votación para la elección %{resource_name} de %{space_name} en la API de Vocdoni"
+          unpublish: "%{user_name} despublicó la elección %{resource_name} en %{space_name}"
+          update: "%{user_name} actualizó la elección %{resource_name} en %{space_name}"
         wallet:
-          create: "%{user_name} created the Organization wallet for the Vocdoni API"
+          create: "%{user_name} creó la cartera de la organización para la API de Vocdoni"
       election_m:
         badge_name:
           canceled: Cancelada
@@ -261,8 +261,8 @@ es:
         end_date: Finaliza el
         footer:
           remaining_time:
-            one: "<strong>%{count} hour %{minutes} minutes</strong> remaining to vote."
-            other: "<strong>%{count} hours %{minutes} minutes</strong> remaining to vote."
+            one: "Queda <strong>%{count} hora %{minutes} minutos</strong> para votar."
+            other: "Quedan <strong>%{count} horas %{minutes} minutos</strong> para votar."
           view: Ver
           vote: Votar
         label:
@@ -273,22 +273,22 @@ es:
       elections:
         count:
           elections_count:
-            one: "%{count} election"
-            other: "%{count} elections"
+            one: "%{count} elección"
+            other: "%{count} elecciones"
         preview:
-          available_answers: 'Available answers:'
-          description: 'These are the questions for this voting process:'
+          available_answers: 'Respuestas disponibles:'
+          description: 'Estas son las preguntas para este proceso de votación:'
           title: Preguntas de la elección
         results:
           description: 'Estos son los resultados de la votación, para cada pregunta:'
           percentage: "%{count}%"
-          title: Election results
+          title: Resultados de la elección
           votes:
-            one: "%{count} vote"
-            other: "%{count} votes"
+            one: "%{count} voto"
+            other: "%{count} votos"
         show:
           action_button:
-            change_vote: Change your vote
+            change_vote: Cambiar tu voto
             vote: Empezar a votar
             vote_again: Votar de nuevo
           back: Elecciones disponibles
@@ -297,55 +297,55 @@ es:
           preview: Previsualizar
           verify:
             already_voted: '¿Ya has votado?'
-            verify_here: Check your vote here.
-            will_verify: You will be able to verify your vote once the election is started.
+            verify_here: Comprueba tu voto aquí.
+            will_verify: Podrás verificar tu voto una vez que comience la elección.
           voting_period_status:
-            canceled: Voting was canceled. It was ment to begin on %{start_time} and end on %{end_time}
-            finished: Voting began on %{start_time} and ended on %{end_time}
-            ongoing: 'Active voting until: %{end_time}'
-            paused: Voting is paused. It ends on %{end_time}
-            upcoming: Voting begins on %{start_time}
+            canceled: La votación ha sido cancelada. Iba a empezar el %{start_time} y terminar el %{end_time}
+            finished: La votación empezó el %{start_time} y finalizó el %{end_time}
+            ongoing: 'Votación activa hasta: %{end_time}'
+            paused: La votación está pausada. Finaliza el %{end_time}
+            upcoming: La votación empieza el %{start_time}
       models:
         answer:
           fields:
-            proposals: Proposals
-            title: Title
+            proposals: Propuestas
+            title: Título
         election:
           fields:
-            end_time: End time
-            start_time: Start time
-            status: Status
-            title: Title
+            end_time: Hora de finalización
+            start_time: Hora de inicio
+            status: Estado
+            title: Título
         question:
           fields:
-            answers: Answers
-            title: Title
+            answers: Respuestas
+            title: Título
       votes:
         confirm:
-          answer: Answer
-          answer_number: answer %{number}
-          confirm: Confirm
-          edit: edit
-          header: Confirm your vote
-          intro: Here is a summary of the vote you are about to sent. <br> Please confirm your vote or edit your answers.
-          question: Question %{count}
+          answer: Respuesta
+          answer_number: respuesta %{number}
+          confirm: Confirmar
+          edit: editar
+          header: Confirma tu voto
+          intro: Aquí tienes un resumen del voto que estás a punto de enviar. <br> Por favor, confirma tu voto o edita tus respuestas.
+          question: Pregunta %{count}
         failed:
-          header: Vote failed
-          lead: Your vote has not been sent!
+          header: Voto fallido
+          lead: '¡Tu voto no se ha enviado!'
           message:
-            no_votes_left: There are no votes left.
-            unknown: Something went wrong, please try it again.
-          try_again: Try again
+            no_votes_left: No quedan votos.
+            unknown: Algo salió mal. Por favor, inténtalo de nuevo.
+          try_again: Inténtalo de nuevo
         header:
-          confirm: Confirm your vote
-          failed: Vote failed
-          login: Identification
-          submitting: Submitting the vote
+          confirm: Confirma tu voto
+          failed: Voto fallido
+          login: Identificación
+          submitting: Enviando el voto
           vote_cast: Tu voto ha sido emitido
         login:
           access: Acceder
           description: Para votar, tendremos que comprobar que estás en el censo
-          election_not_open: Currently the election is not open for voting. Try again later.
+          election_not_open: Actualmente la elección no está abierta. Inténtalo de nuevo más tarde.
           failed: Comprueba que los datos proporcionados son correctos e inténtalo de nuevo
           form_title: Introduce tus datos
           title: Verifica tu identidad
