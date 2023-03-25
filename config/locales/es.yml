@@ -169,7 +169,7 @@ es:
               minimum_questions: La elección tiene <strong>al menos una pregunta</strong>.
               published: La elección está <strong>publicada</strong>.
               time_before: La configuración se está realizando <strong>al menos %{minutes} minutos</strong> antes de que comience la elección.
-            submit: Nueva elección
+            submit: Configurar elección
             success: Elección enviada con éxito a la API de Vocdoni
             title: Configurar elección
           created:
