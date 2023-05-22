@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { ElectionStatus, ElectionStatusReady, VocdoniSDKClient } from "@vocdoni/sdk";
+import { ElectionStatus, VocdoniSDKClient } from "@vocdoni/sdk";
 
 import VoteQuestionsComponent from "./vote_questions.component";
 import VoteComponent from "./setup-vote";
