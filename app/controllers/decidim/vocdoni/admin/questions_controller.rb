@@ -5,7 +5,7 @@ module Decidim
     module Admin
       # This controller allows the create or update questions for an election.
       class QuestionsController < Admin::ApplicationController
-        helper_method :election, :questions, :question
+        helper_method :election, :questions, :question, :status
 
         def new
           enforce_permission_to :create, :question, election: election
@@ -84,6 +84,10 @@ module Decidim
 
         def question
           questions.find(params[:id])
+        end
+
+        def status
+          @status = CsvCensus::Status.new(election)
         end
       end
     end

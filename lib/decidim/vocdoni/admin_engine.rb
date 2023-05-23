@@ -13,6 +13,7 @@ module Decidim
         resources :wallets, only: [:new, :create]
         resources :elections do
           member do
+            get :publish_page
             put :publish
             put :unpublish
             post :answers_values
@@ -24,6 +25,7 @@ module Decidim
           resources :census, only: [:index, :create] do
             delete :destroy_all, on: :collection, as: :destroy_all
           end
+          resources :election_calendar, only: [:edit, :update]
         end
         root to: "elections#index"
       end

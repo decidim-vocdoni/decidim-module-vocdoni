@@ -1,0 +1,16 @@
+<%= render partial: 'decidim/vocdoni/admin/shared/tab_links', locals: { active_class: "publish", election: election } %>
+<div class="card">
+  <div class="card-section">
+    <h2><%= t("publish_title", scope: "decidim.vocdoni.admin.elections.new").html_safe %></h2>
+    <p><%= t("publish_text", scope: "decidim.vocdoni.admin.elections.new").html_safe %></p>
+  </div>
+</div>
+<% if allowed_to?(:publish, :election, election: election) && election.start_time.present? && election.end_time.present? %>
+  <div class="flex--cc">
+    <%= link_to t("publish", scope: "decidim.vocdoni.admin.elections.new"),
+                url_for(action: :publish, id: election, controller: "elections"),
+                class: "button form-general-submit",
+                method: :put %>
+  </div>
+<% end %>
+<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

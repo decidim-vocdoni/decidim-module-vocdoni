@@ -1,0 +1,12 @@
+.tabs-title:hover a.disabled {
+  background-color: initial;
+}
+
+.tabs-title a.disabled {
+  color: #999;
+  pointer-events: none;
+}
+
+.tabs-title.is-active {
+  background: #ffffff;
+}

@@ -129,7 +129,19 @@ en:
               noopener">Learn more about Vocdoni</a>.
             title: Elections (Vocdoni)
           new:
+            basic_info: Basic info
+            census: Census
             create: Create
+            publish: Publish
+            publish_text: |
+              If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.<br><br> 
+              To setup the election you must publish it first.<br><br> 
+              The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable after that, due the use of the blockchain. After the setup, the election
+              can start (either manually or automatically depending on the configuration).
+            publish_title: Congratulations! All done.
+            questions: Questions
+            results: Calendar and results
+            save_button: Save and go to the next step
             title: New election
           publish:
             success: The election has been successfully published.

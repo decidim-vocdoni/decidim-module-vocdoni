@@ -1,65 +1,81 @@
 <% add_decidim_page_title(translated_attribute(election.title)) %>
 <% add_decidim_page_title(t(".title")) %>
 
-<% if @status.pending_upload? %> <div class="card">
-    <div class="card-divider">
-      <h2 class="card-title">
-        <%= link_to translated_attribute(election.title), elections_path %> &gt;
-        <%= t("index.title", scope: "decidim.vocdoni.admin.census") %>
-      </h2>
-    </div>
-    <div class="card-section">
-      <p>
-      <%= t("index.info", scope: "decidim.vocdoni.admin.census") %>
-      </p>
-    </div>
+<div class="card-divider mb-s">
+  <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.elections.new") %></h2>
 </div>
-<% end %>
-
-<% if @status.count > 0 %>
-  <div class="card">
-    <div class="card-divider">
-      <h2 class="card-title">
-        <%= link_to translated_attribute(election.title), elections_path %> &gt;
-        <%= t("status.title", scope: "decidim.vocdoni.admin.census") %>
-      </h2>
-    </div>
-    <div class="card-section">
-      <% if @status.ready_to_setup? %>
-        <div class="callout success">
-          <p><%= t("status.ready_to_setup_html", scope: "decidim.vocdoni.admin.census", steps_path: election_steps_path(election)) %></p>
+<%= render partial: 'decidim/vocdoni/admin/shared/tab_links', locals: { active_class: "census", election: election, status: @status } %>
+<div class="card">
+  <div class="card-section">
+    <% if @status.pending_upload? %>
+      <div class="card">
+        <div class="card-divider">
+          <h2 class="card-title">
+            <%= t("index.title", scope: "decidim.vocdoni.admin.census") %>
+          </h2>
         </div>
-      <% end %>
-      <p><%= t("decidim.vocdoni.admin.census.status.data", count: @status.count,
-               due_date: l(@status.last_import_at, format: :long)) %>
-      </p>
+        <div class="card-section">
+          <p>
+            <%= t("index.info", scope: "decidim.vocdoni.admin.census") %>
+          </p>
+        </div>
+      </div>
+    <% end %>
 
-      <% if @status.ready_to_setup? %>
-        <%= link_to t("decidim.vocdoni.admin.census.destroy.title"),
-          destroy_all_election_census_path(election),
-          method: :delete,
-          class: "button alert",
-          data: { confirm: t("decidim.vocdoni.admin.census.destroy.confirm") } %>
-      <% end %>
+    <% if @status.count > 0 %>
+      <div class="card">
+        <div class="card-divider">
+          <h2 class="card-title">
+            <%= link_to translated_attribute(election.title), elections_path %> &gt;
+            <%= t("status.title", scope: "decidim.vocdoni.admin.census") %>
+          </h2>
+        </div>
+        <div class="card-section">
+          <% if @status.ready_to_setup? %>
+            <div class="callout success">
+              <p><%= t("status.ready_to_setup_html", scope: "decidim.vocdoni.admin.census", steps_path: election_steps_path(election)) %></p>
+            </div>
+          <% end %>
+          <p><%= t("decidim.vocdoni.admin.census.status.data", count: @status.count,
+                   due_date: l(@status.last_import_at, format: :long)) %>
+          </p>
 
-      <% if @status.pending_generation? %>
-        <%= render partial: "generate_form", locals: { form: @form, election: election } %>
-      <% end %>
-    </div>
+          <% if @status.ready_to_setup? %>
+            <%= link_to t("decidim.vocdoni.admin.census.destroy.title"),
+                        destroy_all_election_census_path(election),
+                        method: :delete,
+                        class: "button alert",
+                        data: { confirm: t("decidim.vocdoni.admin.census.destroy.confirm") } %>
+          <% end %>
+
+          <% if @status.pending_generation? %>
+            <%= render partial: "generate_form", locals: { form: @form, election: election } %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @status.pending_upload? %>
+      <div class="card">
+        <div class="card-divider">
+          <h2 class="card-title">
+            <%= t("new.title", scope: "decidim.vocdoni.admin.census") %>
+          </h2>
+        </div>
+        <div class="card-section">
+          <%= render partial: "upload_form", locals: { form: @form, election: election } %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
-
-<% if @status.pending_upload? %>
-  <div class="card">
-    <div class="card-divider">
-      <h2 class="card-title">
-        <%= t("new.title", scope: "decidim.vocdoni.admin.census") %>
-      </h2>
-    </div>
-    <div class="card-section">
-      <%= render partial: "upload_form", locals: { form: @form, election: election } %>
-    </div>
-  </div>
-<% end %>
+</div>
+<div class="flex--cc">
+  <% if @status.count > 1 %>
+    <%= link_to t("save_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_election_calendar_path(election, election_id: election.id), class: "button form-general-submit" %>
+  <% else %>
+    <%= link_to t("save_button", scope: "decidim.vocdoni.admin.elections.new"), "", class: "button form-general-submit disabled" %>
+  <% end %>
+</div>
 
 <%= javascript_pack_tag "decidim_vocdoni_admin" %>
+<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
