@@ -507,9 +507,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
-    nokogiri (1.13.9-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.13.9-x86_64-linux)
+    nokogiri (1.13.9-x86_64-darwin)
       racc (~> 1.4)
     oauth (1.1.0)
       oauth-tty (~> 1.0, >= 1.0.1)
@@ -791,12 +789,8 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
-<<<<<<< HEAD
-  x86_64-darwin-21
-  x86_64-darwin-22
-=======
   arm64-darwin-22
->>>>>>> f029e45 (election setup with tabs)
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES

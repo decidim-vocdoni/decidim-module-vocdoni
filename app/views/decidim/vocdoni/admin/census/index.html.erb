@@ -4,7 +4,7 @@
 <div class="card-divider mb-s">
   <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.elections.new") %></h2>
 </div>
-<%= render partial: 'decidim/vocdoni/admin/shared/tab_links', locals: { active_class: "census", election: election, status: @status } %>
+<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "census", election: election, status: @status } %>
 <div class="card">
   <div class="card-section">
     <% if @status.pending_upload? %>
