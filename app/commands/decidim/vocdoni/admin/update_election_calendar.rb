@@ -19,23 +19,28 @@ module Decidim
           return broadcast(:invalid) if form.invalid?
 
           transaction do
-            change_election_calendar
+            update_election!
           end
 
           broadcast(:ok, election)
-        rescue StandardError => e
-          broadcast(:invalid, e.message)
         end
 
         private
 
         attr_reader :form, :election
 
-        def change_election_calendar
-          election.start_time = form.start_time
-          election.end_time = form.end_time
-          election.election_type = election_type_attributes
-          election.save!
+        def update_election!
+          attributes = {
+            start_time: form.start_time,
+            end_time: form.end_time
+          }.merge(election_type_attributes)
+
+          Decidim.traceability.update!(
+            election,
+            form.current_user,
+            attributes,
+            visibility: "all"
+          )
         end
 
         def election_type_attributes

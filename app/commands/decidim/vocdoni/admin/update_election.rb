@@ -43,9 +43,7 @@ module Decidim
           attributes = {
             title: form.title,
             description: form.description,
-            stream_uri: form.stream_uri,
-            start_time: form.start_time,
-            end_time: form.end_time
+            stream_uri: form.stream_uri
           }.merge(election_type_attributes)
 
           Decidim.traceability.update!(
@@ -59,10 +57,8 @@ module Decidim
         def election_type_attributes
           {
             election_type: {
-              auto_start: form.auto_start,
               interruptible: form.interruptible,
               dynamic_census: form.dynamic_census,
-              secret_until_the_end: form.secret_until_the_end,
               anonymous: form.anonymous
             }
           }
