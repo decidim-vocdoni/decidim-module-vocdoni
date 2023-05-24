@@ -44,7 +44,7 @@ module Decidim
             title: form.title,
             description: form.description,
             stream_uri: form.stream_uri
-          }.merge(election_type_attributes)
+          }
 
           Decidim.traceability.update!(
             election,
@@ -52,16 +52,6 @@ module Decidim
             attributes,
             visibility: "all"
           )
-        end
-
-        def election_type_attributes
-          {
-            election_type: {
-              interruptible: form.interruptible,
-              dynamic_census: form.dynamic_census,
-              anonymous: form.anonymous
-            }
-          }
         end
       end
     end

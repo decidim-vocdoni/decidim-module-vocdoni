@@ -13,9 +13,5 @@
     <div class="row column">
       <%= form.text_field :stream_uri %>
     </div>
-
-    <div class="row column">
-      <%= form.check_box :interruptible, { checked: election&.election_type&.fetch("interruptible", true) } %>
-    </div>
   </div>
 </div>

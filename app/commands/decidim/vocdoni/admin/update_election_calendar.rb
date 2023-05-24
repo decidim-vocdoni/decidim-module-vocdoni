@@ -47,7 +47,10 @@ module Decidim
           {
             election_type: {
               auto_start: form.auto_start,
-              secret_until_the_end: form.secret_until_the_end
+              secret_until_the_end: form.secret_until_the_end,
+              interruptible: form.interruptible,
+              dynamic_census: form.dynamic_census,
+              anonymous: form.anonymous
             }
           }
         end

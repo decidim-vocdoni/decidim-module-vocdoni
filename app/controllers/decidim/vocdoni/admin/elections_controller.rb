@@ -81,7 +81,7 @@ module Decidim
           PublishElection.call(election, current_user) do
             on(:ok) do
               flash[:notice] = I18n.t("admin.elections.publish.success", scope: "decidim.vocdoni")
-              redirect_to elections_path
+              redirect_to election_steps_path(election)
             end
           end
         end

@@ -1,7 +1,7 @@
 <% add_decidim_page_title(translated_attribute(election.title)) %>
 <% add_decidim_page_title(t(".title")) %>
 
-<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "edit_action", election: election } %>
+<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "basic_info", election: election } %>
 
 <%= decidim_form_for(@form, html: { class: "form edit_election" }) do |f| %>
   <%= render partial: "form", object: f, locals: { title: t(".title") } %>

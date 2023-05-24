@@ -1,3 +1,7 @@
+<div class="card-divider mb-s">
+  <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.elections.edit") %></h2>
+</div>
+
 <%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "results", election: election } %>
 
 <div class="card">
@@ -12,6 +16,9 @@
         </div>
         <div class="row column">
           <%= f.check_box :secret_until_the_end, { checked: election&.election_type&.fetch("secret_until_the_end", false) } %>
+        </div>
+        <div class="row column">
+          <%= f.check_box :interruptible, { checked: election&.election_type&.fetch("interruptible", true) } %>
         </div>
         <%= f.submit t("save_button", scope: "decidim.vocdoni.admin.elections.new") %>
       <% end %>

@@ -7,7 +7,7 @@ module Decidim
       class AnswersController < Admin::ApplicationController
         include Decidim::Proposals::Admin::Picker
         helper Decidim::ApplicationHelper
-        helper_method :election, :question, :answers, :answer
+        helper_method :election, :question, :answers, :answer, :status
 
         def index; end
 
@@ -87,6 +87,10 @@ module Decidim
 
         def answer
           answers.find(params[:id])
+        end
+
+        def status
+          @status = CsvCensus::Status.new(election)
         end
       end
     end
