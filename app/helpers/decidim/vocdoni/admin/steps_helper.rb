@@ -7,12 +7,12 @@ module Decidim
       #
       module StepsHelper
         def steps(current_step)
-          step_class = "text-success"
+          step_class = "is-complete"
 
           status_for_step(current_step).map do |step|
             if step == current_step
               step_class = "text-muted"
-              [step, "text-warning"]
+              [step, "is-complete"]
             else
               [step, step_class]
             end
