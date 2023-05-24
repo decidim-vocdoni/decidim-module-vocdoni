@@ -71,9 +71,9 @@
 </div>
 <div class="flex--cc">
   <% if @status.count > 1 %>
-    <%= link_to t("save_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_election_calendar_path(election, election_id: election.id), class: "button form-general-submit" %>
+    <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_election_calendar_path(election, election_id: election.id), class: "button form-general-submit" %>
   <% else %>
-    <%= link_to t("save_button", scope: "decidim.vocdoni.admin.elections.new"), "", class: "button form-general-submit disabled" %>
+    <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), "", class: "button form-general-submit disabled" %>
   <% end %>
 </div>
 

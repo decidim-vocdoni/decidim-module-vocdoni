@@ -133,6 +133,7 @@ en:
             basic_info: Basic info
             census: Census
             create: Create
+            next_button: Done, go to the next step
             publish: Publish
             publish_text: "If you are happy with your configuration (you can still
               edit all the steps), now it's time to publish and setup de election.<br><br>
