@@ -16,15 +16,11 @@ describe Decidim::Vocdoni::Admin::ElectionForm do
   let(:current_component) { create :vocdoni_component, participatory_space: participatory_process }
   let(:title) { Decidim::Faker::Localized.sentence(word_count: 3) }
   let(:description) { Decidim::Faker::Localized.sentence(word_count: 3) }
-  let(:start_time) { 1.day.from_now }
-  let(:end_time) { 3.days.from_now }
   let(:attachment_params) { nil }
   let(:attributes) do
     {
       title: title,
       description: description,
-      start_time: start_time,
-      end_time: end_time,
       attachment: attachment_params
     }
   end
@@ -39,30 +35,6 @@ describe Decidim::Vocdoni::Admin::ElectionForm do
 
   describe "when description is missing" do
     let(:description) { { ca: nil, es: nil } }
-
-    it { is_expected.not_to be_valid }
-  end
-
-  describe "when start_time is missing" do
-    let(:start_time) { nil }
-
-    it { is_expected.not_to be_valid }
-  end
-
-  describe "when end_time is missing" do
-    let(:end_time) { nil }
-
-    it { is_expected.not_to be_valid }
-  end
-
-  describe "when start_time is after end_time" do
-    let(:start_time) { end_time + 3.days }
-
-    it { is_expected.not_to be_valid }
-  end
-
-  describe "when start_time is equal to start_time" do
-    let(:start_time) { end_time }
 
     it { is_expected.not_to be_valid }
   end
