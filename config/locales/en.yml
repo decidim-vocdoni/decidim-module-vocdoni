@@ -149,6 +149,7 @@ en:
             title: New election
           publish:
             success: The election has been successfully published.
+            title: Publish election
           unpublish:
             success: The election has been successfully unpublished.
           update:

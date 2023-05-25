@@ -2,7 +2,10 @@
 <% add_decidim_page_title(t(".title")) %>
 
 <div class="card-divider mb-s">
-  <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.elections.edit") %></h2>
+  <h2 class="card-title">
+    <%= t("title", scope: "decidim.vocdoni.admin.elections.edit") %>
+    "<%= translated_attribute(election.title) %>"
+  </h2>
 </div>
 <%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "census", election: election, status: @status } %>
 <div class="card">
