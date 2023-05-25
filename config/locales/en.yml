@@ -47,8 +47,6 @@ en:
         destroy: Delete
         edit: Edit
         manage_answers: Manage answers
-        manage_census: Manage census
-        manage_questions: Manage questions
         manage_steps: Manage steps
         new: New %{name}
         preview: Preview
@@ -116,7 +114,6 @@ en:
             success: Election successfully deleted
           edit:
             title: Edit election
-            update: Update
           form:
             organization_time_zone: Check that the organization time zone is correct
               in the organization settings. The current configuration is %{time_zone}
@@ -132,7 +129,6 @@ en:
           new:
             basic_info: Basic info
             census: Census
-            create: Create
             next_button: Done, go to the next step
             publish: Publish
             publish_text: "If you are happy with your configuration (you can still

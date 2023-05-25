@@ -11,6 +11,12 @@
   <div class="card-section">
     <% if election.present? %>
       <%= decidim_form_for(@election_calendar_form, url: election_election_calendar_path(election), html: { class: "form new_election" }, method: :patch) do |f| %>
+        <div class="callout warning">
+          <p><%= t("organization_time_zone",
+                   time_zone: current_organization.time_zone,
+                   scope: "decidim.vocdoni.admin.elections.form",
+                   time: Time.zone.now) %></p>
+        </div>
         <div class="row column">
           <%= f.datetime_field :start_time %>
         </div>
