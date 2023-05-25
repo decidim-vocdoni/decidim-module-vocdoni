@@ -23,8 +23,8 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
 
       it {
         expect(subject).to eq([
-                                ["create_election", "text-success"],
-                                ["created", "text-success"],
+                                ["create_election", "is-complete"],
+                                ["created", "is-complete"],
                                 ["vote", "text-warning"],
                                 ["vote_ended", "text-muted"],
                                 ["results_published", "text-muted"]
@@ -37,10 +37,10 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
 
       it {
         expect(subject).to eq([
-                                ["create_election", "text-success"],
-                                ["created", "text-success"],
-                                ["vote", "text-success"],
-                                ["vote_ended", "text-success"],
+                                ["create_election", "is-complete"],
+                                ["created", "is-complete"],
+                                ["vote", "is-complete"],
+                                ["vote_ended", "is-complete"],
                                 ["results_published", "text-warning"]
                               ])
       }
@@ -51,9 +51,9 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
 
       it {
         expect(subject).to eq([
-                                ["create_election", "text-success"],
-                                ["created", "text-success"],
-                                ["vote", "text-success"],
+                                ["create_election", "is-complete"],
+                                ["created", "is-complete"],
+                                ["vote", "is-complete"],
                                 ["paused", "text-warning"],
                                 ["vote_ended", "text-muted"],
                                 ["results_published", "text-muted"]
@@ -66,9 +66,9 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
 
       it {
         expect(subject).to eq([
-                                ["create_election", "text-success"],
-                                ["created", "text-success"],
-                                ["vote", "text-success"],
+                                ["create_election", "is-complete"],
+                                ["created", "is-complete"],
+                                ["vote", "is-complete"],
                                 ["canceled", "text-warning"]
                               ])
       }
