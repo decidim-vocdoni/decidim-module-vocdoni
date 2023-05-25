@@ -100,8 +100,10 @@ describe "Admin manages census", :slow, type: :system do
     visit_component_admin
 
     within find("tr", text: translated(election.title)) do
-      page.find(".action-icon--manage-census").click
+      click_link "Edit"
     end
+
+    find("li.tabs-title a", text: "Census").click
   end
 
   def valid_census_file
