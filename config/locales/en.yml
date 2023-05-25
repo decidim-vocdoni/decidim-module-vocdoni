@@ -105,6 +105,11 @@ en:
             ready_to_setup_html: The census data is uploaded and confirmed. It's <a
               href="%{steps_path}">ready to setup</a>.
             title: Current census data
+        election_calendar:
+          edit:
+            organization_time_zone: Check that the organization time zone is correct
+              in the organization settings. The current configuration is %{time_zone}
+              (%{time}).
         elections:
           create:
             invalid: There was a problem creating this election
@@ -114,10 +119,6 @@ en:
             success: Election successfully deleted
           edit:
             title: Edit election
-          form:
-            organization_time_zone: Check that the organization time zone is correct
-              in the organization settings. The current configuration is %{time_zone}
-              (%{time}).
           index:
             description_html: With this voting module, you can easily organize a wide
               range of voting processes with high guarantees. The module utilizes
