@@ -15,20 +15,11 @@ describe Decidim::Vocdoni::Admin::UpdateElection do
       title: { en: "title" },
       description: { en: "description" },
       stream_uri: "https://example.org/stream",
-      start_time: start_time,
-      end_time: end_time,
       attachment: attachment_params,
       photos: current_photos,
-      add_photos: uploaded_photos,
-      auto_start: true,
-      interruptible: true,
-      dynamic_census: false,
-      secret_until_the_end: false,
-      anonymous: false
+      add_photos: uploaded_photos
     )
   end
-  let(:start_time) { 1.day.from_now }
-  let(:end_time) { 2.days.from_now }
   let(:current_photos) { [] }
   let(:uploaded_photos) { [] }
   let(:attachment_params) { nil }
@@ -38,19 +29,12 @@ describe Decidim::Vocdoni::Admin::UpdateElection do
     subject.call
     expect(translated(election.title)).to eq "title"
     expect(translated(election.description)).to eq "description"
-    expect(election.start_time).to be_within(1.second).of start_time
-    expect(election.end_time).to be_within(1.second).of end_time
-    expect(election.election_type.fetch("auto_start")).to be_truthy
-    expect(election.election_type.fetch("interruptible")).to be_truthy
-    expect(election.election_type.fetch("dynamic_census")).to be_falsy
-    expect(election.election_type.fetch("secret_until_the_end")).to be_falsy
-    expect(election.election_type.fetch("anonymous")).to be_falsy
   end
 
   it "traces the action", versioning: true do
     expect(Decidim.traceability)
       .to receive(:update!)
-      .with(election, user, hash_including(:title, :description, :start_time, :end_time), visibility: "all")
+      .with(election, user, hash_including(:title, :description), visibility: "all")
       .and_call_original
 
     expect { subject.call }.to change(Decidim::ActionLog, :count)
