@@ -62,7 +62,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
         hash_including({ census_ready: ["The census is <strong>not ready</strong>. <a href=#{router.election_census_path(election)}>Fix it</a>."] })
       )
       expect(subject.errors.messages).to match(
-        hash_including({ time_before: ["The setup is not being done <strong>at least 10 minutes</strong> before the election starts. <a href=#{router.edit_election_path(election)}>Fix it</a>."] })
+        hash_including({ time_before: ["The setup is not being done <strong>at least 10 minutes</strong> before the election starts. <a href=#{router.edit_election_election_calendar_path(election, election_id: election.id)}>Fix it</a>."] })
       )
     end
   end
