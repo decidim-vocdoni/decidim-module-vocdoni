@@ -139,6 +139,10 @@ en:
               be sent to the Vocdoni platform. This means it will be unmodifiable
               after that, due the use of the blockchain. After the setup, the election\ncan
               start (either manually or automatically depending on the configuration).\n"
+            publish_text_all_done: |-
+              The election is already published. You may still edit or unpublish it if you haven't setup the election yet.
+              <br><br>
+              To setup the election or to keep an eye on the election cycle, go to the steps page:
             publish_title: Congratulations! All done.
             questions: Questions
             results: Calendar and results
@@ -172,7 +176,7 @@ en:
             update: Update question
           index:
             minimum_answers_warning: Questions must have <strong>at least two answers</strong>
-               in order to go to the next step.
+              in order to go to the next step.
             title: Questions
           new:
             create: Create question

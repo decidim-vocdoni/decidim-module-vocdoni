@@ -7,11 +7,22 @@
 <%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "publish", election: election } %>
 <div class="card">
   <div class="card-section">
-    <h2><%= t("publish_title", scope: "decidim.vocdoni.admin.elections.new").html_safe %></h2>
-    <p><%= t("publish_text", scope: "decidim.vocdoni.admin.elections.new").html_safe %></p>
+    <% if election.published? %>
+      <div class="card-section">
+        <h2><%= t("publish_title", scope: "decidim.vocdoni.admin.elections.new").html_safe %></h2>
+        <p><%= t("publish_text_all_done", scope: "decidim.vocdoni.admin.elections.new").html_safe %></p>
+      </div>
+      <div class="card-section">
+        <div class="flex--sc">
+          <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), election_steps_path(election), class: "button form-general-submit"  %>
+        </div>
+      </div>
+    <% else %>
+      <p><%= t("publish_text", scope: "decidim.vocdoni.admin.elections.new").html_safe %></p>
+    <% end %>
   </div>
 </div>
-<% if allowed_to?(:publish, :election, election: election) && election.start_time.present? && election.end_time.present? %>
+<% if allowed_to?(:publish, :election, election: election) %>
   <div class="flex--cc">
     <% if election.published? %>
       <% if allowed_to?(:unpublish, :election, election: election) %>
