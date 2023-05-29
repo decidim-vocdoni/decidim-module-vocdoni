@@ -74,4 +74,16 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
       }
     end
   end
+
+  describe "#fix_it_button_with_icon" do
+    subject { helper.fix_it_button_with_icon(link, icon) }
+
+    let(:link) { "/admin/participatory_processes/123/elections/2/edit/" }
+    let(:icon) { "wrench" }
+
+    it "generates the fix it button with icon" do
+      expect(subject).to have_link("Fix it", href: link, class: "button tiny")
+      expect(subject).to have_selector("svg.icon--wrench")
+    end
+  end
 end

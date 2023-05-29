@@ -26,21 +26,22 @@ describe Decidim::Vocdoni::Admin::SetupForm do
 
   it "shows messages" do
     expect(subject.messages).to match(
-      hash_including({ minimum_answers: "Each question has <strong>at least two answers</strong>." })
-    )
+      hash_including(minimum_answers: hash_including(message: "Each question has <strong>at least two answers</strong>."))
+                                )
     expect(subject.messages).to match(
-      hash_including({ minimum_questions: "The election has <strong>at least one question</strong>." })
-    )
+      hash_including(minimum_questions: hash_including(message: "The election has <strong>at least one question</strong>."))
+                                )
     expect(subject.messages).to match(
-      hash_including({ published: "The election is <strong>published</strong>." })
-    )
+      hash_including(published: hash_including(message: "The election is <strong>published</strong>."))
+                                )
     expect(subject.messages).to match(
-      hash_including({ census_ready: "The census is <strong>ready</strong>." })
-    )
+      hash_including(census_ready: hash_including(message: "The census is <strong>ready</strong>."))
+                                )
     expect(subject.messages).to match(
-      hash_including({ time_before: "The setup is being done <strong>at least 10 minutes</strong> before the election starts." })
-    )
+      hash_including(time_before: hash_including(message: "The setup is being done <strong>at least 10 minutes</strong> before the election starts."))
+                                )
   end
+
 
   context "when the election is not ready for the setup" do
     let(:election) { create :vocdoni_election, start_time: 10.days.ago }
@@ -50,19 +51,19 @@ describe Decidim::Vocdoni::Admin::SetupForm do
     it "shows errors" do
       subject.valid?
       expect(subject.errors.messages).to match(
-        hash_including({ minimum_questions: ["The election <strong>must have at least one question</strong>. <a href=#{router.election_questions_path(election)}>Fix it</a>."] })
+        hash_including({ minimum_questions: ["The election <strong>must have at least one question</strong>."] })
       )
       expect(subject.errors.messages).to match(
-        hash_including({ minimum_answers: ["Questions must have <strong>at least two answers</strong>. <a href=#{router.election_questions_path(election)}>Fix it</a>."] })
+        hash_including({ minimum_answers: ["Questions must have <strong>at least two answers</strong>."] })
       )
       expect(subject.errors.messages).to match(
-        hash_including({ published: ["The election is <strong>not published</strong>. <a href=#{router.edit_election_path(election)}>Fix it</a>."] })
+        hash_including({ published: ["The election is <strong>not published</strong>."] })
       )
       expect(subject.errors.messages).to match(
-        hash_including({ census_ready: ["The census is <strong>not ready</strong>. <a href=#{router.election_census_path(election)}>Fix it</a>."] })
+        hash_including({ census_ready: ["The census is <strong>not ready</strong>."] })
       )
       expect(subject.errors.messages).to match(
-        hash_including({ time_before: ["The setup is not being done <strong>at least 10 minutes</strong> before the election starts. <a href=#{router.edit_election_election_calendar_path(election, election_id: election.id)}>Fix it</a>."] })
+        hash_including({ time_before: ["The setup is not being done <strong>at least 10 minutes</strong> before the election starts."] })
       )
     end
   end
@@ -73,11 +74,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
     end
 
     it "shows the message" do
-      expect(subject.messages).to match(
-        hash_including({
-                         time_before: "The setup is being done <strong>at least 33 minutes</strong> before the election starts."
-                       })
-      )
+      expect(subject.messages[:time_before][:message]).to eq("The setup is being done <strong>at least 33 minutes</strong> before the election starts.")
     end
   end
 
@@ -91,7 +88,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       subject.valid?
       expect(subject.errors.messages).to match(
         hash_including({
-                         minimum_answers: ["Questions must have <strong>at least two answers</strong>. <a href=#{router.election_questions_path(election)}>Fix it</a>."]
+                         minimum_answers: ["Questions must have <strong>at least two answers</strong>."]
                        })
       )
     end

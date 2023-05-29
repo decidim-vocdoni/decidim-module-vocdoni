@@ -188,16 +188,13 @@ en:
               voting technology of the Vocdoni Protocol. Please be patient, as the
               set-up process may take some time.
             errors:
-              census_ready: The census is <strong>not ready</strong>. <a href=%{link}>Fix
-                it</a>.
+              census_ready: The census is <strong>not ready</strong>.
+              fix_it_text: Fix it
               minimum_answers: Questions must have <strong>at least two answers</strong>.
-                <a href=%{link}>Fix it</a>.
               minimum_questions: The election <strong>must have at least one question</strong>.
-                <a href=%{link}>Fix it</a>.
-              published: The election is <strong>not published</strong>. <a href=%{link}>Fix
-                it</a>.
+              published: The election is <strong>not published</strong>.
               time_before: The setup is not being done <strong>at least %{minutes}
-                minutes</strong> before the election starts. <a href=%{link}>Fix it</a>.
+                minutes</strong> before the election starts.
             failed:
               details: View details
               message: Check the Web Development console log error message, fix the
