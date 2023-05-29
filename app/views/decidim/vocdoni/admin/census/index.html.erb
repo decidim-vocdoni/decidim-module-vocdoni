@@ -70,13 +70,19 @@
         </div>
       </div>
     <% end %>
+    <% unless status.name == "ready" %>
+      <div class="card-section">
+        <div class="callout alert">
+          <%= t("census_warning", scope: "decidim.vocdoni.admin.census.index").html_safe %>
+        </div>
+      </div>
+    <% end %>
   </div>
+
 </div>
 <div class="flex--cc">
-  <% if @status.count > 0 %>
+  <% if status.name == "ready" %>
     <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_election_calendar_path(election, election_id: election.id), class: "button form-general-submit" %>
-  <% else %>
-    <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), "", class: "button form-general-submit disabled" %>
   <% end %>
 </div>
 

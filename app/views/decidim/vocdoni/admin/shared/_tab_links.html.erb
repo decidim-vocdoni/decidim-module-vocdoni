@@ -10,10 +10,10 @@
       <%= link_to t("census", scope: "decidim.vocdoni.admin.elections.new"), election_census_path(election), class: election.minimum_answers? ? "" : "disabled" %>
     </li>
     <li class="tabs-title <%= active_class == "results" ? "is-active" : "" %>">
-      <%= link_to t("results", scope: "decidim.vocdoni.admin.elections.new"), edit_election_election_calendar_path(election, election_id: election.id), class: status.count > 0 ? "" : "disabled" %>
+      <%= link_to t("results", scope: "decidim.vocdoni.admin.elections.new"), edit_election_election_calendar_path(election, election_id: election.id), class: status.name == "ready" ? "" : "disabled" %>
     </li>
     <li class="tabs-title <%= active_class == "publish" ? "is-active" : "" %>">
-      <%= link_to t("publish", scope: "decidim.vocdoni.admin.elections.new"), publish_page_election_path(election), class: (election.start_time.present? && election.end_time.present?) ? "" : "disabled" %>
+      <%= link_to t("publish", scope: "decidim.vocdoni.admin.elections.new"), publish_page_election_path(election), class: (election.start_time.present? && election.end_time.present? &&  status.name == "ready") ? "" : "disabled" %>
     </li>
   </ul>
 </div>

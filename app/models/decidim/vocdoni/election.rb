@@ -70,6 +70,8 @@ module Decidim::Vocdoni
     #
     # Returns a boolean.
     def minimum_minutes_before_start?
+      return unless start_time
+
       start_time > (Time.zone.at(Decidim::Vocdoni.config.setup_minimum_minutes_before_start.minutes.from_now))
     end
 
