@@ -7,10 +7,14 @@ module Decidim
         helper_method :election, :status
 
         def edit
+          enforce_permission_to :update, :election, election: election
+
           @election_calendar_form = ElectionCalendarForm.from_model(election)
         end
 
         def update
+          enforce_permission_to :update, :election, election: election
+
           @election_calendar_form = ElectionCalendarForm.from_params(params)
 
           UpdateElectionCalendar.call(@election_calendar_form, election) do
