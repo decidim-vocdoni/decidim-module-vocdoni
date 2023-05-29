@@ -27,21 +27,20 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   it "shows messages" do
     expect(subject.messages).to match(
       hash_including(minimum_answers: hash_including(message: "Each question has <strong>at least two answers</strong>."))
-                                )
+    )
     expect(subject.messages).to match(
       hash_including(minimum_questions: hash_including(message: "The election has <strong>at least one question</strong>."))
-                                )
+    )
     expect(subject.messages).to match(
       hash_including(published: hash_including(message: "The election is <strong>published</strong>."))
-                                )
+    )
     expect(subject.messages).to match(
       hash_including(census_ready: hash_including(message: "The census is <strong>ready</strong>."))
-                                )
+    )
     expect(subject.messages).to match(
       hash_including(time_before: hash_including(message: "The setup is being done <strong>at least 10 minutes</strong> before the election starts."))
-                                )
+    )
   end
-
 
   context "when the election is not ready for the setup" do
     let(:election) { create :vocdoni_election, start_time: 10.days.ago }
