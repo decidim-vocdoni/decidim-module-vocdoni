@@ -94,8 +94,9 @@ en:
           new:
             file: ".csv file with emails data"
             info: 'Must be a file in CSV format with only two columns, one with the
-              email address and another with the date of birth (format YYYY-MM-DD).
-              It must be separated with a semicolon (;):'
+              email address and another with the value of a token that the user will
+              have to introduce in order to vote. It must be separated with a semicolon
+              (;):'
             submit: Upload file
             title: Upload a new census
           status:
@@ -171,7 +172,7 @@ en:
             update: Update question
           index:
             minimum_answers_warning: Questions must have <strong>at least two answers</strong>
-              i in order to go to the nex step.
+               in order to go to the next step.
             title: Questions
           new:
             create: Create question
