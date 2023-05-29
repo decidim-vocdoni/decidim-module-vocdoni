@@ -94,6 +94,7 @@ describe "Election setup wizard", :slow, type: :system do
 
         it "goes to the next step" do
           expect(page).to have_content("Upload a new census")
+          expect(page).not_to have_content(I18n.t("questions.index.minimum_answers_warning", scope: "decidim.vocdoni.admin"))
         end
       end
 
@@ -108,6 +109,7 @@ describe "Election setup wizard", :slow, type: :system do
         it "doesn't go to the next step" do
           expect(page).to have_css("a.button.disabled", text: "Done, go to the next step")
           expect(page).to have_css("li.tabs-title a.disabled", text: "Census")
+          expect(page).to have_content(I18n.t("questions.index.minimum_answers_warning", scope: "decidim.vocdoni.admin"))
         end
       end
     end

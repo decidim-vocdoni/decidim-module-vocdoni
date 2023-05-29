@@ -171,6 +171,8 @@ en:
             title: Edit question
             update: Update question
           index:
+            minimum_answers_warning: Questions must have <strong>at least two answers</strong>
+              i in order to go to the nex step.
             title: Questions
           new:
             create: Create question
