@@ -32,7 +32,7 @@
           <% if form.errors.include?(key) %>
             <% Array(form.errors[key]).each do |error| %>
               <td><%= icon "x", class: "text-alert", role: "img", "aria-hidden": true %> <%= error.to_s.html_safe %></td>
-              <td class="table-list__actions"><%= fix_it_button_with_icon(value[:link], 'wrench') %></td>
+              <td class="table-list__actions"><%= fix_it_button_with_icon(value[:link], "wrench") %></td>
             <% end %>
           <% else %>
             <td><%= icon "check", class: "text-success", role: "img", "aria-hidden": true %>&nbsp;<%= value[:message].html_safe %></td>
