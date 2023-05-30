@@ -59,12 +59,12 @@
         </table>
       </div>
     </div>
+    <% unless election.minimum_answers? %>
+      <div class="callout alert">
+        <%= t("minimum_answers_warning", scope: "decidim.vocdoni.admin.questions.index").html_safe %>
+      </div>
+    <% end %>
   </div>
-  <% unless election.minimum_answers? %>
-    <div class="callout alert">
-      <%= t("minimum_answers_warning", scope: "decidim.vocdoni.admin.questions.index").html_safe %>
-    </div>
-  <% end %>
 </div>
 <div class="flex--cc">
   <% if allowed_to?(:index, :census, election: election) && election.minimum_answers? %>
