@@ -88,10 +88,6 @@ module Decidim
         def answer
           answers.find(params[:id])
         end
-
-        def status
-          @status = CsvCensus::Status.new(election)
-        end
       end
     end
   end

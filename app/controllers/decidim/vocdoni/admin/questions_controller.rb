@@ -85,10 +85,6 @@ module Decidim
         def question
           questions.find(params[:id])
         end
-
-        def status
-          @status = CsvCensus::Status.new(election)
-        end
       end
     end
   end

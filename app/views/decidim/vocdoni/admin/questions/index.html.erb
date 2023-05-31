@@ -68,10 +68,7 @@
 </div>
 <div class="flex--cc">
   <% if allowed_to?(:index, :census, election: election) && election.minimum_answers? %>
-    <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), election_census_path(election), class:
-      "button form-general-submit" %>
-  <% else %>
-    <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), "#", class: "button form-general-submit disabled" %>
+    <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), election_census_path(election), class: "button form-general-submit" %>
   <% end %>
 </div>
 <%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

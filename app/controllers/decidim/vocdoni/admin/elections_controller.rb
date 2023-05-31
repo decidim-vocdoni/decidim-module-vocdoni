@@ -118,10 +118,6 @@ module Decidim
         def election
           @election ||= elections.find_by(id: params[:id])
         end
-
-        def status
-          @status = CsvCensus::Status.new(election)
-        end
       end
     end
   end

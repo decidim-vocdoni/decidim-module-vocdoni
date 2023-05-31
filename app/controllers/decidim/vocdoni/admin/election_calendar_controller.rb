@@ -34,10 +34,6 @@ module Decidim
         def election
           @election ||= Decidim::Vocdoni::Election.find(params[:election_id])
         end
-
-        def status
-          @status = CsvCensus::Status.new(election)
-        end
       end
     end
   end
