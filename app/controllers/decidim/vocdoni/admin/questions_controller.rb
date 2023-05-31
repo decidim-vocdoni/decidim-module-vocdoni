@@ -5,7 +5,7 @@ module Decidim
     module Admin
       # This controller allows the create or update questions for an election.
       class QuestionsController < Admin::ApplicationController
-        helper_method :election, :questions, :question, :status
+        helper_method :election, :questions, :question
 
         def new
           enforce_permission_to :create, :question, election: election

@@ -5,7 +5,7 @@ module Decidim
     module Admin
       # This controller allows the create or update an election.
       class ElectionsController < Admin::ApplicationController
-        helper_method :elections, :election, :status
+        helper_method :elections, :election
 
         def index
           # flash.now[:alert] ||= I18n.t("elections.index.no_bulletin_board", scope: "decidim.vocdoni.admin").html_safe unless Decidim::Elections.bulletin_board.configured?

@@ -4,7 +4,7 @@ module Decidim
   module Vocdoni
     module Admin
       class ElectionCalendarController < Admin::ApplicationController
-        helper_method :election, :status
+        helper_method :election
 
         def edit
           enforce_permission_to :update, :election, election: election

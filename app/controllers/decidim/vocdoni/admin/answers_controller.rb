@@ -7,7 +7,7 @@ module Decidim
       class AnswersController < Admin::ApplicationController
         include Decidim::Proposals::Admin::Picker
         helper Decidim::ApplicationHelper
-        helper_method :election, :question, :answers, :answer, :status
+        helper_method :election, :question, :answers, :answer
 
         def index; end
 
