@@ -1,5 +1,5 @@
 import { initVocdoniClient } from "src/decidim/vocdoni/admin/utils/init_vocdoni_client";
-import { ElectionStatus } from "@vocdoni/sdk";
+import {ElectionStatus} from "@vocdoni/sdk";
 
 const ELECTION_VOTES_SELECTOR = ".js-votes-count";
 const INTERUPTIBLE_CONTINUE_BUTTON_SELECTOR = ".js-vocdoni-interruptible[data-action='continue']";
@@ -71,7 +71,7 @@ const handleElectionStatus = (electionMetadata) => {
     cancelButton.classList.remove("hide");
     endButton.classList.remove("hide");
     break;
-  case ElectionStatus.READY:
+  case ElectionStatus.ONGOING:
     pauseButton.classList.remove("hide");
     cancelButton.classList.remove("hide");
     endButton.classList.remove("hide");
