@@ -1,5 +1,5 @@
 import { initVocdoniClient } from "src/decidim/vocdoni/admin/utils/init_vocdoni_client";
-import {ElectionStatus, ElectionStatusReady} from "@vocdoni/sdk";
+import {ElectionStatus} from "@vocdoni/sdk";
 
 const ELECTION_VOTES_SELECTOR = ".js-votes-count";
 const INTERUPTIBLE_CONTINUE_BUTTON_SELECTOR = ".js-vocdoni-interruptible[data-action='continue']";
