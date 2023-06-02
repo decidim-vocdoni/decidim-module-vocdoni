@@ -2,7 +2,7 @@
 <div class="card-divider mb-s">
   <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.elections.edit") %></h2>
 </div>
-<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "questions", election: election, status: status } %>
+<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "questions", election: election, status: census_status } %>
 <%= decidim_form_for([election, @form], html: { class: "form new_question" }) do |f| %>
   <%= render partial: "form", object: f, locals: { title: t(".title") } %>
 

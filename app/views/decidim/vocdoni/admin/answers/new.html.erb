@@ -1,5 +1,5 @@
 <div class="card">
-  <%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "questions", election: election, status: status } %>
+  <%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "questions", election: election, status: census_status } %>
   <% add_decidim_page_title(t(".title")) %>
 
   <%= decidim_form_for([election, question, @form], html: { class: "form new_answer" }) do |f| %>
