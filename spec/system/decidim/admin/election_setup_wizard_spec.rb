@@ -107,7 +107,7 @@ describe "Election setup wizard", :slow, type: :system do
         end
 
         it "doesn't go to the next step" do
-          expect(page).to have_css("a.button.disabled", text: "Done, go to the next step")
+          expect(page).not_to have_css("a.button", text: "Done, go to the next step")
           expect(page).to have_css("li.tabs-title a.disabled", text: "Census")
           expect(page).to have_content("Questions must have at least two answers in order to go to the next step.")
         end
