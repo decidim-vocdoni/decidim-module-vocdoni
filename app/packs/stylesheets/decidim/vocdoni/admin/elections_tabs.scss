@@ -54,6 +54,10 @@
   z-index: 1000;
 }
 
+.progress-indicator > li.text-warning::before {
+  background: #ffae00;;
+}
+
 .progress-indicator > li::after {
   content: '';
   position: absolute;
