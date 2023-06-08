@@ -1,10 +1,4 @@
-<div class="card-divider mb-s">
-  <h2 class="card-title">
-    <%= t("title", scope: "decidim.vocdoni.admin.elections.edit") %>
-    "<%= translated_attribute(election.title) %>"
-  </h2>
-</div>
-
+<%= render partial: "decidim/vocdoni/admin/shared/election_title" %>
 <%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "results", election: election } %>
 
 <div class="card">

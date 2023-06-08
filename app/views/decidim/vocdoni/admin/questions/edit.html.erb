@@ -1,6 +1,5 @@
-<% add_decidim_page_title(translated_attribute(question.title)) %>
-<% add_decidim_page_title(t(".title")) %>
-
+<%= render partial: "decidim/vocdoni/admin/shared/election_title" %>
+<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "questions", election: election, status: census_status } %>
 <%= decidim_form_for([election, @form], html: { class: "form edit_question" }) do |f| %>
   <%= render partial: "form", object: f, locals: { title: t(".title") } %>
 
@@ -8,3 +7,4 @@
     <%= f.submit t(".update") %>
   </div>
 <% end %>
+<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
