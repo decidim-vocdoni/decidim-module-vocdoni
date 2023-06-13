@@ -2,8 +2,7 @@
   <div class="card-divider">
     <h2 class="card-title">
       <%= title %>
-      <%= t("for_question", scope: "decidim.vocdoni.admin.answers.index") %>
-      <%= link_to  "\"#{translated_attribute(question.title)}\"", edit_election_question_path(election, question) %>
+      <%= question_with_link(question, election).html_safe %>
     </h2>
   </div>
 

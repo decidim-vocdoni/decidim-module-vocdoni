@@ -27,12 +27,6 @@ module Decidim
             [:census_ready, { link: router.election_census_path(election) }, census.ready_to_setup?]
           ].freeze
         end
-        #
-        # def messages
-        #   @messages ||= validations.to_h do |message, t_args, _valid|
-        #     [message, I18n.t("steps.create_election.requirements.#{message}", **t_args, scope: "decidim.vocdoni.admin")]
-        #   end
-        # end
 
         def messages
           @messages ||= validations.to_h do |message, t_args, _valid|
