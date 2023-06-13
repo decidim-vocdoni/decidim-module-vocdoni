@@ -7,7 +7,9 @@ module Decidim
       #
       module StepsWizardHelper
         def tab_class(tab_name, active_class)
-          "tabs-title #{active_class == tab_name ? "is-active" : ""}"
+          css_classes = ["tabs-title"]
+          css_classes << "is-active" if active_class == tab_name
+          css_classes.join(" ")
         end
 
         # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
