@@ -10,7 +10,7 @@
     <% if election.published? %>
       <div class="card-section">
         <h2><%= t("publish_title", scope: "decidim.vocdoni.admin.elections.new").html_safe %></h2>
-        <p><%= t("publish_text_all_done", scope: "decidim.vocdoni.admin.elections.new").html_safe %></p>
+        <%= t("publish_text_all_done_html", scope: "decidim.vocdoni.admin.elections.new") %>
       </div>
       <div class="card-section">
         <div class="flex--sc">
@@ -18,7 +18,7 @@
         </div>
       </div>
     <% else %>
-      <p><%= t("publish_text", scope: "decidim.vocdoni.admin.elections.new").html_safe %></p>
+      <%= t("publish_text_html", scope: "decidim.vocdoni.admin.elections.new") %>
     <% end %>
   </div>
 </div>

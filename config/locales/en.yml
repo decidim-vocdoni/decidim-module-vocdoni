@@ -135,17 +135,14 @@ en:
             census: Census
             next_button: Done, go to the next step
             publish: Publish
-            publish_text: "If you are happy with your configuration (you can still
-              edit all the steps), now it's time to publish and setup de election.<br><br>
-              \nTo setup the election you must publish it first.<br><br> \nThe setup
-              process is when the election configuration, including the census, will
-              be sent to the Vocdoni platform. This means it will be unmodifiable
-              after that, due the use of the blockchain. After the setup, the election\ncan
-              start (either manually or automatically depending on the configuration).\n"
-            publish_text_all_done: |-
-              The election is already published. You may still edit or unpublish it if you haven't setup the election yet.
-              <br><br>
-              To setup the election or to keep an eye on the election cycle, go to the steps page:
+            publish_text_all_done_html: |-
+              <p>The election is already published. You may still edit or unpublish it if you haven't setup the election yet.</p>
+              <p>To setup the election or to keep an eye on the election cycle, go to the steps page:</p>
+            publish_text_html: |-
+              <p>If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.</p>
+               <p>To setup the election you must publish it first.</p>
+               <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
+                after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
             publish_title: Congratulations! All done.
             questions: Questions
             results: Calendar and results
