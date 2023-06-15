@@ -21,9 +21,7 @@ module Decidim
 
         def fix_it_button_with_icon(link, icon)
           link_to link, class: "button tiny" do
-            concat icon(icon)
-            concat " "
-            concat " #{I18n.t("decidim.vocdoni.admin.steps.create_election.errors.fix_it_text")}"
+            "#{icon(icon)} #{I18n.t("decidim.vocdoni.admin.steps.create_election.errors.fix_it_text")}".html_safe
           end
         end
 
