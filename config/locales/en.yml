@@ -113,6 +113,7 @@ en:
             organization_time_zone: Check that the organization time zone is correct
               in the organization settings. The current configuration is %{time_zone}
               (%{time}).
+            title: Edit election calendar
         elections:
           create:
             invalid: There was a problem creating this election
@@ -150,6 +151,8 @@ en:
             title: New election
           publish:
             success: The election has been successfully published.
+            title: Publish election
+          publish_page:
             title: Publish election
           unpublish:
             success: The election has been successfully unpublished.
