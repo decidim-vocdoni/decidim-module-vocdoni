@@ -25,7 +25,7 @@ module Decidim
           resources :census, only: [:index, :create] do
             delete :destroy_all, on: :collection, as: :destroy_all
           end
-          resources :election_calendar, only: [:edit, :update]
+          resource :calendar, controller: "election_calendar", only: [:edit, :update]
         end
         root to: "elections#index"
       end

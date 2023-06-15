@@ -10,7 +10,7 @@
       <%= link_to t("census", scope: "decidim.vocdoni.admin.elections.new"), election_census_path(election), class: tab_link_class("census", election) %>
     </li>
     <li class="<%= tab_class("results", active_class) %>">
-      <%= link_to t("results", scope: "decidim.vocdoni.admin.elections.new"), edit_election_election_calendar_path(election, election_id: election.id), class: tab_link_class("results", election) %>
+      <%= link_to t("results", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: tab_link_class("results", election) %>
     </li>
     <li class="<%= tab_class("publish", active_class) %>">
       <%= link_to t("publish", scope: "decidim.vocdoni.admin.elections.new"), publish_page_election_path(election), class: tab_link_class("publish", election) %>
