@@ -27,6 +27,11 @@ module Decidim
           end
         end
 
+        def question_with_link(question, election)
+          link = link_to("\"#{translated_attribute(question&.title)}\"", edit_election_question_path(election, question))
+          t("for_question_html", question: link, scope: "decidim.vocdoni.admin.answers.index")
+        end
+
         private
 
         def census_ready_or_minimum_answers?(election)
@@ -47,11 +52,6 @@ module Decidim
 
         def census_status
           @census_status ||= CsvCensus::Status.new(election)&.name
-        end
-
-        def question_with_link(question, election)
-          link = link_to("\"#{translated_attribute(question&.title)}\"", edit_election_question_path(election, question))
-          t("for_question_html", question: link, scope: "decidim.vocdoni.admin.answers.index")
         end
       end
     end
