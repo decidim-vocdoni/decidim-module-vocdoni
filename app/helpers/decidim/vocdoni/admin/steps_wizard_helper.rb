@@ -12,22 +12,38 @@ module Decidim
           css_classes.join(" ")
         end
 
-        # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         def tab_link_class(tab_name, election)
           case tab_name
           when "questions"
             election.present? ? "" : "disabled"
           when "census"
-            election&.minimum_answers? || census_status == "ready" ? "" : "disabled"
+            census_ready_or_minimum_answers?(election) ? "" : "disabled"
           when "results"
-            census_status == "ready" ? "" : "disabled"
+            census_ready? ? "" : "disabled"
           when "publish"
-            election.start_time.present? && election.end_time.present? && census_status == "ready" ? "" : "disabled"
+            publishable?(election) ? "" : "disabled"
           else
             ""
           end
         end
-        # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+        private
+
+        def census_ready_or_minimum_answers?(election)
+          election&.minimum_answers? || census_status == "ready"
+        end
+
+        def census_ready?
+          census_status == "ready"
+        end
+
+        def times_set?(election)
+          election.start_time.present? && election.end_time.present?
+        end
+
+        def publishable?(election)
+          census_ready? && times_set?(election)
+        end
 
         def census_status
           @census_status ||= CsvCensus::Status.new(election)&.name
