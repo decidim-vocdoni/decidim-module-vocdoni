@@ -49,6 +49,24 @@ describe Decidim::Vocdoni::Admin::Permissions do
     it { is_expected.to be true }
   end
 
+  describe "election calendar" do
+    let(:action) do
+      { scope: :admin, action: :edit, subject: :election_calendar }
+    end
+
+    context "when everything is ok" do
+      let(:election) { create :vocdoni_election, :with_census, component: elections_component }
+
+      it { is_expected.to be true }
+    end
+
+    context "when election has no census" do
+      let(:election) { create :vocdoni_election, component: elections_component }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe "election update" do
     let(:action) do
       { scope: :admin, action: :update, subject: :election }
@@ -58,12 +76,27 @@ describe Decidim::Vocdoni::Admin::Permissions do
   end
 
   describe "election publish" do
-    let(:election) { create :vocdoni_election, component: elections_component }
     let(:action) do
       { scope: :admin, action: :publish, subject: :election }
     end
 
-    it { is_expected.to be true }
+    context "when everything is ok" do
+      let(:election) { create :vocdoni_election, :with_census, component: elections_component }
+
+      it { is_expected.to be true }
+    end
+
+    context "when election has no census" do
+      let(:election) { create :vocdoni_election, component: elections_component }
+
+      it { is_expected.to be false }
+    end
+
+    context "when election has no calendar" do
+      let(:election) { create :vocdoni_election, :with_census, end_time: nil, component: elections_component }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe "election delete" do
@@ -75,6 +108,7 @@ describe Decidim::Vocdoni::Admin::Permissions do
   end
 
   describe "election unpublish" do
+    let(:election) { create :vocdoni_election, :with_census, :published, component: elections_component }
     let(:action) do
       { scope: :admin, action: :unpublish, subject: :election }
     end
