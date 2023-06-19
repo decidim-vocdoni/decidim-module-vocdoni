@@ -3,25 +3,21 @@
 module Decidim
   module Vocdoni
     module Admin
-      # Custom helpers, scoped to the vocdoni admin engine.
-      #
       module StepsWizardHelper
         def tab_class(tab_name, active_class)
-          css_classes = ["tabs-title"]
-          css_classes << "is-active" if active_class == tab_name
-          css_classes.join(" ")
+          active_class == tab_name ? "tabs-title is-active" : "tabs-title"
         end
 
         def tab_link_class(tab_name, election)
           case tab_name
           when "questions"
-            election.present? ? "" : "disabled"
+            css_class_for(election.ready_for_questions_form?)
           when "census"
-            census_ready_or_minimum_answers?(election) ? "" : "disabled"
-          when "results"
-            census_ready? ? "" : "disabled"
+            css_class_for(election.ready_for_census_form?)
+          when "calendar"
+            css_class_for(election.ready_for_calendar_form?)
           when "publish"
-            publishable?(election) ? "" : "disabled"
+            css_class_for(election.ready_for_publish_form?)
           else
             ""
           end
@@ -32,26 +28,20 @@ module Decidim
           t("for_question_html", question: link, scope: "decidim.vocdoni.admin.answers.index")
         end
 
+        def tabs_info
+          {
+            "basic_info" => { path: edit_election_path(election), translation: "basic_info" },
+            "questions" => { path: election_questions_path(election), translation: "questions" },
+            "census" => { path: election_census_path(election), translation: "census" },
+            "calendar" => { path: edit_election_calendar_path(election), translation: "results" },
+            "publish" => { path: publish_page_election_path(election), translation: "publish" }
+          }
+        end
+
         private
 
-        def census_ready_or_minimum_answers?(election)
-          election&.minimum_answers? || census_status == "ready"
-        end
-
-        def census_ready?
-          census_status == "ready"
-        end
-
-        def times_set?(election)
-          election.start_time.present? && election.end_time.present?
-        end
-
-        def publishable?(election)
-          census_ready? && times_set?(election)
-        end
-
-        def census_status
-          @census_status ||= CsvCensus::Status.new(election)&.name
+        def css_class_for(condition)
+          condition ? "" : "disabled"
         end
       end
     end

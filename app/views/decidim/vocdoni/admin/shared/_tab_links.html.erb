@@ -1,19 +1,9 @@
 <div class="card">
   <ul class="tabs">
-    <li class="<%= tab_class("basic_info", active_class) %>">
-      <%= link_to t("basic_info", scope: "decidim.vocdoni.admin.elections.new"), edit_election_path(election), class: tab_link_class("basic_info", election) %>
-    </li>
-    <li class="<%= tab_class("questions", active_class) %>">
-      <%= link_to t("questions", scope: "decidim.vocdoni.admin.elections.new"), election_questions_path(election), class: tab_link_class("questions", election) %>
-    </li>
-    <li class="<%= tab_class("census", active_class) %>">
-      <%= link_to t("census", scope: "decidim.vocdoni.admin.elections.new"), election_census_path(election), class: tab_link_class("census", election) %>
-    </li>
-    <li class="<%= tab_class("results", active_class) %>">
-      <%= link_to t("results", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: tab_link_class("results", election) %>
-    </li>
-    <li class="<%= tab_class("publish", active_class) %>">
-      <%= link_to t("publish", scope: "decidim.vocdoni.admin.elections.new"), publish_page_election_path(election), class: tab_link_class("publish", election) %>
-    </li>
+    <% tabs_info.each do |tab_name, info| %>
+      <li class="<%= tab_class(tab_name, active_class) %>">
+        <%= link_to t(info[:translation], scope: "decidim.vocdoni.admin.elections.new"), info[:path], class: tab_link_class(tab_name, election) %>
+      </li>
+    <% end %>
   </ul>
 </div>

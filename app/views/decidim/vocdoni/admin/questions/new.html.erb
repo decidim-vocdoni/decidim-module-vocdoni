@@ -1,6 +1,6 @@
 <% add_decidim_page_title(t(".title")) %>
 <%= render partial: "decidim/vocdoni/admin/shared/election_title" %>
-<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "questions", election: election, status: census_status } %>
+<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "questions", election: election, status: election.census_status} %>
 <%= decidim_form_for([election, @form], html: { class: "form new_question" }) do |f| %>
   <%= render partial: "form", object: f, locals: { title: t(".title") } %>
 

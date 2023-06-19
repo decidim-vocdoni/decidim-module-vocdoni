@@ -73,7 +73,7 @@
 
 </div>
 <div class="flex--cc">
-  <% if status.name == "ready" %>
+  <% if election.ready_for_calendar_form? %>
     <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: "button form-general-submit" %>
   <% end %>
 </div>

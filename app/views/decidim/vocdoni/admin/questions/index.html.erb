@@ -59,7 +59,7 @@
   </div>
 </div>
 <div class="flex--cc">
-  <% if allowed_to?(:index, :census, election: election) && election.minimum_answers? %>
+  <% if allowed_to?(:index, :census, election: election) && election.ready_for_census_form? %>
     <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), election_census_path(election), class: "button form-general-submit" %>
   <% end %>
 </div>
