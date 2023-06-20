@@ -19,6 +19,11 @@ ignore_unused:
   - "decidim.vocdoni.elections.show.preview"
   - "decidim.vocdoni.elections.show.verify.{already_voted,verify_here,will_verify}"
   - "decidim.vocdoni.models.answer.fields.proposals"
+  - "decidim.vocdoni.admin.elections.new.basic_info"
+  - "decidim.vocdoni.admin.elections.new.census"
+  - "decidim.vocdoni.admin.elections.new.publish"
+  - "decidim.vocdoni.admin.elections.new.questions"
+  - "decidim.vocdoni.admin.elections.new.results"
   # To be removed once the header image is no longer necessary by the Vocdoni SDK
   - "decidim.admin.shared.gallery.gallery_legend"
 
