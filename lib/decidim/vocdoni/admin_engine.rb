@@ -13,7 +13,7 @@ module Decidim
         resources :wallets, only: [:new, :create]
         resources :elections do
           member do
-            get :publish_page
+            get :publish_page, path: "publish_election"
             put :publish
             put :unpublish
             post :answers_values
