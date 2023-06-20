@@ -91,14 +91,14 @@ module Decidim::Vocdoni
     #
     # Returns a boolean.
     def ready_for_census_form?
-      minimum_answers? || census_ready?
+      minimum_answers?
     end
 
     # Public: Checks if the election is ready for the calendar step
     #
     # Returns a boolean.
     def ready_for_calendar_form?
-      census_ready?
+      census_ready? && ready_for_census_form?
     end
 
     # Public: Checks if the election is ready for the publish step

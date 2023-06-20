@@ -56,6 +56,8 @@ describe Decidim::Vocdoni::Admin::Permissions do
 
     context "when everything is ok" do
       let(:election) { create :vocdoni_election, :with_census, component: elections_component }
+      let(:question) { create :vocdoni_question, election: election }
+      let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
 
       it { is_expected.to be true }
     end
@@ -82,12 +84,14 @@ describe Decidim::Vocdoni::Admin::Permissions do
 
     context "when everything is ok" do
       let(:election) { create :vocdoni_election, :with_census, component: elections_component }
+      let(:question) { create :vocdoni_question, election: election }
+      let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
 
       it { is_expected.to be true }
     end
 
     context "when election has no census" do
-      let(:election) { create :vocdoni_election, component: elections_component }
+      let!(:election) { create :vocdoni_election, component: elections_component }
 
       it { is_expected.to be false }
     end
@@ -109,6 +113,8 @@ describe Decidim::Vocdoni::Admin::Permissions do
 
   describe "election unpublish" do
     let(:election) { create :vocdoni_election, :with_census, :published, component: elections_component }
+    let(:question) { create :vocdoni_question, election: election }
+    let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
     let(:action) do
       { scope: :admin, action: :unpublish, subject: :election }
     end

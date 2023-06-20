@@ -3,6 +3,8 @@
 require "spec_helper"
 
 describe Decidim::Vocdoni::Admin::StepsWizardHelper do
+  let(:election) { double }
+
   describe "#tab_class" do
     it "returns the correct class for the active tab" do
       tab_name = "questions"
@@ -20,16 +22,22 @@ describe Decidim::Vocdoni::Admin::StepsWizardHelper do
   end
 
   describe "#tab_link_class" do
+    before do
+      allow(election).to receive(:ready_for_questions_form?).and_return(true)
+      allow(election).to receive(:ready_for_census_form?).and_return(true)
+      allow(election).to receive(:ready_for_calendar_form?).and_return(true)
+      allow(election).to receive(:ready_for_publish_form?).and_return(true)
+    end
+
     it 'returns an empty string for the "questions" tab with a present election' do
       tab_name = "questions"
-      election = double(present?: true)
       result = helper.tab_link_class(tab_name, election)
       expect(result).to eq("")
     end
 
     it 'returns "disabled" for the "questions" tab with a nil election' do
       tab_name = "questions"
-      election = nil
+      allow(election).to receive(:ready_for_questions_form?).and_return(false)
       result = helper.tab_link_class(tab_name, election)
       expect(result).to eq("disabled")
     end
@@ -37,7 +45,6 @@ describe Decidim::Vocdoni::Admin::StepsWizardHelper do
 
   describe "#question_with_link" do
     let(:question) { double(title: "Test question") }
-    let(:election) { double }
 
     it "returns the correct formatted question with link" do
       allow(helper).to receive(:translated_attribute).with(question.title).and_return("Test question")

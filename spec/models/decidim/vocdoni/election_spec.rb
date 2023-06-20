@@ -145,4 +145,102 @@ describe Decidim::Vocdoni::Election do
       expect(subject.explorer_vote_url).to eq "https://example.org/processes/show/#/12345"
     end
   end
+
+  describe "#ready_for_questions_form?" do
+    it "returns true when the election is present" do
+      expect(subject.ready_for_questions_form?).to be true
+    end
+  end
+
+  describe "#times_set?" do
+    context "when start and end times are present" do
+      it "returns true" do
+        expect(subject.times_set?).to be true
+      end
+    end
+
+    context "when start time or end time is not present" do
+      subject(:election) { build(:vocdoni_election, start_time: nil, end_time: 1.day.from_now) }
+
+      it "returns false" do
+        expect(subject.times_set?).to be false
+      end
+    end
+  end
+
+  describe "#census_ready?" do
+    context "when census status is ready" do
+      let(:status) { instance_double(Decidim::Vocdoni::CsvCensus::Status, name: "ready") }
+
+      before do
+        allow(Decidim::Vocdoni::CsvCensus::Status).to receive(:new).with(election).and_return(status)
+      end
+
+      it "returns true" do
+        expect(subject.census_ready?).to be true
+      end
+    end
+  end
+
+  describe "#ready_for_census_form?" do
+    let(:question) { create(:vocdoni_question, election: election) }
+
+    context "when minimum_answers? returns true" do
+      let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+
+      it "returns true" do
+        expect(subject.ready_for_census_form?).to be true
+      end
+    end
+
+    context "when minimum_answers? returns false" do
+      let!(:answer) { create(:vocdoni_election_answer, question: question) }
+
+      it "returns false" do
+        expect(subject.ready_for_census_form?).to be false
+      end
+    end
+  end
+
+  describe "#ready_for_calendar_form?" do
+    context "when census is ready" do
+      subject(:election) { build(:vocdoni_election, :with_census) }
+
+      let(:question) { create(:vocdoni_question, election: election) }
+      let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+
+      it "returns true" do
+        expect(subject.ready_for_calendar_form?).to be true
+      end
+    end
+
+    context "when census is not upload" do
+      subject(:election) { build(:vocdoni_election) }
+
+      it "returns false" do
+        expect(subject.ready_for_calendar_form?).to be false
+      end
+    end
+  end
+
+  describe "#ready_for_publish_form?" do
+    context "when ready for calendar form and times are set" do
+      subject(:election) { build(:vocdoni_election, :with_census) }
+
+      let(:question) { create(:vocdoni_question, election: election) }
+      let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+
+      it "returns true" do
+        expect(subject.ready_for_publish_form?).to be true
+      end
+
+      context "when times are not set" do
+        subject(:election) { build(:vocdoni_election, :with_census, start_time: nil, end_time: nil) }
+
+        it "returns false" do
+          expect(subject.ready_for_publish_form?).to be false
+        end
+      end
+    end
+  end
 end
