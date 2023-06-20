@@ -73,11 +73,6 @@ module Decidim::Vocdoni
       present?
     end
 
-    # Public: Returns the status of the election census
-    def census_status
-      @census_status ||= CsvCensus::Status.new(self)&.name
-    end
-
     # Public: Checks if the start and end times for the election are set.
     #
     # Returns a boolean indicating if both the start and end times are present.
@@ -151,6 +146,12 @@ module Decidim::Vocdoni
     # Returns a string with the full URL
     def explorer_vote_url
       "https://#{Decidim::Vocdoni.explorer_vote_domain}/processes/show/#/#{vocdoni_election_id}"
+    end
+
+    private
+
+    def census_status
+      @census_status ||= CsvCensus::Status.new(self)&.name
     end
   end
 end

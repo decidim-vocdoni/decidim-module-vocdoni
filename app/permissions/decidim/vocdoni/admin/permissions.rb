@@ -58,10 +58,6 @@ module Decidim
           @current_vocdoni_wallet ||= Decidim::Vocdoni::Wallet.find_by(decidim_organization_id: user.organization.id)
         end
 
-        def census_status
-          CsvCensus::Status.new(election)&.name
-        end
-
         def allow_if_not_blocked
           toggle_allow(election && !election.blocked?)
         end
@@ -69,23 +65,23 @@ module Decidim
         def allow_question_step
           return if election.blank?
 
-          toggle_allow(election.present?)
+          toggle_allow(election.ready_for_questions_form?)
         end
 
         def allow_calendar_step
-          toggle_allow(census_status == "ready")
+          toggle_allow(election.ready_for_calendar_form?)
         end
 
         def allow_publish_step
           return if election.blank?
 
-          toggle_allow(election&.start_time.present? && election&.end_time.present? && census_status == "ready")
+          toggle_allow(election.ready_for_publish_form?)
         end
 
         def allow_census_step
           return if election.blank?
 
-          toggle_allow(election&.minimum_answers? || census_status == "ready")
+          toggle_allow(election.ready_for_census_form?)
         end
       end
     end
