@@ -43,8 +43,6 @@ es:
         destroy: Eliminar
         edit: Editar
         manage_answers: Gestionar respuestas
-        manage_census: Gestionar censo
-        manage_questions: Gestionar preguntas
         manage_steps: Gestionar pasos de la votación
         new: Nueva %{name}
         preview: Previsualizar
@@ -63,6 +61,8 @@ es:
             title: Editar respuesta
             update: Actualizar respuesta
           index:
+            back: Back to questions
+            for_question_html: for question %{question}
             title: Respuestas
           new:
             create: Crear respuesta
@@ -84,17 +84,22 @@ es:
           destroy_all:
             success: Se han eliminado todos los datos del censo
           index:
+            census_warning: The census is not ready yet. You can <b>upload and confirm</b> it from the census page.
             info: Para crear el censo para una elección de Vocdoni, debes subir el censo y confirmarlo.
             title: Censo para una votación de Vocdoni
           new:
             file: "Archivo .csv con los correos electrónicos"
-            info: 'Debe ser un archivo en formato CSV con sólo dos columnas, una con la dirección de correo electrónico y otra con la fecha de nacimiento (formato AAAA-MM-DD). Debe estar separado con punto y coma (;):'
+            info: 'Must be a file in CSV format with only two columns, one with the email address and another with the value of a token that the user will have to introduce in order to vote. It must be separated with a semicolon (;):'
             submit: Subir archivo
             title: Subir un censo nuevo
           status:
             data: Hay %{count} registros cargados en total. La última fecha de subida fue el %{due_date}. Si quieres modificar el censo (por ejemplo, agregar más participantes), es necesario eliminar primero todos los datos cargados.
-            ready_to_setup_html: Los datos del censo se han subido y confirmado. Está <a href="%{steps_path}">todo listo para configurar la elección</a>.
+            ready_to_setup_html: The census data is uploaded and confirmed.
             title: Datos de censo actuales
+        election_calendar:
+          edit:
+            organization_time_zone: Check that the organization time zone is correct in the organization settings. The current configuration is %{time_zone} (%{time}).
+            title: Edit election calendar
         elections:
           create:
             invalid: Se ha producido un error al crear la elección
@@ -104,17 +109,32 @@ es:
             success: La elección se ha eliminado correctamente
           edit:
             title: Editar elección
-            update: Actualizar
-          form:
-            organization_time_zone: Compruebe que la zona horaria de la organización es correcta en la configuración de la organización. La configuración actual es %{time_zone} (%{time}).
           index:
             description_html: Con este módulo de votación, puedes organizar fácilmente una amplia gama de procesos de votación con altas garantías. El módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones con los más altos estándares de seguridad, verificación universal, resistencia a la censura y anonimato. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Más información sobre Vocdoni</a>.
             title: Elecciones (Vocdoni)
           new:
-            create: Crear
+            basic_info: Basic info
+            census: Census
+            next_button: Done, go to the next step
+            publish: Publish
+            publish_text_all_done_html: |-
+              <p>The election is already published. You may still edit or unpublish it if you haven't setup the election yet.</p>
+              <p>To setup the election or to keep an eye on the election cycle, go to the steps page:</p>
+            publish_text_html: |-
+              <p>If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.</p>
+              <p>To setup the election you must publish it first.</p>
+              <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
+              after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
+            publish_title: Congratulations! All done.
+            questions: Questions
+            results: Calendar and results
+            save_button: Save and go to the next step
             title: Nueva elección
           publish:
             success: La elección se ha publicado correctamente.
+            title: Publish election
+          publish_page:
+            title: Publish election
           unpublish:
             success: La elección se ha despublicado correctamente.
           update:
@@ -139,6 +159,7 @@ es:
             title: Editar pregunta
             update: Actualizar pregunta
           index:
+            minimum_answers_warning: Questions must have <strong>at least two answers</strong> in order to go to the next step.
             title: Preguntas
           new:
             create: Crear una pregunta
@@ -153,11 +174,12 @@ es:
           create_election:
             description: El proceso de votación es seguro utilizando la avanzada tecnología digital de votación del Protocolo de Vocdoni. Por favor, ten paciencia, ya que el proceso de configuración puede tardar algún tiempo.
             errors:
-              census_ready: El censo <strong>no está listo</strong>. <a href=%{link}>Solucionarlo</a>.
-              minimum_answers: Las preguntas deben tener <strong>al menos dos respuestas</strong>. <a href=%{link}>Solucionarlo</a>.
-              minimum_questions: La elección <strong>debe tener al menos una pregunta</strong>. <a href=%{link}>Solucionarlo</a>.
-              published: La elección <strong>no está publicada</strong>. <a href=%{link}>Solucionarlo</a>.
-              time_before: La configuración no se está haciendo <strong>al menos %{minutes} minutos</strong> antes de que comience la elección. <a href=%{link}>Solucionarlo</a>.
+              census_ready: The census is <strong>not ready</strong>.
+              fix_it_text: Fix it
+              minimum_answers: Questions must have <strong>at least two answers</strong>.
+              minimum_questions: The election <strong>must have at least one question</strong>.
+              published: The election is <strong>not published</strong>.
+              time_before: The setup is not being done <strong>at least %{minutes} minutes</strong> before the election starts.
             failed:
               details: Ver detalles
               message: Comprueba el mensaje de error de registro de la consola de Desarrollo Web, corrige el problema y vuelve a intentarlo.
