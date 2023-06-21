@@ -7,7 +7,7 @@ module Decidim
       #
       module StepsHelper
         def steps(current_step)
-          step_class = "text-success"
+          step_class = "is-complete"
 
           status_for_step(current_step).map do |step|
             if step == current_step
@@ -16,6 +16,12 @@ module Decidim
             else
               [step, step_class]
             end
+          end
+        end
+
+        def fix_it_button_with_icon(link, icon)
+          link_to link, class: "button tiny" do
+            "#{icon(icon)} #{I18n.t("decidim.vocdoni.admin.steps.create_election.errors.fix_it_text")}".html_safe
           end
         end
 

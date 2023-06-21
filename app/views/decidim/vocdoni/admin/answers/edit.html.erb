@@ -1,10 +1,15 @@
 <% add_decidim_page_title(translated_attribute(answer.title)) %>
 <% add_decidim_page_title(t(".title")) %>
 
-<%= decidim_form_for([election, question, @form], html: { class: "form edit_answer" }) do |f| %>
-  <%= render partial: "form", object: f, locals: { title: t(".title") } %>
+<%= render partial: "decidim/vocdoni/admin/shared/election_title" %>
+<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "questions", election: election } %>
+<div class="card">
+  <%= decidim_form_for([election, question, @form], html: { class: "form edit_answer" }) do |f| %>
+    <%= render partial: "form", object: f, locals: { title: t(".title") } %>
 
-  <div class="button--double form-general-submit">
-    <%= f.submit t(".update") %>
-  </div>
-<% end %>
+    <div class="button--double form-general-submit">
+      <%= f.submit t(".update") %>
+    </div>
+  <% end %>
+</div>
+<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

@@ -1,0 +1,9 @@
+<div class="card">
+  <ul class="tabs">
+    <% tabs_info.each do |tab_name, info| %>
+      <li class="<%= tab_class(tab_name, active_class) %>">
+        <%= link_to t(info[:translation], scope: "decidim.vocdoni.admin.elections.new"), info[:path], class: tab_link_class(tab_name, election) %>
+      </li>
+    <% end %>
+  </ul>
+</div>

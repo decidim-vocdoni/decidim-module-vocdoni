@@ -4,7 +4,7 @@ module Decidim
   module Vocdoni
     module Admin
       class CensusController < Admin::ApplicationController
-        helper_method :elections, :election, :census_path
+        helper_method :elections, :election, :census_path, :status
 
         def index
           enforce_permission_to :index, :census, election: election

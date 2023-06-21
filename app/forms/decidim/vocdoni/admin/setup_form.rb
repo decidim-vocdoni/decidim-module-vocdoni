@@ -21,15 +21,15 @@ module Decidim
           @validations ||= [
             [:minimum_questions, { link: router.election_questions_path(election) }, election.questions.any?],
             [:minimum_answers, { link: router.election_questions_path(election) }, election.minimum_answers?],
-            [:published, { link: router.edit_election_path(election) }, election.published_at.present?],
-            [:time_before, { link: router.edit_election_path(election), minutes: time_before_minutes }, election.minimum_minutes_before_start?],
+            [:published, { link: router.publish_page_election_path(election) }, election.published_at.present?],
+            [:time_before, { link: router.edit_election_calendar_path(election), minutes: time_before_minutes }, election.minimum_minutes_before_start?],
             [:census_ready, { link: router.election_census_path(election) }, census.ready_to_setup?]
           ].freeze
         end
 
         def messages
           @messages ||= validations.to_h do |message, t_args, _valid|
-            [message, I18n.t("steps.create_election.requirements.#{message}", **t_args, scope: "decidim.vocdoni.admin")]
+            [message, { message: I18n.t("steps.create_election.requirements.#{message}", **t_args, scope: "decidim.vocdoni.admin"), link: t_args[:link] }]
           end
         end
 

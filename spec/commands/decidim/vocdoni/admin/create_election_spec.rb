@@ -14,24 +14,15 @@ describe Decidim::Vocdoni::Admin::CreateElection do
       invalid?: invalid,
       title: { en: "title" },
       description: { en: "description" },
-      start_time: start_time,
-      end_time: end_time,
       stream_uri: "https://example.org/stream",
       attachment: attachment_params,
       photos: photos,
       add_photos: uploaded_photos,
-      auto_start: true,
-      interruptible: true,
-      dynamic_census: false,
-      secret_until_the_end: false,
-      anonymous: false,
       current_user: user,
       current_component: current_component,
       current_organization: organization
     )
   end
-  let(:start_time) { 1.day.from_now }
-  let(:end_time) { 2.days.from_now }
   let(:invalid) { false }
   let(:attachment_params) { nil }
   let(:photos) { [] }
@@ -48,13 +39,6 @@ describe Decidim::Vocdoni::Admin::CreateElection do
     expect(translated(election.title)).to eq "title"
     expect(translated(election.description)).to eq "description"
     expect(election.stream_uri).to eq "https://example.org/stream"
-    expect(election.start_time).to be_within(1.second).of start_time
-    expect(election.end_time).to be_within(1.second).of end_time
-    expect(election.election_type.fetch("auto_start")).to be_truthy
-    expect(election.election_type.fetch("interruptible")).to be_truthy
-    expect(election.election_type.fetch("dynamic_census")).to be_falsy
-    expect(election.election_type.fetch("secret_until_the_end")).to be_falsy
-    expect(election.election_type.fetch("anonymous")).to be_falsy
   end
 
   it "sets the component" do
@@ -68,7 +52,7 @@ describe Decidim::Vocdoni::Admin::CreateElection do
       .with(
         Decidim::Vocdoni::Election,
         user,
-        hash_including(:title, :description, :end_time, :start_time, :component),
+        hash_including(:title, :description, :component),
         visibility: "all"
       )
       .and_call_original

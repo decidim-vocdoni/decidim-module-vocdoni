@@ -10,24 +10,13 @@ module Decidim
 
         translatable_attribute :title, String
         translatable_attribute :description, String
-        attribute :start_time, Decidim::Attributes::TimeWithZone
-        attribute :end_time, Decidim::Attributes::TimeWithZone
         attribute :stream_uri, String
         attribute :attachment, AttachmentForm
-
-        # Election Type attributes
-        attribute :auto_start, Boolean, default: true
-        attribute :interruptible, Boolean, default: true
-        attribute :dynamic_census, Boolean, default: false
-        attribute :secret_until_the_end, Boolean, default: false
-        attribute :anonymous, Boolean, default: false
 
         attachments_attribute :photos
 
         validates :title, translatable_presence: true
         validates :description, translatable_presence: true
-        validates :start_time, presence: true, date: { before: :end_time }
-        validates :end_time, presence: true, date: { after: :start_time }
         validate :notify_missing_attachment_if_errored
 
         private

@@ -47,8 +47,6 @@ en:
         destroy: Delete
         edit: Edit
         manage_answers: Manage answers
-        manage_census: Manage census
-        manage_questions: Manage questions
         manage_steps: Manage steps
         new: New %{name}
         preview: Preview
@@ -67,6 +65,8 @@ en:
             title: Edit answer
             update: Update answer
           index:
+            back: Back to questions
+            for_question_html: for question %{question}
             title: Answers
           new:
             create: Create answer
@@ -89,23 +89,31 @@ en:
           destroy_all:
             success: All census data have been deleted
           index:
+            census_warning: The census is not ready yet. You can <b>upload and confirm</b>
+              it from the census page.
             info: For setting up the census for a Vocdoni Election, you need to upload
               the census and confirm it.
             title: Census for a Vocdoni election
           new:
             file: ".csv file with emails data"
             info: 'Must be a file in CSV format with only two columns, one with the
-              email address and another with the date of birth (format YYYY-MM-DD).
-              It must be separated with a semicolon (;):'
+              email address and another with the value of a token that the user will
+              have to introduce in order to vote. It must be separated with a semicolon
+              (;):'
             submit: Upload file
             title: Upload a new census
           status:
             data: There are %{count} records loaded in total. Last upload date was
               on %{due_date}. If you want to change the census (for instance, adding
               more participants), its necessary to first delete all census data.
-            ready_to_setup_html: The census data is uploaded and confirmed. It's <a
-              href="%{steps_path}">ready to setup</a>.
+            ready_to_setup_html: The census data is uploaded and confirmed.
             title: Current census data
+        election_calendar:
+          edit:
+            organization_time_zone: Check that the organization time zone is correct
+              in the organization settings. The current configuration is %{time_zone}
+              (%{time}).
+            title: Edit election calendar
         elections:
           create:
             invalid: There was a problem creating this election
@@ -115,11 +123,6 @@ en:
             success: Election successfully deleted
           edit:
             title: Edit election
-            update: Update
-          form:
-            organization_time_zone: Check that the organization time zone is correct
-              in the organization settings. The current configuration is %{time_zone}
-              (%{time}).
           index:
             description_html: With this voting module, you can easily organize a wide
               range of voting processes with high guarantees. The module utilizes
@@ -129,10 +132,28 @@ en:
               noopener">Learn more about Vocdoni</a>.
             title: Elections (Vocdoni)
           new:
-            create: Create
+            basic_info: Basic info
+            census: Census
+            next_button: Done, go to the next step
+            publish: Publish
+            publish_text_all_done_html: |-
+              <p>The election is already published. You may still edit or unpublish it if you haven't setup the election yet.</p>
+              <p>To setup the election or to keep an eye on the election cycle, go to the steps page:</p>
+            publish_text_html: |-
+              <p>If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.</p>
+               <p>To setup the election you must publish it first.</p>
+               <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
+                after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
+            publish_title: Congratulations! All done.
+            questions: Questions
+            results: Calendar and results
+            save_button: Save and go to the next step
             title: New election
           publish:
             success: The election has been successfully published.
+            title: Publish election
+          publish_page:
+            title: Publish election
           unpublish:
             success: The election has been successfully unpublished.
           update:
@@ -157,6 +178,8 @@ en:
             title: Edit question
             update: Update question
           index:
+            minimum_answers_warning: Questions must have <strong>at least two answers</strong>
+              in order to go to the next step.
             title: Questions
           new:
             create: Create question
@@ -174,16 +197,13 @@ en:
               voting technology of the Vocdoni Protocol. Please be patient, as the
               set-up process may take some time.
             errors:
-              census_ready: The census is <strong>not ready</strong>. <a href=%{link}>Fix
-                it</a>.
+              census_ready: The census is <strong>not ready</strong>.
+              fix_it_text: Fix it
               minimum_answers: Questions must have <strong>at least two answers</strong>.
-                <a href=%{link}>Fix it</a>.
               minimum_questions: The election <strong>must have at least one question</strong>.
-                <a href=%{link}>Fix it</a>.
-              published: The election is <strong>not published</strong>. <a href=%{link}>Fix
-                it</a>.
+              published: The election is <strong>not published</strong>.
               time_before: The setup is not being done <strong>at least %{minutes}
-                minutes</strong> before the election starts. <a href=%{link}>Fix it</a>.
+                minutes</strong> before the election starts.
             failed:
               details: View details
               message: Check the Web Development console log error message, fix the

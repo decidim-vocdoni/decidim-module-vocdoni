@@ -2,13 +2,13 @@
 <% add_decidim_page_title(t(".title")) %>
 
 <div class="card js-vocdoni-client"
-  data-default-locale="<%= current_organization.default_locale %>"
-  data-answers-values-election-path="<%= answers_values_election_path(election) %>"
-  data-vocdoni-wallet-private-key="<%= @current_vocdoni_wallet.private_key %>"
-  <% if @election.vocdoni_election_id %>
-    data-vocdoni-election-id="<%= @election.vocdoni_election_id %>"
-  <% end %>
-  data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>">
+     data-default-locale="<%= current_organization.default_locale %>"
+     data-answers-values-election-path="<%= answers_values_election_path(election) %>"
+     data-vocdoni-wallet-private-key="<%= @current_vocdoni_wallet.private_key %>"
+     <% if @election.vocdoni_election_id %>
+     data-vocdoni-election-id="<%= @election.vocdoni_election_id %>"
+     <% end %>
+     data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>">
 
   <div class="card-divider">
     <h2 class="card-title">
@@ -18,12 +18,14 @@
   </div>
 
   <div class="card-section">
-    <% steps(current_step).each_with_index do |step, i| %>
-      <% if i > 0 %>&nbsp;&gt;&nbsp;<% end %>
-      <span class="<%= step.last %>"><%= t("steps.#{step.first}.title", scope: "decidim.vocdoni.admin") %></span>
-    <% end %>
+    <ol class="progress-indicator">
+      <% steps(current_step).each_with_index do |step, i| %>
+        <li class="<%= step.last %>" data-step="">
+            <span><%= t("steps.#{step.first}.title", scope: "decidim.vocdoni.admin") %></span>
+        </li>
+      <% end %>
+    </ol>
   </div>
-
   <%= render partial: "available_credits" %>
 </div>
 

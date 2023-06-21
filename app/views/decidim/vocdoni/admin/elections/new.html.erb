@@ -1,9 +1,22 @@
 <% add_decidim_page_title(t(".title")) %>
 
+<div class="card-divider mb-s">
+  <h2 class="card-title"><%= t(".title") %></h2>
+</div>
+<% scope = "decidim.vocdoni.admin.elections.new" %>
+<ul class="tabs">
+  <li class="tabs-title is-active"><%= link_to t("basic_info", scope: scope), new_election_path %></li>
+  <li class="tabs-title"><a href="" class="disabled"><%= t("questions", scope: scope) %></a></li>
+  <li class="tabs-title"><a href="" class="disabled"><%= t("census", scope: scope) %></a></li>
+  <li class="tabs-title"><a href="" class="disabled"><%= t("results", scope: scope) %></a></li>
+  <li class="tabs-title"><a href="" class="disabled"><%= t("publish", scope: scope) %></a>
+  </li>
+</ul>
+
 <%= decidim_form_for(@form, html: { class: "form new_election" }) do |f| %>
   <%= render partial: "form", object: f, locals: { title: t(".title") } %>
-
   <div class="button--double form-general-submit">
-    <%= f.submit t(".create") %>
+    <%= f.submit t(".save_button") %>
   </div>
 <% end %>
+<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

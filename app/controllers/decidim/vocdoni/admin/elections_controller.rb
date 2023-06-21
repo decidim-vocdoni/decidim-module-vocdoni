@@ -23,7 +23,7 @@ module Decidim
           CreateElection.call(@form) do
             on(:ok) do
               flash[:notice] = I18n.t("elections.create.success", scope: "decidim.vocdoni.admin")
-              redirect_to elections_path
+              redirect_to election_questions_path(election)
             end
 
             on(:invalid) do
@@ -45,7 +45,7 @@ module Decidim
           UpdateElection.call(@form, election) do
             on(:ok) do
               flash[:notice] = I18n.t("elections.update.success", scope: "decidim.vocdoni.admin")
-              redirect_to elections_path
+              redirect_to election_questions_path(election)
             end
 
             on(:invalid) do
@@ -71,13 +71,17 @@ module Decidim
           redirect_to elections_path
         end
 
+        def publish_page
+          enforce_permission_to :publish, :election, election: election
+        end
+
         def publish
           enforce_permission_to :publish, :election, election: election
 
           PublishElection.call(election, current_user) do
             on(:ok) do
               flash[:notice] = I18n.t("admin.elections.publish.success", scope: "decidim.vocdoni")
-              redirect_to elections_path
+              redirect_to publish_page_election_path(election)
             end
           end
         end
@@ -88,7 +92,7 @@ module Decidim
           UnpublishElection.call(election, current_user) do
             on(:ok) do
               flash[:notice] = I18n.t("admin.elections.unpublish.success", scope: "decidim.vocdoni")
-              redirect_to elections_path
+              redirect_to publish_page_election_path(election)
             end
           end
         end

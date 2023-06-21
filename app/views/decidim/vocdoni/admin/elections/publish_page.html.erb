@@ -1,0 +1,44 @@
+<% add_decidim_page_title(t(".title")) %>
+
+<div class="card-divider mb-s">
+  <h2 class="card-title">
+    <%= t("title", scope: "decidim.vocdoni.admin.elections.publish") %>
+    "<%= translated_attribute(election.title) %>"
+  </h2>
+</div>
+<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "publish", election: election } %>
+<div class="card">
+  <div class="card-section">
+    <% if election.published? %>
+      <div class="card-section">
+        <h2><%= t("publish_title", scope: "decidim.vocdoni.admin.elections.new") %></h2>
+        <%= t("publish_text_all_done_html", scope: "decidim.vocdoni.admin.elections.new") %>
+      </div>
+      <div class="card-section">
+        <div class="flex--sc">
+          <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), election_steps_path(election), class: "button form-general-submit" %>
+        </div>
+      </div>
+    <% else %>
+      <%= t("publish_text_html", scope: "decidim.vocdoni.admin.elections.new") %>
+    <% end %>
+  </div>
+</div>
+<% if allowed_to?(:publish, :election, election: election) %>
+  <div class="flex--cc">
+    <% if election.published? %>
+      <% if allowed_to?(:unpublish, :election, election: election) %>
+        <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), url_for(action: :unpublish, id: election, controller: "elections"), class: "button muted", method: :put %>
+      <% else %>
+        <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), "#", class: "button muted disabled" %>
+      <% end %>
+    <% else %>
+      <% if allowed_to?(:publish, :election, election: election) %>
+        <%= link_to t("actions.publish", scope: "decidim.vocdoni"), url_for(action: :publish, id: election, controller: "elections"), class: "button hollow", method: :put %>
+      <% else %>
+        <%= link_to t("actions.publish", scope: "decidim.vocdoni"), "#", class: "button hollow disabled" %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

@@ -66,10 +66,54 @@ module Decidim::Vocdoni
       questions.any? && questions.all? { |question| question.answers.size > 1 }
     end
 
+    # Public: Checks if the election is ready for the questions step
+    #
+    # Returns a boolean.
+    def ready_for_questions_form?
+      present?
+    end
+
+    # Public: Checks if the start and end times for the election are set.
+    #
+    # Returns a boolean indicating if both the start and end times are present.
+    def times_set?
+      start_time.present? && end_time.present?
+    end
+
+    # Public: Checks if the census status for the election is "ready".
+    #
+    # Returns a boolean indicating if the census status equals "ready".
+    def census_ready?
+      census_status == "ready"
+    end
+
+    # Public: Checks if the election is ready for the census step
+    #
+    # Returns a boolean.
+    def ready_for_census_form?
+      minimum_answers?
+    end
+
+    # Public: Checks if the election is ready for the calendar step
+    #
+    # Returns a boolean.
+    def ready_for_calendar_form?
+      census_ready? && ready_for_census_form?
+    end
+
+    # Public: Checks if the election is ready for the publish step
+    #
+    # Returns a boolean.
+    def ready_for_publish_form?
+      ready_for_calendar_form? && times_set?
+    end
+
     # Public: Checks if the election start_time is minimum some minutes later than the present time
     #
     # Returns a boolean.
     def minimum_minutes_before_start?
+      return unless start_time
+
       start_time > (Time.zone.at(Decidim::Vocdoni.config.setup_minimum_minutes_before_start.minutes.from_now))
     end
 
@@ -102,6 +146,12 @@ module Decidim::Vocdoni
     # Returns a string with the full URL
     def explorer_vote_url
       "https://#{Decidim::Vocdoni.explorer_vote_domain}/processes/show/#/#{vocdoni_election_id}"
+    end
+
+    private
+
+    def census_status
+      @census_status ||= CsvCensus::Status.new(self)&.name
     end
   end
 end

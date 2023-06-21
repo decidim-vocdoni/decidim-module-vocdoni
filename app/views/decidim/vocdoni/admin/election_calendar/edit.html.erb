@@ -1,0 +1,33 @@
+<% add_decidim_page_title(t(".title")) %>
+
+<%= render partial: "decidim/vocdoni/admin/shared/election_title" %>
+<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "calendar", election: election
+} %>
+
+<div class="card">
+  <div class="card-section">
+    <% if election.present? %>
+      <%= decidim_form_for(@election_calendar_form, url: election_calendar_path(election), html: { class: "form new_election" }, method: :patch) do |f| %>
+        <div class="callout warning">
+          <p><%= t(".organization_time_zone",
+                   time_zone: current_organization.time_zone,
+                   time: Time.zone.now) %></p>
+        </div>
+        <div class="row column">
+          <%= f.datetime_field :start_time %>
+        </div>
+        <div class="row column">
+          <%= f.datetime_field :end_time %>
+        </div>
+        <div class="row column">
+          <%= f.check_box :secret_until_the_end, { checked: election&.election_type&.fetch("secret_until_the_end", false) } %>
+        </div>
+        <div class="row column">
+          <%= f.check_box :interruptible, { checked: election&.election_type&.fetch("interruptible", true) } %>
+        </div>
+        <%= f.submit t("save_button", scope: "decidim.vocdoni.admin.elections.new") %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

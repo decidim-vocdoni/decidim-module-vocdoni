@@ -1,24 +1,13 @@
 <% add_decidim_page_title(translated_attribute(election.title)) %>
 <% add_decidim_page_title(t(".title")) %>
 
+<%= render partial: "decidim/vocdoni/admin/shared/election_title" %>
+<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "basic_info", election: election } %>
 <%= decidim_form_for(@form, html: { class: "form edit_election" }) do |f| %>
   <%= render partial: "form", object: f, locals: { title: t(".title") } %>
 
   <div class="button--double form-general-submit">
-    <%= f.submit t(".update") %>
-
-    <% if election.published? %>
-      <% if allowed_to?(:unpublish, :election, election: election) %>
-        <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), url_for(action: :unpublish, id: election, controller: "elections"), class: "button muted", method: :put %>
-      <% else %>
-        <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), "#", class: "button muted disabled" %>
-      <% end %>
-    <% else %>
-      <% if allowed_to?(:publish, :election, election: election) %>
-        <%= link_to t("actions.publish", scope: "decidim.vocdoni"), url_for(action: :publish, id: election, controller: "elections"), class: "button hollow", method: :put %>
-      <% else %>
-        <%= link_to t("actions.publish", scope: "decidim.vocdoni"), "#", class: "button hollow disabled" %>
-      <% end %>
-    <% end %>
+    <%= f.submit t("save_button", scope: "decidim.vocdoni.admin.elections.new") %>
   </div>
 <% end %>
+<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
