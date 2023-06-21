@@ -75,9 +75,9 @@ module Decidim::Vocdoni
 
     # Public: Checks if the start and end times for the election are set.
     #
-    # Returns a boolean indicating if both the start and end times are present.
+    # Returns a boolean indicating if both the start time or manual_start and end time are present.
     def times_set?
-      start_time.present? && end_time.present?
+      (start_time.present? || manual_start) && end_time.present?
     end
 
     # Public: Checks if the census status for the election is "ready".

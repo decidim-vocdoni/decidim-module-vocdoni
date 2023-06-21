@@ -14,7 +14,10 @@
                    time: Time.zone.now) %></p>
         </div>
         <div class="row column">
-          <%= f.datetime_field :start_time %>
+          <%= f.check_box :manual_start, { checked: election&.manual_start } %>
+        </div>
+        <div class="row column start-time-field-container">
+          <%= f.datetime_field :start_time, id: "start_time_field"  %>
         </div>
         <div class="row column">
           <%= f.datetime_field :end_time %>
@@ -31,3 +34,18 @@
   </div>
 </div>
 <%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+                const manualStartCheckbox = document.getElementById("election_calendar_manual_start");
+                const startTimeFieldContainer = document.querySelector(".start-time-field-container");
+
+                function toggleStartTimeField() {
+                        startTimeFieldContainer.style.display = manualStartCheckbox.checked ? "none" : "block";
+                }
+
+                manualStartCheckbox.addEventListener("change", toggleStartTimeField);
+
+                toggleStartTimeField();
+        });
+</script>

@@ -6,6 +6,7 @@ module Decidim
       class ElectionCalendarForm < Decidim::Form
         attribute :start_time, Decidim::Attributes::TimeWithZone
         attribute :end_time, Decidim::Attributes::TimeWithZone
+        attribute :manual_start, Boolean, default: false
 
         # Election Type attributes
         attribute :auto_start, Boolean, default: true
@@ -14,8 +15,15 @@ module Decidim
         attribute :dynamic_census, Boolean, default: false
         attribute :anonymous, Boolean, default: false
 
-        validates :start_time, presence: true, date: { before: :end_time }
-        validates :end_time, presence: true, date: { after: :start_time }
+        validates :start_time, presence: true, unless: :manual_start?
+        validates :end_time, presence: true
+
+        validate :valid_end_time
+
+        def valid_end_time
+          errors.add(:end_time, :invalid) if start_time.present? && start_time > end_time
+          errors.add(:end_time, :invalid) if manual_start? && end_time <= 1.hour.from_now
+        end
       end
     end
   end
