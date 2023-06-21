@@ -43,8 +43,6 @@ ca:
         destroy: Eliminar
         edit: Editar
         manage_answers: Gestionar les respostes
-        manage_census: Gestionar el cens
-        manage_questions: Gestionar les preguntes
         manage_steps: Gestionar els pasos de la votació
         new: Nova %{name}
         preview: Vista prèvia
@@ -63,6 +61,8 @@ ca:
             title: Editar resposta
             update: Actualitzar resposta
           index:
+            back: Back to questions
+            for_question_html: for question %{question}
             title: Respostes
           new:
             create: Crear resposta
@@ -84,17 +84,22 @@ ca:
           destroy_all:
             success: S'han eliminat totes les dades del cens
           index:
+            census_warning: The census is not ready yet. You can <b>upload and confirm</b> it from the census page.
             info: Per configurar el cens per a una elecció de Vocdoni, has de pujar el cens i confirmar-lo.
             title: Cens per a una elecció de Vocdoni
           new:
             file: "fitxer .csv amb dades de correus electrònics"
-            info: 'Ha de ser un fitxer en format CSV amb només dues columnes, una amb l''adreça de correu electrònic i una altra amb la data de naixement (format AAAA-MM-DD). Ha d''estar separat amb punt i coma (;):'
+            info: 'Must be a file in CSV format with only two columns, one with the email address and another with the value of a token that the user will have to introduce in order to vote. It must be separated with a semicolon (;):'
             submit: Pujar fitxer
             title: Pujar un nou cens
           status:
             data: Hi ha %{count} registres carregats en total. L'última data de pujada va ser el %{due_date}. Si vols modificar el cens (per exemple, afegir més participants), cal eliminar primer totes les dades carregades.
-            ready_to_setup_html: Les dades del cens s'han pujat i confirmat. Està <a href="%{steps_path}">tot llest per configurar l'elecció</a>.
+            ready_to_setup_html: The census data is uploaded and confirmed.
             title: Dades de cens actuals
+        election_calendar:
+          edit:
+            organization_time_zone: Check that the organization time zone is correct in the organization settings. The current configuration is %{time_zone} (%{time}).
+            title: Edit election calendar
         elections:
           create:
             invalid: S'ha produït un error en crear l'elecció
@@ -104,17 +109,32 @@ ca:
             success: L'elecció s'ha eliminat correctament
           edit:
             title: Editar l'elecció
-            update: Actualitzar
-          form:
-            organization_time_zone: Comprova que la zona horària de l'organització és correcta a la configuració de l'organització. La configuració actual és %{time_zone} (%{time}).
           index:
             description_html: Amb aquest mòdul de votació, pots organitzar fàcilment una àmplia gamma de processos de votació amb altes garanties. El mòdul utilitza el Protocol de Vocdoni, una tecnologia de votació de codi obert per organitzar eleccions amb els estàndards més alts de seguretat, verificació universal, resistència a la censura i anonimat. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Més informació sobre Vocdoni</a>.
             title: Eleccions (Vocdoni)
           new:
-            create: Crear
+            basic_info: Basic info
+            census: Census
+            next_button: Done, go to the next step
+            publish: Publish
+            publish_text_all_done_html: |-
+              <p>The election is already published. You may still edit or unpublish it if you haven't setup the election yet.</p>
+              <p>To setup the election or to keep an eye on the election cycle, go to the steps page:</p>
+            publish_text_html: |-
+              <p>If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.</p>
+              <p>To setup the election you must publish it first.</p>
+              <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
+              after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
+            publish_title: Congratulations! All done.
+            questions: Questions
+            results: Calendar and results
+            save_button: Save and go to the next step
             title: Nova elecció
           publish:
             success: L'elecció s'ha publicat correctament.
+            title: Publish election
+          publish_page:
+            title: Publish election
           unpublish:
             success: L'elecció s'ha despublicat correctament.
           update:
@@ -139,6 +159,7 @@ ca:
             title: Editar pregunta
             update: Actualitzar la pregunta
           index:
+            minimum_answers_warning: Questions must have <strong>at least two answers</strong> in order to go to the next step.
             title: Preguntes
           new:
             create: Crear una pregunta
@@ -153,11 +174,12 @@ ca:
           create_election:
             description: El procés de votació és segur utilitzant la tecnologia digital de votació avançada del Protocol de Vocdoni. Si us plau, tingues paciència, ja que el procés de configuració pot trigar algun temps.
             errors:
-              census_ready: El cens <strong>no està llest</strong>. <a href=%{link}>Solucionar-ho</a>.
-              minimum_answers: Les preguntes han de tenir <strong>almenys dues respostes</strong>. <a href=%{link}>Solucionar-ho</a>.
-              minimum_questions: L'elecció <strong>ha de tenir com a mínim una pregunta</strong>. <a href=%{link}>Solucionar-ho</a>.
-              published: L'elecció <strong>no està publicada</strong>. <a href=%{link}>Solucionar-ho</a>.
-              time_before: La configuració no s'està fent <strong>almenys %{minutes} minuts</strong> abans que comenci l'elecció. <a href=%{link}>Solucionar-ho</a>.
+              census_ready: The census is <strong>not ready</strong>.
+              fix_it_text: Fix it
+              minimum_answers: Questions must have <strong>at least two answers</strong>.
+              minimum_questions: The election <strong>must have at least one question</strong>.
+              published: The election is <strong>not published</strong>.
+              time_before: The setup is not being done <strong>at least %{minutes} minutes</strong> before the election starts.
             failed:
               details: Mostra els detalls
               message: Comprova el missatge d'error de registre de la consola de desenvolupament web, corregeix el problema i torna-ho a provar.
