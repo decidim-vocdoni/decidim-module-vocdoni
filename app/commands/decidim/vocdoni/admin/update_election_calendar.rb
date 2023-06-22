@@ -47,17 +47,13 @@ module Decidim
         def election_type_attributes
           {
             election_type: {
-              auto_start: auto_start,
+              auto_start: form.auto_start,
               secret_until_the_end: form.secret_until_the_end,
               interruptible: interruptible,
               dynamic_census: form.dynamic_census,
               anonymous: form.anonymous
             }
           }
-        end
-
-        def auto_start
-          !form.manual_start
         end
 
         def interruptible
@@ -67,7 +63,8 @@ module Decidim
         end
 
         def start_time
-          form.manual_start ? nil : form.start_time
+          start = Time.zone.now + Decidim::Vocdoni.manual_start_time_setting + Decidim::Vocdoni.setup_minimum_minutes_before_start.minutes
+          form.manual_start ? start : form.start_time
         end
       end
     end

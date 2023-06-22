@@ -38,6 +38,9 @@ module Decidim
           election.vocdoni_election_id = form.vocdoni_election_id
           election.status = :created
           election.blocked_at = Time.zone.now
+
+          election.status = :paused if election.manual_start
+
           election.save!
         end
 

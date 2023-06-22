@@ -204,6 +204,7 @@ en:
               published: The election is <strong>not published</strong>.
               time_before: The setup is not being done <strong>at least %{minutes}
                 minutes</strong> before the election starts.
+              valid_end_time: The election <strong>end time</strong> is not valid.
             failed:
               details: View details
               message: Check the Web Development console log error message, fix the
@@ -217,6 +218,7 @@ en:
               published: The election is <strong>published</strong>.
               time_before: The setup is being done <strong>at least %{minutes} minutes</strong>
                 before the election starts.
+              valid_end_time: The election <strong>end time</strong> is valid.
             submit: Setup election
             success: Election successfully sent to the Vocdoni API
             title: Setup election
@@ -244,6 +246,13 @@ en:
             title: Ended
           index:
             title: Steps dashboard
+          information_html: "<p><strong>Congratulations, you have the election properly
+            configured!</strong></p>\n<p>At this point you can still make changes
+            if you see something misconfigured. Make sure that you preview the election.</p>\n<p>If
+            you are comfortable with the current setup, now it is the moment to transfer
+            the election to the \nVocdoni Blockchain.<br>\nThen the election will
+            be able to start.Once you do this, there is no going back, and no more
+            modifications are allowed.</p>"
           paused:
             message: The election is paused
             success: The election has been successfully continued.

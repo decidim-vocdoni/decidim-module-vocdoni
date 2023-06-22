@@ -1,6 +1,10 @@
 <% add_decidim_page_title(translated_attribute(election.title)) %>
 <% add_decidim_page_title(t(".title")) %>
-
+<div class="callout warning">
+  <p>
+    <%= t("steps.information_html", scope: "decidim.vocdoni.admin") %>
+  </p>
+</div>
 <div class="card js-vocdoni-client"
      data-default-locale="<%= current_organization.default_locale %>"
      data-answers-values-election-path="<%= answers_values_election_path(election) %>"

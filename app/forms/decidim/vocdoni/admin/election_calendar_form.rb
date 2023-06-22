@@ -21,8 +21,8 @@ module Decidim
         validate :valid_end_time
 
         def valid_end_time
-          errors.add(:end_time, :invalid) if start_time.present? && start_time > end_time
-          errors.add(:end_time, :invalid) if manual_start? && end_time <= 1.hour.from_now
+          errors.add(:start_time, :invalid) if start_time.present? && end_time.present? && start_time >= end_time
+          errors.add(:end_time, :invalid) if manual_start? && end_time < Time.zone.now
         end
       end
     end
