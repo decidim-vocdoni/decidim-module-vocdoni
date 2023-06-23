@@ -10,10 +10,7 @@
 
     <div class="callout warning">
       <p><%= t(".start_describe") %></p>
-        <%= button_to t(".start_election"), manual_start_election_path(election),
-                      method: :post,
-                      class: "button js-vocdoni-interruptible",
-                      data: { action: ["continue", "success"], confirm: t("confirm",  scope: "decidim.vocdoni.admin.steps.danger_zone") }%>
+      <%= manual_start_button(manual_start_election_path(election), "play-circle") %>
     </div>
   </div>
 </div>
