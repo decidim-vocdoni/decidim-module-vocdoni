@@ -131,6 +131,8 @@ en:
               and anonymity. <a href="https://vocdoni.io" target="_blank" rel="noreferrer
               noopener">Learn more about Vocdoni</a>.
             title: Elections (Vocdoni)
+          manual_start:
+            success: The election has been successfully started.
           new:
             basic_info: Basic info
             census: Census
@@ -226,6 +228,9 @@ en:
             explorer_vote: View at Explorer Vote
             message: The election has been created. We're waiting for the start date
               time to arrive.
+            start_describe: This election has been configured to start manually, please
+              press the button to begin the voting period.
+            start_election: Start election
             title: Election created
             view: View landing page
           credits:

@@ -109,6 +109,15 @@ module Decidim
           end
         end
 
+        def manual_start
+          ManualStartElection.call(election) do
+            on(:ok) do
+              flash[:notice] = I18n.t("admin.elections.manual_start.success", scope: "decidim.vocdoni")
+              redirect_to election_questions_path(election)
+            end
+          end
+        end
+
         private
 
         def elections
