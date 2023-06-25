@@ -92,4 +92,18 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       )
     end
   end
+
+  context "when manual start" do
+    let(:election) { create :vocdoni_election, :ready_for_setup, component: component, manual_start: true }
+
+    it { is_expected.to be_valid }
+
+    it "does not show time_before message" do
+      expect(subject.messages).not_to have_key(:time_before)
+    end
+
+    it "shows the message" do
+      expect(subject.messages[:manual_start][:message]).to eq("The election has <strong>a manual start</strong> setting.")
+    end
+  end
 end
