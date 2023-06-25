@@ -22,7 +22,7 @@ module Decidim
             [:minimum_questions, { link: router.election_questions_path(election) }, election.questions.any?],
             [:minimum_answers, { link: router.election_questions_path(election) }, election.minimum_answers?],
             [:published, { link: router.publish_page_election_path(election) }, election.published_at.present?],
-            [:time_before, { link: router.edit_election_calendar_path(election), minutes: time_before_minutes }, election.minimum_minutes_before_start?],
+            time_before_validation,
             [:census_ready, { link: router.election_census_path(election) }, census.ready_to_setup?]
           ].freeze
         end
@@ -53,6 +53,14 @@ module Decidim
 
         def time_before_minutes
           Decidim::Vocdoni.config.setup_minimum_minutes_before_start
+        end
+
+        def time_before_validation
+          if election.manual_start
+            [:manual_start, { link: router.edit_election_calendar_path(election), minutes: time_before_minutes }, true]
+          else
+            [:time_before, { link: router.edit_election_calendar_path(election), minutes: time_before_minutes }, election.minimum_minutes_before_start?]
+          end
         end
       end
     end

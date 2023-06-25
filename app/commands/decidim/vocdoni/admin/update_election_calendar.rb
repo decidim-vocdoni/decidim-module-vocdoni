@@ -63,8 +63,8 @@ module Decidim
         end
 
         def start_time
-          start = Time.zone.now + Decidim::Vocdoni.manual_start_time_setting + Decidim::Vocdoni.setup_minimum_minutes_before_start.minutes
-          form.manual_start ? start : form.start_time
+          start_time = Time.zone.now + Decidim::Vocdoni.manual_start_time_setting
+          form.manual_start ? start_time : form.start_time
         end
       end
     end
