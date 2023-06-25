@@ -189,6 +189,7 @@ export default class CreateVocdoniElection {
                 description { translations { text locale } }
                 attachments { thumbnail url type }
                 streamUri
+                manual_start
                 startTime
                 endTime
                 interruptible

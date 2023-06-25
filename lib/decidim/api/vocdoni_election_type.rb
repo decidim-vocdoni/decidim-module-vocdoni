@@ -18,6 +18,7 @@ module Decidim
       field :title, Decidim::Core::TranslatedFieldType, "The title for this election", null: false
       field :description, Decidim::Core::TranslatedFieldType, "The description for this election", null: false
       field :stream_uri, GraphQL::Types::String, "The stream URI for this election", null: true, camelize: true
+      field :manual_start, GraphQL::Types::Boolean, "Whether this election will start manually", null: true
       field :start_time, Decidim::Core::DateTimeType, "The start time for this election", null: false
       field :end_time, Decidim::Core::DateTimeType, "The end time for this election", null: false
       field :created_at, Decidim::Core::DateTimeType, "When this election was created", null: true
