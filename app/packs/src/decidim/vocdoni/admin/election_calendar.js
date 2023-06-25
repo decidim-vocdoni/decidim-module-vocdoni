@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const manualStartCheckbox = document.getElementById("election_calendar_manual_start");
-    const startTimeField = document.getElementById("election_calendar_start_time");
+  const manualStartCheckbox = document.getElementById("election_calendar_manual_start");
+  const startTimeField = document.getElementById("election_calendar_start_time");
 
-    const toggleStartTimeField = () => {
-        const isManualStartChecked = manualStartCheckbox.checked;
-        startTimeField.disabled = isManualStartChecked;
-        startTimeField.classList.toggle("text-muted", isManualStartChecked);
-    }
+  const toggleStartTimeField = () => {
+    const isManualStartChecked = manualStartCheckbox.checked;
+    startTimeField.disabled = isManualStartChecked;
+    startTimeField.classList.toggle("text-muted", isManualStartChecked);
+  }
 
-    manualStartCheckbox.addEventListener("change", toggleStartTimeField);
-    toggleStartTimeField();
+  manualStartCheckbox.addEventListener("change", toggleStartTimeField);
+  toggleStartTimeField();
 });
