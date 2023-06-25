@@ -9,8 +9,10 @@
     <%= render partial: "action_buttons", locals: { election: election } %>
 
     <div class="callout warning">
-      <p><%= t(".start_describe") %></p>
-      <%= manual_start_button(manual_start_election_path(election), "play-circle") %>
+      <p class="flex-center"><%= t(".start_describe") %></p>
+      <div class="flex-center">
+        <%= manual_start_button(manual_start_election_path(election), "media-play") %>
+      </div>
     </div>
   </div>
 </div>

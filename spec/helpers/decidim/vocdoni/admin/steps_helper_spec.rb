@@ -91,11 +91,11 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
     subject { helper.manual_start_button(link, icon) }
 
     let(:link) { "/admin/participatory_processes/123/elections/2/manual_start/" }
-    let(:icon) { "play-circle" }
+    let(:icon) { "media-play" }
 
     it "generates the manual start button with icon" do
       expect(subject).to have_selector("button[type=submit]", class: "button js-vocdoni-interruptible")
-      expect(subject).to have_selector("svg.icon--play-circle")
+      expect(subject).to have_selector("svg.icon--media-play")
     end
   end
 end

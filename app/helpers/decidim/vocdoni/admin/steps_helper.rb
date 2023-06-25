@@ -30,7 +30,7 @@ module Decidim
                     class: "button js-vocdoni-interruptible",
                     method: :post,
                     data: { action: %w(continue success), confirm: t("confirm", scope: "decidim.vocdoni.admin.steps.danger_zone") } do
-            "#{icon(icon)} #{I18n.t("decidim.vocdoni.admin.steps.created.start_election")}".html_safe
+            "#{icon(icon, class: "icon--before")} #{I18n.t("decidim.vocdoni.admin.steps.created.start_election")}".html_safe
           end
         end
 
