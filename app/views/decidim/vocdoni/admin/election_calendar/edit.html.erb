@@ -34,23 +34,4 @@
   </div>
 </div>
 <%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
-
-<script>
-        document.addEventListener("DOMContentLoaded", function() {
-                const manualStartCheckbox = document.getElementById("election_calendar_manual_start");
-                const startTimeField = document.getElementById("election_calendar_start_time");
-                function toggleStartTimeField() {
-                        startTimeField.disabled = manualStartCheckbox.checked;
-
-                        if (manualStartCheckbox.checked) {
-                                startTimeField.classList.add("text-muted");
-                        } else {
-                                startTimeField.classList.remove("text-muted");
-                        }
-                }
-
-                manualStartCheckbox.addEventListener("change", toggleStartTimeField);
-
-                toggleStartTimeField();
-        });
-</script>
+<%= javascript_pack_tag "decidim_vocdoni_admin" %>
