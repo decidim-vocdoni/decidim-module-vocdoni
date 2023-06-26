@@ -61,9 +61,7 @@ Currently, the following ENV variables are supported:
 
 | ENV variable | Description | Default value |
 | ------------ | ----------- | ------------- |
-| VOCDONI_API_ENDPOINT_ENV | The environment of the Vocdoni API. Only two values are accepted: `dev`, `stg`. Read more on
-[Vocdoni SDK Usage Environment](https://github.com/vocdoni/vocdoni-sdk#environment)
-  | `stg` |
+| VOCDONI_API_ENDPOINT_ENV | The environment of the Vocdoni API. Only two values are accepted: `dev`, `stg`. Read more on [Vocdoni SDK Usage Environment](https://github.com/vocdoni/vocdoni-sdk#environment) | `stg` |
 | VOCDONI_MINUTES_BEFORE_START | How many minutes should the setup be run before the election starts | `10` |
 
 
