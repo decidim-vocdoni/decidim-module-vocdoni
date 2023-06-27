@@ -133,6 +133,7 @@ export default class CreateVocdoniElection {
       title: transformLocales(electionMetadata.title.translations, defaultLocale),
       description: transformLocales(electionMetadata.description.translations, defaultLocale),
       streamUri: electionMetadata.streamUri,
+      manualStart: electionMetadata.manualStart,
       startDate: Date.parse(electionMetadata.startTime),
       endDate: Date.parse(electionMetadata.endTime),
       census,
@@ -189,7 +190,7 @@ export default class CreateVocdoniElection {
                 description { translations { text locale } }
                 attachments { thumbnail url type }
                 streamUri
-                manual_start
+                manualStart
                 startTime
                 endTime
                 interruptible
