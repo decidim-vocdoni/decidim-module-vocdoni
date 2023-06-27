@@ -46,6 +46,12 @@ const collectFaucetTokensListener = async () => {
   });
 }
 
+export const getAvailableCredits = async () => {
+  const client = initVocdoniClient();
+  const clientInfo = await client.createAccount();
+  return clientInfo.balance;
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   showAvailableCredits();
   collectFaucetTokensListener();

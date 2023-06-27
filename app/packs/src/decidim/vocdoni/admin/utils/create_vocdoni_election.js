@@ -1,7 +1,8 @@
 import { Election, PlainCensus } from "@vocdoni/sdk";
 import { initVocdoniClient } from "src/decidim/vocdoni/admin/utils/init_vocdoni_client";
+import { getAvailableCredits } from "src/decidim/vocdoni/admin/available_credits";
 
-// Allow the user to vote multiple times
+// Do not allow the user to vote multiple times
 const MAX_VOTE_OVERWRITES = 0;
 
 /*
@@ -75,6 +76,17 @@ export default class CreateVocdoniElection {
       console.log("ELECTION => ", election);
 
       document.querySelector(this.containerClass).classList.add("spinner-container");
+
+      const electionCost = await this.client.calculateElectionCost(election);
+      console.log("ELECTION COST: ", electionCost);
+
+      let availableTokenBalance = await getAvailableCredits();
+
+      if (availableTokenBalance < electionCost) {
+        console.error("RESULT => ERROR! Not enough tokens to create the election.");
+        this.onFailure();
+        return;
+      }
 
       const vocdoniElectionId = await this.client.createElection(election);
       console.log("RESULT => OK! VOCDONI ELECTION ID ", vocdoniElectionId);
