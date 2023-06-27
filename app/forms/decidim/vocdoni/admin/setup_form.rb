@@ -52,7 +52,7 @@ module Decidim
         end
 
         def time_before_minutes
-          Decidim::Vocdoni.config.setup_minimum_minutes_before_start
+          Decidim::Vocdoni.setup_minimum_minutes_before_start
         end
       end
     end

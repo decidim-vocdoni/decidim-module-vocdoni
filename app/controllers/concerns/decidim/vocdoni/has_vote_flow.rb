@@ -9,7 +9,7 @@ module Decidim
       extend ActiveSupport::Concern
 
       def vocdoni_api_endpoint_env
-        Decidim::Vocdoni.config.api_endpoint_env
+        Decidim::Vocdoni.api_endpoint_env
       end
 
       def preview_mode?

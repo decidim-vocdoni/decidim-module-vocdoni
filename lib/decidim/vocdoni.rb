@@ -14,13 +14,19 @@ module Decidim
 
     # Public Setting that defines how many minutes should the setup be run before the election starts
     config_accessor :setup_minimum_minutes_before_start do
-      10
+      ENV.fetch("VOCDONI_MINUTES_BEFORE_START", 10).to_i
     end
 
     # Public Setting to configure the Vocdoni API enpoint
     # It can be "dev" or "stg"
     config_accessor :api_endpoint_env do
-      "stg"
+      ENV.fetch("VOCDONI_API_ENDPOINT_ENV", "stg")
+    end
+
+    def self.api_endpoint_env
+      return "stg" if config.api_endpoint_env.downcase == "stg"
+
+      "dev"
     end
 
     def self.explorer_vote_domain

@@ -55,16 +55,22 @@ status are checked every 15 minutes, you can do it with this configuration:
 
 ## Configuration
 
-It's possible to change the Environment of the Vocdoni API that's being used through an initializer. By default is "dev".
+By default, the module is configured to read the configuration from ENV variables.
 
-It should be one of the available in the Vocdoni SDK. Currently the supported values are "dev" or "stg". Read more on
-[Vocdoni SDK Usage Environment](https://github.com/vocdoni/vocdoni-sdk#environment)
+Currently, the following ENV variables are supported:
 
-You can change it on your `config/initializers/decidim.rb` file inside your application:
+| ENV variable | Description | Default value |
+| ------------ | ----------- | ------------- |
+| VOCDONI_API_ENDPOINT_ENV | The environment of the Vocdoni API. Only two values are accepted: `dev`, `stg`. Read more on [Vocdoni SDK Usage Environment](https://github.com/vocdoni/vocdoni-sdk#environment) | `stg` |
+| VOCDONI_MINUTES_BEFORE_START | How many minutes should the setup be run before the election starts | `10` |
 
-```
+
+It is also possible to configure the module using the `decidim-vocdoni` initializer:
+
+```ruby
 Decidim::Vocdoni.configure do |config|
   config.api_endpoint_env = "stg"
+  config.setup_minimum_minutes_before_start = 20
 end
 ```
 
