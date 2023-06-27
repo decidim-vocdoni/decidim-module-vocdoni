@@ -333,11 +333,4 @@ describe "Election setup wizard", :slow, type: :system do
     send_keys(:enter)
     click_button "Save and go to the next step"
   end
-
-  def fill_calendar_with_manual_start
-    check "Manual start"
-    fill_in "election_calendar_end_time", with: 12.days.from_now.strftime("%d/%m/%Y %H:%M")
-    send_keys(:enter)
-    click_button "Save and go to the next step"
-  end
 end
