@@ -139,7 +139,7 @@ export default class CreateVocdoniElection {
       electionType: {
         interruptible: electionMetadata.interruptible,
         secretUntilTheEnd: electionMetadata.secretUntilTheEnd,
-        anonymous: electionMetadata.anonymous,
+        anonymous: electionMetadata.anonymous
       },
       voteType: {
         maxVoteOverwrites: MAX_VOTE_OVERWRITES
