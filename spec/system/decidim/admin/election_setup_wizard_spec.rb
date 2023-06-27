@@ -217,6 +217,16 @@ describe "Election setup wizard", :slow, type: :system do
           expect(page).to have_content("To setup the election you must publish it first")
         end
       end
+
+      context "when selecting manual start" do
+        before do
+          check "Manual start"
+        end
+
+        it "disables the Start time field" do
+          expect(page).to have_field("election_calendar_start_time", disabled: true, class: "text-muted")
+        end
+      end
     end
 
     describe "publish" do
@@ -319,6 +329,13 @@ describe "Election setup wizard", :slow, type: :system do
   def fill_calendar_and_results
     fill_in "election_calendar_start_time", with: 12.minutes.from_now.strftime("%d/%m/%Y %H:%M")
     send_keys(:enter)
+    fill_in "election_calendar_end_time", with: 12.days.from_now.strftime("%d/%m/%Y %H:%M")
+    send_keys(:enter)
+    click_button "Save and go to the next step"
+  end
+
+  def fill_calendar_with_manual_start
+    check "Manual start"
     fill_in "election_calendar_end_time", with: 12.days.from_now.strftime("%d/%m/%Y %H:%M")
     send_keys(:enter)
     click_button "Save and go to the next step"

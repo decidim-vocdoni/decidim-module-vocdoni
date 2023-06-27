@@ -42,6 +42,26 @@ describe "Admin manages election steps", :slow, type: :system do
     end
   end
 
+  describe "election with manual start" do
+    let(:election) { create :vocdoni_election, :ready_for_setup, component: current_component, manual_start: true }
+
+    before do
+      visit_steps_page
+      click_button "Create"
+      sleep 12
+      click_button "Setup election"
+    end
+
+    it "performs the action successfully" do
+      expect(page).to have_button("Start election")
+      click_button "Start election"
+      accept_confirm
+
+      expect(page).to have_admin_callout("successfully")
+      expect(page).to have_selector("li.text-warning", text: "Vote period")
+    end
+  end
+
   private
 
   def visit_steps_page
