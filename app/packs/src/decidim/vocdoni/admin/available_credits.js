@@ -7,23 +7,28 @@ const CONTAINER_SELECTOR = ".process-content";
 const ACTIONS_BUTTONS_SELECTOR = ".js-vocdoni-interruptible, #new_setup_ button[type=submit]";
 const SPINNER_CLASS = "spinner-container";
 
+export const getAvailableCredits = async () => {
+  const client = initVocdoniClient();
+  const clientInfo = await client.createAccount();
+  return clientInfo.balance;
+};
+
 const showAvailableCredits = async () => {
   const creditsSpan = document.querySelector(CREDIT_SPAN_SELECTOR);
   if (!creditsSpan) {
     return;
   }
 
-  const client = initVocdoniClient();
-  const clientInfo = await client.createAccount();
+  const availableCredits = await getAvailableCredits();
 
-  if (clientInfo.balance === 0) {
+  if (availableCredits === 0) {
     document.querySelector(NO_TOKENS_MESSAGE_SELECTOR).classList.remove("hide");
     document.querySelectorAll(ACTIONS_BUTTONS_SELECTOR).forEach((element) => {
       element.disabled = true;
     });
   }
 
-  creditsSpan.innerHTML = clientInfo.balance;
+  creditsSpan.innerHTML = availableCredits;
 };
 
 const collectFaucetTokensListener = async () => {
@@ -45,12 +50,6 @@ const collectFaucetTokensListener = async () => {
     });
   });
 }
-
-export const getAvailableCredits = async () => {
-  const client = initVocdoniClient();
-  const clientInfo = await client.createAccount();
-  return clientInfo.balance;
-};
 
 document.addEventListener("DOMContentLoaded", () => {
   showAvailableCredits();
