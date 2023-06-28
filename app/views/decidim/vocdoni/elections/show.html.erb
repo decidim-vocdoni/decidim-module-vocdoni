@@ -1,15 +1,15 @@
 <% add_decidim_meta_tags(
-     title: translated_attribute(election.title),
-     description: translated_attribute(election.description)
-   ) %>
+  title: translated_attribute(election.title),
+  description: translated_attribute(election.description)
+) %>
 
 <%
-  edit_link(
-    resource_locator(election).edit,
-    :update,
-    :election,
-    election: election
-  )
+edit_link(
+  resource_locator(election).edit,
+  :update,
+  :election,
+  election: election
+)
 %>
 
 <%= render partial: "decidim/shared/component_announcement" %>
