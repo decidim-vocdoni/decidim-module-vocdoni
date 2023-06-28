@@ -39,9 +39,7 @@ module Decidim
           election.status = :created
           election.start_time = Time.zone.now + Decidim::Vocdoni.manual_start_time_setting
           election.blocked_at = Time.zone.now
-
           election.status = :paused if election.manual_start
-
           election.save!
         end
 
