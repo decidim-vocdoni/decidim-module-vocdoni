@@ -251,12 +251,15 @@ en:
           ended:
             title: Ended
           index:
+            information_html: "<p><strong>Congratulations, you have the election properly
+              configured!</strong></p>                                            \n<p>At
+              this point you can still make changes if you see something misconfigured.
+              Make sure that you preview the election.</p>   \n<p>If you are comfortable
+              with the current setup, now it is the moment to transfer the election
+              to the Vocdoni Blockchain.</p> \n<p>Then the election will be able to
+              start. Once you do this, there is no going back, and no more modifications
+              are allowed.</p>"
             title: Steps dashboard
-           information_html: |-                                                                                                             
-             <p><strong>Congratulations, you have the election properly configured!</strong></p>                                            
-             <p>At this point you can still make changes if you see something misconfigured. Make sure that you preview the election.</p>   
-             <p>If you are comfortable with the current setup, now it is the moment to transfer the election to the Vocdoni Blockchain.</p> 
-             <p>Then the election will be able to start.Once you do this, there is no going back, and no more modifications are allowed.</p>
           paused:
             message: The election is paused
             success: The election has been successfully continued.
