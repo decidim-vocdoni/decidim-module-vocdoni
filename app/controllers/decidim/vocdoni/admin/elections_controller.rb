@@ -106,6 +106,12 @@ module Decidim
                 format.json { render json: { status: :ok } }
               end
             end
+
+            on(:invalid) do
+              respond_to do |format|
+                format.json { render json: { status: :invalid } }
+              end
+            end
           end
         end
 

@@ -16,8 +16,6 @@ module Decidim
         #
         # Broadcasts :ok if started, :invalid otherwise.
         def call
-          return broadcast(:invalid) if invalid?
-
           start_election
 
           broadcast(:ok, election)
