@@ -223,7 +223,7 @@ describe "Election setup wizard", :slow, type: :system do
           check "Manual start"
         end
 
-        it "disables the Start time field" do
+        it "disables the start time field" do
           expect(page).to have_field("election_calendar_start_time", disabled: true, class: "text-muted")
         end
       end
