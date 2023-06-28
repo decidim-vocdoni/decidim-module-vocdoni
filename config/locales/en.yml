@@ -143,9 +143,9 @@ en:
               <p>To setup the election or to keep an eye on the election cycle, go to the steps page:</p>
             publish_text_html: |-
               <p>If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.</p>
-               <p>To setup the election you must publish it first.</p>
-               <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
-                after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
+              <p>To setup the election you must publish it first.</p>
+              <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
+              after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
             publish_title: Congratulations! All done.
             questions: Questions
             results: Calendar and results
@@ -257,7 +257,7 @@ en:
               Make sure that you preview the election.</p>   \n<p>If you are comfortable
               with the current setup, now it is the moment to transfer the election
               to the Vocdoni Blockchain.</p> \n<p>Then the election will be able to
-              start. Once you do this, there is no going back, and no more modifications
+              start.Once you do this, there is no going back, and no more modifications
               are allowed.</p>"
             title: Steps dashboard
           paused:
