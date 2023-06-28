@@ -19,7 +19,7 @@ module Decidim
 
     # Public Setting that defines how long after the setting the election will start if the manual start option is selected
     config_accessor :manual_start_time_setting do
-      30.seconds
+      ENV.fetch("VOCDONI_MANUAL_START_TIME_SETTING_IN_SECONDS", "30").to_i.seconds
     end
 
     # Public Setting to configure the Vocdoni API enpoint

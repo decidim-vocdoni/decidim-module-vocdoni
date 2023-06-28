@@ -71,6 +71,7 @@ module Decidim
       end
 
       def start_date
+        return t("decidim.vocdoni.election_m.manual_start") if model.manual_start
         return unless model.start_time
 
         model.start_time.to_date

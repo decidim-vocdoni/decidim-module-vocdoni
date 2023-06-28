@@ -23,10 +23,10 @@
           <%= f.datetime_field :end_time %>
         </div>
         <div class="row column">
-          <%= f.check_box :secret_until_the_end, { checked: election&.election_type&.fetch("secret_until_the_end", false) } %>
+          <%= f.check_box :secret_until_the_end, { checked: election.election_type&.fetch("secret_until_the_end", false) } %>
         </div>
         <div class="row column">
-          <%= f.check_box :interruptible, { checked: election&.election_type&.fetch("interruptible", true) } %>
+          <%= f.check_box :interruptible, { checked: election.election_type&.fetch("interruptible", true) } %>
         </div>
         <%= f.submit t("save_button", scope: "decidim.vocdoni.admin.elections.new") %>
       <% end %>

@@ -18,10 +18,14 @@ module Decidim
         validates :start_time, presence: true, unless: :manual_start?
         validates :end_time, presence: true
 
+        validate :valid_start_time
         validate :valid_end_time
 
-        def valid_end_time
+        def valid_start_time
           errors.add(:start_time, :invalid) if start_time.present? && end_time.present? && start_time >= end_time
+        end
+
+        def valid_end_time
           errors.add(:end_time, :invalid) if manual_start? && end_time < Time.zone.now
         end
       end
