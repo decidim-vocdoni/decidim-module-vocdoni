@@ -8,7 +8,7 @@
      <% if @election.vocdoni_election_id %>
      data-vocdoni-election-id="<%= @election.vocdoni_election_id %>"
      <% end %>
-     data-vocdoni-env="<%= Decidim::Vocdoni.config.api_endpoint_env %>">
+     data-vocdoni-env="<%= Decidim::Vocdoni.api_endpoint_env %>">
 
   <div class="card-divider">
     <h2 class="card-title">
