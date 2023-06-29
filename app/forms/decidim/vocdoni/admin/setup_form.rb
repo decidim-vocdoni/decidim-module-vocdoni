@@ -23,7 +23,7 @@ module Decidim
             [:minimum_answers, { link: router.election_questions_path(election) }, election.minimum_answers?],
             [:census_ready, { link: router.election_census_path(election) }, census.ready_to_setup?],
             time_before_validation,
-            [:published, { link: router.publish_page_election_path(election) }, election.published_at.present?],
+            [:published, { link: router.publish_page_election_path(election) }, election.published_at.present?]
           ].freeze
         end
 
