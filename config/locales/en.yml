@@ -342,7 +342,6 @@ en:
           vote: Vote
         label:
           date: Dates
-        manual_start: Manual start
         questions: Questions %{count}
         start_date: Starts
         unspecified: Not specified
@@ -370,7 +369,6 @@ en:
             vote_again: Vote again
           back: Available elections
           canceled: This election was canceled
-          manual_start: Manual start
           paused: This election is curently paused. Try again later.
           preview: Preview
           verify:
