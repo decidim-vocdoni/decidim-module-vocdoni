@@ -103,7 +103,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
     end
 
     it "shows the message" do
-      expect(subject.messages[:manual_start][:message]).to eq("The election has <strong>a manual start</strong> setting.")
+      expect(subject.messages[:manual_start][:message]).to eq("The election <strong>will start manually.</strong>")
     end
   end
 end

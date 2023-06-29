@@ -6,7 +6,9 @@
     <li class="card-data__item">
       <div class="card-data__item--centerblock">
         <strong><%= t("decidim.vocdoni.election_m.start_date") %></strong>
-        <%= start_date ? l(start_date, format: :decidim_short) : t("decidim.vocdoni.election_m.unspecified") %>
+        <% unless model.manual_start %>
+          <%= start_date ? l(start_date, format: :decidim_short) : t("decidim.vocdoni.election_m.unspecified") %>
+        <% end %>
       </div>
     </li>
     <li class="card-data__item">
