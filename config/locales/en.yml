@@ -220,7 +220,7 @@ en:
             invalid: There was a problem setting up this election
             requirements:
               census_ready: The census is <strong>ready</strong>.
-              manual_start: The election has <strong>a manual start</strong> setting.
+              manual_start: The election <strong>will start manually.</strong>
               minimum_answers: Each question has <strong>at least two answers</strong>.
               minimum_questions: The election has <strong>at least one question</strong>.
               published: The election is <strong>published</strong>.

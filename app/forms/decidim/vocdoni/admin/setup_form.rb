@@ -21,9 +21,9 @@ module Decidim
           @validations ||= [
             [:minimum_questions, { link: router.election_questions_path(election) }, election.questions.any?],
             [:minimum_answers, { link: router.election_questions_path(election) }, election.minimum_answers?],
-            [:published, { link: router.publish_page_election_path(election) }, election.published_at.present?],
+            [:census_ready, { link: router.election_census_path(election) }, census.ready_to_setup?],
             time_before_validation,
-            [:census_ready, { link: router.election_census_path(election) }, census.ready_to_setup?]
+            [:published, { link: router.publish_page_election_path(election) }, election.published_at.present?],
           ].freeze
         end
 
