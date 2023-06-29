@@ -63,7 +63,7 @@ Currently, the following ENV variables are supported:
 | ------------ | ----------- |-------|
 | VOCDONI_API_ENDPOINT_ENV | The environment of the Vocdoni API. Only two values are accepted: `dev`, `stg`. Read more on [Vocdoni SDK Usage Environment](https://github.com/vocdoni/vocdoni-sdk#environment) | `stg` |
 | VOCDONI_MINUTES_BEFORE_START | How many minutes should the setup be run before the election starts | `10`  |
-| VOCDONI_MANUAL_START_TIME_SETTING_IN_SECONDS | How many seconds there will be a delay to start the election after creating it on the blockchain | `30`  |
+| VOCDONI_MANUAL_START_TIME_SETTING_IN_SECONDS | How many seconds there will be a delay to start the election with manual start after creating it on the blockchain | `30`  |
 
 
 It is also possible to configure the module using the `decidim-vocdoni` initializer:
@@ -72,6 +72,7 @@ It is also possible to configure the module using the `decidim-vocdoni` initiali
 Decidim::Vocdoni.configure do |config|
   config.api_endpoint_env = "stg"
   config.setup_minimum_minutes_before_start = 20
+  config.manual_start_time_setting = 30
 end
 ```
 
