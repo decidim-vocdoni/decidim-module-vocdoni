@@ -6,6 +6,7 @@ module Decidim
       # This command gets called when saving the election time settings from the admin panel
       class UpdateElectionCalendar < Decidim::Command
         # Public: Initializes the command.
+        #
         # form - An ElectionCalendarForm object with the time settings to update
         # election - The election to update
         def initialize(form, election)
@@ -14,6 +15,7 @@ module Decidim
         end
 
         # Public: Update Election Calendar
+        #
         # Broadcasts :ok if setup, :invalid otherwise.
         def call
           return broadcast(:invalid) if form.invalid?

@@ -3,11 +3,11 @@
     <h2 class="card-title"><%= t(".title") %></h2>
   </div>
   <div class="card-section js-election-setup">
-    <div class="callout warning">
-      <p>
+    <% unless @form.invalid? %>
+      <div class="callout warning">
         <%= t("steps.create_election.information_html", scope: "decidim.vocdoni.admin") %>
-      </p>
-    </div>
+      </div>
+    <% end %>
     <p>
       <%= t("description", scope: "decidim.vocdoni.admin.steps.create_election") %>
     </p>

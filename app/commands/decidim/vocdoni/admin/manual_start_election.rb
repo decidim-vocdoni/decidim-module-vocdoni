@@ -14,7 +14,7 @@ module Decidim
 
         # Public: Starts the Election.
         #
-        # Broadcasts :ok if started, :invalid otherwise.
+        # Broadcasts :ok if started
         def call
           start_election
 
