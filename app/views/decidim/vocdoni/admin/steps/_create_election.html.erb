@@ -5,7 +5,7 @@
   <div class="card-section js-election-setup">
     <% unless @form.invalid? %>
       <div class="callout warning">
-        <%= t("steps.create_election.information_html", scope: "decidim.vocdoni.admin") %>
+        <%= t("steps.create_election.information_html", scope: "decidim.vocdoni.admin", link: resource_locator(election).path) %>
       </div>
     <% end %>
     <p>
