@@ -33,7 +33,6 @@ module Decidim
 
         def update_election!
           attributes = {
-            manual_start: form.manual_start?,
             start_time: start_time,
             end_time: form.end_time
           }.merge(election_type_attributes)
@@ -49,7 +48,7 @@ module Decidim
         def election_type_attributes
           {
             election_type: {
-              auto_start: form.auto_start,
+              auto_start: !form.manual_start,
               secret_until_the_end: form.secret_until_the_end,
               interruptible: interruptible,
               dynamic_census: form.dynamic_census,
@@ -59,13 +58,13 @@ module Decidim
         end
 
         def interruptible
-          return true if form.manual_start?
+          return true if form.manual_start
 
           form.interruptible
         end
 
         def start_time
-          form.manual_start? ? nil : form.start_time
+          form.manual_start ? nil : form.start_time
         end
       end
     end

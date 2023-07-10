@@ -59,6 +59,18 @@ module Decidim::Vocdoni
       blocked_at.present?
     end
 
+    def manual_start?
+      election_type&.fetch("auto_start", true) == false
+    end
+
+    def interruptible?
+      election_type&.fetch("interruptible", true)
+    end
+
+    def secret_until_the_end?
+      election_type&.fetch("secret_until_the_end", false)
+    end
+
     # Public: Checks if the number of answers are minimum 2 for each question
     #
     # Returns a boolean.

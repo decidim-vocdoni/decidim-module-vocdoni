@@ -29,6 +29,8 @@ FactoryBot.define do
     status { nil }
     election_type do
       {
+        "auto_start" => true,
+        "dynamic_census" => false,
         "interruptible" => true,
         "secret_until_the_end" => false
       }
@@ -42,6 +44,18 @@ FactoryBot.define do
     trait :started do
       status { "vote" }
       start_time { 2.days.ago }
+    end
+
+    trait :manual_start do
+      start_time { nil }
+      election_type do
+        {
+          "auto_start" => false,
+          "dynamic_census" => false,
+          "interruptible" => true,
+          "secret_until_the_end" => false
+        }
+      end
     end
 
     trait :ongoing do

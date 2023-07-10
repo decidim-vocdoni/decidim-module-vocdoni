@@ -9,7 +9,6 @@ module Decidim
         attribute :manual_start, Boolean, default: false
 
         # Election Type attributes
-        attribute :auto_start, Boolean, default: true
         attribute :secret_until_the_end, Boolean, default: false
         attribute :interruptible, Boolean, default: true
         attribute :dynamic_census, Boolean, default: false

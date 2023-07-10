@@ -17,10 +17,10 @@ module Decidim
       ENV.fetch("VOCDONI_MINUTES_BEFORE_START", 10).to_i
     end
 
-    # Public Setting that defines how long after the action of manually starting 
+    # Public Setting that defines how long after the action of manually starting
     # an election will the start_time of an election will be setup
-    # Some time is needed in order to comunicate the election to vocdoni, 
-    # send the configured data and set it to "paused" status 
+    # Some time is needed in order to comunicate the election to vocdoni,
+    # send the configured data and set it to "paused" status
     config_accessor :manual_start_time_delay do
       ENV.fetch("VOCDONI_MANUAL_START_DELAY", "30").to_i.seconds
     end

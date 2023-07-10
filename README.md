@@ -8,7 +8,7 @@
 
 :warning: This module is under development and is not ready to be used in production.
 
-An elections component for decidim's participatory spaces based on the [Vocdoni](https://vocdoni.app).
+An elections component for Decidim's participatory spaces based on the [Vocdoni](https://vocdoni.app).
 
 Vocdoni is a secure digital voting solution using decentralized technologies.
 The voting protocol which powers the platform is designed to be universally verifiable,
@@ -63,8 +63,7 @@ Currently, the following ENV variables are supported:
 | ------------ | ----------- |-------|
 | VOCDONI_API_ENDPOINT_ENV | The environment of the Vocdoni API. Only two values are accepted: `dev`, `stg`. Read more on [Vocdoni SDK Usage Environment](https://github.com/vocdoni/vocdoni-sdk#environment) | `stg` |
 | VOCDONI_MINUTES_BEFORE_START | How many minutes should the setup be run before the election starts (when configured automatically) | `10` |
-| VOCDONI_MANUAL_START_DELAY | How many seconds after the action of starting an election manually people will be allowed to vote. Note that this time is needed in order to configure the election in the blockchain. You might want to increase it if comunication with the Vocdoni API is slow. | `30` |
-
+| VOCDONI_MANUAL_START_DELAY | How many seconds after the action of starting an election manually people will be allowed to vote. Note that this time is needed in order to configure the election in the blockchain. You might want to increase it if communication with the Vocdoni API is slow. | `30` |
 
 It is also possible to configure the module using the `decidim-vocdoni` initializer:
 

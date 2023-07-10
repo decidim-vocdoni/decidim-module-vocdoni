@@ -14,7 +14,6 @@ describe Decidim::Vocdoni::Admin::UpdateElectionCalendar do
       current_user: user,
       start_time: start_time,
       end_time: end_time,
-      auto_start: true,
       manual_start: manual_start,
       interruptible: true,
       dynamic_census: false,
@@ -42,7 +41,7 @@ describe Decidim::Vocdoni::Admin::UpdateElectionCalendar do
 
   it "traces the action", versioning: true do
     expect(Decidim.traceability)
-      .to receive(:update!).with(election, user, hash_including(:start_time, :end_time, :manual_start), visibility: "all").and_call_original
+      .to receive(:update!).with(election, user, hash_including(:start_time, :end_time, { election_type: { auto_start: true, anonymous: false, dynamic_census: false, interruptible: true, secret_until_the_end: false } }), visibility: "all").and_call_original
 
     expect { subject.call }.to change(Decidim::ActionLog, :count)
     action_log = Decidim::ActionLog.last
