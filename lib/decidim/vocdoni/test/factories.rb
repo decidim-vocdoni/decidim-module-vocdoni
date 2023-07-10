@@ -47,7 +47,6 @@ FactoryBot.define do
     end
 
     trait :manual_start do
-      start_time { nil }
       election_type do
         {
           "auto_start" => false,
