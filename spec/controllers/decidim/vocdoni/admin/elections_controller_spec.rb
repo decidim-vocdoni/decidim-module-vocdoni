@@ -67,7 +67,7 @@ describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
 
   describe "POST manual_start" do
     let(:component) { create(:vocdoni_component) }
-    let(:election) { create(:vocdoni_election, component: component, manual_start: true) }
+    let(:election) { create(:vocdoni_election, :manual_start, component: component) }
 
     it "manually starts the election" do
       post :manual_start, params: { id: election.id }

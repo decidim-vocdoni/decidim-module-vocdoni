@@ -59,12 +59,20 @@ module Decidim::Vocdoni
       blocked_at.present?
     end
 
+    def auto_start?
+      election_type&.fetch("auto_start", true)
+    end
+
     def manual_start?
-      election_type&.fetch("auto_start", true) == false
+      auto_start? == false
     end
 
     def interruptible?
       election_type&.fetch("interruptible", true)
+    end
+
+    def dynamic_census?
+      election_type&.fetch("dynamic_census", false)
     end
 
     def secret_until_the_end?

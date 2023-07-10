@@ -19,6 +19,7 @@ module Decidim
       field :description, Decidim::Core::TranslatedFieldType, "The description for this election", null: false
       field :stream_uri, GraphQL::Types::String, "The stream URI for this election", null: true, camelize: true
       field :auto_start, GraphQL::Types::Boolean, "Whether this election will start automatically or manually", method: :auto_start?, null: true
+      field :dynamic_census, GraphQL::Types::Boolean, "Whether the census is closed or dynamic", method: :dynamic_census?, null: true
       field :start_time, Decidim::Core::DateTimeType, "The start time for this election", null: true
       field :end_time, Decidim::Core::DateTimeType, "The end time for this election", null: false
       field :created_at, Decidim::Core::DateTimeType, "When this election was created", null: true

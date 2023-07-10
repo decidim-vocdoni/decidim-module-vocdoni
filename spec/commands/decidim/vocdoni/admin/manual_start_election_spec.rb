@@ -5,12 +5,10 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::ManualStartElection do
   subject { described_class.new(election) }
 
-  let(:election) { create :vocdoni_election, manual_start: manual_start, start_time: start_time, end_time: end_time }
+  let(:election) { create :vocdoni_election, :manual_start, end_time: end_time }
   let(:organization) { election.component.organization }
 
-  let(:start_time) { nil }
   let(:end_time) { 2.days.from_now }
-  let(:manual_start) { true }
 
   describe "call" do
     it "starts the election" do

@@ -43,7 +43,7 @@ describe "Admin manages election steps", :slow, type: :system do
   end
 
   describe "election with manual start" do
-    let(:election) { create :vocdoni_election, :ready_for_setup, component: current_component, manual_start: true }
+    let(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, component: current_component }
 
     before do
       visit_steps_page

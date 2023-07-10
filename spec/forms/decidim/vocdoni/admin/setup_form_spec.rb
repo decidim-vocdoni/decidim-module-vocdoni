@@ -94,7 +94,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   end
 
   context "when manual start" do
-    let(:election) { create :vocdoni_election, :ready_for_setup, component: component, manual_start: true }
+    let(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, component: component }
 
     it { is_expected.to be_valid }
 
