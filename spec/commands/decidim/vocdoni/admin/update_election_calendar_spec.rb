@@ -30,7 +30,7 @@ describe Decidim::Vocdoni::Admin::UpdateElectionCalendar do
   it "updates the election" do
     subject.call
 
-    expect(election.manual_start).to be(false)
+    expect(election.manual_start?).to be(false)
     expect(election.start_time).to be_within(1.second).of start_time
     expect(election.end_time).to be_within(1.second).of end_time
     expect(election.election_type.fetch("auto_start")).to be_truthy

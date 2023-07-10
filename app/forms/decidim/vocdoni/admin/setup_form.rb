@@ -56,7 +56,7 @@ module Decidim
         end
 
         def time_before_validation
-          if election.manual_start
+          if election.manual_start?
             [:manual_start, { link: router.edit_election_calendar_path(election), minutes: time_before_minutes }, true]
           else
             [:time_before, { link: router.edit_election_calendar_path(election), minutes: time_before_minutes }, election.minimum_minutes_before_start?]

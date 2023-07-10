@@ -7,7 +7,7 @@
     <p><%= t(".message") %></p>
 
     <%= render partial: "action_buttons", locals: { election: election } %>
-    <% if election.manual_start %>
+    <% if election.manual_start? %>
       <div class="callout warning">
         <p class="flex-center"><%= t(".start_describe") %></p>
         <div class="flex-center">

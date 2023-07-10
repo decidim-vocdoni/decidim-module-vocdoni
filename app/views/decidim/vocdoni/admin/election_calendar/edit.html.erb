@@ -14,7 +14,7 @@
                    time: Time.zone.now) %></p>
         </div>
         <div class="row column">
-          <%= f.check_box :manual_start, { checked: election.manual_start } %>
+          <%= f.check_box :manual_start, { checked: election.manual_start? } %>
         </div>
         <div class="row column start-time-field-container">
           <%= f.datetime_field :start_time %>
