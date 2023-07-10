@@ -114,7 +114,7 @@ module Decidim::Vocdoni
     def minimum_minutes_before_start?
       return unless start_time
 
-      start_time > (Time.zone.at(Decidim::Vocdoni.setup_minimum_minutes_before_start.minutes.from_now))
+      start_time > (Time.zone.at(Decidim::Vocdoni.minimum_minutes_before_start.minutes.from_now))
     end
 
     # Public: Checks if all the Answers related to an Election (through Questions) have a value
