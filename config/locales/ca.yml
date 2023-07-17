@@ -112,6 +112,8 @@ ca:
           index:
             description_html: Amb aquest mòdul de votació, pots organitzar fàcilment una àmplia gamma de processos de votació amb altes garanties. El mòdul utilitza el Protocol de Vocdoni, una tecnologia de votació de codi obert per organitzar eleccions amb els estàndards més alts de seguretat, verificació universal, resistència a la censura i anonimat. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Més informació sobre Vocdoni</a>.
             title: Eleccions (Vocdoni)
+          manual_start:
+            success: The election has been successfully started.
           new:
             basic_info: Basic info
             census: Census
@@ -180,23 +182,33 @@ ca:
               minimum_questions: The election <strong>must have at least one question</strong>.
               published: The election is <strong>not published</strong>.
               time_before: The setup is not being done <strong>at least %{minutes} minutes</strong> before the election starts.
+              valid_end_time: The election <strong>end time</strong> is not valid.
             failed:
               details: Mostra els detalls
               message: Comprova el missatge d'error de registre de la consola de desenvolupament web, corregeix el problema i torna-ho a provar.
               title: L'elecció té un error i no s'ha pogut crear
+            information_html: |-
+              <p><strong>Election successfully configured!</strong></p>
+              <p>At this point you can still make changes if you see something misconfigured. <a href="%{link}">Make sure that you preview the election.</a></p>
+              <p>If you are comfortable with the current configuration, click on the "Setup election" button to send it to the Vocdoni Blockchain. Then the election will be able to start.</p>
+              <p><strong>Please note that this action is irreversible, with no further modifications allowed.</strong></p>
             invalid: S'ha produït un error en configurar aquesta elecció
             requirements:
               census_ready: El cens està <strong>llest</strong>.
+              manual_start: The election <strong>will start manually.</strong>
               minimum_answers: Cada pregunta té <strong>almenys 2 respostes</strong>.
               minimum_questions: L'elecció té <strong>almenys 1 pregunta</strong>.
               published: L'elecció està <strong>publicada</strong>.
               time_before: La configuració s'està fent <strong>almenys %{minutes} minuts</strong> abans que comenci l'elecció.
+              valid_end_time: The election <strong>end time</strong> is valid.
             submit: Configurar elecció
             success: L'elecció s'ha enviat correctament a l'API de Vocdoni
             title: Configurar elecció
           created:
             explorer_vote: Veure a l'explorador de vot
             message: L'elecció ha estat creada. Estem esperant que arribi la data d'inici.
+            start_describe: This election has been configured to start manually, please press the button to begin the voting period.
+            start_election: Start election
             title: Elecció creada
             view: Veure pàgina d'inici
           credits:
