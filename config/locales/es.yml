@@ -112,6 +112,8 @@ es:
           index:
             description_html: Con este módulo de votación, puedes organizar fácilmente una amplia gama de procesos de votación con altas garantías. El módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones con los más altos estándares de seguridad, verificación universal, resistencia a la censura y anonimato. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Más información sobre Vocdoni</a>.
             title: Elecciones (Vocdoni)
+          manual_start:
+            success: The election has been successfully started.
           new:
             basic_info: Basic info
             census: Census
@@ -180,23 +182,33 @@ es:
               minimum_questions: The election <strong>must have at least one question</strong>.
               published: The election is <strong>not published</strong>.
               time_before: The setup is not being done <strong>at least %{minutes} minutes</strong> before the election starts.
+              valid_end_time: The election <strong>end time</strong> is not valid.
             failed:
               details: Ver detalles
               message: Comprueba el mensaje de error de registro de la consola de Desarrollo Web, corrige el problema y vuelve a intentarlo.
               title: La elección tiene un error y no se ha podido crear
+            information_html: |-
+              <p><strong>Election successfully configured!</strong></p>
+              <p>At this point you can still make changes if you see something misconfigured. <a href="%{link}">Make sure that you preview the election.</a></p>
+              <p>If you are comfortable with the current configuration, click on the "Setup election" button to send it to the Vocdoni Blockchain. Then the election will be able to start.</p>
+              <p><strong>Please note that this action is irreversible, with no further modifications allowed.</strong></p>
             invalid: Se ha producido un error al configurar esta elección
             requirements:
               census_ready: El censo está <strong>listo</strong>.
+              manual_start: The election <strong>will start manually.</strong>
               minimum_answers: Cada pregunta tiene <strong>al menos dos respuestas</strong>.
               minimum_questions: La elección tiene <strong>al menos una pregunta</strong>.
               published: La elección está <strong>publicada</strong>.
               time_before: La configuración se está realizando <strong>al menos %{minutes} minutos</strong> antes de que comience la elección.
+              valid_end_time: The election <strong>end time</strong> is valid.
             submit: Configurar elección
             success: Elección enviada con éxito a la API de Vocdoni
             title: Configurar elección
           created:
             explorer_vote: Ver en el explorador de voto
             message: La elección ha sido creada. Estamos esperando a que llegue la fecha de inicio.
+            start_describe: This election has been configured to start manually, please press the button to begin the voting period.
+            start_election: Start election
             title: Elección creada
             view: Ver página de inicio
           credits:
