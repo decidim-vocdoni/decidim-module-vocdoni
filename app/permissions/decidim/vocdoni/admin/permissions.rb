@@ -35,7 +35,7 @@ module Decidim
             end
           when :steps
             case permission_action.action
-            when :read, :update
+            when :read, :update, :manual_start
               allow!
             end
           when :wallet

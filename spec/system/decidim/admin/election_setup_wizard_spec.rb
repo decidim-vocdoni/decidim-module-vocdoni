@@ -217,6 +217,16 @@ describe "Election setup wizard", :slow, type: :system do
           expect(page).to have_content("To setup the election you must publish it first")
         end
       end
+
+      context "when selecting manual start" do
+        before do
+          check "Manual start"
+        end
+
+        it "disables the start time field" do
+          expect(page).to have_field("election_calendar_start_time", disabled: true, class: "text-muted")
+        end
+      end
     end
 
     describe "publish" do

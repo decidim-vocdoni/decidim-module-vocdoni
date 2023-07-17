@@ -131,6 +131,8 @@ en:
               and anonymity. <a href="https://vocdoni.io" target="_blank" rel="noreferrer
               noopener">Learn more about Vocdoni</a>.
             title: Elections (Vocdoni)
+          manual_start:
+            success: The election has been successfully started.
           new:
             basic_info: Basic info
             census: Census
@@ -141,9 +143,9 @@ en:
               <p>To setup the election or to keep an eye on the election cycle, go to the steps page:</p>
             publish_text_html: |-
               <p>If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.</p>
-               <p>To setup the election you must publish it first.</p>
-               <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
-                after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
+              <p>To setup the election you must publish it first.</p>
+              <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
+              after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
             publish_title: Congratulations! All done.
             questions: Questions
             results: Calendar and results
@@ -204,19 +206,27 @@ en:
               published: The election is <strong>not published</strong>.
               time_before: The setup is not being done <strong>at least %{minutes}
                 minutes</strong> before the election starts.
+              valid_end_time: The election <strong>end time</strong> is not valid.
             failed:
               details: View details
               message: Check the Web Development console log error message, fix the
                 problem and retry.
               title: The election has an error and couldn't be created
+            information_html: |-
+              <p><strong>Election successfully configured!</strong></p>
+              <p>At this point you can still make changes if you see something misconfigured. <a href="%{link}">Make sure that you preview the election.</a></p>
+              <p>If you are comfortable with the current configuration, click on the "Setup election" button to send it to the Vocdoni Blockchain. Then the election will be able to start.</p>
+              <p><strong>Please note that this action is irreversible, with no further modifications allowed.</strong></p>
             invalid: There was a problem setting up this election
             requirements:
               census_ready: The census is <strong>ready</strong>.
+              manual_start: The election <strong>will start manually.</strong>
               minimum_answers: Each question has <strong>at least two answers</strong>.
               minimum_questions: The election has <strong>at least one question</strong>.
               published: The election is <strong>published</strong>.
               time_before: The setup is being done <strong>at least %{minutes} minutes</strong>
                 before the election starts.
+              valid_end_time: The election <strong>end time</strong> is valid.
             submit: Setup election
             success: Election successfully sent to the Vocdoni API
             title: Setup election
@@ -224,6 +234,9 @@ en:
             explorer_vote: View at Explorer Vote
             message: The election has been created. We're waiting for the start date
               time to arrive.
+            start_describe: This election has been configured to start manually, please
+              press the button to begin the voting period.
+            start_election: Start election
             title: Election created
             view: View landing page
           credits:

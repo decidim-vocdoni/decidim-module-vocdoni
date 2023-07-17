@@ -62,6 +62,7 @@ Decidim.register_component(:vocdoni) do |component|
       # the election not being created yet in the Vocodni API
       status = %w(none created vote vote_ended results_published).sample
       blocked_at = Time.current
+      auto_start = [true, false].sample
 
       case status
       when "vote"
@@ -87,12 +88,12 @@ Decidim.register_component(:vocdoni) do |component|
         description: Decidim::Faker::Localized.wrapped("<p>", "</p>") do
           Decidim::Faker::Localized.paragraph(sentence_count: 3)
         end,
-        start_time: start_time,
+        start_time: auto_start ? start_time : 30.seconds.from_now,
         end_time: end_time,
         published_at: Faker::Boolean.boolean(true_ratio: 0.5) ? 1.week.ago : nil,
         election_type: {
-          auto_start: [true, false].sample,
-          interruptible: [true, false].sample,
+          auto_start: auto_start,
+          interruptible: auto_start ? [true, false].sample : true,
           dynamic_census: [true, false].sample,
           secret_until_the_end: [true, false].sample,
           anonymous: [true, false].sample

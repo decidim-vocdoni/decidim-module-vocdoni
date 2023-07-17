@@ -86,4 +86,16 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
       expect(subject).to have_selector("svg.icon--wrench")
     end
   end
+
+  describe "#manual_start_button" do
+    subject { helper.manual_start_button(link, icon) }
+
+    let(:link) { "/admin/participatory_processes/123/elections/2/manual_start/" }
+    let(:icon) { "media-play" }
+
+    it "generates the manual start button with icon" do
+      expect(subject).to have_selector("button[type=submit]", class: "button js-vocdoni-interruptible")
+      expect(subject).to have_selector("svg.icon--media-play")
+    end
+  end
 end

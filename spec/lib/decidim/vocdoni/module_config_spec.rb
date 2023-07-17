@@ -10,11 +10,13 @@ module Decidim
       let(:env) do
         {
           "VOCDONI_MINUTES_BEFORE_START" => minutes,
-          "VOCDONI_API_ENDPOINT_ENV" => vocdoni_env
+          "VOCDONI_API_ENDPOINT_ENV" => vocdoni_env,
+          "VOCDONI_MANUAL_START_DELAY" => start_delay
         }
       end
       let(:vocdoni_env) { "STG" }
       let(:minutes) { "11" }
+      let(:start_delay) { "33" }
       let(:config) { JSON.parse cmd_capture("bin/rails runner 'puts Decidim::Vocdoni.config.to_json'", env: env) }
       let(:endpoint_env) { cmd_capture("bin/rails runner 'puts Decidim::Vocdoni.api_endpoint_env'", env: env) }
 
@@ -26,8 +28,9 @@ module Decidim
 
       it "has the correct configuration" do
         expect(config).to eq({
-                               "setup_minimum_minutes_before_start" => 11,
-                               "api_endpoint_env" => "STG"
+                               "minimum_minutes_before_start" => 11,
+                               "api_endpoint_env" => "STG",
+                               "manual_start_time_delay" => 33
                              })
       end
 

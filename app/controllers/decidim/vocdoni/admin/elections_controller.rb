@@ -106,6 +106,23 @@ module Decidim
                 format.json { render json: { status: :ok } }
               end
             end
+
+            on(:invalid) do
+              respond_to do |format|
+                format.json { render json: { status: :invalid } }
+              end
+            end
+          end
+        end
+
+        def manual_start
+          enforce_permission_to :manual_start, :steps, election: election
+
+          ManualStartElection.call(election) do
+            on(:ok) do
+              flash[:notice] = I18n.t("admin.elections.manual_start.success", scope: "decidim.vocdoni")
+              redirect_to election_steps_path(election)
+            end
           end
         end
 

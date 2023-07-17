@@ -19,7 +19,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   let(:router) { Decidim::EngineRouter.admin_proxy(election.component) }
 
   before do
-    allow(Decidim::Vocdoni).to receive(:setup_minimum_minutes_before_start).and_return(10)
+    allow(Decidim::Vocdoni).to receive(:minimum_minutes_before_start).and_return(10)
   end
 
   it { is_expected.to be_valid }
@@ -67,9 +67,9 @@ describe Decidim::Vocdoni::Admin::SetupForm do
     end
   end
 
-  context "when the setup_minimum_minutes_before_start is different" do
+  context "when the minimum_minutes_before_start is different" do
     before do
-      allow(Decidim::Vocdoni).to receive(:setup_minimum_minutes_before_start).and_return(33)
+      allow(Decidim::Vocdoni).to receive(:minimum_minutes_before_start).and_return(33)
     end
 
     it "shows the message" do
@@ -90,6 +90,20 @@ describe Decidim::Vocdoni::Admin::SetupForm do
                          minimum_answers: ["Questions must have <strong>at least two answers</strong>."]
                        })
       )
+    end
+  end
+
+  context "when manual start" do
+    let(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, component: component }
+
+    it { is_expected.to be_valid }
+
+    it "does not show time_before message" do
+      expect(subject.messages).not_to have_key(:time_before)
+    end
+
+    it "shows the message" do
+      expect(subject.messages[:manual_start][:message]).to eq("The election <strong>will start manually.</strong>")
     end
   end
 end

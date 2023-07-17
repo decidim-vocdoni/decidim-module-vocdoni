@@ -98,11 +98,27 @@ module Decidim
         end
       end
 
+      describe "autoStart" do
+        let(:query) { "{ autoStart }" }
+
+        it "returns the election's autoStart setting" do
+          expect(response["autoStart"]).to be_truthy
+        end
+      end
+
       describe "interruptible" do
         let(:query) { "{ interruptible }" }
 
         it "returns the election's interruptible setting" do
           expect(response["interruptible"]).to be_truthy
+        end
+      end
+
+      describe "dynamicCensus" do
+        let(:query) { "{ dynamicCensus }" }
+
+        it "returns the election's dynamicCensus setting" do
+          expect(response["dynamicCensus"]).to be_falsey
         end
       end
 

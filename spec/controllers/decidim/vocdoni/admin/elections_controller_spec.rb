@@ -64,4 +64,17 @@ describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
       end
     end
   end
+
+  describe "POST manual_start" do
+    let(:component) { create(:vocdoni_component) }
+    let(:election) { create(:vocdoni_election, :manual_start, component: component) }
+
+    it "manually starts the election" do
+      post :manual_start, params: { id: election.id }
+
+      expect(flash[:notice]).not_to be_empty
+      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to(election_steps_path(election))
+    end
+  end
 end

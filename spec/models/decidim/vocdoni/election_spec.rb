@@ -23,6 +23,22 @@ describe Decidim::Vocdoni::Election do
   it { is_expected.not_to be_started }
   it { is_expected.not_to be_ongoing }
   it { is_expected.not_to be_finished }
+  it { is_expected.to be_auto_start }
+  it { is_expected.not_to be_manual_start }
+  it { is_expected.to be_interruptible }
+  it { is_expected.not_to be_secret_until_the_end }
+
+  context "when manual start" do
+    subject(:election) { build :vocdoni_election, :manual_start }
+
+    it { is_expected.to be_manual_start }
+    it { is_expected.not_to be_auto_start }
+    it { is_expected.to be_interruptible }
+    it { is_expected.not_to be_secret_until_the_end }
+    it { is_expected.not_to be_started }
+    it { is_expected.not_to be_ongoing }
+    it { is_expected.not_to be_finished }
+  end
 
   context "when it is ongoing" do
     subject(:election) { build :vocdoni_election, :ongoing }

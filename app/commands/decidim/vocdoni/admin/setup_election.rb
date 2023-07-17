@@ -37,7 +37,9 @@ module Decidim
         def update_election
           election.vocdoni_election_id = form.vocdoni_election_id
           election.status = :created
+          election.start_time = Time.zone.now + Decidim::Vocdoni.manual_start_time_delay if election.manual_start?
           election.blocked_at = Time.zone.now
+          election.status = :paused if election.manual_start?
           election.save!
         end
 

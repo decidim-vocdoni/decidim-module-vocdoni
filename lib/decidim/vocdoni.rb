@@ -13,8 +13,16 @@ module Decidim
     include ActiveSupport::Configurable
 
     # Public Setting that defines how many minutes should the setup be run before the election starts
-    config_accessor :setup_minimum_minutes_before_start do
+    config_accessor :minimum_minutes_before_start do
       ENV.fetch("VOCDONI_MINUTES_BEFORE_START", 10).to_i
+    end
+
+    # Public Setting that defines how long after the action of manually starting
+    # an election will the start_time of an election will be setup
+    # Some time is needed in order to comunicate the election to vocdoni,
+    # send the configured data and set it to "paused" status
+    config_accessor :manual_start_time_delay do
+      ENV.fetch("VOCDONI_MANUAL_START_DELAY", "30").to_i.seconds
     end
 
     # Public Setting to configure the Vocdoni API enpoint

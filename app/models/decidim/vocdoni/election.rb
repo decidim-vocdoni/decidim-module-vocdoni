@@ -59,6 +59,26 @@ module Decidim::Vocdoni
       blocked_at.present?
     end
 
+    def auto_start?
+      election_type&.fetch("auto_start", true)
+    end
+
+    def manual_start?
+      auto_start? == false
+    end
+
+    def interruptible?
+      election_type&.fetch("interruptible", true)
+    end
+
+    def dynamic_census?
+      election_type&.fetch("dynamic_census", false)
+    end
+
+    def secret_until_the_end?
+      election_type&.fetch("secret_until_the_end", false)
+    end
+
     # Public: Checks if the number of answers are minimum 2 for each question
     #
     # Returns a boolean.
@@ -75,9 +95,9 @@ module Decidim::Vocdoni
 
     # Public: Checks if the start and end times for the election are set.
     #
-    # Returns a boolean indicating if both the start and end times are present.
+    # Returns a boolean indicating if both the start time or manual_start and end time are present.
     def times_set?
-      start_time.present? && end_time.present?
+      (start_time.present? || manual_start?) && end_time.present?
     end
 
     # Public: Checks if the census status for the election is "ready".
@@ -114,7 +134,7 @@ module Decidim::Vocdoni
     def minimum_minutes_before_start?
       return unless start_time
 
-      start_time > (Time.zone.at(Decidim::Vocdoni.setup_minimum_minutes_before_start.minutes.from_now))
+      start_time > (Time.zone.at(Decidim::Vocdoni.minimum_minutes_before_start.minutes.from_now))
     end
 
     # Public: Checks if all the Answers related to an Election (through Questions) have a value
