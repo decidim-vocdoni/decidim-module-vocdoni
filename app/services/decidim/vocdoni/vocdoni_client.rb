@@ -14,7 +14,7 @@ module Decidim
         url = "#{base_url}/elections/#{vocdoni_election_id}"
         response = Faraday.get(url)
 
-        JSON.parse(response.body) if response.success?
+        JSON.parse(response.body) if response.success? && response.body.present?
       end
 
       private
