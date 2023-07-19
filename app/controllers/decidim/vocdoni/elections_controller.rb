@@ -39,7 +39,7 @@ module Decidim
       end
 
       def vocdoni_client
-        @vocdoni_client ||= Decidim::Vocdoni::VocdoniClient.new(wallet: current_vocdoni_wallet.private_key, api_endpoint_env: api_endpoint_env)
+        @vocdoni_client ||= VocdoniClient.new(wallet: current_vocdoni_wallet.private_key, api_endpoint_env: api_endpoint_env)
       end
 
       def vocdoni_election_id

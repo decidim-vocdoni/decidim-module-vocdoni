@@ -5,6 +5,8 @@ module Decidim
     # This cell renders the results in real time
     # for a given instance of an Election
     class ElectionResultsRealtimeCell < Decidim::ViewModel
+      include Decidim::Vocdoni::Engine.routes.url_helpers
+
       def show
         render unless model.election_type["secret_until_the_end"] || model.finished?
       end
