@@ -16,6 +16,7 @@ module Decidim
           enforce_permission_to :update, :election_calendar, election: election
 
           @election_calendar_form = ElectionCalendarForm.from_params(params)
+          @election_calendar_form.secret_until_the_end = params[:result_type] == "after_voting"
 
           UpdateElectionCalendar.call(@election_calendar_form, election) do
             on(:ok) do

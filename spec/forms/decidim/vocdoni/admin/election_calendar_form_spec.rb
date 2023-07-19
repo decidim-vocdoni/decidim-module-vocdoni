@@ -21,9 +21,11 @@ describe Decidim::Vocdoni::Admin::ElectionCalendarForm do
     {
       start_time: start_time,
       end_time: end_time,
+      result_type: result_type,
       manual_start: manual_start
     }
   end
+  let(:result_type) { "after_voting" }
 
   it { is_expected.to be_valid }
 
@@ -67,6 +69,18 @@ describe Decidim::Vocdoni::Admin::ElectionCalendarForm do
   describe "when manual_start is true and end_time is equal to current time" do
     let(:manual_start) { true }
     let(:end_time) { Time.zone.now }
+
+    it { is_expected.not_to be_valid }
+  end
+
+  describe "when result_type is not in ['real_time', 'after_voting']" do
+    let(:result_type) { "invalid_value" }
+
+    it { is_expected.not_to be_valid }
+  end
+
+  describe "when result_type is missing" do
+    let(:result_type) { nil }
 
     it { is_expected.not_to be_valid }
   end
