@@ -16,6 +16,13 @@ module Decidim
         enforce_permission_to :view, :election, election: election
 
         @election_data = (election_data if !election.election_type["secret_until_the_end"] && (election_data.present? && !election.finished?))
+
+        respond_to do |format|
+          format.html
+          format.json do
+            render json: { election_data: @election_data }
+          end
+        end
       end
 
       private

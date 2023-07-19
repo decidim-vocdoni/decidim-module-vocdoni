@@ -8,7 +8,8 @@
         <ul class="voc-accordion accordion mb-m evote__preview js-votes-count"
             data-accordion
             data-multi-expand="true"
-            data-allow-all-closed="true">
+            data-allow-all-closed="true"
+            data-url="<%= url_for(action: :show, controller: :elections, id: model.id, format: :json) %>">
           <% model.questions.each_with_index do |question, question_index| %>
             <li class="accordion-item evote__preview-question <%= " is-active" if question_index == 0 %>" data-accordion-item>
               <a href="#" class="accordion-title flex--sbc"><%= t("vote_stats.question", scope: vote_stats_scope) %>: <%= translated_attribute(question.title) %></a>
@@ -25,7 +26,11 @@
                     <% question.answers.each_with_index do |answer, answer_index| %>
                       <tr>
                         <td><%= translated_attribute(answer.title) %></td>
-                        <td><%= election_results&.dig(question_index, answer_index)&.to_i || 0 %></td>
+                        <td class="votes-for-answer"
+                            data-question-index="<%= question_index %>"
+                            data-answer-index="<%= answer_index %>">
+                          <%= election_results&.dig(question_index, answer_index)&.to_i || 0 %>
+                        </td>
                       </tr>
                     <% end %>
                     </tbody>
@@ -39,3 +44,5 @@
     </div>
   </div>
 </div>
+
+<%= javascript_pack_tag "decidim_vocdoni_update_results" %>
