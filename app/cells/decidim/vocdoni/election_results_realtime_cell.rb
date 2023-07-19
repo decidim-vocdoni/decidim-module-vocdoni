@@ -11,12 +11,31 @@ module Decidim
         render unless model.election_type["secret_until_the_end"] || model.finished?
       end
 
+      def election_url
+        election_path(
+          id: model.id,
+          format: :json,
+          component_id: current_component.id,
+          assembly_slug: current_participatory_space.slug
+        )
+      end
+
       def election_data
         @election_data ||= options[:election_data]
       end
 
       def election_results
         @election_results ||= election_data["result"]
+      end
+
+      private
+
+      def current_component
+        model.component
+      end
+
+      def current_participatory_space
+        current_component.participatory_space
       end
     end
   end

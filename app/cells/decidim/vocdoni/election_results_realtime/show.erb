@@ -1,5 +1,5 @@
 <% vote_stats_scope = "decidim.vocdoni.admin.steps" %>
-<div class="row">
+<div class="row realtime-results">
   <div class="columns large-8">
     <h3 class="section-heading"><%= t("vote_stats.title", scope: vote_stats_scope) %></h3>
     <p><%= t("description", scope: "decidim.vocdoni.elections.show") %></p>
@@ -9,7 +9,7 @@
             data-accordion
             data-multi-expand="true"
             data-allow-all-closed="true"
-            data-url="<%= url_for(action: :show, controller: :elections, id: model.id, format: :json) %>">
+            data-url="<%= election_url %>">
           <% model.questions.each_with_index do |question, question_index| %>
             <li class="accordion-item evote__preview-question <%= " is-active" if question_index == 0 %>" data-accordion-item>
               <a href="#" class="accordion-title flex--sbc"><%= t("vote_stats.question", scope: vote_stats_scope) %>: <%= translated_attribute(question.title) %></a>
