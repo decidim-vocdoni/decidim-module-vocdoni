@@ -369,6 +369,7 @@ en:
             vote_again: Vote again
           back: Available elections
           canceled: This election was canceled
+          description: Real-time voting results
           paused: This election is curently paused. Try again later.
           preview: Preview
           verify:

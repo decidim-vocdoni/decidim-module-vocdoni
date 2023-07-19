@@ -28,6 +28,26 @@ module Decidim
         @election ||= Decidim::Vocdoni::Election.where(component: current_component).find(params[:id])
       end
 
+      def current_vocdoni_wallet
+        @current_vocdoni_wallet ||= Decidim::Vocdoni::Wallet.find_by(decidim_organization_id: current_organization.id)
+      end
+
+      def api_endpoint_env
+        @api_endpoint_env ||= Decidim::Vocdoni.api_endpoint_env
+      end
+
+      def vocdoni_client
+        @vocdoni_client ||= Decidim::Vocdoni::VocdoniClient.new(wallet: current_vocdoni_wallet.private_key, api_endpoint_env: api_endpoint_env)
+      end
+
+      def vocdoni_election_id
+        @vocdoni_election_id ||= election.vocdoni_election_id
+      end
+
+      def election_data
+        @election_data ||= vocdoni_client.fetch_election(vocdoni_election_id)
+      end
+
       # Public: Checks if the component has only one election resource.
       #
       # Returns Boolean.
