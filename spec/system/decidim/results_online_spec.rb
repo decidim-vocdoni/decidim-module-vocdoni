@@ -20,7 +20,7 @@ describe "Results online", type: :system do
   include_context "with a component"
 
   context "when until_the_end is false" do
-    let!(:election) { create :vocdoni_election, :started, :published, :simple, component: component, election_type: { secret_until_the_end: secret_until_the_end }, vocdoni_election_id: vocdoni_election_id }
+    let!(:election) { create :vocdoni_election, :ongoing, :published, :simple, component: component, election_type: { secret_until_the_end: secret_until_the_end }, vocdoni_election_id: vocdoni_election_id }
     let(:question) { create :vocdoni_question, election: election }
     let(:answers) { create_list :answer, 2, question: question }
     let(:secret_until_the_end) { false }
@@ -62,10 +62,21 @@ describe "Results online", type: :system do
         expect(page).not_to have_content("VOTE STATISTICS")
       end
     end
+
+    context "when the election is not ongoing" do
+      let(:election) { create :vocdoni_election, :paused, :published, :simple, component: component }
+
+      it "shows the results" do
+        visit_component
+        click_link translated(election.title)
+
+        expect(page).not_to have_content("VOTE STATISTICS")
+      end
+    end
   end
 
   context "when until_the_end is true" do
-    let(:election) { create :vocdoni_election, :started, :published, :simple, component: component }
+    let(:election) { create :vocdoni_election, :ongoing, :published, :simple, component: component }
 
     it "doesn't show the results" do
       visit_component

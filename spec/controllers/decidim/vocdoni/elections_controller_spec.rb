@@ -20,9 +20,9 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
   describe "GET #show" do
     before { sign_in user }
 
-    context "when election is not secret until the end and has data and is not finished" do
+    context "when election is not secret until the end and has data and is ongoing" do
       let(:election) do
-        create(:vocdoni_election, :published, component: component, election_type: { "secret_until_the_end" => false })
+        create(:vocdoni_election, :published, :ongoing, component: component, election_type: { "secret_until_the_end" => false })
       end
 
       before do
@@ -82,8 +82,8 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
       end
     end
 
-    context "when election is started" do
-      let(:election) { create(:vocdoni_election, :started, :published, component: component, vocdoni_election_id: "123") }
+    context "when election is ongoing" do
+      let(:election) { create(:vocdoni_election, :ongoing, :published, component: component, vocdoni_election_id: "123") }
 
       it "returns the vocdoni election id" do
         get :show, params: { id: election.id }
@@ -107,8 +107,8 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
       end
     end
 
-    context "when election is started" do
-      let(:election) { create(:vocdoni_election, :started, :published, component: component, vocdoni_election_id: "123") }
+    context "when election is ongoing" do
+      let(:election) { create(:vocdoni_election, :ongoing, :published, component: component, vocdoni_election_id: "123") }
       let(:election_data) { { data: "election data" } }
 
       before do

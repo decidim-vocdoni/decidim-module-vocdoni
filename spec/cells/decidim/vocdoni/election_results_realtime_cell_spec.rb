@@ -16,8 +16,8 @@ describe Decidim::Vocdoni::ElectionResultsRealtimeCell, type: :cell do
     allow(controller).to receive(:current_user).and_return(current_user)
   end
 
-  context "when election is not secret until the end and not finished" do
-    let!(:election) { create(:vocdoni_election, :published, :started, component: component, election_type: { "secret_until_the_end" => false }) }
+  context "when election is not secret until the end and ongoing" do
+    let!(:election) { create(:vocdoni_election, :ongoing, :started, component: component, election_type: { "secret_until_the_end" => false }) }
 
     it "renders the cell" do
       expect(subject).to have_css(".realtime-results")
@@ -25,7 +25,7 @@ describe Decidim::Vocdoni::ElectionResultsRealtimeCell, type: :cell do
   end
 
   context "when election is secret until the end" do
-    let!(:election) { create(:vocdoni_election, :published, :started, election_type: { "secret_until_the_end" => true }) }
+    let!(:election) { create(:vocdoni_election, :published, :ongoing, election_type: { "secret_until_the_end" => true }) }
 
     it "does not render the cell" do
       expect(subject).not_to have_css(".realtime-results")

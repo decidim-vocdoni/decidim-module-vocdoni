@@ -8,7 +8,7 @@ module Decidim
       include Decidim::Vocdoni::Engine.routes.url_helpers
 
       def show
-        render unless model.election_type["secret_until_the_end"] || model.finished?
+        render unless model.election_type["secret_until_the_end"] || !model.ongoing?
       end
 
       def election_url

@@ -15,7 +15,7 @@ module Decidim
       def show
         enforce_permission_to :view, :election, election: election
 
-        @election_data = (election_data if !election.election_type["secret_until_the_end"] && (election_data.present? && !election.finished?))
+        @election_data = (election_data if !election.election_type["secret_until_the_end"] && election.ongoing?)
 
         respond_to do |format|
           format.html
