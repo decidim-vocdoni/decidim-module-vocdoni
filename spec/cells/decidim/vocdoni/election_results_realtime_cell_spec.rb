@@ -14,7 +14,6 @@ describe Decidim::Vocdoni::ElectionResultsRealtimeCell, type: :cell do
 
   before do
     allow(controller).to receive(:current_user).and_return(current_user)
-    routes { Decidim::Vocdoni::Engine.routes }
   end
 
   context "when election is not secret until the end and not finished" do
