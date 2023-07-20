@@ -25,6 +25,7 @@
       </div>
 
       <% if step_index == 0 %>
+        <%#= votes_left_message(current_voter, election) %>
         <div class="callout warning hide js-already_voted"><%= t(".already_voted") %></div>
       <% end %>
 

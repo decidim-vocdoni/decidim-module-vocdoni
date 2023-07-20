@@ -12,6 +12,12 @@ module Decidim
   module Vocdoni
     include ActiveSupport::Configurable
 
+    # Public Setting that defines the maximum number of votes that can be
+    # overwritten by the voter
+    config_accessor :votes_overwrite_max do
+      ENV.fetch("DECIDIM_VOCDONI_VOTES_OVERWRITE_MAX", 3).to_i
+    end
+
     # Public Setting that defines how many minutes should the setup be run before the election starts
     config_accessor :minimum_minutes_before_start do
       ENV.fetch("VOCDONI_MINUTES_BEFORE_START", 10).to_i

@@ -62,6 +62,7 @@ const setupElectionStep = async () => {
       defaultLocale: document.querySelector(".js-vocdoni-client").dataset.defaultLocale,
       componentId: window.location.pathname.split("/")[5],
       electionId: window.location.pathname.split("/")[8],
+      maxVoteOverwrites: document.querySelector(".js-vocdoni-client").dataset.maxVoteOverwrites,
       containerClass: ".process-content"
     }, onSuccess, onFailure);
     election.run();

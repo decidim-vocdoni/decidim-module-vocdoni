@@ -441,6 +441,9 @@ en:
         new:
           already_voted: You have already voted on this election. You can vote again.
             The previous vote will be overwritten.
+          can_vote_again: You have already voted on this election. You can vote again.
+          can_vote_one_more_time: You have already voted on this election. You can vote again one more time.
+          no_more_votes_left: You have already voted on this election. You can not vote again.
           more_information: More information
           preview_alert: This is a preview of the voting booth.
           question_steps: Question %{current_step} of %{total_steps}

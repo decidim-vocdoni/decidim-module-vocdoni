@@ -2,9 +2,6 @@ import { Election, PlainCensus } from "@vocdoni/sdk";
 import { initVocdoniClient } from "src/decidim/vocdoni/admin/utils/init_vocdoni_client";
 import { getAvailableCredits } from "src/decidim/vocdoni/admin/available_credits";
 
-// Do not allow the user to vote multiple times
-const MAX_VOTE_OVERWRITES = 0;
-
 /*
  * Creates an Election in the Vocdoni API
  * Instantiates the Vocdoni SDK client using the Wallet's private key given as parameter.
@@ -29,6 +26,7 @@ export default class CreateVocdoniElection {
     this.defaultLocale = options.defaultLocale;
     this.componentId = options.componentId;
     this.electionId = options.electionId;
+    this.maxVoteOverwrites = options.maxVoteOverwrites;
     this.containerClass = options.containerClass;
     this.onSuccess = onSuccess;
     this.onFailure = onFailure;
@@ -39,6 +37,7 @@ export default class CreateVocdoniElection {
     console.log("DEFAULT LOCALE => ", options.defaultLocale);
     console.log("VOCDONI COMPONENT ID => ", options.componentId);
     console.log("ELECTION ID => ", options.electionId);
+    console.log("MAX VOTE OVERWRITES => ", options.maxVoteOverwrites);
     console.groupEnd();
   }
 
@@ -133,6 +132,9 @@ export default class CreateVocdoniElection {
 
     let electionMetadata = await this._getElectionMetadata();
     electionMetadata = electionMetadata.data.component.election;
+
+    // Do not allow the user to vote multiple times
+    const MAX_VOTE_OVERWRITES = parseInt(document.querySelector("#max-vote-overwrites").dataset.maxVoteOverwrites);
 
     // Save the electionMetadata in the DOM to show it in the markup if there's any error
     const errorDetails = document.querySelector(this.containerClass).querySelector(".js-election-create-error-message-details");
