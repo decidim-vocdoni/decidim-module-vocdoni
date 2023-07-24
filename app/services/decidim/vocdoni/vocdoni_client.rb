@@ -3,12 +3,6 @@
 module Decidim
   module Vocdoni
     class VocdoniClient
-      API_ENDPOINTS = {
-        "prd" => "https://api.vocdoni.net/v2",
-        "stg" => "https://api-stg.vocdoni.net/v2",
-        "dev" => "https://api-dev.vocdoni.net/v2"
-      }.freeze
-
       attr_reader :wallet, :api_endpoint_env
 
       def initialize(wallet:, api_endpoint_env:)
@@ -30,7 +24,7 @@ module Decidim
       end
 
       def base_url
-        API_ENDPOINTS[api_endpoint_env]
+        Decidim::Vocdoni::api_endpoint_url(api_endpoint_env)
       end
     end
   end

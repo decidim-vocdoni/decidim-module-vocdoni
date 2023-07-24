@@ -12,6 +12,13 @@ module Decidim
   module Vocdoni
     include ActiveSupport::Configurable
 
+    # Hash constant defining the Vocdoni API endpoints for each environment.
+    API_ENDPOINTS = {
+      "prd" => "https://api.vocdoni.net/v2",
+      "stg" => "https://api-stg.vocdoni.net/v2",
+      "dev" => "https://api-dev.vocdoni.net/v2"
+    }.freeze
+
     # Public Setting that defines how many minutes should the setup be run before the election starts
     config_accessor :minimum_minutes_before_start do
       ENV.fetch("VOCDONI_MINUTES_BEFORE_START", 10).to_i
@@ -29,6 +36,11 @@ module Decidim
     # It can be "dev" or "stg"
     config_accessor :api_endpoint_env do
       ENV.fetch("VOCDONI_API_ENDPOINT_ENV", "stg")
+    end
+
+    # Public: Returns the API endpoint URL based on the environment specified in the configuration.
+    def self.api_endpoint_url(api_endpoint_env)
+      API_ENDPOINTS[api_endpoint_env]
     end
 
     def self.api_endpoint_env

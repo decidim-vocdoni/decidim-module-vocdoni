@@ -15,7 +15,7 @@ module Decidim
       def show
         enforce_permission_to :view, :election, election: election
 
-        @election_data = (election_data if !election.election_type["secret_until_the_end"] && election.ongoing?)
+        @election_data = election_metadata
 
         respond_to do |format|
           format.html
@@ -55,6 +55,12 @@ module Decidim
 
       def election_data
         @election_data ||= vocdoni_client.fetch_election(vocdoni_election_id)
+      end
+
+      def election_metadata
+        return nil unless !election.election_type["secret_until_the_end"] && election.ongoing?
+
+        @election_metadata ||= election_data
       end
 
       # Public: Checks if the component has only one election resource.

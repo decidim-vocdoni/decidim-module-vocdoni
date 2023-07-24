@@ -19,11 +19,13 @@ const updateResults = function (data) {
 */
 const handleDOMContentLoaded = function () {
   const url = document.querySelector(".js-votes-count").dataset.url;
+  const MILLISECONDS_TO_REFRESH = 10 * 1000;
+
   setInterval(function () {
     fetch(url).then(function (response) {
       return response.json();
     }).then(updateResults);
-  }, 10000);
+  }, MILLISECONDS_TO_REFRESH);
 };
 
 document.addEventListener("DOMContentLoaded", handleDOMContentLoaded);
