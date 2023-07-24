@@ -46,6 +46,7 @@ module Decidim
 
         @election_metadata ||= vocdoni_client.fetch_election
       end
+
       # Public: Checks if the component has only one election resource.
       #
       # Returns Boolean.
