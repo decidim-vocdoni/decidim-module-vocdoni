@@ -3,14 +3,13 @@
 module Decidim
   module Vocdoni
     class VocdoniClient
-      attr_reader :wallet, :api_endpoint_env
+      attr_reader :vocdoni_election_id
 
-      def initialize(wallet:, api_endpoint_env:)
-        @wallet = wallet
-        @api_endpoint_env = api_endpoint_env
+      def initialize(vocdoni_election_id:)
+        @vocdoni_election_id = vocdoni_election_id
       end
 
-      def fetch_election(vocdoni_election_id)
+      def fetch_election
         fetch_from_api("/elections/#{vocdoni_election_id}")
       end
 
@@ -24,7 +23,7 @@ module Decidim
       end
 
       def base_url
-        Decidim::Vocdoni.api_endpoint_url(api_endpoint_env)
+        Decidim::Vocdoni.api_endpoint_url
       end
     end
   end
