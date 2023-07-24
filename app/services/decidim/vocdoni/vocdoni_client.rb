@@ -24,7 +24,7 @@ module Decidim
       end
 
       def base_url
-        Decidim::Vocdoni::api_endpoint_url(api_endpoint_env)
+        Decidim::Vocdoni.api_endpoint_url(api_endpoint_env)
       end
     end
   end

@@ -38,6 +38,11 @@ module Decidim
       ENV.fetch("VOCDONI_API_ENDPOINT_ENV", "stg")
     end
 
+    # Public Setting to configure the interruptible elections
+    config_accessor :interruptible_elections do
+      true
+    end
+
     # Public: Returns the API endpoint URL based on the environment specified in the configuration.
     def self.api_endpoint_url(api_endpoint_env)
       API_ENDPOINTS[api_endpoint_env]
