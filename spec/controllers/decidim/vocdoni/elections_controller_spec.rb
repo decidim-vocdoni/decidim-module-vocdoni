@@ -26,8 +26,8 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
       end
 
       before do
-        allow(controller).to receive(:election_data).and_return({ data: "test" })
-        allow(election).to receive(:finished?).and_return(false)
+        allow(controller).to receive(:election_metadata).and_return({ data: "test" })
+        allow(election).to receive(:ongoing?).and_return(true)
       end
 
       it "sets election data" do
@@ -46,80 +46,50 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
     end
   end
 
-  describe "#current_vocdoni_wallet" do
-    it "returns the vocdoni wallet for current organization" do
-      expect(controller.send(:current_vocdoni_wallet)).to eq(wallet)
-    end
-  end
-
-  describe "#api_endpoint_env" do
-    before { allow(Decidim::Vocdoni).to receive(:api_endpoint_env).and_return("stg") }
-
-    it "returns api endpoint environment" do
-      expect(controller.send(:api_endpoint_env)).to eq("stg")
-    end
-  end
-
   describe "#vocdoni_client" do
     before do
-      allow(Decidim::Vocdoni::VocdoniClient).to receive(:new).with(wallet: wallet.private_key, api_endpoint_env:
-        "api_env").and_return(vocdoni_client)
-      allow(Decidim::Vocdoni).to receive(:api_endpoint_env).and_return("api_env")
+      allow(Decidim::Vocdoni::VocdoniClient).to receive(:new)
+        .with(vocdoni_election_id: election.vocdoni_election_id)
+        .and_return(vocdoni_client)
     end
 
     it "returns a VocdoniClient instance" do
+      get :show, params: { id: election.id }
       expect(controller.send(:vocdoni_client)).to eq(vocdoni_client)
     end
   end
 
-  describe "#vocdoni_election_id" do
-    context "when election is not started" do
-      let(:election) { create(:vocdoni_election, :published, component: component) }
-
-      it "returns nil" do
-        get :show, params: { id: election.id }
-        expect(controller.send(:vocdoni_election_id)).to be_nil
+  describe "#election_metadata" do
+    context "when election is ongoing and not secret until the end" do
+      let(:election) do
+        create(:vocdoni_election, :published, :ongoing, component: component,
+                                                        election_type: { "secret_until_the_end" => false },
+                                                        vocdoni_election_id: "123")
       end
-    end
-
-    context "when election is ongoing" do
-      let(:election) { create(:vocdoni_election, :ongoing, :published, component: component, vocdoni_election_id: "123") }
-
-      it "returns the vocdoni election id" do
-        get :show, params: { id: election.id }
-        expect(controller.send(:vocdoni_election_id)).to eq("123")
-      end
-    end
-  end
-
-  describe "#election_data" do
-    context "when election is not started" do
-      let(:election) { create(:vocdoni_election, :published, component: component) }
+      let(:election_metadata) { { data: "election metadata" } }
 
       before do
-        stub_request(:get, "https://api-stg.vocdoni.net/v2/elections/")
-          .to_return(status: 200, body: nil, headers: {})
-      end
-
-      it "returns nil" do
-        get :show, params: { id: election.id }
-        expect(controller.send(:election_data)).to be_nil
-      end
-    end
-
-    context "when election is ongoing" do
-      let(:election) { create(:vocdoni_election, :ongoing, :published, component: component, vocdoni_election_id: "123") }
-      let(:election_data) { { data: "election data" } }
-
-      before do
-        allow(Decidim::Vocdoni::VocdoniClient).to receive(:new).with(wallet: wallet.private_key, api_endpoint_env: "stg").and_return(vocdoni_client)
-        allow(vocdoni_client).to receive(:fetch_election).with("123").and_return(election_data)
-        allow(Decidim::Vocdoni).to receive(:api_endpoint_env).and_return("stg")
+        allow(Decidim::Vocdoni::VocdoniClient).to receive(:new)
+          .with(vocdoni_election_id: election.vocdoni_election_id)
+          .and_return(vocdoni_client)
+        allow(vocdoni_client).to receive(:fetch_election).and_return(election_metadata)
       end
 
       it "returns the election data" do
         get :show, params: { id: election.id }
-        expect(controller.send(:election_data)).to eq(election_data)
+        expect(controller.send(:election_metadata)).to eq(election_metadata)
+      end
+    end
+
+    context "when election is not ongoing or is secret until the end" do
+      let(:election) do
+        create(:vocdoni_election, :published, component: component,
+                                              election_type: { "secret_until_the_end" => true })
+      end
+
+      it "returns nil" do
+        get :show, params: { id: election.id }
+        expect(controller.send(:election_metadata)).to be_nil
       end
     end
   end
