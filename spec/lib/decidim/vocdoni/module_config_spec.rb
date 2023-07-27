@@ -30,7 +30,8 @@ module Decidim
         expect(config).to eq({
                                "minimum_minutes_before_start" => 11,
                                "api_endpoint_env" => "STG",
-                               "manual_start_time_delay" => 33
+                               "manual_start_time_delay" => 33,
+                               "interruptible_elections" => true
                              })
       end
 

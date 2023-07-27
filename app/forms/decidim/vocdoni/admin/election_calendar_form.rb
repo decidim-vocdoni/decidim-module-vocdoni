@@ -10,12 +10,14 @@ module Decidim
 
         # Election Type attributes
         attribute :secret_until_the_end, Boolean, default: false
+        attribute :result_type, String
         attribute :interruptible, Boolean, default: true
         attribute :dynamic_census, Boolean, default: false
         attribute :anonymous, Boolean, default: false
 
         validates :start_time, presence: true, unless: :manual_start?
         validates :end_time, presence: true
+        validates :result_type, inclusion: { in: %w(real_time after_voting) }
 
         validate :valid_start_time
         validate :valid_end_time

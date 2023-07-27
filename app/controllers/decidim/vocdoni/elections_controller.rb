@@ -14,6 +14,15 @@ module Decidim
 
       def show
         enforce_permission_to :view, :election, election: election
+
+        @election_data = election_metadata
+
+        respond_to do |format|
+          format.html
+          format.json do
+            render json: { election_data: @election_data }
+          end
+        end
       end
 
       private
@@ -26,6 +35,16 @@ module Decidim
         # The single election is searched from non-published records on purpose
         # to allow previewing for admins.
         @election ||= Decidim::Vocdoni::Election.where(component: current_component).find(params[:id])
+      end
+
+      def vocdoni_client
+        @vocdoni_client ||= VocdoniClient.new(vocdoni_election_id: election.vocdoni_election_id)
+      end
+
+      def election_metadata
+        return nil unless !election.election_type["secret_until_the_end"] && election.ongoing?
+
+        @election_metadata ||= vocdoni_client.fetch_election
       end
 
       # Public: Checks if the component has only one election resource.
