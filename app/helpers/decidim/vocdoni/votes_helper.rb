@@ -13,12 +13,11 @@ module Decidim
         translated_attribute(answer.description).present?
       end
 
-      def votes_left_message(voter, election)
-        votes_left = Decidim::Vocdoni.votes_overwrite_max - voter.votes_count(election)
+      def votes_left_message(votes_left)
         scope = "decidim.vocdoni.votes.new"
 
         if votes_left > 1
-          content_tag :div, t("can_vote_again", scope: scope), class: "callout secondary js-already_voted"
+          content_tag :div, t("can_vote_again", scope: scope, votes_left: votes_left), class: "callout secondary js-already_voted"
         elsif votes_left == 1
           content_tag :div, t("can_vote_one_more_time", scope: scope), class: "callout warning js-already_voted"
         else

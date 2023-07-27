@@ -1,8 +1,11 @@
 <div class="vote-wrapper"
-  data-vocdoni-env="<%= vocdoni_api_endpoint_env %>"
-  data-election-unique-id="<%== election_unique_id %>"
-  data-scheme-name="vocdoni"
-  data-preview="<%= preview_mode? %>">
+     id="vote-wrapper"
+     data-vocdoni-env="<%= vocdoni_api_endpoint_env %>"
+     data-url="<%= votes_left_election_votes_path(election.id)%>"
+     data-election-unique-id="<%== election_unique_id %>"
+     data-scheme-name="vocdoni"
+     data-election-id="<%= election.id %>"
+     data-preview="<%= preview_mode? %>">
 
   <div id="login" class="focus__step" data-toggler=".hide">
     <%= render("login") %>
@@ -25,9 +28,14 @@
       </div>
 
       <% if step_index == 0 %>
-        <%#= votes_left_message(current_voter, election) %>
-        <div class="callout warning hide js-already_voted"><%= t(".already_voted") %></div>
-      <% end %>
+        <div id="votes-left-message">
+          <!--
+            This block is updated by a JavaScript function with server response data.
+            Initially it's empty, but it's filled with data from JavaScript,
+            which makes a request to the server for fresh data and updates this block accordingly.
+          -->
+        </div>
+    <% end %>
 
       <div class="focus__content evote">
         <div class="row">

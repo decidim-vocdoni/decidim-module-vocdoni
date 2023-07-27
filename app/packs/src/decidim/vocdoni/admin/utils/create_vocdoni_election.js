@@ -133,8 +133,8 @@ export default class CreateVocdoniElection {
     let electionMetadata = await this._getElectionMetadata();
     electionMetadata = electionMetadata.data.component.election;
 
-    // Do not allow the user to vote multiple times
-    const MAX_VOTE_OVERWRITES = parseInt(document.querySelector("#max-vote-overwrites").dataset.maxVoteOverwrites);
+    // Allow the user to vote multiple times
+    const MAX_VOTE_OVERWRITES = parseInt(document.querySelector("#max-vote-overwrites").dataset.maxVoteOverwrites, 10);
 
     // Save the electionMetadata in the DOM to show it in the markup if there's any error
     const errorDetails = document.querySelector(this.containerClass).querySelector(".js-election-create-error-message-details");
