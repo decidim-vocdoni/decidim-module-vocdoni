@@ -93,7 +93,7 @@ Decidim.register_component(:vocdoni) do |component|
         published_at: Faker::Boolean.boolean(true_ratio: 0.5) ? 1.week.ago : nil,
         election_type: {
           auto_start: auto_start,
-          interruptible: auto_start ? [true, false].sample : true,
+          interruptible: true,
           dynamic_census: [true, false].sample,
           secret_until_the_end: [true, false].sample,
           anonymous: [true, false].sample

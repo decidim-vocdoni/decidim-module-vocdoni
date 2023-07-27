@@ -56,4 +56,6 @@ edit_link(
 
 <%= cell("decidim/vocdoni/election_preview", election) %>
 
+<%= cell("decidim/vocdoni/election_results_realtime", election, election_data: @election_data) if @election_data %>
+
 <%= cell("decidim/vocdoni/election_results", election) %>

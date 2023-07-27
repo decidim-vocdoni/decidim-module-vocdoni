@@ -49,18 +49,12 @@ module Decidim
           {
             election_type: {
               auto_start: !form.manual_start,
-              secret_until_the_end: form.secret_until_the_end,
-              interruptible: interruptible,
+              secret_until_the_end: form.result_type == "after_voting",
+              interruptible: Decidim::Vocdoni.interruptible_elections,
               dynamic_census: form.dynamic_census,
               anonymous: form.anonymous
             }
           }
-        end
-
-        def interruptible
-          return true if form.manual_start
-
-          form.interruptible
         end
 
         def start_time

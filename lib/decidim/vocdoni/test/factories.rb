@@ -32,7 +32,7 @@ FactoryBot.define do
         "auto_start" => true,
         "dynamic_census" => false,
         "interruptible" => true,
-        "secret_until_the_end" => false
+        "secret_until_the_end" => true
       }
     end
     component { create(:vocdoni_component, organization: organization) }
@@ -52,7 +52,7 @@ FactoryBot.define do
           "auto_start" => false,
           "dynamic_census" => false,
           "interruptible" => true,
-          "secret_until_the_end" => false
+          "secret_until_the_end" => true
         }
       end
     end

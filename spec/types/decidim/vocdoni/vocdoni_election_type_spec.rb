@@ -126,7 +126,7 @@ module Decidim
         let(:query) { "{ secretUntilTheEnd }" }
 
         it "returns the election's secret until the end setting" do
-          expect(response["secretUntilTheEnd"]).to be_falsey
+          expect(response["secretUntilTheEnd"]).to be_truthy
         end
       end
 
