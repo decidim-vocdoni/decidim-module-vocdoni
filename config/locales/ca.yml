@@ -98,7 +98,11 @@ ca:
             title: Dades de cens actuals
         election_calendar:
           edit:
+            after_voting_note: Show results only when the election is closed
+            calendar_title: Calendar
             organization_time_zone: Check that the organization time zone is correct in the organization settings. The current configuration is %{time_zone} (%{time}).
+            real_time_note: Show results as soon as the first vote is submitted
+            results_title: Results availability
             title: Edit election calendar
         elections:
           create:
@@ -327,6 +331,7 @@ ca:
             vote_again: Votar de nou
           back: Eleccions disponibles
           canceled: S'ha cancel·lat aquesta elecció
+          description: Real-time voting results
           paused: Aquesta elecció està pausada. Torna-ho a provar més tard.
           preview: Vista prèvia
           verify:
