@@ -20,7 +20,7 @@ module Decidim
           content_tag :div, t("can_vote_again", scope: scope, votes_left: votes_left), class: "callout secondary js-already_voted"
         elsif votes_left == 1
           content_tag :div, t("can_vote_one_more_time", scope: scope), class: "callout warning js-already_voted"
-        else
+        elsif votes_left.zero?
           content_tag :div, t("no_more_votes_left", scope: scope), class: "callout alert js-already_voted"
         end
       end
