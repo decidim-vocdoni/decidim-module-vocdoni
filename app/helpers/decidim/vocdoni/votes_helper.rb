@@ -16,7 +16,7 @@ module Decidim
       def votes_left_message(votes_left)
         scope = "decidim.vocdoni.votes.new"
 
-        if votes_left > 1
+        if votes_left > 1 && votes_left <= Decidim::Vocdoni.votes_overwrite_max
           content_tag :div, t("can_vote_again", scope: scope, votes_left: votes_left), class: "callout secondary js-already_voted"
         elsif votes_left == 1
           content_tag :div, t("can_vote_one_more_time", scope: scope), class: "callout warning js-already_voted"

@@ -444,8 +444,6 @@ en:
         modal:
           close: Close
         new:
-          already_voted: You have already voted on this election. You can vote again.
-            The previous vote will be overwritten.
           can_vote_again: You have already voted on this election. You can vote again
             %{votes_left} times.
           can_vote_one_more_time: You have already voted on this election. You can

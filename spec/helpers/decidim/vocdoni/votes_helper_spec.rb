@@ -40,6 +40,40 @@ module Decidim
           end
         end
       end
+
+      describe "votes_left_message" do
+        let(:votes_left) { nil }
+
+        let(:votes_left_message) { helper.votes_left_message(votes_left) }
+
+        before do
+          allow(Decidim::Vocdoni).to receive(:votes_overwrite_max).and_return(5)
+        end
+
+        context "when votes_left is greater than 1 and less than or equal to votes_overwrite_max" do
+          let(:votes_left) { 3 }
+
+          it "returns the 'can_vote_again' message" do
+            expect(votes_left_message).to include(I18n.t("can_vote_again", scope: "decidim.vocdoni.votes.new", votes_left: votes_left))
+          end
+        end
+
+        context "when votes_left is equal to 1" do
+          let(:votes_left) { 1 }
+
+          it "returns the 'can_vote_one_more_time' message" do
+            expect(votes_left_message).to include(I18n.t("can_vote_one_more_time", scope: "decidim.vocdoni.votes.new"))
+          end
+        end
+
+        context "when votes_left is 0 or less" do
+          let(:votes_left) { 0 }
+
+          it "returns the 'no_more_votes_left' message" do
+            expect(votes_left_message).to include(I18n.t("no_more_votes_left", scope: "decidim.vocdoni.votes.new"))
+          end
+        end
+      end
     end
   end
 end
