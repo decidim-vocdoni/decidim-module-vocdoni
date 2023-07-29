@@ -15,14 +15,18 @@ module Decidim
 
       def votes_left_message(votes_left)
         scope = "decidim.vocdoni.votes.new"
+        max_votes = Decidim::Vocdoni.votes_overwrite_max
 
-        if votes_left > 1 && votes_left <= Decidim::Vocdoni.votes_overwrite_max
-          content_tag :div, t("can_vote_again", scope: scope, votes_left: votes_left), class: "callout secondary js-already_voted"
-        elsif votes_left == 1
-          content_tag :div, t("can_vote_one_more_time", scope: scope), class: "callout warning js-already_voted"
-        elsif votes_left.zero?
-          content_tag :div, t("no_more_votes_left", scope: scope), class: "callout alert js-already_voted"
-        end
+        message_key, css_class = case votes_left
+                                 when (2..max_votes)
+                                   %w(can_vote_again secondary)
+                                 when 1
+                                   %w(can_vote_one_more_time warning)
+                                 when 0
+                                   %w(no_more_votes_left alert)
+                                 end
+
+        content_tag :div, t(message_key, scope: scope, votes_left: votes_left), class: "callout #{css_class} js-already_voted"
       end
     end
   end
