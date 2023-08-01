@@ -398,8 +398,10 @@ ca:
         modal:
           close: Tancar
         new:
-          already_voted: Ja has votat en aquesta elecció. Pots tornar a votar. El vot anterior s'anul·larà.
+          can_vote_again: You have already voted on this election. You can vote again %{votes_left} times.
+          can_vote_one_more_time: You have already voted on this election. You can vote again one more time.
           more_information: Més informació
+          no_more_votes_left: You have already voted on this election. You can not vote again.
           preview_alert: Aquesta és una vista prèvia de la cabina de votació.
           question_steps: Pregunta %{current_step} de %{total_steps}
         submitting:
