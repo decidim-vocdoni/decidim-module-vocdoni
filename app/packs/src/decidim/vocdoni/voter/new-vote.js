@@ -154,6 +154,30 @@ $(() => {
         return;
       }
 
+      const votesLeft = await client.votesLeftCount();
+      const electionUrl = document.getElementById("vote-wrapper").dataset.url;
+      console.log("VOTES LEFT => ", votesLeft);
+
+      /**
+       * Function to update the votes left for a given election.
+       * @param {number} votesLeftParam - The remaining votes overwrite for the election.
+       *  @returns {void} No return value.
+       */
+      const updateVotesLeft = function(votesLeftParam) {
+        fetch(electionUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+          },
+          body: JSON.stringify({ votesLeft: votesLeftParam })
+        }).then((response) => response.json()).then((data) => {
+          document.getElementById("votes-left-message").innerHTML = data.message;
+        }).catch((error) => console.error("Error:", error));
+      }
+
+      updateVotesLeft(votesLeft);
+
       const hasAlreadyVoted = await client.hasAlreadyVoted();
       if (hasAlreadyVoted) {
         console.log("ALREADY VOTED");

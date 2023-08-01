@@ -24,6 +24,12 @@ module Decidim
         enforce_permission_to :view, :election, election: election
       end
 
+      def votes_left
+        votes_left = params[:votesLeft]
+        message = helpers.votes_left_message(votes_left.to_i)
+        render json: { message: message }
+      end
+
       private
 
       def election_unique_id

@@ -2,6 +2,8 @@
 <% add_decidim_page_title(t(".title")) %>
 
 <div class="card js-vocdoni-client"
+     id="max-vote-overwrites"
+     data-max-vote-overwrites="<%= Decidim::Vocdoni.votes_overwrite_max %>"
      data-default-locale="<%= current_organization.default_locale %>"
      data-answers-values-election-path="<%= answers_values_election_path(election) %>"
      data-vocdoni-wallet-private-key="<%= @current_vocdoni_wallet.private_key %>"

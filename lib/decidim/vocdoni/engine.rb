@@ -13,6 +13,7 @@ module Decidim
         resources :elections, only: [:index, :show] do
           resources :votes, only: [:new, :create, :update, :show] do
             match "new", action: :new, via: :post, as: :login, on: :collection
+            post "votes_left", on: :collection
           end
         end
 
