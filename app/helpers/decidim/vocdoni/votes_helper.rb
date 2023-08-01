@@ -17,6 +17,8 @@ module Decidim
         scope = "decidim.vocdoni.votes.new"
         max_votes = Decidim::Vocdoni.votes_overwrite_max
 
+        return if votes_left > max_votes
+
         message_key, css_class = case votes_left
                                  when (2..max_votes)
                                    %w(can_vote_again secondary)
