@@ -398,8 +398,10 @@ es:
         modal:
           close: Cerrar
         new:
-          already_voted: Ya has votado en esta elección. Puedes votar de nuevo. El voto anterior se anulará.
+          can_vote_again: You have already voted on this election. You can vote again %{votes_left} times.
+          can_vote_one_more_time: You have already voted on this election. You can vote again one more time.
           more_information: Más información
+          no_more_votes_left: You have already voted on this election. You can not vote again.
           preview_alert: Esta es una vista previa de la cabina de votación.
           question_steps: Pregunta %{current_step} de %{total_steps}
         submitting:
