@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-DECIDIM_VERSION = "0.27.1"
+DECIDIM_VERSION = "0.27.4"
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-vocdoni", path: "."
@@ -20,7 +20,6 @@ group :development, :test do
 end
 
 group :development do
-  gem "i18n-tasks", "~> 0.9.37"
   gem "letter_opener_web", "~> 2.0"
   gem "listen", "~> 3.1"
   gem "rubocop-faker", "~> 1.1"
