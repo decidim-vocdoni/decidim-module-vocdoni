@@ -115,6 +115,40 @@ can add the environment variables to the root directory of the project in a file
 named `.rbenv-vars`. If these are defined for the environment, you can omit
 defining these in the commands shown above.
 
+
+#### Useful commands for debugging/tests
+
+While developing, you may need to delete or restart the different resources in the Decidim side, so you don't
+waste too much time on a manual setup. These are some commands that could be useful for that.
+
+NOTE: some of these commands could be destructive, so proceed with caution!
+
+##### View the private key for the first Organization' Wallet
+
+```shell
+bin/rails runner 'puts Decidim::Vocdoni::Wallet.first.private_key'
+```
+
+##### View all the Election IDs from Vocdoni
+
+```shell
+bin/rails runner 'puts Decidim::Vocdoni::Election.all.pluck(:vocdoni_election_id).uniq.compact.sort'
+```
+
+##### Delete all the Organizations' Wallets
+
+This may be necessary in the cases where there's a Blockchain reset, something done periodically in the Stage chain.
+
+```shell
+bin/rails runner 'Decidim::Vocdoni::Wallet.delete_all'
+```
+
+##### Reset Elections in Decidim
+
+```shell
+bin/rails runner 'Decidim::Vocdoni::Election.update_all(blocked_at: nil, status: nil, vocdoni_election_id: nil, start_time: Time.now+10.minutes, end_time: Time.now+10.minutes+1.hour)'
+```
+
 #### Webpacker notes
 
 As latest versions of Decidim, this repository uses Webpacker for Rails. This means that compilation
