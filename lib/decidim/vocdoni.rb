@@ -41,7 +41,7 @@ module Decidim
     # Public Setting to configure the Vocdoni API enpoint
     # It can be "dev" or "stg"
     config_accessor :api_endpoint_env do
-      ENV.fetch("VOCDONI_API_ENDPOINT_ENV", "stg")
+      ENV.fetch("VOCDONI_API_ENDPOINT_ENV", "dev")
     end
 
     # Public: Setting to configure the interruptible elections
