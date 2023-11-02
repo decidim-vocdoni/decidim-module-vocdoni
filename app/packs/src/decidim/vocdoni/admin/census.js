@@ -1,4 +1,8 @@
-function toggleSectionsBasedOnRadioButton() {
+/**
+ * Toggle sections based on the selected radio button.
+ * @returns {undefined}
+ */
+const toggleSectionsBasedOnRadioButton = function() {
   const csvRadioButton = document.getElementById("csv_radio_button");
   const permissionsRadioButton = document.getElementById("permissions_radio_button");
   const csvUploadDiv = document.getElementById("csv_upload");
