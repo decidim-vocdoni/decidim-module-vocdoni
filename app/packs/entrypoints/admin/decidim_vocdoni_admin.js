@@ -6,6 +6,7 @@ import "src/decidim/vocdoni/admin/steps/setup_election"
 import "src/decidim/vocdoni/admin/steps/vote"
 import "src/decidim/vocdoni/admin/steps/vote_ended"
 import "src/decidim/vocdoni/admin/election_calendar"
+import "src/decidim/vocdoni/admin/census"
 
 // Images
 require.context("../../images", true)

@@ -1,8 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
+function toggleStartTimeFieldBasedOnCheckbox() {
   const manualStartCheckbox = document.getElementById("election_calendar_manual_start");
   const startTimeField = document.getElementById("election_calendar_start_time");
 
-  if (manualStartCheckbox === null || startTimeField === null) { 
+  if (!manualStartCheckbox || !startTimeField) {
     return;
   }
 
@@ -10,8 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const isManualStartChecked = manualStartCheckbox.checked;
     startTimeField.disabled = isManualStartChecked;
     startTimeField.classList.toggle("text-muted", isManualStartChecked);
-  }
+  };
 
   manualStartCheckbox.addEventListener("change", toggleStartTimeField);
   toggleStartTimeField();
-});
+}
+
+document.addEventListener("DOMContentLoaded", toggleStartTimeFieldBasedOnCheckbox);

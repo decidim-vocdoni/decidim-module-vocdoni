@@ -75,6 +75,9 @@ en:
             invalid: There was a problem updating this answer
             success: Answer successfully updated
         census:
+          census_type:
+            permissions: Decidim permissions
+            csv: CSV
           confirm:
             submit: Confirm the census data
           create:
@@ -91,8 +94,7 @@ en:
           index:
             census_warning: The census is not ready yet. You can <b>upload and confirm</b>
               it from the census page.
-            info: For setting up the census for a Vocdoni Election, you need to upload
-              the census and confirm it.
+            info: You need to choose if you want a CSV file as census or to use the Decidim's verifications systems.
             title: Census for a Vocdoni election
           new:
             file: ".csv file with emails data"
