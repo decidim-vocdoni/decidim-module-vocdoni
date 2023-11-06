@@ -82,6 +82,7 @@ en:
             submit: Confirm the census data
           create:
             error: There was an error importing or generating the census.
+            submit_permissions: Save census
             success:
               generate: Successfully generated the census
               import: Successfully imported %{count} items (%{errors} errors)

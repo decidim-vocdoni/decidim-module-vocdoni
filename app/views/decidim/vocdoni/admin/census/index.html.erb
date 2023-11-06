@@ -78,11 +78,7 @@
           </h2>
         </div>
         <div class="card-section">
-          <% current_organization.available_authorizations.each do |authorization| %>
-            <%= check_box_tag "selected_authorizations[]", authorization %>
-            <%= label_tag "selected_authorizations_#{authorization}", authorization.humanize %>
-            <br>
-          <% end %>
+          <%= render partial: "decidim_permissions_form", locals: { form: @census_permissions_form, election: election, current_organization: current_organization } %>
         </div>
       </div>
     <% end %>

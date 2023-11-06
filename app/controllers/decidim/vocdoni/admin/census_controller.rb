@@ -10,26 +10,16 @@ module Decidim
           enforce_permission_to :index, :census, election: election
 
           @form = current_step_form_instance
+          @census_permissions_form = form(CensusPermissionsForm).instance
         end
 
         def create
           enforce_permission_to :create, :census, election: election
-          @form = form(current_step_form_class).from_params(params)
 
-          current_step_command_class.call(@form, election) do
-            on(:ok) do
-              flash[:notice] = if @form.respond_to?(:data)
-                                 t(".success.import", count: @form.data.values.count, errors: @form.data.errors.count)
-                               else
-                                 t(".success.generate")
-                               end
-              redirect_to election_census_path(election)
-            end
-
-            on(:invalid) do
-              flash[:alert] = t(".error")
-              render :index
-            end
+          if params[:census_permissions]
+            handle_census_permissions
+          else
+            handle_census_csv
           end
         end
 
@@ -91,6 +81,45 @@ module Decidim
 
         def election
           @election ||= elections.find_by(id: params[:election_id])
+        end
+
+        def handle_census_permissions
+          @form = form(CensusPermissionsForm).from_params(params[:census_permissions])
+
+          process_form(@form, CensusPermissions, success_message_for(@form), :index)
+        end
+
+        def handle_census_csv
+          @form = form(current_step_form_class).from_params(params)
+
+          process_form(@form, current_step_command_class, success_message_for(@form, count_method: :values, error_method: :errors), :index)
+        end
+
+        def process_form(form, command_class, success_message, failure_template)
+          command_class.call(form, election) do
+            on(:ok) { set_flash_and_redirect(:notice, success_message) }
+            on(:invalid) { set_flash_and_render(:alert, t(".error"), failure_template) }
+          end
+        end
+
+        def success_message_for(form, count_method: :count, error_method: nil)
+          if form.respond_to?(:data)
+            t(".success.import",
+              count: form.data.send(count_method),
+              errors: error_method ? form.data.send(error_method).count : 0)
+          else
+            t(".success.generate")
+          end
+        end
+
+        def set_flash_and_redirect(type, message)
+          flash[type] = message
+          redirect_to election_census_path(election)
+        end
+
+        def set_flash_and_render(type, message, template)
+          flash[type] = message
+          render template
         end
       end
     end

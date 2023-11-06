@@ -23,6 +23,10 @@ module Decidim
         values.each { |value| create(email: value.first.downcase, election: election, token: value.second.downcase) }
       end
 
+      def self.insert_participants_with_permissions(election, emails, token)
+        emails.flatten.each { |email| create(email: email.downcase, election: election, token: token) }
+      end
+
       def self.clear(election)
         inside(election).delete_all
       end

@@ -125,7 +125,7 @@ export default class CreateVocdoniElection {
           localeName = "default";
         }
 
-        if (elem.text !== null && elem.text !== undefined) {
+        if (elem.text !== null && typeof elem.text !== "undefined") {
           obj[localeName] = elem.text;
         }
 
