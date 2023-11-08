@@ -51,7 +51,7 @@ module Decidim
               auto_start: !form.manual_start,
               secret_until_the_end: form.result_type == "after_voting",
               interruptible: Decidim::Vocdoni.interruptible_elections,
-              dynamic_census: form.dynamic_census,
+              dynamic_census: election.census_type == "census_permissions" ? true : form.dynamic_census,
               anonymous: form.anonymous
             }
           }

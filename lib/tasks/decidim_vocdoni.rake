@@ -7,4 +7,9 @@ namespace :decidim_vocdoni do
   task :change_election_status, [] => :environment do
     Decidim::Vocdoni::ElectionStatusChanger.new.run
   end
+
+  desc "Send batch updates to Vocdoni"
+  task :send_batch_updates, [] => :environment do
+    Decidim::Vocdoni::SendDataToVocdoniJob.new.perform
+  end
 end

@@ -20,6 +20,12 @@ module Decidim
         root to: "elections#index"
       end
 
+      initializer "decidim.vocdoni.overrides" do
+        config.to_prepare do
+          Decidim::Authorization.include(Decidim::Vocdoni::AuthorizationOverride)
+        end
+      end
+
       initializer "decidim.vocdoni.add_cells_view_paths" do
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Vocdoni::Engine.root}/app/cells")
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Vocdoni::Engine.root}/app/views") # for partials

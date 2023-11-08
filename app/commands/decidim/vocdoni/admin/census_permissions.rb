@@ -6,6 +6,9 @@ module Decidim
       # A command with the business logic to create census data for an
       # election.
       class CensusPermissions < Decidim::Command
+        TOKEN = "verified"
+        CENSUS_TYPE = "census_permissions"
+
         def initialize(form, election)
           @form = form
           @election = election
@@ -21,8 +24,9 @@ module Decidim
 
           users_data = fetch_verified_users
 
-          Voter.insert_participants_with_permissions(@election, users_data, token: "verified")
-
+          Voter.insert_participants_with_permissions(@election, users_data, TOKEN)
+          update_census_type(CENSUS_TYPE)
+          update_verification_types(@form.census_permissions)
           broadcast(:ok)
         end
 
@@ -30,6 +34,14 @@ module Decidim
 
         def fetch_verified_users
           @form.data.map { |user| [user.email] }
+        end
+
+        def update_census_type(census_type)
+          @election.update!(census_type: census_type)
+        end
+
+        def update_verification_types(types)
+          @election.update!(verification_types: types)
         end
       end
     end
