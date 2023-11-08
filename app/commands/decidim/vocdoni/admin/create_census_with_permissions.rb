@@ -5,7 +5,7 @@ module Decidim
     module Admin
       # A command with the business logic to create census data for an
       # election.
-      class CensusPermissions < Decidim::Command
+      class CreateCensusWithPermissions < Decidim::Command
         TOKEN = "verified"
         CENSUS_TYPE = "census_permissions"
 
@@ -41,7 +41,7 @@ module Decidim
         end
 
         def update_verification_types(types)
-          @election.update!(verification_types: types)
+          @election.update!(verification_types: types) if types.present?
         end
       end
     end

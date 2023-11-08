@@ -8,26 +8,51 @@
     <p><%= t(".description") %></p>
     <div class="evote__content">
       <div class="evote__grid">
-        <%= decidim_form_for(@form, url: "#", html: { class: "form", autocomplete: "off" }) do |f| %>
-          <div class="row mt-sm">
-            <div class="columns medium-centered evote__login">
-              <p class="text-center"><strong><%= t(".form_title") %></strong></p>
-              <div class="card">
-                <div class="card__content">
-                  <form>
-                    <div>
-                      <div class="callout alert hide js-login_error"><%= t(".failed") %></div>
-                      <div class="callout warning hide js-election_not_open"><%= t(".election_not_open") %></div>
-                    </div>
-                    <div>
-                      <%= render partial: "login_fields", locals: { f: f } %>
-                    </div>
-                    <%= f.submit t(".access"), class: "button expanded mt-s mb-none" %>
-                  </form>
+        <% if election.census_type == "census_csv" %>
+          <%= decidim_form_for(@form, url: "#", html: { class: "form", autocomplete: "off" }) do |f| %>
+            <div class="row mt-sm">
+              <div class="columns medium-centered evote__login">
+                <p class="text-center"><strong><%= t(".form_title") %></strong></p>
+                <div class="card">
+                  <div class="card__content">
+                    <form>
+                      <div>
+                        <div class="callout alert hide js-login_error"><%= t(".failed") %></div>
+                        <div class="callout warning hide js-election_not_open"><%= t(".election_not_open") %></div>
+                      </div>
+                      <div>
+                        <%= render partial: "login_fields", locals: { f: f } %>
+                      </div>
+                      <%= f.submit t(".access"), class: "button expanded mt-s mb-none" %>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          <% end %>
+        <% else %>
+          <% census_authorize_methods.each do |unauthorized_method| %>
+            <%= link_to unauthorized_method.root_path(redirect_url: nil) do %>
+              <div class="card--list__item">
+                <div class="card--list__text">
+                  <%= icon "lock-unlocked", class: "card--list__icon", role: "img" %>
+                  <div>
+                    <h5 class="card--list__heading">
+                      <%= t("#{unauthorized_method.key}.name", scope: "decidim.authorization_handlers") %>
+                    </h5>
+                    <span class="text-small">
+                    <%= t("#{unauthorized_method.key}.explanation", scope: "decidim.authorization_handlers") %>
+                  </span>
+                  </div>
+                </div>
+                <div class="card--list__data" aria-hidden="true">
+                <span class="card--list__data__icon">
+                  <%= icon "chevron-right", role: "img", "aria-hidden": true %>
+                </span>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
         <% end %>
       </div>
     </div>

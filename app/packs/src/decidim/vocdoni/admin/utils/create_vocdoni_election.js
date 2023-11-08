@@ -157,6 +157,7 @@ export default class CreateVocdoniElection {
       electionType: {
         interruptible: electionMetadata.interruptible,
         secretUntilTheEnd: electionMetadata.secretUntilTheEnd,
+        dynamicCensus: electionMetadata.dynamicCensus,
         anonymous: electionMetadata.anonymous
       },
       voteType: {

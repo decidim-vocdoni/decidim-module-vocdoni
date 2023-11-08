@@ -18,7 +18,7 @@
           </p>
         </div>
         <div class="card-section collection-input">
-          <%= radio_button_tag "census_type", "csv", election.census_type == "census_csv", id: "csv_radio_button" %>
+          <%= radio_button_tag "census_type", "csv", election.census_type.blank? || election.census_type == "census_csv", id: "csv_radio_button" %>
           <%= label_tag "csv_radio_button", t("census_type.csv", scope: "decidim.vocdoni.admin.census") %>
 
           <%= radio_button_tag "census_type", "permissions", election.census_type == "census_permissions", id: "permissions_radio_button" %>
