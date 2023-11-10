@@ -11,7 +11,7 @@ module Decidim
       helper VotesHelper
       helper_method :exit_path, :elections, :election, :questions, :questions_count, :vote,
                     :preview_mode?, :election_unique_id, :vocdoni_api_endpoint_env, :census_authorize_methods,
-                    :granted_authorizations, :pending_authorizations
+                    :granted_authorizations
 
       delegate :count, to: :questions, prefix: true
 

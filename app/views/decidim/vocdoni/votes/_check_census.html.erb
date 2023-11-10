@@ -9,30 +9,12 @@
     <div class="evote__content">
       <div class="evote__grid">
         <% unless election.internal_census? %>
-          <%= decidim_form_for(@form, url: "#", html: { class: "form", autocomplete: "off" }) do |f| %>
-            <div class="row mt-sm">
-              <div class="columns medium-centered evote__login">
-                <p class="text-center"><strong><%= t(".form_title") %></strong></p>
-                <div class="card">
-                  <div class="card__content">
-                    <form>
-                      <div>
-                        <div class="callout alert hide js-login_error"><%= t(".failed") %></div>
-                        <div class="callout warning hide js-election_not_open"><%= t(".election_not_open") %></div>
-                      </div>
-                      <div>
-                        <%= render partial: "login_fields", locals: { f: f } %>
-                      </div>
-                      <%= f.submit t(".access"), class: "button expanded mt-s mb-none" %>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
+          <%= render partial: "login", locals: { form: @form } %>
         <% else %>
-          <%= render("internal_census") %>
-        <% end %>
+          <% census_authorize_methods.each do |authorized_method| %>
+            <%= render_internal_census(authorized_method, granted_authorizations) %>
+          <% end %>
+      <% end %>
       </div>
     </div>
     <%= render partial: "vocdoni_logo" %>
