@@ -53,6 +53,13 @@ status are checked every 15 minutes, you can do it with this configuration:
 0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status > /dev/null
 ```
 
+# Sending Batch Updates to Vocdoni
+To set up automatic sending of batch updates to Vocdoni every minute, add the following line to your crontab:
+
+```crontab
+* * * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails runner decidim_vocdoni:send_batch_updates > /dev/null
+```
+
 ## Configuration
 
 By default, the module is configured to read the configuration from ENV variables.
