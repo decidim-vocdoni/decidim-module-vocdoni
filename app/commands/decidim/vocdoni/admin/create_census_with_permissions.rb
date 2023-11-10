@@ -7,7 +7,6 @@ module Decidim
       # election.
       class CreateCensusWithPermissions < Decidim::Command
         TOKEN = "verified"
-        CENSUS_TYPE = "census_permissions"
 
         def initialize(form, election)
           @form = form
@@ -25,7 +24,7 @@ module Decidim
           users_data = fetch_verified_users
 
           Voter.insert_participants_with_permissions(@election, users_data, TOKEN)
-          update_census_type(CENSUS_TYPE)
+          update_census_type
           update_verification_types(@form.census_permissions)
           broadcast(:ok)
         end
@@ -36,8 +35,8 @@ module Decidim
           @form.data.map { |user| [user.email] }
         end
 
-        def update_census_type(census_type)
-          @election.update!(census_type: census_type)
+        def update_census_type
+          @election.update!(internal_census: true)
         end
 
         def update_verification_types(types)

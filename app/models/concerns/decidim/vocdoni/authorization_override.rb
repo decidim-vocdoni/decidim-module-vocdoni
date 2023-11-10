@@ -37,7 +37,7 @@ module Decidim
         private
 
         def elections_with_census_permissions
-          Decidim::Vocdoni::Election.where(census_type: "census_permissions")
+          Decidim::Vocdoni::Election.where(internal_census: true)
         end
       end
     end

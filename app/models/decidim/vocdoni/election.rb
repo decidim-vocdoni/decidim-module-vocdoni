@@ -168,8 +168,18 @@ module Decidim::Vocdoni
       "https://#{Decidim::Vocdoni.explorer_vote_domain}/processes/show/#/#{vocdoni_election_id}"
     end
 
+    # Public: Checks if the election uses an internal census.
+    #
+    # This method returns `true` if Decidim's internal census system is used to create a Vocdoni election.
+    # This method returns `false` if a CSV file is used to create a Vocdoni election.
+    #
+    # Returns a boolean.
+    def internal_census?
+      internal_census
+    end
+
     def census_permissions_verification_types
-      return if census_type != "census_permissions"
+      return unless internal_census?
 
       verification_types
     end

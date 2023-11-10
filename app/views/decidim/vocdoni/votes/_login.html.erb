@@ -8,7 +8,8 @@
     <p><%= t(".description") %></p>
     <div class="evote__content">
       <div class="evote__grid">
-        <% if election.census_type == "census_csv" %>
+        <% byebug %>
+        <% unless election.internal_census? %>
           <%= decidim_form_for(@form, url: "#", html: { class: "form", autocomplete: "off" }) do |f| %>
             <div class="row mt-sm">
               <div class="columns medium-centered evote__login">

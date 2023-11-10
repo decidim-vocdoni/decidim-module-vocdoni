@@ -23,7 +23,7 @@ module Decidim
 
       def process_election_authorizations(election_id, authorizations)
         election = Decidim::Vocdoni::Election.find_by(id: election_id)
-        return unless election && election.census_type == "census_permissions"
+        return unless election && election.internal_census?
 
         user_emails = authorizations.filter_map do |authorization_data|
           user = Decidim::User.find_by(id: authorization_data.authorization.decidim_user_id)
