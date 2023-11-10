@@ -6,6 +6,7 @@ module Decidim
       belongs_to :election, foreign_key: "decidim_vocdoni_election_id", class_name: "Decidim::Vocdoni::Election", inverse_of: :voters
 
       validates :email, format: { with: ::Devise.email_regexp }
+      validates :email, uniqueness: { scope: :decidim_vocdoni_election_id }
       validates :token, presence: true
       validates :in_vocdoni_census, inclusion: { in: [true, false] }
 

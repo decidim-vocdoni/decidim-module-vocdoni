@@ -92,7 +92,7 @@ module Decidim
         def handle_census_csv
           @form = form(current_step_form_class).from_params(params)
 
-          process_form(@form, current_step_command_class, success_message_for(@form, count_method: :values, error_method: :errors), :index)
+          process_form(@form, current_step_command_class, success_message_for(@form, error_method: :errors), :index)
         end
 
         def process_form(form, command_class, success_message, failure_template)
@@ -102,11 +102,13 @@ module Decidim
           end
         end
 
-        def success_message_for(form, count_method: :count, error_method: nil)
+        def success_message_for(form, error_method: nil)
           if form.respond_to?(:data)
+            count = form.data.respond_to?(:values) ? form.data.values.count : form.data.count
+            error_count = error_method ? form.data.send(error_method).count : 0
             t(".success.import",
-              count: form.data.send(count_method),
-              errors: error_method ? form.data.send(error_method).count : 0)
+              count: count,
+              errors: error_count)
           else
             t(".success.generate")
           end
