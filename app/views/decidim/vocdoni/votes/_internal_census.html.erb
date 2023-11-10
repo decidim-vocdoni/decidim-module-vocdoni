@@ -1,0 +1,26 @@
+<% census_authorize_methods.each do |authorized_method| %>
+  <%= link_to authorized_method.root_path(redirect_url: nil) do %>
+    <div class="card--list__item">
+      <div class="card--list__text">
+        <% if granted_authorizations.include?(authorized_method) %>
+          <%= icon "check", class: "card--list__icon success", role: "img" %>
+        <% else %>
+          <%= icon "minus", class: "card--list__icon alert", role: "img" %>
+        <% end %>
+        <div class="text-left">
+          <h5 class="card--list__heading">
+            <%= t("#{authorized_method.key}.name", scope: "decidim.authorization_handlers") %>
+          </h5>
+          <span class="text-small">
+            <%= t("#{authorized_method.key}.explanation", scope: "decidim.authorization_handlers") %>
+          </span>
+        </div>
+      </div>
+      <div class="card--list__data" aria-hidden="true">
+        <span class="card--list__data__icon">
+          <%= icon "chevron-right", role: "img", "aria-hidden": true %>
+        </span>
+      </div>
+    </div>
+  <% end %>
+<% end %>

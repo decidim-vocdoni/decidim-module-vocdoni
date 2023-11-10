@@ -56,7 +56,7 @@ status are checked every 15 minutes, you can do it with this configuration:
 To configure Vocdoni to automatically send batch updates, add the following line to your crontab. This will allow updates to be sent every minute, reducing the waiting time for participants to a maximum of 70 seconds.
 
 ```crontab
-* * * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails runner decidim_vocdoni:send_batch_updates > /dev/null
+* * * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:send_batch_updates > /dev/null
 ```
 
 ## Configuration

@@ -10,7 +10,8 @@ module Decidim
 
       helper VotesHelper
       helper_method :exit_path, :elections, :election, :questions, :questions_count, :vote,
-                    :preview_mode?, :election_unique_id, :vocdoni_api_endpoint_env, :census_authorize_methods
+                    :preview_mode?, :election_unique_id, :vocdoni_api_endpoint_env, :census_authorize_methods,
+                    :granted_authorizations, :pending_authorizations
 
       delegate :count, to: :questions, prefix: true
 
@@ -82,6 +83,20 @@ module Decidim
         @census_authorize_methods ||= available_verification_workflows.select do |workflow|
           election_verification_types.include?(workflow.name)
         end
+      end
+
+      def granted_authorizations
+        @granted_authorizations ||= census_authorize_methods.select do |workflow|
+          user_authorizations.include?(workflow.name)
+        end
+      end
+
+      def user_authorizations
+        Decidim::Verifications::Authorizations.new(
+          organization: current_organization,
+          user: current_user,
+          granted: true
+        ).query.pluck(:name)
       end
     end
   end
