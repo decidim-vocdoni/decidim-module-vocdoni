@@ -73,7 +73,6 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
   });
 }
 
-
 /*
  * Check if the election is open
  *
@@ -97,109 +96,80 @@ const checkIfElectionIsOpen = async (env, wallet, electionUniqueId) => {
   return isElectionOpen;
 }
 
-$(() => {
-  // UI Elements
-  const $voteWrapper = $(".vote-wrapper");
+// Functions for displaying error messages
+const showLoginErrorMessage = () => {
+  console.log("KO -> Wallet is not in census");
+  $(".js-login_error").removeClass("hide");
+};
 
-  // Use the questions component
+const showElectionClosedErrorMessage = () => {
+  console.log("Election is not open");
+  $(".vote-wrapper").find(".js-election_not_open").removeClass("hide");
+};
+
+$(() => {
+  const $voteWrapper = $(".vote-wrapper");
   const questionsComponent = new VoteQuestionsComponent($voteWrapper);
   questionsComponent.init();
+
+  const env = $voteWrapper.data("vocdoni-env");
+  console.log("ENV => ", env)
+  const electionUniqueId = $voteWrapper.data("election-unique-id");
+  console.log("ELECTION ID => ", electionUniqueId)
+  const checkVerificationUrl = $voteWrapper.data("check-verification-url");
+  console.log("CHECK VERIFICATION URL => ", checkVerificationUrl)
+  // Reinitialize the questions component on certain occasions
   $(document).on("on.zf.toggler", () => {
-    // On some ocassions, when adding the Identification step in the same document,
-    // the $currentStep isn't set correctly
-    //
-    // Adding a slight delay works as a workaround
-    setTimeout(() => {
-      // continue and back btn
-      questionsComponent.init();
-    }, 100);
+    setTimeout(() => questionsComponent.init(), 100);
   });
 
+  // Common logic for initiating the voting process
+  const initVotingProcess = async (wallet) => {
+    const client = new VocdoniSDKClient({ env, wallet });
+    client.setElectionId(electionUniqueId);
+
+    if (!(await checkIfElectionIsOpen(env, wallet, electionUniqueId))) {
+      console.log("Election is not open");
+      return;
+    }
+
+    // if (!(await client.isInCensus()) || !(await client.votesLeftCount()) || await client.hasAlreadyVoted()) {
+    //   console.log("User cannot vote");
+    //   return;
+    // }
+
+    const voteComponent = new VoteComponent({ env, electionUniqueId, wallet });
+    $("#check_census").foundation("toggle");
+    $("#step-0").foundation("toggle");
+    await mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
+  };
+
+  // Handle verification
+  if (checkVerificationUrl) {
+    fetch(checkVerificationUrl)
+      .then(response => response.json())
+      .then(data => {
+        console.log("Verification data:", data)
+        if (data.isVerified) {
+          const wallet = VocdoniSDKClient.generateWalletFromData([data.email, data.token, data.election_id.toString()]);
+          initVotingProcess(wallet).then(() => console.log("Voting process initialized"));
+        } else {
+          console.log("User is not verified");
+        }
+      })
+      .catch(error => console.error("Error during verification:", error));
+  }
+
+  // Handle login form submission
   const $loginForm = $voteWrapper.find("#new_login_");
   $loginForm.on("submit", async (event) => {
     event.preventDefault();
-
-    const showLoginErrorMessage = () => {
-      console.log("KO -> Wallet is not in census");
-      $(".js-login_error").removeClass("hide");
+    const wallet = walletFromLoginForm($loginForm);
+    if (!wallet) {
+      console.log("Login error: Wallet not found");
+      return;
     }
-
-    const showElectionClosedErrorMessage = () => {
-      console.log("Election is not open");
-      $(".vote-wrapper").find(".js-election_not_open").removeClass("hide");
-    }
-
-    const electionUniqueId = $voteWrapper.data("electionUniqueId");
-    let voteComponent = null;
-
-    if ($voteWrapper.data("preview") === true) {
-      console.log("Preview mode");
-      voteComponent = new PreviewVoteComponent({electionUniqueId});
-    } else {
-      const wallet = walletFromLoginForm($loginForm);
-      const env = $voteWrapper.data("vocdoniEnv");
-
-      if (wallet === {}) {
-        showLoginErrorMessage();
-        return;
-      }
-
-      const client = new VocdoniSDKClient({ env, wallet })
-      client.setElectionId(electionUniqueId);
-      const isInCensus = await client.isInCensus();
-      console.log("IS IN CENSUS => ", isInCensus);
-
-      if (!isInCensus) {
-        showLoginErrorMessage();
-        return;
-      }
-
-      const votesLeft = await client.votesLeftCount();
-      const electionUrl = document.getElementById("vote-wrapper").dataset.url;
-      console.log("VOTES LEFT => ", votesLeft);
-
-      /**
-       * Function to update the votes left for a given election.
-       * @param {number} votesLeftParam - The remaining votes overwrite for the election.
-       *  @returns {void} No return value.
-       */
-      const updateVotesLeft = function(votesLeftParam) {
-        fetch(electionUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
-          },
-          body: JSON.stringify({ votesLeft: votesLeftParam })
-        }).then((response) => response.json()).then((data) => {
-          document.getElementById("votes-left-message").innerHTML = data.message;
-        }).catch((error) => console.error("Error:", error));
-      }
-
-      updateVotesLeft(votesLeft);
-
-      const hasAlreadyVoted = await client.hasAlreadyVoted();
-      if (hasAlreadyVoted) {
-        console.log("ALREADY VOTED");
-        $("#step-0").find(".js-already_voted").removeClass("hide");
-      }
-
-      console.log("OK!! Wallet is in census");
-
-      const isElectionOpen = await checkIfElectionIsOpen(env, wallet, electionUniqueId);
-      console.log("IS ELECTION OPEN => ", isElectionOpen);
-
-      if (!isElectionOpen) {
-        showElectionClosedErrorMessage();
-        return;
-      }
-
-      voteComponent = new VoteComponent({env, electionUniqueId, wallet});
-    }
-
-    $("#login").foundation("toggle");
-    $("#step-0").foundation("toggle");
-    mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
+    await initVotingProcess(wallet);
   });
 });
 /* eslint-enable no-console */

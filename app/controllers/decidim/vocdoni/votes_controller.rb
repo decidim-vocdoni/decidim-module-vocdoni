@@ -6,12 +6,12 @@ module Decidim
     class VotesController < Decidim::Vocdoni::ApplicationController
       layout "decidim/vocdoni_votes"
       include Decidim::Vocdoni::HasVoteFlow
+      include Decidim::Vocdoni::VoterVerifications
       include FormFactory
 
       helper VotesHelper
       helper_method :exit_path, :elections, :election, :questions, :questions_count, :vote,
-                    :preview_mode?, :election_unique_id, :vocdoni_api_endpoint_env, :census_authorize_methods,
-                    :granted_authorizations
+                    :preview_mode?, :election_unique_id, :vocdoni_api_endpoint_env
 
       delegate :count, to: :questions, prefix: true
 
@@ -29,6 +29,10 @@ module Decidim
         votes_left = params[:votesLeft]
         message = helpers.votes_left_message(votes_left.to_i)
         render json: { message: message }
+      end
+
+      def check_verification
+        render json: { isVerified: voter_verified?, email: voter.email, election_id: election.id, token: voter.token }
       end
 
       private
@@ -73,30 +77,6 @@ module Decidim
         enforce_permission_to :vote, :election, election: election
 
         true
-      end
-
-      def census_authorize_methods
-        extend Decidim::UserProfile
-
-        election_verification_types = election.verification_types
-
-        @census_authorize_methods ||= available_verification_workflows.select do |workflow|
-          election_verification_types.include?(workflow.name)
-        end
-      end
-
-      def granted_authorizations
-        @granted_authorizations ||= census_authorize_methods.select do |workflow|
-          user_authorizations.include?(workflow.name)
-        end
-      end
-
-      def user_authorizations
-        Decidim::Verifications::Authorizations.new(
-          organization: current_organization,
-          user: current_user,
-          granted: true
-        ).query.pluck(:name)
       end
     end
   end

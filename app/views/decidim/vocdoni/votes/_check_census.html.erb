@@ -10,10 +10,6 @@
       <div class="evote__grid">
         <% unless election.internal_census? %>
           <%= render partial: "login", locals: { form: @form } %>
-        <% else %>
-          <% census_authorize_methods.each do |authorized_method| %>
-            <%= render_internal_census(authorized_method, granted_authorizations) %>
-          <% end %>
       <% end %>
       </div>
     </div>

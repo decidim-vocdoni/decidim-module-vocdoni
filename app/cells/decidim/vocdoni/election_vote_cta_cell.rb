@@ -6,6 +6,8 @@ module Decidim
     # for a given instance of an Election
     class ElectionVoteCtaCell < Decidim::ViewModel
       include Decidim::Vocdoni::HasVoteFlow
+      include Decidim::Vocdoni::VoterVerifications
+      include Decidim::Vocdoni::Engine.routes.url_helpers
 
       delegate :current_user,
                :current_participatory_space,
@@ -18,6 +20,10 @@ module Decidim
       # This is needed by HasVoteFlow
       def election
         model
+      end
+
+      def modal_id
+        options[:modal_id] || "internalCensusModal"
       end
 
       def new_election_vote_path

@@ -30,20 +30,6 @@ module Decidim
 
         content_tag :div, t(message_key, scope: scope, votes_left: votes_left), class: "callout #{css_class} js-already_voted"
       end
-
-      def render_internal_census(authorized_method, granted_authorizations)
-        content = capture do
-          render partial: "internal_census", locals: { authorized_method: authorized_method, granted: granted_authorizations.include?(authorized_method) }
-        end
-
-        if granted_authorizations.include?(authorized_method)
-          content
-        else
-          link_to authorized_method.root_path(redirect_url: nil) do
-            content
-          end
-        end
-      end
     end
   end
 end

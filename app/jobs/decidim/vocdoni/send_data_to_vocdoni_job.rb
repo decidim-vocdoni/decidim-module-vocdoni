@@ -35,8 +35,10 @@ module Decidim
 
         Decidim::Vocdoni::Voter.insert_participants_with_permissions(election, user_emails, "verified") if user_emails.any?
 
-        Rails.logger.debug { "Processed authorization data for election with id: #{election.id}" }
-        Rails.logger.debug { "Election voters count: #{election.voters.count}" }
+        # rubocop:disable Rails/Output
+        puts "Processed authorization data for election with id: #{election.id}"
+        puts "Election voters count: #{election.voters.count}"
+        # rubocop:enable Rails/Output
 
         authorizations.select(&:processed).each(&:destroy)
       end
