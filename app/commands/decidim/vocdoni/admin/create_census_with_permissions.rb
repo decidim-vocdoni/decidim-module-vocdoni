@@ -6,8 +6,6 @@ module Decidim
       # A command with the business logic to create census data for an
       # election.
       class CreateCensusWithPermissions < Decidim::Command
-        TOKEN = "verified"
-
         def initialize(form, election)
           @form = form
           @election = election
@@ -23,7 +21,10 @@ module Decidim
 
           users_data = fetch_verified_users
 
-          Voter.insert_participants_with_permissions(@election, users_data, TOKEN)
+          # rubocop:disable Rails/SkipsModelValidations
+          Voter.insert_all(@election, users_data)
+          # rubocop:enable Rails/SkipsModelValidations
+
           update_census_type
           update_verification_types(@form.census_permissions)
           broadcast(:ok)
@@ -32,7 +33,13 @@ module Decidim
         private
 
         def fetch_verified_users
-          @form.data.map { |user| [user.email] }
+          @form.data.map do |user|
+            [user.email, token_for_voter(user.email)]
+          end
+        end
+
+        def token_for_voter(email)
+          "#{email}-#{@election.id}-#{rand(100_000..999_999)}"
         end
 
         def update_census_type

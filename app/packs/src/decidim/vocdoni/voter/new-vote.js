@@ -96,68 +96,79 @@ const checkIfElectionIsOpen = async (env, wallet, electionUniqueId) => {
   return isElectionOpen;
 }
 
-// Functions for displaying error messages
+// Display error messages
 const showLoginErrorMessage = () => {
   console.log("KO -> Wallet is not in census");
   $(".js-login_error").removeClass("hide");
 };
-
 const showElectionClosedErrorMessage = () => {
   console.log("Election is not open");
   $(".vote-wrapper").find(".js-election_not_open").removeClass("hide");
 };
 
+// Document ready function
 $(() => {
   const $voteWrapper = $(".vote-wrapper");
   const questionsComponent = new VoteQuestionsComponent($voteWrapper);
   questionsComponent.init();
 
   const env = $voteWrapper.data("vocdoni-env");
-  console.log("ENV => ", env)
   const electionUniqueId = $voteWrapper.data("election-unique-id");
-  console.log("ELECTION ID => ", electionUniqueId)
   const checkVerificationUrl = $voteWrapper.data("check-verification-url");
+  const isPreview = $voteWrapper.data("preview") === true;
+
+  console.group("Election data");
+  console.log("ENV => ", env)
+  console.log("ELECTION ID => ", electionUniqueId)
   console.log("CHECK VERIFICATION URL => ", checkVerificationUrl)
+  console.log("IS PREVIEW => ", isPreview)
+  console.groupEnd();
+
   // Reinitialize the questions component on certain occasions
   $(document).on("on.zf.toggler", () => {
     setTimeout(() => questionsComponent.init(), 100);
   });
 
-  // Common logic for initiating the voting process
+  // Initiates the voting process
   const initVotingProcess = async (wallet) => {
-    const client = new VocdoniSDKClient({ env, wallet });
-    client.setElectionId(electionUniqueId);
-
-    if (!(await checkIfElectionIsOpen(env, wallet, electionUniqueId))) {
-      console.log("Election is not open");
-      return;
+    if (isPreview) {
+      const voteComponent = new PreviewVoteComponent({ electionUniqueId });
+      await mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
+    } else {
+      if (!(await checkIfElectionIsOpen(env, wallet, electionUniqueId))) {
+        showElectionClosedErrorMessage();
+        return;
+      }
+      const client = new VocdoniSDKClient({ env, wallet });
+      client.setElectionId(electionUniqueId);
+      if (!(await client.isInCensus()) || !(await client.votesLeftCount()) || await client.hasAlreadyVoted()) {
+        console.log("User cannot vote");
+        return;
+      }
+      const voteComponent = new VoteComponent({ env, electionUniqueId, wallet });
+      $("#check_census").foundation("toggle");
+      $("#step-0").foundation("toggle");
+      await mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
     }
-
-    // if (!(await client.isInCensus()) || !(await client.votesLeftCount()) || await client.hasAlreadyVoted()) {
-    //   console.log("User cannot vote");
-    //   return;
-    // }
-
-    const voteComponent = new VoteComponent({ env, electionUniqueId, wallet });
-    $("#check_census").foundation("toggle");
-    $("#step-0").foundation("toggle");
-    await mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
   };
-
-  // Handle verification
+  // Handle user verifications
   if (checkVerificationUrl) {
-    fetch(checkVerificationUrl)
-      .then(response => response.json())
-      .then(data => {
-        console.log("Verification data:", data)
+    fetch(checkVerificationUrl).
+      then((response) => response.json()).
+      then((data) => {
+        console.log("Verification data:", data);
         if (data.isVerified) {
-          const wallet = VocdoniSDKClient.generateWalletFromData([data.email, data.token, data.election_id.toString()]);
+          const wallet = VocdoniSDKClient.generateWalletFromData([data.email.toLowerCase(), data.token.toLowerCase()]);
+          console.group("Wallet data");
+          console.log("EMAIL => ", data.email);
+          console.log("TOKEN => ", data.token);
+          console.log("WALLET => ", wallet);
+          console.groupEnd();
           initVotingProcess(wallet).then(() => console.log("Voting process initialized"));
         } else {
           console.log("User is not verified");
         }
-      })
-      .catch(error => console.error("Error during verification:", error));
+      }).catch((error) => console.error("Error during verification:", error));
   }
 
   // Handle login form submission
@@ -166,7 +177,7 @@ $(() => {
     event.preventDefault();
     const wallet = walletFromLoginForm($loginForm);
     if (!wallet) {
-      console.log("Login error: Wallet not found");
+      showLoginErrorMessage();
       return;
     }
     await initVotingProcess(wallet);

@@ -33,11 +33,11 @@ module Decidim
 
         def voter_verified?
           required_authorizations = census_authorize_methods.map(&:name)
-          required_authorizations.present? && required_authorizations.all? { |auth| user_authorizations.include?(auth) }
+          required_authorizations.present? && required_authorizations.all? { |auth| user_authorizations&.include?(auth) }
         end
 
         def voter
-          @voter ||= Decidim::Vocdoni::Voter.find_by(email: current_user.email, decidim_vocdoni_election_id: election.id)
+          @voter ||= Decidim::Vocdoni::Voter.find_by(email: current_user&.email, decidim_vocdoni_election_id: election.id)
         end
       end
     end

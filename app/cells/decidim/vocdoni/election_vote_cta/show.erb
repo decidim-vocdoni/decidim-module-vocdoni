@@ -15,7 +15,7 @@
   <% elsif model.ongoing? %>
     <%= link_to new_election_vote_path,
                 class: "button button--sc vote-button",
-                **(election.internal_census? && !voter_verified? ?
+                **((election.internal_census? && !voter_verified?) || !current_user ?
                      { data: { open: modal_id }, "aria-controls" => modal_id, "aria-haspopup" => "dialog", tabindex: "0" } :
                      { is_verified: voter_verified? }) do %>
       <%= vote_action_button_text %>

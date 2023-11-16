@@ -1,5 +1,6 @@
 <div class="vote-wrapper"
-     id="vote-wrapper"
+     id="vote-wrapper",
+     data-internal-census="<%= election.internal_census? %>"
      data-vocdoni-env="<%= vocdoni_api_endpoint_env %>"
      data-url="<%= votes_left_election_votes_path(election.id) %>"
      data-election-unique-id="<%== election_unique_id %>"
