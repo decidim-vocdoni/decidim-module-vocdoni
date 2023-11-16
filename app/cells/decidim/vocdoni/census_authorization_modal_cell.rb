@@ -18,6 +18,8 @@ module Decidim
       end
 
       def modal_id
+        return "loginModal" unless current_user
+
         options[:modal_id] || "internalCensusModal"
       end
 
