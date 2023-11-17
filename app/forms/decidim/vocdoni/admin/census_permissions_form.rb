@@ -4,20 +4,22 @@ module Decidim
   module Vocdoni
     module Admin
       class CensusPermissionsForm < Decidim::Form
-        mimic :census_permissions
-
-        attribute :census_permissions, Array[String]
+        attribute :verification_types, Array[String]
 
         def data
-          verification_types = census_permissions
+          return [] if verification_types.blank?
 
-          verified_users_ids = Decidim::Authorization
-                               .where(name: verification_types)
-                               .group(:decidim_user_id)
-                               .having("COUNT(distinct name) = ?", verification_types.count)
-                               .pluck(:decidim_user_id)
+          users = context.current_organization.users.not_deleted.confirmed
 
-          Decidim::User.where(id: verified_users_ids).uniq
+          verified_user_ids = Decidim::Authorization
+                              .where(decidim_user_id: users.select(:id))
+                              .where.not(granted_at: nil)
+                              .where(name: verification_types)
+                              .group(:decidim_user_id)
+                              .having("COUNT(distinct name) = ?", verification_types.count)
+                              .pluck(:decidim_user_id)
+
+          users.where(id: verified_user_ids)
         end
       end
     end

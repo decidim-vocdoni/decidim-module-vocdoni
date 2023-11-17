@@ -23,7 +23,7 @@ module Decidim
 
       initializer "decidim.vocdoni.overrides" do
         config.to_prepare do
-          Decidim::Authorization.include(Decidim::Vocdoni::AuthorizationOverride)
+          Decidim::Authorization.include(Decidim::Vocdoni::AuthorizationExtensions)
         end
       end
 

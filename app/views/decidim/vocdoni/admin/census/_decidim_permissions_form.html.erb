@@ -1,7 +1,7 @@
 <%= decidim_form_for form, url: election_census_path(election), method: :post do |form| %>
   <%= form.hidden_field :census_permissions_form, value: true %>
   <% current_organization.available_authorizations.each do |authorization| %>
-    <%= form.check_box :census_permissions, { label: authorization.humanize, multiple: true, include_hidden: false, checked: election.verification_types.include?(authorization) }, authorization %>
+    <%= form.check_box :verification_types, { label: authorization.humanize, multiple: true, include_hidden: false, checked: election.verification_types.include?(authorization) }, authorization %>
   <% end %>
   <%= form.submit t("create.submit_permissions", scope: "decidim.vocdoni.admin.census") %>
 <% end %>

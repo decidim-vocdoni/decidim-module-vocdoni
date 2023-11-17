@@ -10,7 +10,7 @@ module Decidim
       validates :token, presence: true
       validates :in_vocdoni_census, inclusion: { in: [true, false] }
 
-      after_save :update_in_vocdoni_census, if: :saved_change_to_wallet_address?
+      after_save :update_in_vocdoni_census!, if: :saved_change_to_wallet_address?
 
       def self.inside(election)
         where(election: election)
@@ -31,7 +31,7 @@ module Decidim
         inside(election).delete_all
       end
 
-      def update_in_vocdoni_census
+      def update_in_vocdoni_census!
         self.in_vocdoni_census = wallet_address.present?
         save! if changed?
       end

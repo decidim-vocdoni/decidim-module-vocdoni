@@ -26,7 +26,7 @@ module Decidim
           # rubocop:enable Rails/SkipsModelValidations
 
           update_census_type
-          update_verification_types(@form.census_permissions)
+          update_verification_types(@form.verification_types)
           update_election_type
           broadcast(:ok)
         end
@@ -40,7 +40,7 @@ module Decidim
         end
 
         def token_for_voter(email)
-          "#{email}-#{@election.id}-#{rand(100_000..999_999)}"
+          "#{email}-#{@election.id}-#{SecureRandom.hex(16)}"
         end
 
         def update_census_type

@@ -2,7 +2,7 @@
 
 module Decidim
   module Vocdoni
-    module AuthorizationOverride
+    module AuthorizationExtensions
       extend ActiveSupport::Concern
 
       included do

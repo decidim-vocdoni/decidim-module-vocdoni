@@ -104,11 +104,17 @@ module Decidim
 
         def success_message_for(form, error_method: nil)
           if form.respond_to?(:data)
-            count = form.data.respond_to?(:values) ? form.data.values.count : form.data.count
-            error_count = error_method ? form.data.send(error_method).count : 0
-            t(".success.import",
-              count: count,
-              errors: error_count)
+            data = form.data
+            count = if data.is_a?(ActiveRecord::Relation) || data.is_a?(ActiveRecord::AssociationRelation)
+                      data.count
+                    elsif data.respond_to?(:values)
+                      valid_values = data.values.compact_blank
+                      valid_values.size
+                    else
+                      0
+                    end
+            error_count = error_method && data.respond_to?(error_method) ? data.send(error_method).size : 0
+            t(".success.import", count: count, errors: error_count)
           else
             t(".success.generate")
           end

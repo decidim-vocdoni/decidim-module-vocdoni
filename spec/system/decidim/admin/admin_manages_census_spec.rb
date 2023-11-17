@@ -77,6 +77,85 @@ describe "Admin manages census", :slow, type: :system do
     end
   end
 
+  describe "internal census" do
+    let!(:authorization_handler_name) { "dummy_authorization_handler" }
+    let!(:id_document_handler_name) { "id_document_handler" }
+    let!(:organization) { create(:organization, available_authorizations: available_authorizations) }
+    let!(:available_authorizations) { [authorization_handler_name, id_document_handler_name] }
+    let(:authorizations_count) { organization.available_authorizations.count }
+    let(:authorizations_checkboxes) { find_all("input[type='checkbox'][name='census_permissions[verification_types][]']") }
+    let!(:user_with_authorizations) { create(:user, :admin, :confirmed, organization: organization) }
+    let!(:user_without_authorizations) { create(:user, :admin, :confirmed, organization: organization) }
+    let!(:dummy_authorization) { create(:authorization, user: user_with_authorizations, name: id_document_handler_name) }
+
+    before do
+      visit_census_page
+      choose("permissions_radio_button")
+    end
+
+    it "has Decidim permissions content" do
+      expect(page).to have_content("Decidim permissions")
+      expect(authorizations_checkboxes.count).to eq(authorizations_count)
+    end
+
+    context "when selected any permission" do
+      before do
+        check(id_document_handler_name.humanize)
+        click_button "Save census"
+      end
+
+      it "has success message" do
+        expect(page).to have_admin_callout("Successfully imported 1 items (0 errors)")
+      end
+
+      it "has confirm button" do
+        expect(page).to have_content("Confirm the census data")
+      end
+
+      it "has the message that the records loaded" do
+        expect(page).to have_content("There are 1 records loaded")
+      end
+    end
+
+    context "when selected a few permissions" do
+      before do
+        check(authorization_handler_name.humanize)
+        check(id_document_handler_name.humanize)
+        click_button "Save census"
+      end
+
+      it "has message" do
+        expect(page).to have_admin_callout("Successfully imported 0 items (0 errors)")
+      end
+
+      it "goes to the next step" do
+        expect(page).to have_css("a.button", text: "Done, go to the next step")
+      end
+
+      it "doesn't have the message that the census isn't ready" do
+        expect(page).not_to have_content("The census is not ready yet")
+      end
+    end
+
+    context "when don't select any permissions" do
+      before do
+        click_button "Save census"
+      end
+
+      it "has success message" do
+        expect(page).to have_admin_callout("Successfully imported 0 items (0 errors)")
+      end
+
+      it "goes to the next step" do
+        expect(page).to have_css("a.button", text: "Done, go to the next step")
+      end
+
+      it "doesn't have the message that the census isn't ready" do
+        expect(page).not_to have_content("The census is not ready yet")
+      end
+    end
+  end
+
   private
 
   def deletes_the_census
