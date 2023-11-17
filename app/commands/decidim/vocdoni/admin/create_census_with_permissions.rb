@@ -22,11 +22,12 @@ module Decidim
           users_data = fetch_verified_users
 
           # rubocop:disable Rails/SkipsModelValidations
-          Voter.insert_all(@election, users_data)
+          Voter.insert_all(@election, users_data) if users_data.present?
           # rubocop:enable Rails/SkipsModelValidations
 
           update_census_type
           update_verification_types(@form.census_permissions)
+          update_election_type
           broadcast(:ok)
         end
 
@@ -47,7 +48,13 @@ module Decidim
         end
 
         def update_verification_types(types)
-          @election.update!(verification_types: types) if types.present?
+          @election.update!(verification_types: types) || []
+        end
+
+        def update_election_type
+          return unless @election.internal_census?
+
+          @election.update!(election_type: { dynamic_census: true })
         end
       end
     end

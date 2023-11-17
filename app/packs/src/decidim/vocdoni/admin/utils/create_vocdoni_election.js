@@ -153,6 +153,7 @@ export default class CreateVocdoniElection {
       manualStart: electionMetadata.manualStart,
       startDate: Date.parse(electionMetadata.startTime),
       endDate: Date.parse(electionMetadata.endTime),
+      maxCensusSize: electionMetadata.voters.length || 1,
       census,
       electionType: {
         interruptible: electionMetadata.interruptible,

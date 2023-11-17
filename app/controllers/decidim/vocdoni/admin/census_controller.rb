@@ -84,7 +84,7 @@ module Decidim
         end
 
         def handle_census_permissions
-          @form = form(CensusPermissionsForm).from_params(params[:census_permissions])
+          @form = form(CensusPermissionsForm).from_params(params[:census_permissions] || {})
 
           process_form(@form, CreateCensusWithPermissions, success_message_for(@form), :index)
         end

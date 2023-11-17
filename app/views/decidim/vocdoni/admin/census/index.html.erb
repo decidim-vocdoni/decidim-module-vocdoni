@@ -82,13 +82,13 @@
         </div>
       </div>
     <% end %>
-    <% unless status.name == "ready" %>
-      <div class="card-section">
-        <div class="callout alert">
-          <%= t("census_warning", scope: "decidim.vocdoni.admin.census.index").html_safe %>
-        </div>
+    <% unless status.name == "ready" || (election.internal_census? && election.verification_types.empty?) %>
+    <div class="card-section">
+      <div class="callout alert">
+        <%=  t("census_warning", scope: "decidim.vocdoni.admin.census.index").html_safe  %>
       </div>
-    <% end %>
+    </div>
+    <%  end %>
   </div>
 
 </div>
