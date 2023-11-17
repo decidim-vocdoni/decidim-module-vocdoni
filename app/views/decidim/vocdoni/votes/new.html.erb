@@ -1,5 +1,5 @@
 <div class="vote-wrapper"
-     id="vote-wrapper",
+     id="vote-wrapper"
      data-internal-census="<%= election.internal_census? %>"
      data-vocdoni-env="<%= vocdoni_api_endpoint_env %>"
      data-url="<%= votes_left_election_votes_path(election.id) %>"
@@ -75,7 +75,6 @@
   <div id="vote_failed" class="hide focus__step" data-redirect_url=".hide">
     <%= render("show_failed") %>
   </div>
-
 </div>
 
 <% content_for :js_content do %>

@@ -87,10 +87,10 @@
       election.internal_census? && election.voters.empty? %>
     <div class="card-section">
       <div class="callout alert">
-        <%=  t("census_warning", scope: "decidim.vocdoni.admin.census.index").html_safe  %>
+        <%= t("census_warning", scope: "decidim.vocdoni.admin.census.index").html_safe %>
       </div>
     </div>
-    <%  end %>
+    <% end %>
   </div>
 
 </div>
