@@ -36,7 +36,8 @@ module Decidim
         end
 
         def ready_to_setup?
-          return true if @election.internal_census? && @election.verification_types.empty?
+          return true if (@election.internal_census? && @election.verification_types.empty?) ||
+                         (@election.internal_census? && @election.voters.empty?)
 
           count(:wallet_address).positive? && count == count(:wallet_address)
         end

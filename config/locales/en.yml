@@ -335,7 +335,8 @@ en:
       census_authorization_modal:
         not_authorized:
           authorize: Authorize with "%{authorization}"
-          explanation: In order to perform this action, you need to be authorized with "%{authorization}".
+          explanation: In order to perform this action, you need to be authorized
+            with "%{authorization}".
           title: Authorization required
       election_m:
         badge_name:
@@ -413,6 +414,15 @@ en:
             answers: Answers
             title: Title
       votes:
+        check_census:
+          access: Access
+          close_modal: Close
+          description: To vote, we'll need to check that you're on the census
+          election_not_open: Currently the election is not open for voting. Try again
+            later.
+          failed: Check that the provided data is correct and try again
+          form_title: Enter your data
+          title: Verify your identity
         confirm:
           answer: Answer
           answer_number: answer %{number}
@@ -435,15 +445,6 @@ en:
           login: Identification
           submitting: Submitting the vote
           vote_cast: Your vote has been cast
-        check_census:
-          access: Access
-          description: To vote, we'll need to check that you're on the census
-          election_not_open: Currently the election is not open for voting. Try again
-            later.
-          failed: Check that the provided data is correct and try again
-          form_title: Enter your data
-          title: Verify your identity
-          close_modal: Close
         login_fields:
           email: Email
           email_placeholder: user@example.org

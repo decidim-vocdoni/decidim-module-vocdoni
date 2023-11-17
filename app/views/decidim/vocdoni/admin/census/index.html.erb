@@ -82,7 +82,9 @@
         </div>
       </div>
     <% end %>
-    <% unless status.name == "ready" || (election.internal_census? && election.verification_types.empty?) %>
+    <% unless status.name == "ready" ||
+      (election.internal_census? && election.verification_types.empty?) ||
+      election.internal_census? && election.voters.empty? %>
     <div class="card-section">
       <div class="callout alert">
         <%=  t("census_warning", scope: "decidim.vocdoni.admin.census.index").html_safe  %>

@@ -56,6 +56,16 @@ module Decidim
         "#{current_participatory_space.underscored_name}_slug".to_sym
       end
 
+      def link_attributes_for_voting(election, voter_verified, modal_id)
+        if election.verification_types.empty?
+          {}
+        elsif (election.internal_census? && !voter_verified) || !current_user
+          { data: { open: modal_id }, "aria-controls" => modal_id, "aria-haspopup" => "dialog", tabindex: "0" }
+        else
+          { is_verified: voter_verified }
+        end
+      end
+
       def engine_router
         @engine_router ||= EngineRouter.main_proxy(current_component || model)
       end
