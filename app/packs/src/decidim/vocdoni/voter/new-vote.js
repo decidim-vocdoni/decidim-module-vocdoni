@@ -178,9 +178,9 @@ $(() => {
 
   // Handle login form submission
   const $loginForm = $voteWrapper.find("#new_login_");
-  const $loginInputs = $loginForm.find('input');
+  const $loginInputs = $loginForm.find("input");
 
-  if ($loginInputs.filter(':focus').length > 0) {
+  if ($loginInputs.filter(":focus").length > 0) {
     questionsComponent.unsavedChanges = true;
   }
 
