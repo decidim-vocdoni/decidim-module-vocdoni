@@ -19,10 +19,10 @@
         </div>
         <div class="card-section collection-input">
           <%= radio_button_tag "census_type", "csv", !election.internal_census?, id: "csv_radio_button" %>
-          <%= label_tag "csv_radio_button", t("census_type.csv", scope: "decidim.vocdoni.admin.census") %>
+          <%= label_tag "csv_radio_button", t("census_type.external", scope: "decidim.vocdoni.admin.census") %>
 
           <%= radio_button_tag "census_type", "permissions", election.internal_census?, id: "permissions_radio_button" %>
-          <%= label_tag "permissions_radio_button", t("census_type.permissions", scope: "decidim.vocdoni.admin.census") %>
+          <%= label_tag "permissions_radio_button", t("census_type.internal", scope: "decidim.vocdoni.admin.census") %>
         </div>
       </div>
     <% end %>
@@ -63,7 +63,7 @@
       <div id="csv_upload" class="card">
         <div class="card-divider">
           <h2 class="card-title">
-            <%= t("new.title", scope: "decidim.vocdoni.admin.census") %>
+            <%= t("new.title.external", scope: "decidim.vocdoni.admin.census") %>
           </h2>
         </div>
         <div class="card-section">
@@ -74,7 +74,7 @@
       <div id="permissions_select" class="card" style="display: none;">
         <div class="card-divider">
           <h2 class="card-title">
-            <%= t("census_type.permissions", scope: "decidim.vocdoni.admin.census") %>
+            <%= t("new.title.internal", scope: "decidim.vocdoni.admin.census") %>
           </h2>
         </div>
         <div class="card-section">

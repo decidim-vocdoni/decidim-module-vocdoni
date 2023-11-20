@@ -4,7 +4,7 @@ module Decidim
   module Vocdoni
     module Admin
       class CensusController < Admin::ApplicationController
-        helper_method :elections, :election, :census_path, :status
+        helper_method :elections, :election, :census_path, :status, :census_type
 
         def index
           enforce_permission_to :index, :census, election: election
@@ -128,6 +128,14 @@ module Decidim
         def set_flash_and_render(type, message, template)
           flash[type] = message
           render template
+        end
+
+        def census_type
+          if params[:census_permissions]
+            "internal"
+          else
+            "external"
+          end
         end
       end
     end
