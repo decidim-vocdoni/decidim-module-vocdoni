@@ -39,6 +39,7 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
 
       validVoteFn(formData);
       questionsComponent.voteCasted = true;
+      questionsComponent.unsavedChanges = false;
     },
     onFinish(voteId, env) {
       console.log("Vote finished");
@@ -101,6 +102,7 @@ const showLoginErrorMessage = () => {
   console.log("KO -> Wallet is not in census");
   $(".js-login_error").removeClass("hide");
 };
+
 const showElectionClosedErrorMessage = () => {
   console.log("Election is not open");
   $(".vote-wrapper").find(".js-election_not_open").removeClass("hide");
@@ -134,6 +136,9 @@ $(() => {
     if (isPreview) {
       const voteComponent = new PreviewVoteComponent({ electionUniqueId });
       await mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
+
+      $("#check_census").foundation("toggle");
+      $("#step-0").foundation("toggle");
     } else {
       if (!(await checkIfElectionIsOpen(env, wallet, electionUniqueId))) {
         showElectionClosedErrorMessage();
@@ -173,6 +178,12 @@ $(() => {
 
   // Handle login form submission
   const $loginForm = $voteWrapper.find("#new_login_");
+  const $loginInputs = $loginForm.find('input');
+
+  if ($loginInputs.filter(':focus').length > 0) {
+    questionsComponent.unsavedChanges = true;
+  }
+
   $loginForm.on("submit", async (event) => {
     event.preventDefault();
     const wallet = walletFromLoginForm($loginForm);

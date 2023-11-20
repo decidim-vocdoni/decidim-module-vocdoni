@@ -27,7 +27,7 @@ describe "Results online", type: :system do
     let(:vocdoni_election_id) { "12345" }
 
     before do
-      stub_request(:get, "https://api-stg.vocdoni.net/v2/elections/#{vocdoni_election_id}")
+      stub_request(:get, "https://api-dev.vocdoni.net/v2/elections/#{vocdoni_election_id}")
         .with(
           headers: {
             "Accept" => "*/*",

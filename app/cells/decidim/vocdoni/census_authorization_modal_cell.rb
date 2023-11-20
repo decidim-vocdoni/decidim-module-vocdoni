@@ -33,11 +33,11 @@ module Decidim
       end
 
       def not_authorized_explanation(authorized_method)
-        t(".not_authorized.explanation", authorization: authorization_name(authorized_method))
+        t("not_authorized.explanation", authorization: authorization_name(authorized_method), scope: "decidim.vocdoni.census_authorization_modal")
       end
 
       def authorize_link_text(authorized_method)
-        t(".not_authorized.authorize", authorization: authorization_name(authorized_method))
+        t("not_authorized.authorize", authorization: authorization_name(authorized_method), scope: "decidim.vocdoni.census_authorization_modal")
       end
 
       def authorization_name(authorized_method)

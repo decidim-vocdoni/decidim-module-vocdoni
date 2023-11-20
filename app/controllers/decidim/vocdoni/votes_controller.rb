@@ -32,7 +32,7 @@ module Decidim
       end
 
       def check_verification
-        render json: { isVerified: voter_verified?, email: voter.email, election_id: election.id, token: voter.token }
+        render json: { isVerified: voter_verified?, email: voter&.email, election_id: election.id, token: voter&.token }
       end
 
       private
