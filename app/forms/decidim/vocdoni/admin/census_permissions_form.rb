@@ -7,6 +7,10 @@ module Decidim
         attribute :verification_types, Array[String]
 
         def data
+          valid_types = context.current_organization.available_authorizations
+
+          verification_types.select! { |type| valid_types.include?(type) }
+
           return [] if verification_types.blank?
 
           users = context.current_organization.users.not_deleted.confirmed

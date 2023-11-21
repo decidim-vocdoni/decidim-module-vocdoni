@@ -5,7 +5,7 @@ module Decidim
     module Admin
       # A command with the business logic to create census data for an
       # election.
-      class CreateCensusWithPermissions < Decidim::Command
+      class CreateInternalCensus < Decidim::Command
         def initialize(form, election)
           @form = form
           @election = election
