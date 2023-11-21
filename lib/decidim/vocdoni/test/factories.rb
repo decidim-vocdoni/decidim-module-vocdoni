@@ -37,6 +37,10 @@ FactoryBot.define do
     end
     component { create(:vocdoni_component, organization: organization) }
 
+    trait :with_internal_census do
+      internal_census { true }
+    end
+
     trait :upcoming do
       start_time { 1.day.from_now }
     end
@@ -217,5 +221,11 @@ FactoryBot.define do
     trait :with_credentials do
       wallet_address { Faker::Blockchain::Ethereum.address }
     end
+  end
+
+  factory :vocdoni_authorizations_data, class: "Decidim::Vocdoni::AuthorizationsData" do
+    association :authorization, factory: :authorization
+    association :election, factory: :vocdoni_election
+    processed { false }
   end
 end

@@ -25,15 +25,17 @@ module Decidim
         election = Decidim::Vocdoni::Election.find_by(id: election_id)
         return unless election && election.internal_census?
 
-        user_emails = authorizations.filter_map do |authorization_data|
+        user_data = authorizations.filter_map do |authorization_data|
           user = Decidim::User.find_by(id: authorization_data.authorization.decidim_user_id)
           if user && election.verification_types.include?(authorization_data.authorization.name)
             authorization_data.update(processed: true)
-            user.email
+            [user.email.downcase, token_for_voter(user.email, election.id)]
           end
         end
 
-        Decidim::Vocdoni::Voter.insert_participants_with_permissions(election, user_emails, "verified") if user_emails.any?
+        # rubocop:disable Rails/SkipsModelValidations
+        Decidim::Vocdoni::Voter.insert_all(election, user_data) if user_data.any?
+        # rubocop:enable Rails/SkipsModelValidations
 
         # rubocop:disable Rails/Output
         puts "Processed authorization data for election with id: #{election.id}"
@@ -41,6 +43,10 @@ module Decidim
         # rubocop:enable Rails/Output
 
         authorizations.select(&:processed).each(&:destroy)
+      end
+
+      def token_for_voter(email, election_id)
+        "#{email}-#{election_id}-#{SecureRandom.hex(16)}"
       end
     end
   end
