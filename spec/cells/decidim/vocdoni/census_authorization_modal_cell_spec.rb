@@ -13,7 +13,7 @@ module Decidim
       let(:verification_types) { [authorization_handler_name] }
       let(:current_user) { create(:user, :confirmed, organization: organization) }
       let(:organization) { create(:organization, available_authorizations: [authorization_handler_name]) }
-      let(:voter) { create(:vocdoni_voter, election: model, user: current_user) }
+      let(:voter) { create(:vocdoni_voter, election: model, email: current_user.email) }
       let(:authorization_handler_name) { "id_documents" }
       let(:authorization) { create(:authorization, name: authorization_handler_name, user: current_user, granted_at: 1.day.ago) }
 
