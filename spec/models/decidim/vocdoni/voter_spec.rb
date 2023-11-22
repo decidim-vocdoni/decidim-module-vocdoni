@@ -57,4 +57,45 @@ describe Decidim::Vocdoni::Voter do
       end
     end
   end
+
+  describe ".inside" do
+    let!(:voter) { create(:vocdoni_voter, election: election) }
+
+    it "returns voters for a specific election" do
+      expect(Decidim::Vocdoni::Voter.inside(election)).to include(voter)
+    end
+  end
+
+  describe ".search_user_email" do
+    let!(:voter) { create(:vocdoni_voter, election: election, email: "user@example.com") }
+
+    it "returns the voter for a specific election and email" do
+      expect(Decidim::Vocdoni::Voter.search_user_email(election, "user@example.com")).to eq(voter)
+    end
+  end
+
+  describe ".clear" do
+    before { create_list(:vocdoni_voter, 3, election: election, token: "some_token") }
+
+    it "removes all voters for a specific election" do
+      expect { Decidim::Vocdoni::Voter.clear(election) }.to change(Decidim::Vocdoni::Voter, :count).by(-3)
+    end
+  end
+
+  describe "#update_in_vocdoni_census!" do
+    context "when the wallet address changes" do
+      it "updates the in_vocdoni_census flag" do
+        subject.wallet_address = "new_address"
+        subject.save!
+        expect(subject.in_vocdoni_census).to be true
+      end
+    end
+  end
+
+  describe "#sent_to_vocdoni?" do
+    it "returns the in_vocdoni_census value" do
+      subject.in_vocdoni_census = true
+      expect(subject.sent_to_vocdoni?).to be true
+    end
+  end
 end
