@@ -72,7 +72,7 @@ describe "Vote online in an election", type: :system do
   end
 
   describe "internal census" do
-    let!(:election) { create :vocdoni_election, :ongoing, :published, :with_internal_census, component: component, verification_types:verification_types }
+    let!(:election) { create :vocdoni_election, :ongoing, :published, :with_internal_census, component: component, verification_types: verification_types }
     let(:authorization) { create(:authorization, user: user, name: "dummy_authorization_handler") }
     let(:verification_types) { [authorization.name] }
 
