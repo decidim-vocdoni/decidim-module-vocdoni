@@ -146,10 +146,39 @@ $(() => {
       }
       const client = new VocdoniSDKClient({ env, wallet });
       client.setElectionId(electionUniqueId);
-      if (!(await client.isInCensus()) || !(await client.votesLeftCount()) || await client.hasAlreadyVoted()) {
-        console.log("User cannot vote");
-        return;
+
+      const votesLeft = await client.votesLeftCount();
+      const electionUrl = document.getElementById("vote-wrapper").dataset.url;
+      console.log("VOTES LEFT => ", votesLeft);
+
+      /**
+       * Function to update the votes left for a given election.
+       * @param {number} votesLeftParam - The remaining votes overwrite for the election.
+       *  @returns {void} No return value.
+       */
+      const updateVotesLeft = function(votesLeftParam) {
+        fetch(electionUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+          },
+          body: JSON.stringify({ votesLeft: votesLeftParam })
+        }).then((response) => response.json()).then((data) => {
+          document.getElementById("votes-left-message").innerHTML = data.message;
+        }).catch((error) => console.error("Error:", error));
       }
+
+      updateVotesLeft(votesLeft);
+
+      const hasAlreadyVoted = await client.hasAlreadyVoted();
+      if (hasAlreadyVoted) {
+        console.log("ALREADY VOTED");
+        $("#step-0").find(".js-already_voted").removeClass("hide");
+      }
+
+      console.log("OK!! Wallet is in census");
+
       const voteComponent = new VoteComponent({ env, electionUniqueId, wallet });
       $("#check_census").foundation("toggle");
       $("#step-0").foundation("toggle");
