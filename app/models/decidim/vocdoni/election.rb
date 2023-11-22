@@ -168,12 +168,6 @@ module Decidim::Vocdoni
       "https://#{Decidim::Vocdoni.explorer_vote_domain}/processes/show/#/#{vocdoni_election_id}"
     end
 
-    def census_permissions_verification_types
-      return unless internal_census?
-
-      verification_types
-    end
-
     private
 
     def census_status
