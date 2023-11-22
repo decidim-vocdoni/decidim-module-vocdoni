@@ -70,4 +70,62 @@ describe "Vote online in an election", type: :system do
       it_behaves_like "doesn't allow admins to preview the voting booth"
     end
   end
+
+  describe "internal census" do
+    let!(:election) { create :vocdoni_election, :ongoing, :published, :with_internal_census, component: component, verification_types:verification_types }
+    let(:authorization) { create(:authorization, user: user, name: "dummy_authorization_handler") }
+    let(:verification_types) { [authorization.name] }
+
+    context "when the user is not logged in" do
+      before do
+        logout :user
+        visit_component
+        click_link translated(election.title)
+        click_link "Start voting"
+      end
+
+      it "shows login modal" do
+        visit_component
+        click_link translated(election.title)
+
+        expect(page).to have_link("Start voting")
+
+        click_link "Start voting"
+
+        expect(page).to have_content("Please sign in")
+      end
+    end
+
+    context "when the user is logged in" do
+      context "when user is not authorized" do
+        let(:another_user) { create(:user, :confirmed, organization: organization) }
+
+        before do
+          login_as another_user, scope: :user
+          visit_component
+          click_link translated(election.title)
+          click_link "Start voting"
+        end
+
+        it "shows a modal with required authorizations" do
+          expect(page).to have_content("Authorization required")
+          expect(page).to have_link("Authorize with \"Example authorization\"")
+        end
+      end
+
+      context "when user is authorized" do
+        before do
+          login_as user, scope: :user
+          visit_component
+          click_link translated(election.title)
+          click_link "Start voting"
+        end
+
+        it "doesn't show a modal with required authorizations" do
+          expect(page).not_to have_content("Authorization required")
+          expect(page).not_to have_link("Authorize with \"Example authorization\"")
+        end
+      end
+    end
+  end
 end
