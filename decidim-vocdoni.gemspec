@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,db,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 
-  s.add_dependency "decidim-core", Decidim::Vocdoni.version
+  s.add_dependency "decidim-core", Decidim::Vocdoni::DECIDIM_VERSION
+  s.add_dependency "node-runner", "~> 1.1"
   s.metadata["rubygems_mfa_required"] = "true"
 end

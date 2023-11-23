@@ -3,6 +3,7 @@ PATH
   specs:
     decidim-vocdoni (0.27.1)
       decidim-core (= 0.27.1)
+      node-runner (~> 1.1)
 
 GEM
   remote: https://rubygems.org/
@@ -507,6 +508,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
+    node-runner (1.1.0)
     nokogiri (1.13.10-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.10-x86_64-darwin)
@@ -815,7 +817,7 @@ DEPENDENCIES
   web-console (~> 4.2)
 
 RUBY VERSION
-   ruby 3.0.5p211
+   ruby 3.0.6p216
 
 BUNDLED WITH
    2.3.20

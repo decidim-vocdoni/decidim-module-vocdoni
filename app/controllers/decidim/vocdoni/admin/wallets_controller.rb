@@ -14,18 +14,8 @@ module Decidim
 
         def create
           enforce_permission_to :create, :wallet
-          @form = form(WalletForm).from_params(params)
-
-          CreateWallet.call(@form) do
-            on(:ok) do
-              flash[:notice] = I18n.t("wallet.create.success", scope: "decidim.vocdoni.admin")
-              redirect_to redirect_location
-            end
-            on(:invalid) do
-              flash.now[:alert] = I18n.t("wallet.create.invalid", scope: "decidim.vocdoni.admin")
-              render action: "new"
-            end
-          end
+          CreateOrganizationWalletJob.perform_now(current_organization.id)
+          redirect_to EngineRouter.admin_proxy(current_component).election_steps_path(location)
         end
 
         private

@@ -8,7 +8,7 @@ on:
 
 env:
   CI: "true"
-  RUBY_VERSION: 3.0.5
+  RUBY_VERSION: 3.0.6
   NODE_VERSION: 16.9.1
   CODECOV_TOKEN: 3dc89116-a8ed-4df4-bf06-812fc0d8854d
 
@@ -33,7 +33,7 @@ jobs:
       DATABASE_PASSWORD: postgres
       DATABASE_HOST: localhost
     steps:
-      - uses: actions/checkout@v2.0.0
+      - uses: actions/checkout@4
         with:
           fetch-depth: 1
 
