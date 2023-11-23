@@ -14,6 +14,7 @@ module Decidim
           users = context.current_organization.users.not_deleted.confirmed
           unless verification_types.blank?
             verified_users = Decidim::Authorization.select(:decidim_user_id)
+                             .where(decidim_user_id: users.select(:id))
                              .where.not(granted_at: nil)
                              .where(name: verification_types)
                              .group(:decidim_user_id)
