@@ -11,19 +11,17 @@ module Decidim
 
           verification_types.select! { |type| valid_types.include?(type) }
 
-          return [] if verification_types.blank?
-
           users = context.current_organization.users.not_deleted.confirmed
-
-          verified_user_ids = Decidim::Authorization
-                              .where(decidim_user_id: users.select(:id))
-                              .where.not(granted_at: nil)
-                              .where(name: verification_types)
-                              .group(:decidim_user_id)
-                              .having("COUNT(distinct name) = ?", verification_types.count)
-                              .pluck(:decidim_user_id)
-
-          users.where(id: verified_user_ids)
+          unless verification_types.blank?
+            verified_users = Decidim::Authorization.select(:decidim_user_id)
+                             .where.not(granted_at: nil)
+                             .where(name: verification_types)
+                             .group(:decidim_user_id)
+                             .having("COUNT(distinct name) = ?", verification_types.count)
+            users = users.where(id: verified_users)
+          end
+          
+          users
         end
       end
     end

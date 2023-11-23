@@ -78,6 +78,7 @@
           </h2>
         </div>
         <div class="card-section">
+          <p class="help-text"><%= t("permissions_warning", scope: "decidim.vocdoni.admin.census") %></p>
           <%= render partial: "decidim_permissions_form", locals: { form: @census_permissions_form, election: election, current_organization: current_organization } %>
         </div>
       </div>

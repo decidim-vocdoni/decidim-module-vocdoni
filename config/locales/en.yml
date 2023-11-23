@@ -75,6 +75,8 @@ en:
             invalid: There was a problem updating this answer
             success: Answer successfully updated
         census:
+          permissions_warning: Note that users will need to fulfill all selected authorizations
+            in order to vote (leaving all checkboxes empty will allow to vote anyone registered).
           census_type:
             external: External (CSV)
             internal: Internal (Decidim registered users)
