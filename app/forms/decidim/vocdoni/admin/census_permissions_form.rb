@@ -7,23 +7,26 @@ module Decidim
         attribute :verification_types, Array[String]
 
         def data
-          valid_types = context.current_organization.available_authorizations
-
-          verification_types.select! { |type| valid_types.include?(type) }
+          verification_types.select! { |type| valid_authorization_types.include?(type) }
 
           return [] if verification_types.blank?
 
           users = context.current_organization.users.not_deleted.confirmed
+          verified_users = Decidim::Authorization
+                           .select(:decidim_user_id)
+                           .where(decidim_user_id: users.select(:id))
+                           .where.not(granted_at: nil)
+                           .where(name: verification_types)
+                           .group(:decidim_user_id)
+                           .having("COUNT(distinct name) = ?", verification_types.count)
 
-          verified_user_ids = Decidim::Authorization
-                              .where(decidim_user_id: users.select(:id))
-                              .where.not(granted_at: nil)
-                              .where(name: verification_types)
-                              .group(:decidim_user_id)
-                              .having("COUNT(distinct name) = ?", verification_types.count)
-                              .pluck(:decidim_user_id)
+          users.where(id: verified_users)
+        end
 
-          users.where(id: verified_user_ids)
+        private
+
+        def valid_authorization_types
+          context.current_organization.available_authorizations
         end
       end
     end
