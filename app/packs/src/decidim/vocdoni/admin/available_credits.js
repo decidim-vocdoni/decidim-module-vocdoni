@@ -1,9 +1,6 @@
 const CREDIT_SPAN_SELECTOR = ".js-vocdoni-credits-balance";
 const NO_TOKENS_MESSAGE_SELECTOR = ".js-vocdoni-credits-collect-faucet-tokens-section";
-const COLLECT_TOKENS_BUTTON_SELECTOR = ".js-vocdoni-credits-collect-faucet-tokens";
-const CONTAINER_SELECTOR = ".process-content";
 const ACTIONS_BUTTONS_SELECTOR = ".js-vocdoni-interruptible, #new_setup_ button[type=submit]";
-const SPINNER_CLASS = "spinner-container";
 
 export const getAvailableCredits = async () => {
   const vocdoniClientMetadata = document.querySelector(".js-vocdoni-client");
