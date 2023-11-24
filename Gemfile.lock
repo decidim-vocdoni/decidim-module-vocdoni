@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     decidim-vocdoni (0.27.1)
-      decidim-core (= 0.27.1)
+      decidim-core (~> 0.27.1)
       node-runner (~> 1.1)
 
 GEM

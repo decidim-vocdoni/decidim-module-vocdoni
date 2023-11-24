@@ -26,7 +26,7 @@ describe "Admin creates wallet", :slow, type: :system do
   end
 
   context "when there is a wallet" do
-    let!(:wallet) { create :wallet, organization: current_component.organization }
+    let!(:wallet) { create :vocdoni_wallet, organization: current_component.organization }
 
     it "goes to the step page" do
       visit_steps_page

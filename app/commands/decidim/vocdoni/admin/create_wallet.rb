@@ -7,8 +7,9 @@ module Decidim
       # from the admin panel.
       # The Wallet will be created in the frontend with ethers.js
       class CreateWallet < Decidim::Command
-        def initialize(form)
-          @form = form
+        def initialize(user)
+          @organization = user.organization
+          @user = user
         end
 
         # Creates the wallet if valid.
@@ -17,7 +18,7 @@ module Decidim
         #
         # Returns nothing
         def call
-          return broadcast(:invalid) if form.invalid?
+          return broadcast(:invalid) unless private_key.match?(/\A0x[a-zA-Z0-9]*\z/)
 
           create_wallet!
 
@@ -26,17 +27,21 @@ module Decidim
 
         private
 
-        attr_reader :form, :wallet
+        attr_reader :organization, :user, :wallet
+
+        def private_key
+          @private_key ||= Sdk.new(organization).deterministicWallet(organization.id)
+        end
 
         def create_wallet!
           attributes = {
-            organization: form.current_organization,
-            private_key: form.private_key
+            organization: organization,
+            private_key: private_key
           }
 
           @wallet = Decidim.traceability.create!(
             Wallet,
-            form.current_user,
+            user,
             attributes
           )
         end

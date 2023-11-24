@@ -8,7 +8,7 @@ describe "Results online", type: :system do
   let(:organization) { component.organization }
   let!(:elections) { create_list(:vocdoni_election, 2, :vote, component: component) } # prevents redirect to single election page
   let(:router) { Decidim::EngineRouter.main_proxy(component).decidim_participatory_process_vocdoni }
-  let!(:wallet) { create(:wallet, organization: organization, private_key: private_key) }
+  let!(:wallet) { create(:vocdoni_wallet, organization: organization, private_key: private_key) }
   let(:private_key) { Faker::Blockchain::Ethereum.address }
 
   before do

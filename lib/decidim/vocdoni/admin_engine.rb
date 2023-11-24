@@ -18,6 +18,7 @@ module Decidim
             put :unpublish
             post :answers_values
             post :manual_start
+            post :credits
           end
           resources :steps, only: [:index, :update]
           resources :questions do

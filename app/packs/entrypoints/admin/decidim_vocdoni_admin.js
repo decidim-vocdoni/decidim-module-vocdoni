@@ -1,4 +1,3 @@
-import "src/decidim/vocdoni/admin/create_wallet"
 import "src/decidim/vocdoni/admin/generate_credentials"
 import "src/decidim/vocdoni/admin/available_credits"
 

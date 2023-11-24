@@ -11,6 +11,8 @@ module Decidim
                  foreign_key: "decidim_organization_id",
                  class_name: "Decidim::Organization"
 
+      validates :private_key, presence: true, uniqueness: true
+
       def self.log_presenter_class_for(_log)
         Decidim::Vocdoni::AdminLog::WalletPresenter
       end

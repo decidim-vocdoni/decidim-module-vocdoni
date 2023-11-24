@@ -33,6 +33,14 @@ module Decidim
           end
         end
 
+        # returns useful information about the election in JSON format
+        # this makes a call to the Vocdoni API so best to use it asynchronically
+        def show
+          enforce_permission_to :read, :election, election: election
+
+          render json: Sdk.new(current_organization).info
+        end
+
         def edit
           enforce_permission_to :update, :election, election: election
           @form = form(ElectionForm).from_model(election)
@@ -124,6 +132,15 @@ module Decidim
               redirect_to election_steps_path(election)
             end
           end
+        end
+
+        def credits
+          enforce_permission_to :read, :election, election: election
+
+          SdkRunnerJob.perform_later(current_organization.id, :collectFaucetTokens)
+          flash[:notice] = I18n.t("admin.elections.credits.success", scope: "decidim.vocdoni")
+
+          redirect_to election_steps_path(election)
         end
 
         private

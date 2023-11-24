@@ -130,7 +130,7 @@ describe Decidim::Vocdoni::Admin::Permissions do
     it { is_expected.to be true }
 
     context "when there's already a wallet for this organization" do
-      let(:wallet) { create :wallet, organization: elections_component.organization }
+      let(:wallet) { create :vocdoni_wallet, organization: elections_component.organization }
 
       it { is_expected.to be true }
     end

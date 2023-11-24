@@ -122,6 +122,9 @@ en:
           create:
             invalid: There was a problem creating this election
             success: Election successfully created
+          credits:
+            success: More credits have been requested. They will be available soon,
+              refresh the page in a few seconds in case they don't appear yet.
           destroy:
             invalid: There was a problem deleting this election
             success: Election successfully deleted
@@ -245,6 +248,8 @@ en:
             view: View landing page
           credits:
             available: Available credits
+            dev_mode: You are using Vocdoni in the %{env} environment. It is possible
+              to collect credits for free (without any warranty)
             get_more: Get more credits
             warning: You have no credits left. You can get more credits by clicking
               on the button below.
