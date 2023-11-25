@@ -12,9 +12,9 @@ module Decidim
       class NodeError < NodeRunnerError; end
 
       def self.runner
-        javascript = File.read("#{wrapper_path}/index.js")
+        javascript = File.read(wrapper_path("index.js"))
         # customize the runner to handle promises
-        NodeRunner.new(javascript, executor: NodeRunner::Executor.new(runner_path: "#{wrapper_path}/node_runner.js"))
+        NodeRunner.new(javascript, executor: NodeRunner::Executor.new(runner_path: wrapper_path("node_runner.js")))
       end
 
       def initialize(organization, election = nil)
@@ -47,8 +47,10 @@ module Decidim
         JSON.parse(runner.to_json)["source"].include?("const #{function} = (")
       end
 
-      def self.wrapper_path
-        File.join(Decidim::Vocdoni::Engine.root, "node-wrapper")
+      def self.wrapper_path(filename = nil)
+        parts = ["node-wrapper"]
+        parts << filename.to_s if filename
+        File.join(Decidim::Vocdoni::Engine.root, *parts)
       end
     end
   end

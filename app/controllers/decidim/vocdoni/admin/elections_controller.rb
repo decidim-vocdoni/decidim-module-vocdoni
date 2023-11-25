@@ -137,7 +137,7 @@ module Decidim
         def credits
           enforce_permission_to :read, :election, election: election
 
-          SdkRunnerJob.perform_later(current_organization.id, :collectFaucetTokens)
+          SdkRunnerJob.perform_later(organization_id: current_organization.id, command: :collectFaucetTokens)
           flash[:notice] = I18n.t("admin.elections.credits.success", scope: "decidim.vocdoni")
 
           redirect_to election_steps_path(election)
