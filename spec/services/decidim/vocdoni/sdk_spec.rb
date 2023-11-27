@@ -21,9 +21,9 @@ module Decidim
       end
 
       it "can generate a deterministic wallet" do
-        expect(subject.deterministicWallet).to eq("0x4561187acaee0c0a9d28947f5f0a3619c38f4751485a07d0f9a696a062537e28")
-        expect(subject.deterministicWallet("one parameter")).to eq("0x005861c26e225cf6276b44c8ac90ba3cb83ae5db25a8ccb5a484ecde3f7002dd")
-        expect(subject.deterministicWallet(["array 0", "array 1"])).to eq("0x54c32aa638290fdcb1857c9148e4b6840f4bf6aaab06d1ea86106a3d1eb001e7")
+        expect(subject.deterministicWallet).to eq("0xc2b2820fe8e7ebe9ab139800d9da92588b77858f04907974baa534fad851ef5d")
+        expect(subject.deterministicWallet("one parameter")).to eq("0x86dacaf5b85730e597b5eb0af57b279a68f8faad76eb1bff78d06631b02906db")
+        expect(subject.deterministicWallet(["array 0", "array 1"])).to eq("0x56c63a4ba6f1c854ec5282d4a0c55761cb52f5d7f9f432d18c008fdc13c299a9")
       end
 
       it "has env variables" do

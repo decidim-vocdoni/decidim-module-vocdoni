@@ -18,7 +18,7 @@ describe "Admin creates wallet", :slow, type: :system do
 
     it "creates a new wallet" do
       visit_steps_page
-      click_button "Create"
+      click_link "Create"
 
       expect(page).to have_content("The election has at least one question.")
       expect(Decidim::Vocdoni::Wallet.last.private_key.length).to eq 66

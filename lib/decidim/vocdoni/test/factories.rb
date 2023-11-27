@@ -5,7 +5,7 @@ require "decidim/core/test/factories"
 FactoryBot.define do
   factory :vocdoni_wallet, class: "Decidim::Vocdoni::Wallet" do
     organization
-    private_key { Faker::Blockchain::Ethereum.address }
+    private_key { "0xc2b2820fe8e7ebe9ab139800d9da92588b77858f04907974baa534fad851ef5d" }
   end
 
   factory :vocdoni_component, parent: :component do
