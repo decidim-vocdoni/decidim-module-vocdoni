@@ -9,6 +9,7 @@ module Decidim::Vocdoni
     include Decidim::TranslatableResource
     include Decidim::Publicable
     include Decidim::Traceable
+    include VocdoniApiUtils
 
     enum status: [:created, :vote, :paused, :vote_ended, :results_published, :canceled].index_with(&:to_s)
 
@@ -77,6 +78,10 @@ module Decidim::Vocdoni
 
     def secret_until_the_end?
       election_type&.fetch("secret_until_the_end", false)
+    end
+
+    def anonymous?
+      election_type&.fetch("anonymous", false)
     end
 
     # Public: Checks if the number of answers are minimum 2 for each question
@@ -166,6 +171,35 @@ module Decidim::Vocdoni
     # Returns a string with the full URL
     def explorer_vote_url
       "https://#{Decidim::Vocdoni.explorer_vote_domain}/processes/show/#/#{vocdoni_election_id}"
+    end
+
+    # Public: the Vocdoni's format to create a new election
+    # https://developer.vocdoni.io/sdk#creating-a-voting-process
+    # The process to create an election still needs to add the keys "census" and "questions"
+    # This is done using the Vocdoni SDK
+    def to_vocdoni
+      {
+        "title" => transform_locales(title),
+        "description" => transform_locales(description),
+        "header" => photo&.attached_uploader(:file)&.url(host: organization.host),
+        "streamUri" => stream_uri,
+        "startDate" => start_time.iso8601,
+        "endDate" => end_time.iso8601,
+        "electionType" => {
+          "autoStart" => auto_start?,
+          # For the moment, we consider all censuses dynamic so admins can update them
+          "dynamicCensus" => true,
+          "interruptible" => interruptible?,
+          "secretUntilTheEnd" => secret_until_the_end?,
+          "anonymous" => anonymous?
+        },
+        "voteType" => {
+          # uniqueChoices: false, # if the choices are unique when voting
+          # costFromWeight: false, # for cuadrating voting
+          # costExponent: 10000, # for cuadrating voting
+          "maxVoteOverwrites" => Decidim::Vocdoni.votes_overwrite_max.to_i
+        }
+      }
     end
 
     private

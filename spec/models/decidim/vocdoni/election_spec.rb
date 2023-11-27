@@ -259,4 +259,93 @@ describe Decidim::Vocdoni::Election do
       end
     end
   end
+
+  describe "#to_vocdoni" do
+    let(:election) { create(:vocdoni_election, :with_photos, election_type: type, component: component, title: title, description: description) }
+    let(:component) { create(:vocdoni_component, participatory_space: participatory_process) }
+    let(:participatory_process) { create(:participatory_process, organization: organization) }
+    let(:organization) { create(:organization, enable_machine_translations: true) }
+    let(:title) do
+      {
+        en: "English title",
+        es: "",
+        machine_translations: {
+          ca: "Catalan title"
+        }
+      }
+    end
+    let(:description) do
+      {
+        en: "English description",
+        machine_translations: {
+          ca: "Catalan description"
+        }
+      }
+    end
+    let(:type) do
+      { "anonymous" => false, "auto_start" => false, "interruptible" => true, "dynamic_census" => false, "secret_until_the_end" => false }
+    end
+
+    let(:json) { election.to_vocdoni }
+
+    it "returns the election as json" do
+      # expect(json["id"]).to eq election.id
+      expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "English title", "default" => "English title" })
+      expect(json["description"]).to eq({ "en" => "English description", "ca" => "Catalan description", "es" => "English description", "default" => "English description" })
+      expect(json["header"]).to eq election.photo.attached_uploader(:file).url(host: organization.host)
+      expect(json["streamUri"]).to match(%r{^https?://})
+      expect(json["startDate"]).to eq(election.start_time.iso8601)
+      expect(json["endDate"]).to eq(election.end_time.iso8601)
+      expect(json["electionType"]).to eq({
+                                           "autoStart" => false,
+                                           "interruptible" => true,
+                                           "dynamicCensus" => true,
+                                           "secretUntilTheEnd" => false,
+                                           "anonymous" => false
+                                         })
+      expect(json["voteType"]).to eq({
+                                       "maxVoteOverwrites" => 10
+                                     })
+      # expect(json["questions"].size).to eq election.questions.size
+      # expect(json["questions"].first["answers"].size).to eq election.questions.first.answers.size
+    end
+
+    context "when no attachments" do
+      let(:election) { create(:vocdoni_election, title: title, component: component) }
+
+      it "returns the election as json" do
+        expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "English title", "default" => "English title" })
+        expect(json["header"]).to be_nil
+      end
+    end
+
+    context "when diffrent election type" do
+      let(:type) do
+        { "anonymous" => true, "auto_start" => true, "interruptible" => false, "dynamic_census" => true, "secret_until_the_end" => true }
+      end
+
+      it "returns the election as json" do
+        expect(json["startDate"]).to eq(election.start_time.iso8601)
+        expect(json["electionType"]).to eq({
+                                             "autoStart" => true,
+                                             "dynamicCensus" => true,
+                                             "interruptible" => false,
+                                             "secretUntilTheEnd" => true,
+                                             "anonymous" => true
+                                           })
+      end
+    end
+
+    context "when diffrent configuration" do
+      before do
+        allow(Decidim::Vocdoni).to receive(:votes_overwrite_max).and_return(5)
+      end
+
+      it "returns the election as json" do
+        expect(json["voteType"]).to eq({
+                                         "maxVoteOverwrites" => 5
+                                       })
+      end
+    end
+  end
 end

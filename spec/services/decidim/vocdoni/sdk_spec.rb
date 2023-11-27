@@ -6,9 +6,9 @@ module Decidim
   module Vocdoni
     describe Sdk do
       subject { described_class.new(organization, election) }
-      let(:organization) { create :organization }
+      let(:organization) { election.organization }
       let!(:wallet) { create :vocdoni_wallet, organization: organization, private_key: private_key }
-      let!(:election) { create :vocdoni_election, organization: organization }
+      let!(:election) { create :vocdoni_election }
       let(:private_key) { "0x0000000000000000000000000000000000000000000000000000000000000001" }
       let(:salt) { Rails.application.secret_key_base }
 
@@ -21,7 +21,7 @@ module Decidim
       end
 
       it "can generate a deterministic wallet" do
-        expect(subject.deterministicWallet).to eq("0xc2b2820fe8e7ebe9ab139800d9da92588b77858f04907974baa534fad851ef5d")
+        expect(subject.deterministicWallet).to eq("0x0c2c39585c9c0b47d2844a9d402a2446e8e7fce3908ef1a9287908316b959d6d")
         expect(subject.deterministicWallet("one parameter")).to eq("0x86dacaf5b85730e597b5eb0af57b279a68f8faad76eb1bff78d06631b02906db")
         expect(subject.deterministicWallet(["array 0", "array 1"])).to eq("0x56c63a4ba6f1c854ec5282d4a0c55761cb52f5d7f9f432d18c008fdc13c299a9")
       end
@@ -52,6 +52,7 @@ module Decidim
 
       context "when election is not present" do
         let!(:election) { nil }
+        let(:organization) { create :organization }
 
         it "has env variables" do
           expect(subject.env).to eq({
@@ -82,6 +83,44 @@ module Decidim
                                        "sik" => "fd921bbec1fdd59d08298498ccdc53b1fd208a3ef77a8bbaf8377642a35ff028"
                                      }
                                    })
+      end
+
+      context "when an election" do
+        let(:census) { ["0x0000000000000000000000000000000000000000"] }
+        let(:questions) do
+          [[
+            "Ain't this process awesome?",
+            "Question description",
+            [
+              {
+                title: "Yes",
+                value: 0
+              },
+              {
+                title: "No",
+                value: 1
+              }
+            ]
+          ]]
+        end
+        let(:json) { election.to_vocdoni }
+        let(:data) { subject.election(json, questions, census)["election"] }
+
+        it "formats an election" do
+          expect(data["title"]).to eq(json["title"])
+          expect(data["description"]).to eq(json["description"])
+          expect(Time.zone.parse(data["startDate"])).to eq(Time.zone.parse(json["startDate"]))
+          expect(Time.zone.parse(data["endDate"])).to eq(Time.zone.parse(json["endDate"]))
+          expect(data["electionType"]).to eq(json["electionType"])
+          expect(data["questions"]).to eq([{
+                                            "title" => { "default" => "Ain't this process awesome?" },
+                                            "description" => { "default" => "Question description" },
+                                            "choices" => [
+                                              { "title" => { "default" => "Yes" }, "value" => 0 },
+                                              { "title" => { "default" => "No" }, "value" => 1 }
+                                            ]
+                                          }])
+        end
       end
 
       it "throws exception on missing method" do

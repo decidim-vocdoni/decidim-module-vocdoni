@@ -87,7 +87,7 @@ export default class CreateVocdoniElection {
         return;
       }
 
-      const vocdoniElectionId = await this.client.createElection(election);
+      // const vocdoniElectionId = await this.client.createElection(election);
       console.log("RESULT => OK! VOCDONI ELECTION ID ", vocdoniElectionId);
       this.onSuccess(vocdoniElectionId);
     } catch (error) {
@@ -141,16 +141,16 @@ export default class CreateVocdoniElection {
     errorDetails.innerHTML = JSON.stringify(electionMetadata, null, 4);
 
     const walletsAddresses = electionMetadata.voters.map((voter) => voter.wallet_address);
-    const census = this._initializeCensus(walletsAddresses);
+    // const census = this._initializeCensus(walletsAddresses);
 
-    const election = Election.from({
+    const elec = {
       title: transformLocales(electionMetadata.title.translations, defaultLocale),
       description: transformLocales(electionMetadata.description.translations, defaultLocale),
       streamUri: electionMetadata.streamUri,
       manualStart: electionMetadata.manualStart,
       startDate: Date.parse(electionMetadata.startTime),
       endDate: Date.parse(electionMetadata.endTime),
-      census,
+      // census,
       electionType: {
         interruptible: electionMetadata.interruptible,
         secretUntilTheEnd: electionMetadata.secretUntilTheEnd,
@@ -159,7 +159,9 @@ export default class CreateVocdoniElection {
       voteType: {
         maxVoteOverwrites: MAX_VOTE_OVERWRITES
       }
-    });
+    };
+    console.log("ELEC", elec, Election, PlainCensus)
+    const election = Election.from(elec);
 
     if (electionMetadata.attachments.length > 0) {
       let header = electionMetadata.attachments[0].url;

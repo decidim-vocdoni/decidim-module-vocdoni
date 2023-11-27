@@ -11,11 +11,11 @@ export const initVocdoniClient = () => {
     return {};
   }
 
-  const walletPrivateKey = vocdoniClientMetadata.dataset.vocdoniWalletPrivateKey;
+  // const walletPrivateKey = vocdoniClientMetadata.dataset.vocdoniWalletPrivateKey;
   const vocdoniElectionId = vocdoniClientMetadata.dataset.vocdoniElectionId;
   const env = vocdoniClientMetadata.dataset.vocdoniEnv;
 
-  const wallet = new Wallet(walletPrivateKey);
+  const wallet = new Wallet("0x51f93487a60fccdd5da6addce9db79b02530c45e5d3bc4f6315de70444ed8429");
   const client = new VocdoniSDKClient({ env, wallet });
 
   if (vocdoniElectionId) {

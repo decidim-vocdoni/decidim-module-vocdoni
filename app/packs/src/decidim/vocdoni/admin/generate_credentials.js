@@ -14,7 +14,6 @@ const checkCredentialsGenerationProgress = async () => {
     }
   });
   const result = await response.json();
-  console.log(result)
   container.innerHTML = result.percentageText;
   if (result.percentageComplete < 100) {
     setTimeout(checkCredentialsGenerationProgress, 1000);

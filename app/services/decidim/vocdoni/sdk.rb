@@ -11,8 +11,8 @@ module Decidim
     class Sdk
       class NodeError < NodeRunnerError; end
 
-      def self.runner
-        javascript = File.read(wrapper_path("index.js"))
+      def self.runner(file = "index.js")
+        javascript = File.read(wrapper_path(file))
         # customize the runner to handle promises
         NodeRunner.new(javascript, executor: NodeRunner::Executor.new(runner_path: wrapper_path("node_runner.js")))
       end
@@ -29,6 +29,7 @@ module Decidim
       end
 
       attr_reader :secrets_env, :organization
+      attr_writer :runner
 
       def runner
         @runner ||= self.class.runner
@@ -38,7 +39,7 @@ module Decidim
         secrets_env.each do |key, value|
           ENV[key] = value
         end
-        runner.send(function, args)
+        runner.send(function, *args)
       rescue Errno::EACCES => e
         raise NodeError, e.message
       end

@@ -9,7 +9,7 @@ module Decidim
 
           count = voters.count
           ok = 0
-          Rails.logger.info "CreateVoteWalletsJob: Processing #{count} voters for election #{election_id}"
+          Rails.logger.info "CreateVoterWalletsJob: Processing #{count} voters for election #{election_id}"
           voters.find_each do |voter|
             voter.wallet_address = sdk.deterministicWallet([voter.email, voter.token])
             if voter.save
@@ -18,7 +18,7 @@ module Decidim
               Rails.logger.error "CreateVoterWalletsJob: Error updaing the private key for voter #{voter.id}"
             end
           end
-          Rails.logger.info "CreateVoteWalletsJob: Succesfully processed #{ok} voters. #{count - ok} errors for election #{election_id}"
+          Rails.logger.info "CreateVoterWalletsJob: Succesfully processed #{ok} voters. #{count - ok} errors for election #{election_id}"
         end
 
         private
