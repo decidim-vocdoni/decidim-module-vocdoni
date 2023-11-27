@@ -17,6 +17,26 @@ module Decidim
           Voter.inside(@election).distinct.count(attribute)
         end
 
+        def percentage_complete
+          return 0 if count.zero?
+
+          ((count(:wallet_address) * 100) / count).to_i
+        end
+
+        def to_json(*_args)
+          {
+            name: name,
+            electionId: @election.id,
+            count: count,
+            percentageComplete: percentage_complete,
+            percentageText: I18n.t("status.percentage_complete", scope: "decidim.vocdoni.admin.census", count: count, percentage: percentage_complete),
+            lastImportAt: last_import_at,
+            pendingUpload: pending_upload?,
+            pendingGeneration: pending_generation?,
+            readyToSetup: ready_to_setup?
+          }
+        end
+
         def name
           if pending_upload?
             "pending_upload"

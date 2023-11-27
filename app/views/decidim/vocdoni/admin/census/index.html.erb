@@ -2,10 +2,10 @@
 <% add_decidim_page_title(t(".title")) %>
 
 <%= render partial: "decidim/vocdoni/admin/shared/election_title" %>
-<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "census", election: election, status: @status } %>
+<%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "census", election: election, status: status } %>
 <div class="card">
   <div class="card-section">
-    <% if @status.pending_upload? %>
+    <% if status.pending_upload? %>
       <div class="card">
         <div class="card-divider">
           <h2 class="card-title">
@@ -20,7 +20,7 @@
       </div>
     <% end %>
 
-    <% if @status.count > 0 %>
+    <% if status.count > 0 %>
       <div class="card">
         <div class="card-divider">
           <h2 class="card-title">
@@ -28,31 +28,30 @@
           </h2>
         </div>
         <div class="card-section">
-          <% if @status.ready_to_setup? %>
+          <% if status.ready_to_setup? %>
             <div class="callout success">
               <p><%= t("status.ready_to_setup_html", scope: "decidim.vocdoni.admin.census", steps_path: election_steps_path(election)) %></p>
             </div>
+          <% else %>
+            <div class="callout alert">
+              <p><%= t("status.processing_html", scope: "decidim.vocdoni.admin.census") %></p>
+              <p><strong id="census-processing-percentage"><%= t("status.percentage_complete", scope: "decidim.vocdoni.admin.census", count: status.count, percentage: status.percentage_complete) %></strong></p>
+            </div>
           <% end %>
-          <p><%= t("decidim.vocdoni.admin.census.status.data", count: @status.count,
-                   due_date: l(@status.last_import_at, format: :long)) %>
+          <p><%= t("decidim.vocdoni.admin.census.status.data", count: status.count,
+                   due_date: l(status.last_import_at, format: :long)) %>
           </p>
 
-          <% if @status.ready_to_setup? %>
-            <%= link_to t("decidim.vocdoni.admin.census.destroy.title"),
-                        destroy_all_election_census_path(election),
-                        method: :delete,
-                        class: "button alert",
-                        data: { confirm: t("decidim.vocdoni.admin.census.destroy.confirm") } %>
-          <% end %>
-
-          <% if @status.pending_generation? %>
-            <%= render partial: "generate_form", locals: { form: @form, election: election } %>
-          <% end %>
+          <%= link_to t("decidim.vocdoni.admin.census.destroy.title"),
+                      destroy_all_election_census_path(election),
+                      method: :delete,
+                      class: "button alert",
+                      data: { confirm: t("decidim.vocdoni.admin.census.destroy.confirm") } %>
         </div>
       </div>
     <% end %>
 
-    <% if @status.pending_upload? %>
+    <% if status.pending_upload? %>
       <div class="card">
         <div class="card-divider">
           <h2 class="card-title">
@@ -73,11 +72,6 @@
     <% end %>
   </div>
 
-</div>
-<div class="flex--cc">
-  <% if election.ready_for_calendar_form? %>
-    <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: "button form-general-submit" %>
-  <% end %>
 </div>
 
 <%= javascript_pack_tag "decidim_vocdoni_admin" %>
