@@ -38,7 +38,9 @@ module Decidim
         def show
           enforce_permission_to :read, :election, election: election
 
-          render json: Sdk.new(current_organization).info
+          info = Sdk.new(current_organization).info
+          info.merge!(vocdoniElectionId: election.vocdoni_election_id)
+          render json: info
         end
 
         def edit
@@ -101,24 +103,6 @@ module Decidim
             on(:ok) do
               flash[:notice] = I18n.t("admin.elections.unpublish.success", scope: "decidim.vocdoni")
               redirect_to publish_page_election_path(election)
-            end
-          end
-        end
-
-        def answers_values
-          enforce_permission_to :update, :election, election: election
-
-          UpdateAnswersValues.call(election) do
-            on(:ok) do
-              respond_to do |format|
-                format.json { render json: { status: :ok } }
-              end
-            end
-
-            on(:invalid) do
-              respond_to do |format|
-                format.json { render json: { status: :invalid } }
-              end
             end
           end
         end

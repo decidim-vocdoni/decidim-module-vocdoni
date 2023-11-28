@@ -16,7 +16,6 @@ module Decidim
             get :publish_page, path: "publish_election"
             put :publish
             put :unpublish
-            post :answers_values
             post :manual_start
             post :credits
           end

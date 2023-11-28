@@ -46,6 +46,10 @@ module Decidim::Vocdoni
       end_time < Time.current
     end
 
+    def misconfigured?
+      (created? || paused?) && vocdoni_election_id.blank?
+    end
+
     # Public: Checks if the election ongoing now
     #
     # Returns a boolean.
@@ -109,7 +113,7 @@ module Decidim::Vocdoni
     #
     # Returns a boolean indicating if the census status equals "ready".
     def census_ready?
-      census_status == "ready"
+      census_status&.name == "ready"
     end
 
     # Public: Checks if the election is ready for the census step
@@ -181,7 +185,7 @@ module Decidim::Vocdoni
       {
         "title" => transform_locales(title),
         "description" => transform_locales(description),
-        "header" => photo&.attached_uploader(:file)&.url(host: organization.host),
+        "header" => photo&.attached_uploader(:file)&.url(host: organization.host).to_s,
         "streamUri" => stream_uri,
         "startDate" => start_time.iso8601,
         "endDate" => end_time.iso8601,
@@ -202,10 +206,12 @@ module Decidim::Vocdoni
       }
     end
 
-    private
-
     def census_status
-      @census_status ||= CsvCensus::Status.new(self)&.name
+      @census_status ||= CsvCensus::Status.new(self)
+    end
+
+    def questions_to_vocdoni
+      questions.map(&:to_vocdoni)
     end
   end
 end

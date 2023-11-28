@@ -20,7 +20,7 @@ module Decidim
 
           transaction do
             log_action
-            # update_election
+            update_election
             CreateVocdoniElectionJob.perform_later(election.id)
           end
 
@@ -36,10 +36,10 @@ module Decidim
         delegate :election, to: :form
 
         def update_election
-          election.vocdoni_election_id = form.vocdoni_election_id
+          # election.vocdoni_election_id = form.vocdoni_election_id
           election.status = :created
           election.blocked_at = Time.zone.now
-          if election.manual_start?
+          if election.start_time.blank? || election.start_time < Time.zone.now + Decidim::Vocdoni.manual_start_time_delay
             election.start_time = Time.zone.now + Decidim::Vocdoni.manual_start_time_delay
             election.status = :paused
           end

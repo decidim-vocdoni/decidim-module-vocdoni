@@ -1,0 +1,13 @@
+XHRPOST
+https://api-dev.vocdoni.net/v2/elections/price
+[HTTP/2 200  45ms]
+
+ 
+1
+
+{"price":29}
+
+2
+
+​
+

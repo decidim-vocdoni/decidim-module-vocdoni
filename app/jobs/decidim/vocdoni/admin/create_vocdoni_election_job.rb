@@ -10,22 +10,16 @@ module Decidim
           Rails.logger.info "CreateVocdoniElectionJob: Creating election #{election_id} at Vocdoni env #{Decidim::Vocdoni.api_endpoint_env}"
 
           # json format
-          data = election.to_json
-          # add census through the sdk
-          data["census"] = add_census
-          # add questions through the sdk
-          data["questions"] = add_questions
+          begin
+            vocdoni_id = sdk.createElection(election.to_vocdoni, election.questions_to_vocdoni, election.census_status.all_wallets)
+            election.update(vocdoni_election_id: vocdoni_id)
+            Rails.logger.info "CreateVocdoniElectionJob: Election #{election_id} created at Vocdoni with id #{vocdoni_id}"
+          rescue Sdk::NodeError => e
+            Rails.logger.error "CreateVocdoniElectionJob: Error creating election #{election_id} at Vocdoni: #{e.message}"
+          end
         end
 
         private
-
-        def add_census
-          # todo
-        end
-
-        def add_questions
-          # todo
-        end
 
         def sdk
           @sdk ||= Sdk.new(organization, election)

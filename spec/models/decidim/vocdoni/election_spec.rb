@@ -261,7 +261,8 @@ describe Decidim::Vocdoni::Election do
   end
 
   describe "#to_vocdoni" do
-    let(:election) { create(:vocdoni_election, :with_photos, election_type: type, component: component, title: title, description: description) }
+    let(:election) { create(:vocdoni_election, :with_photos, :simple, election_type: type, component: component, title: title, description: description) }
+    let!(:voter) { create(:vocdoni_voter, election: election, wallet_address: "0x0c2c39585c9c0b47d2844a9d402a2446e8e7fce3908ef1a9287908316b959d6d") }
     let(:component) { create(:vocdoni_component, participatory_space: participatory_process) }
     let(:participatory_process) { create(:participatory_process, organization: organization) }
     let(:organization) { create(:organization, enable_machine_translations: true) }
@@ -306,8 +307,6 @@ describe Decidim::Vocdoni::Election do
       expect(json["voteType"]).to eq({
                                        "maxVoteOverwrites" => 10
                                      })
-      # expect(json["questions"].size).to eq election.questions.size
-      # expect(json["questions"].first["answers"].size).to eq election.questions.first.answers.size
     end
 
     context "when no attachments" do
@@ -315,7 +314,7 @@ describe Decidim::Vocdoni::Election do
 
       it "returns the election as json" do
         expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "English title", "default" => "English title" })
-        expect(json["header"]).to be_nil
+        expect(json["header"]).to eq("")
       end
     end
 
@@ -346,6 +345,23 @@ describe Decidim::Vocdoni::Election do
                                          "maxVoteOverwrites" => 5
                                        })
       end
+    end
+
+    it "returns census as wallets" do
+      expect(election.census_status.all_wallets).to eq(["0x0c2c39585c9c0b47d2844a9d402a2446e8e7fce3908ef1a9287908316b959d6d"])
+    end
+
+    it "returns questions in vocdoni format" do
+      vocdoni = election.questions_to_vocdoni[0]
+      first = election.questions.first
+      expect(vocdoni[0]["en"]).to eq(first.title["en"])
+      expect(vocdoni[0]["ca"]).to eq(first.title["ca"])
+      expect(vocdoni[0]["default"]).to eq(first.title["en"])
+      expect(vocdoni[1]["en"]).to eq(first.description["en"])
+      expect(vocdoni[1]["ca"]).to eq(first.description["ca"])
+      expect(vocdoni[1]["default"]).to eq(first.description["en"])
+      expect(vocdoni[2][0]["title"]["en"]).to eq(first.answers[0].title["en"])
+      expect(vocdoni[2][0]["value"]).to eq(first.answers[0].id)
     end
   end
 end

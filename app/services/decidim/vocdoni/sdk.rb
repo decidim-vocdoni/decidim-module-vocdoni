@@ -11,10 +11,27 @@ module Decidim
     class Sdk
       class NodeError < NodeRunnerError; end
 
+      # debug all http calls to a file
+      class Executor < NodeRunner::Executor
+        # uncomment to debug all http calls into development_app/node_debug.log
+        # def exec(filename)
+        #   ENV["NODE_PATH"] = @modules_path
+        #   ENV["NODE_DEBUG"] = "http:*,http2:*"
+        #   stdout, stderr, status = Open3.capture3("#{binary} #{filename}")
+        #   open('node_debug.log', 'a') { |f| f.puts stderr }
+
+        #   if status.success?
+        #     stdout
+        #   else
+        #     raise exec_runtime_error(stderr)
+        #   end
+        # end
+      end
+
       def self.runner(file = "index.js")
         javascript = File.read(wrapper_path(file))
         # customize the runner to handle promises
-        NodeRunner.new(javascript, executor: NodeRunner::Executor.new(runner_path: wrapper_path("node_runner.js")))
+        NodeRunner.new(javascript, executor: Executor.new(runner_path: wrapper_path("node_runner.js")))
       end
 
       def initialize(organization, election = nil)

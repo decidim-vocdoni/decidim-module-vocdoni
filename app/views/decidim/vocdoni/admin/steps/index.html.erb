@@ -5,7 +5,6 @@
      id="max-vote-overwrites"
      data-max-vote-overwrites="<%= Decidim::Vocdoni.votes_overwrite_max %>"
      data-default-locale="<%= current_organization.default_locale %>"
-     data-answers-values-election-path="<%= answers_values_election_path(election) %>"
      <% if @election.vocdoni_election_id %>
      data-vocdoni-election-id="<%= @election.vocdoni_election_id %>"
      <% end %>
@@ -38,7 +37,7 @@
     <%= f.hidden_field :current_step %>
 
     <% if @form.main_button? %>
-      <div class="button--double form-general-submit">
+      <div class="button--double form-general-submit<%= " hide" if election.misconfigured? %>">
         <%= f.button type: :submit, class: "button", disabled: @form.invalid? do %>
           <span class="hide loading">
             <span class="loading-spinner"></span>

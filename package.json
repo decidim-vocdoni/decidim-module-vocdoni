@@ -46,7 +46,6 @@
     "sass-embedded": "~1.57.1"
   },
   "dependencies": {
-    "@ethersproject/wallet": "^5.7.0",
-    "@vocdoni/sdk": "^0.0.16"
+    "@vocdoni/sdk": "^0.5.3"
   }
 }

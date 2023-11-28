@@ -42,7 +42,7 @@ module Decidim
         end
 
         def main_button?
-          true
+          election.status.nil? || election.misconfigured?
         end
 
         private

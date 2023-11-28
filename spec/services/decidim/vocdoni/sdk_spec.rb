@@ -17,20 +17,32 @@ module Decidim
       end
 
       it "can generate a random wallet" do
-        expect(subject.randomWallet).to match(/\A0x[a-zA-Z0-9]*\z/)
+        expect(subject.randomWallet["address"]).to match(/\A0x[a-zA-Z0-9]*\z/)
       end
 
       it "can generate a deterministic wallet" do
-        expect(subject.deterministicWallet).to eq("0x0c2c39585c9c0b47d2844a9d402a2446e8e7fce3908ef1a9287908316b959d6d")
-        expect(subject.deterministicWallet("one parameter")).to eq("0x86dacaf5b85730e597b5eb0af57b279a68f8faad76eb1bff78d06631b02906db")
-        expect(subject.deterministicWallet(["array 0", "array 1"])).to eq("0x56c63a4ba6f1c854ec5282d4a0c55761cb52f5d7f9f432d18c008fdc13c299a9")
+        expect(subject.deterministicWallet).to eq({
+                                                    "address" => "0xa7a372881aDDEf67C6C0c2BDCd2fd013dcD859ea",
+                                                    "privateKey" => "0x0c2c39585c9c0b47d2844a9d402a2446e8e7fce3908ef1a9287908316b959d6d",
+                                                    "publicKey" => "0x04e66c18eb1487ffa051c4324163d002ef51c5d9451456d2c40dd77ece4cf4a803cab889c7a6763af8055355cadf3749c366fdf8307a6a919ff93cd27cfa1a2a44"
+                                                  })
+        expect(subject.deterministicWallet("one parameter")).to eq({
+                                                                     "address" => "0xCf1f8ffa80456C43AEc18c8a3d97429a3248AA6C",
+                                                                     "privateKey" => "0x86dacaf5b85730e597b5eb0af57b279a68f8faad76eb1bff78d06631b02906db",
+                                                                     "publicKey" => "0x04ba0a538555a661ed637edc0d84db8129c37bd6b5861c51f46aae23aeedb436b570aab970315f8dc321c7648c39207eed43458b11e5b85294f77debe44d96675b"
+                                                                   })
+        expect(subject.deterministicWallet(["array 0", "array 1"])).to eq({
+                                                                            "address" => "0xFD1A713E61cE2AbB50c73A897Eaf0bE386274bA7",
+                                                                            "privateKey" => "0x56c63a4ba6f1c854ec5282d4a0c55761cb52f5d7f9f432d18c008fdc13c299a9",
+                                                                            "publicKey" => "0x04468684d08872b8ba4939766f475c5ba28505174ef58cd03878182173c3c6f8c070f70c2762eac83b9fe25618566c9db76a169184828f6f778255c50cc1eecf43"
+                                                                          })
       end
 
       it "has env variables" do
         expect(subject.env).to eq({
                                     "VOCDONI_WALLET_PRIVATE_KEY" => private_key,
                                     "VOCDONI_SALT" => salt,
-                                    "VOCDONI_API_ENV" => "stg",
+                                    "VOCDONI_API_ENV" => "dev",
                                     "VOCDONI_ELECTION_ID" => election.id.to_s,
                                     "VOCDONI_WRAPPER_PATH" => "#{Decidim::Vocdoni::Engine.root}/node-wrapper"
                                   })
@@ -43,7 +55,7 @@ module Decidim
           expect(subject.env).to eq({
                                       "VOCDONI_WALLET_PRIVATE_KEY" => "",
                                       "VOCDONI_SALT" => salt,
-                                      "VOCDONI_API_ENV" => "stg",
+                                      "VOCDONI_API_ENV" => "dev",
                                       "VOCDONI_ELECTION_ID" => election.id.to_s,
                                       "VOCDONI_WRAPPER_PATH" => "#{Decidim::Vocdoni::Engine.root}/node-wrapper"
                                     })
@@ -58,7 +70,7 @@ module Decidim
           expect(subject.env).to eq({
                                       "VOCDONI_WALLET_PRIVATE_KEY" => private_key,
                                       "VOCDONI_SALT" => salt,
-                                      "VOCDONI_API_ENV" => "stg",
+                                      "VOCDONI_API_ENV" => "dev",
                                       "VOCDONI_ELECTION_ID" => "",
                                       "VOCDONI_WRAPPER_PATH" => "#{Decidim::Vocdoni::Engine.root}/node-wrapper"
                                     })
@@ -69,7 +81,7 @@ module Decidim
         expect(subject.info).to eq({
                                      "clientInfo" => {
                                        "address" => "7e5f4552091a69125d5dfcb7b8c2659029395bdf",
-                                       "balance" => 50,
+                                       "balance" => 500,
                                        "electionIndex" => 0,
                                        "metadata" => {
                                          "description" => { "default" => "" },

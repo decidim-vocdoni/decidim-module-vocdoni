@@ -11,7 +11,7 @@ module Decidim
           ok = 0
           Rails.logger.info "CreateVoterWalletsJob: Processing #{count} voters for election #{election_id}"
           voters.find_each do |voter|
-            voter.wallet_address = sdk.deterministicWallet([voter.email, voter.token])
+            voter.wallet_address = sdk.deterministicWallet([voter.email, voter.token])["address"]
             if voter.save
               ok += 1
             else

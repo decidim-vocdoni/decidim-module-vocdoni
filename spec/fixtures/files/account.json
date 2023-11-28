@@ -1,0 +1,13 @@
+XHRGET
+https://api-stg.vocdoni.net/v2/accounts/0xC32dd52AA9F18efa0f28628e7f6b7f77aD6D7dd4
+[HTTP/2 200  297ms]
+
+ 
+1
+
+{"address":"c32dd52aa9f18efa0f28628e7f6b7f77ad6d7dd4","nonce":0,"balance":200,"electionIndex":0,"infoURL":"ipfs://bafybeigv4mfmn3tyusbwmskfn6xhoyvv2i2svdq7pns6dphdivefr62k3q","metadata":{"version":"1.0","name":{"default":""},"description":{"default":""},"newsFeed":{"default":""},"media":{},"meta":{}},"sik":"1d9400116bcbcce7f416da1d6e5d776fb7506c2b55905b00d4573fdd71ba282f"}
+
+2
+
+​
+

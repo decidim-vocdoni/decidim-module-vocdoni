@@ -14,7 +14,11 @@ const { vocdoniElection } = require(`${process.env.VOCDONI_WRAPPER_PATH}/electio
  */ 
 const randomWallet = (name) => {
   const wallet = Wallet.createRandom();
-  return wallet.privateKey;
+  return {
+    address: wallet.address, 
+    privateKey: wallet.privateKey, 
+    publicKey: wallet.publicKey
+  };
 };
 
 /**
@@ -23,7 +27,11 @@ const randomWallet = (name) => {
  */
 const deterministicWallet = (token) => {
   const wallet = VocdoniSDKClient.generateWalletFromData(`${token}-${process.env.VOCDONI_SALT}`);
-  return wallet.privateKey;
+  return {
+    address: wallet.address, 
+    privateKey: wallet.privateKey, 
+    publicKey: wallet.publicKey
+  };
 };
 
 /**

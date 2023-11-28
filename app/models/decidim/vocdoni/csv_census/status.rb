@@ -17,6 +17,10 @@ module Decidim
           Voter.inside(@election).distinct.count(attribute)
         end
 
+        def all_wallets
+          @all_wallets ||= Voter.inside(@election).distinct.select(:wallet_address).where.not(wallet_address: [nil, ""]).pluck(:wallet_address)
+        end
+
         def percentage_complete
           return 0 if count.zero?
 

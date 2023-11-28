@@ -1,0 +1,13 @@
+XHRPOST
+https://api-dev.vocdoni.net/v2/files/cid
+[HTTP/2 200  45ms]
+
+ 
+1
+
+{"cid":"ipfs://bafybeigv4mfmn3tyusbwmskfn6xhoyvv2i2svdq7pns6dphdivefr62k3q"}
+
+2
+
+​
+
