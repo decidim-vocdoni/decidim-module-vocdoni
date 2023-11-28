@@ -87,8 +87,6 @@ en:
           destroy_all:
             success: All census data have been deleted
           index:
-            census_warning: The census is not ready yet. You can <b>upload and confirm</b>
-              it from the census page.
             info: For setting up the census for a Vocdoni Election, you need to upload
               the census.
             title: Census for a Vocdoni election

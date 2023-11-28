@@ -18,7 +18,7 @@ module Decidim
         #
         # Returns nothing
         def call
-          return broadcast(:invalid) unless private_key.match?(/\A0x[a-zA-Z0-9]*\z/)
+          return broadcast(:invalid) unless private_key&.match?(/\A0x[a-zA-Z0-9]*\z/)
 
           create_wallet!
 

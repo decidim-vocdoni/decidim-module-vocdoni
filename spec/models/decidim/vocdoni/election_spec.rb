@@ -5,6 +5,10 @@ require "spec_helper"
 describe Decidim::Vocdoni::Election do
   subject(:election) { build :vocdoni_election }
 
+  before do
+    allow(Rails.application).to receive(:secret_key_base).and_return("a-secret-key-base")
+  end
+
   it { is_expected.to be_valid }
 
   include_examples "has component"
@@ -262,7 +266,7 @@ describe Decidim::Vocdoni::Election do
 
   describe "#to_vocdoni" do
     let(:election) { create(:vocdoni_election, :with_photos, :simple, election_type: type, component: component, title: title, description: description) }
-    let!(:voter) { create(:vocdoni_voter, election: election, wallet_address: "0x0c2c39585c9c0b47d2844a9d402a2446e8e7fce3908ef1a9287908316b959d6d") }
+    let!(:voter) { create(:vocdoni_voter, election: election, wallet_address: "0x0000000000000000000000000000000000000001") }
     let(:component) { create(:vocdoni_component, participatory_space: participatory_process) }
     let(:participatory_process) { create(:participatory_process, organization: organization) }
     let(:organization) { create(:organization, enable_machine_translations: true) }
@@ -348,7 +352,7 @@ describe Decidim::Vocdoni::Election do
     end
 
     it "returns census as wallets" do
-      expect(election.census_status.all_wallets).to eq(["0x0c2c39585c9c0b47d2844a9d402a2446e8e7fce3908ef1a9287908316b959d6d"])
+      expect(election.census_status.all_wallets).to eq(["0x0000000000000000000000000000000000000001"])
     end
 
     it "returns questions in vocdoni format" do

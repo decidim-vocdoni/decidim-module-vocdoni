@@ -7,6 +7,10 @@ describe "Admin manages census", :slow, type: :system do
   let(:current_component) { create :vocdoni_component }
   let(:election) { create :vocdoni_election, :upcoming, :published, :complete, component: current_component, title: { en: "English title" } }
 
+  before do
+    allow(Rails.application).to receive(:secret_key_base).and_return("a-secret-key-base")
+  end
+
   include_context "when managing a component as an admin"
 
   context "when there isn't any census" do
@@ -26,8 +30,8 @@ describe "Admin manages census", :slow, type: :system do
       expect(page).to have_content("Successfully imported 2 items")
       expect(page).to have_content("There are 2 records loaded in total")
 
-      expect(voter1.wallet_address).to eq("0xa6a2af2c195a1bc9fe15acc42c5cde72e8f3b95fa87e18979d2962a5d2f7fa10")
-      expect(voter2.wallet_address).to eq("0xc809ef832cc909deeea2dd69c3ed378ec34d7e16c0ea20a76b8cfe60bdbfdd8d")
+      expect(voter1.wallet_address).to eq("0x798F2E3A2406B27aC6E89F3aef02efB2005A724d")
+      expect(voter2.wallet_address).to eq("0xEb41E436E768b814102902ABF1fd155e007f94D3")
     end
   end
 
@@ -47,13 +51,13 @@ describe "Admin manages census", :slow, type: :system do
         expect(page).to have_content("Completed 0% of 5 total records")
 
         # simulate the percentage of completion
-        wallet = Decidim::Vocdoni::Sdk.new(organization, election).deterministicWallet([voter1.email, voter1.token])
+        wallet = Decidim::Vocdoni::Sdk.new(organization, election).deterministicWallet([voter1.email, voter1.token])["address"]
         voter1.update(wallet_address: wallet)
         voter1.reload
         sleep 1
 
         expect(page).to have_content("Completed 20% of 5 total records")
-        expect(voter1.reload.wallet_address).to eq("0xecfddc9559ff2e0ab45e9a34c6bc0f7ef56c7a2f5cbe1822da904e7124e88b2c")
+        expect(voter1.reload.wallet_address).to eq("0x394DFfEfba5DC574E4c52e64e6c09B8442f96948")
         expect(voter2.reload.wallet_address).to be_nil
       end
 
