@@ -5,6 +5,23 @@ require "spec_helper"
 describe "Admin manages election steps", :slow, type: :system do
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create :vocdoni_component }
+  let(:info) do
+    {
+      clientInfo: {
+        address: '0x0000000000000000000000000000000000000001',
+        balance: balance
+      }
+    }
+  end
+  let(:balance) { 50 }
+  let(:vocdoni_election_id) { "0x0000000000000000000000000000000000000002" }
+
+  before do
+    # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:info).and_return(info)
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:createElection).and_return(vocdoni_election_id)
+    # rubocop:enable RSpec/AnyInstance
+  end
 
   include_context "when managing a component as an admin"
 
@@ -15,11 +32,8 @@ describe "Admin manages election steps", :slow, type: :system do
       visit_steps_page
 
       expect(page).to have_content("It's necessary to create a wallet for this organization")
-      click_button "Create"
+      click_link "Create"
       expect(page).to have_admin_callout("Wallet successfully created")
-
-      # Wait to let the wallet be created
-      sleep 12
 
       within "form.create_election" do
         expect(page).to have_content("The election has at least one question.")
@@ -30,14 +44,28 @@ describe "Admin manages election steps", :slow, type: :system do
         click_button "Setup election"
       end
 
-      within ".form-general-submit" do
-        expect(page).to have_content("Processing...")
-      end
+      expect(page).to have_content("The election is being sent to the Vocdoni API")
+      perform_enqueued_jobs
 
       expect(page).to have_admin_callout("successfully")
+      expect(page).not_to have_content("Vocdoni communication error")
+      expect(page).to have_content("The election has been created")
+    end
 
-      within ".content.created" do
-        expect(page).to have_content("The election has been created")
+    context "when the sdk call fails" do
+      let(:vocdoni_election_id) { "" }
+
+      it "shows an error" do
+        visit_steps_page
+
+        click_link "Create"
+        within "form.create_election" do
+          click_button "Setup election"
+        end
+
+        perform_enqueued_jobs
+
+        expect(page).to have_content("Vocdoni communication error")
       end
     end
   end
@@ -47,9 +75,10 @@ describe "Admin manages election steps", :slow, type: :system do
 
     before do
       visit_steps_page
-      click_button "Create"
-      sleep 12
-      click_button "Setup election"
+      click_link "Create"
+      perform_enqueued_jobs do
+        click_button "Setup election"
+      end
     end
 
     it "performs the action successfully" do
