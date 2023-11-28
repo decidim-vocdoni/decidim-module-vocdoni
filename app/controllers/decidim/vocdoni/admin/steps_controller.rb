@@ -49,7 +49,7 @@ module Decidim
         def current_step_form_class
           @current_step_form_class ||= {
             "create_election" => SetupForm,
-            "created" => SetupForm,
+            "created" => SetupForm, # This allows for resending data to vocdoni if there's been a problem
             "paused" => ElectionStatusForm,
             "vote" => ElectionStatusForm,
             "vote_ended" => ResultsForm

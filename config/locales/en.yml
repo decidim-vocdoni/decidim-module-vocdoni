@@ -237,23 +237,25 @@ en:
                 before the election starts.
               valid_end_time: The election <strong>end time</strong> is valid.
             submit: Setup election
-            success: Election successfully sent to the Vocdoni API
+            success: The election data has been successfully sent to the Vocdoni API.
+              Please wait a few seconds for the election to be ready.
             title: Setup election
           created:
-            submit: Try to resend the election data to the Vocdoni API
             creating: The election is being sent to the Vocdoni API. This might take
               a few moments. This page will refresh automatically.
-            success: The election data has been successfully sent to the Vocdoni API. Please
-              wait a few seconds for the election to be ready.
+            error_vocdoni:
+              message: There was a problem creating the election. The Vocdoni Election
+                ID couldn't be obtained. Please check the application logs for details.
+              title: Vocdoni communication error
             explorer_vote: View at Explorer Vote
             message: The election has been created. We're waiting for the start date
               time to arrive.
             start_describe: This election has been configured to start manually, please
               press the button to begin the voting period.
             start_election: Start election
-            error_vocdoni:
-              title: Vocdoni communication error
-              message: There was a problem creating the election. The Vocdoni Election ID couldn't be obtained. Please check the application logs for details.
+            submit: Try to resend the election data to the Vocdoni API
+            success: The election data has been successfully sent to the Vocdoni API.
+              Please wait a few seconds for the election to be ready.
             title: Election created
             view: View landing page
           credits:
