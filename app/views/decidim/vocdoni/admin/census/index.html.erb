@@ -62,6 +62,12 @@
           <%= render partial: "upload_form", locals: { form: @form, election: election } %>
         </div>
       </div>
+    <% else %>
+      <div class="flex--cc">
+        <% if allowed_to?(:edit, :election_calendar, election: election) && election.ready_for_calendar_form? %>
+          <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: "button form-general-submit" %>
+        <% end %>
+      </div>
     <% end %>
   </div>
 

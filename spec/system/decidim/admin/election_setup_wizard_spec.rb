@@ -151,7 +151,6 @@ describe "Election setup wizard", :slow, type: :system do
         end
 
         it "doesn't go to the next step" do
-          expect(page).to have_content("The census is not ready yet")
           expect(page).not_to have_css("a.button", text: "Done, go to the next step")
           expect(page).to have_css("li.tabs-title a.disabled", text: "Calendar and results")
         end
@@ -260,7 +259,7 @@ describe "Election setup wizard", :slow, type: :system do
         before do
           find("a.hollow", text: "Publish").click
           click_link "Done, go to the next step"
-          click_button "Create"
+          click_link "Create"
         end
 
         it "redirects to the steps dashboard" do
@@ -317,8 +316,10 @@ describe "Election setup wizard", :slow, type: :system do
 
   def upload_census
     attach_file("census_data[file]", valid_census_file)
-    click_button "Upload file"
-    click_button "Confirm the census data"
+    # wallets are generated asynchronously
+    perform_enqueued_jobs do
+      click_button "Upload file"
+    end
     click_link "Done, go to the next step"
   end
 

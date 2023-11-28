@@ -5,7 +5,7 @@ require "decidim/core/test/factories"
 FactoryBot.define do
   factory :vocdoni_wallet, class: "Decidim::Vocdoni::Wallet" do
     organization
-    private_key { "0xc2b2820fe8e7ebe9ab139800d9da92588b77858f04907974baa534fad851ef5d" }
+    private_key { Faker::Blockchain::Ethereum.private_key }
   end
 
   factory :vocdoni_component, parent: :component do
@@ -118,11 +118,11 @@ FactoryBot.define do
 
     trait :with_census do
       after(:build) do |election, _evaluator|
-        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
-        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
-        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
-        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
-        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
       end
     end
 
@@ -214,7 +214,7 @@ FactoryBot.define do
     token { Faker::String.random(length: 4) }
     association :election, factory: :vocdoni_election
 
-    trait :with_credentials do
+    trait :with_wallet do
       wallet_address { Faker::Blockchain::Ethereum.address }
     end
   end

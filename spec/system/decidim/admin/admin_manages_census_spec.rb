@@ -67,7 +67,7 @@ describe "Admin manages census", :slow, type: :system do
     end
 
     context "with the credentials" do
-      let!(:voters) { create_list(:vocdoni_voter, 5, :with_credentials, election: election) }
+      let!(:voters) { create_list(:vocdoni_voter, 5, :with_wallet, election: election) }
 
       it "doesn't have any form" do
         visit_census_page
