@@ -8,7 +8,7 @@ describe "Admin manages election steps", :slow, type: :system do
   let(:info) do
     {
       clientInfo: {
-        address: '0x0000000000000000000000000000000000000001',
+        address: "0x0000000000000000000000000000000000000001",
         balance: balance
       }
     }
@@ -64,8 +64,14 @@ describe "Admin manages election steps", :slow, type: :system do
         end
 
         perform_enqueued_jobs
-
         expect(page).to have_content("Vocdoni communication error")
+
+        click_button "Try to resend the election data to the Vocdoni API"
+        # simulate the job
+        election.update(vocdoni_election_id: "0x0000000000000000000000000000000000000002")
+
+        expect(page).not_to have_content("Vocdoni communication error")
+        expect(page).to have_content("The election has been created")
       end
     end
   end
@@ -74,6 +80,10 @@ describe "Admin manages election steps", :slow, type: :system do
     let(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, component: current_component }
 
     before do
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return({ "status" => "PAUSED" })
+      allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:continueElection).and_return(true)
+      # rubocop:enable RSpec/AnyInstance
       visit_steps_page
       click_link "Create"
       perform_enqueued_jobs do
@@ -82,8 +92,7 @@ describe "Admin manages election steps", :slow, type: :system do
     end
 
     it "performs the action successfully" do
-      expect(page).to have_button("Start election")
-      click_button "Start election"
+      click_link "Start election"
       accept_confirm
 
       expect(page).to have_admin_callout("successfully")

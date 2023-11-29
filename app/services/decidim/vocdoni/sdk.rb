@@ -40,12 +40,12 @@ module Decidim
           "VOCDONI_WALLET_PRIVATE_KEY" => Wallet.find_by(organization: organization)&.private_key.to_s,
           "VOCDONI_SALT" => Rails.application.secret_key_base,
           "VOCDONI_API_ENV" => Vocdoni.api_endpoint_env,
-          "VOCDONI_ELECTION_ID" => election&.id.to_s,
+          "VOCDONI_ELECTION_ID" => election&.vocdoni_election_id.to_s,
           "VOCDONI_WRAPPER_PATH" => self.class.wrapper_path
         }
       end
 
-      attr_reader :secrets_env, :organization
+      attr_reader :secrets_env, :organization, :last_error
       attr_writer :runner
 
       def runner
@@ -59,6 +59,12 @@ module Decidim
         runner.send(function, *args)
       rescue Errno::EACCES => e
         raise NodeError, e.message
+      rescue StandardError => e
+        lines = e.message.split("\n")
+        @last_error = lines.grep(/\[Error\]/).first
+        @last_error = lines.grep(/ErrAPI/).first if @last_error.blank?
+        @last_error = lines.first if @last_error.blank?
+        raise
       end
 
       def respond_to_missing?(function, _include_private = false)

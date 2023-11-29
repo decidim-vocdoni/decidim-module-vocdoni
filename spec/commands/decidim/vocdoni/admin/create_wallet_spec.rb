@@ -15,7 +15,7 @@ describe Decidim::Vocdoni::Admin::CreateWallet do
 
   it "stores the given data" do
     subject.call
-    expect(wallet.private_key).to match(/\A0x[a-zA-Z0-9]*\z/)
+    expect(wallet.private_key).to match(/\A0x[a-fA-F0-9]*\z/)
     expect(wallet.organization).to eq organization
   end
 

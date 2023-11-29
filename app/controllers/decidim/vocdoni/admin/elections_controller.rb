@@ -113,9 +113,12 @@ module Decidim
           ManualStartElection.call(election) do
             on(:ok) do
               flash[:notice] = I18n.t("admin.elections.manual_start.success", scope: "decidim.vocdoni")
-              redirect_to election_steps_path(election)
+            end
+            on(:error) do |message|
+              flash[:alert] = I18n.t("admin.elections.manual_start.error", scope: "decidim.vocdoni", error: message)
             end
           end
+          redirect_to election_steps_path(election)
         end
 
         def credits

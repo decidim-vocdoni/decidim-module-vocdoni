@@ -139,6 +139,7 @@ en:
               noopener">Learn more about Vocdoni</a>.
             title: Elections (Vocdoni)
           manual_start:
+            error: 'There was a problem starting the election: [%{error}]'
             success: The election has been successfully started.
           new:
             basic_info: Basic info

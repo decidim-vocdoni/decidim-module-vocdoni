@@ -21,7 +21,7 @@ module Decidim
       end
 
       it "can generate a random wallet" do
-        expect(subject.randomWallet["address"]).to match(/\A0x[a-zA-Z0-9]*\z/)
+        expect(subject.randomWallet["address"]).to match(/\A0x[a-fA-F0-9]*\z/)
       end
 
       it "can generate a deterministic wallet" do
@@ -144,8 +144,39 @@ module Decidim
           raise_error do |error|
             expect(error).to be_a(NodeRunnerError)
             expect(error.message).to eq("ReferenceError: nothing is not defined")
+            expect(subject.last_error).to eq("ReferenceError: nothing is not defined")
           end
         )
+      end
+
+      context "when an Vocdoni [Error] error" do
+        before do
+          allow(subject.runner).to receive(:something).and_raise(StandardError.new("line 1\n[Error]: The election has already been created\nline 2"))
+        end
+
+        it "throws exception on missing method" do
+          expect { subject.something }.to(
+            raise_error do |error|
+              expect(error.message).to eq("line 1\n[Error]: The election has already been created\nline 2")
+              expect(subject.last_error).to eq("[Error]: The election has already been created")
+            end
+          )
+        end
+      end
+
+      context "when an Vocdoni ErrAPI error" do
+        before do
+          allow(subject.runner).to receive(:something).and_raise(StandardError.new("line 1\nErrAPI: Error: The election has already been created\nline 2"))
+        end
+
+        it "throws exception on missing method" do
+          expect { subject.something }.to(
+            raise_error do |error|
+              expect(error.message).to eq("line 1\nErrAPI: Error: The election has already been created\nline 2")
+              expect(subject.last_error).to eq("ErrAPI: Error: The election has already been created")
+            end
+          )
+        end
       end
 
       it "responds to missing method" do

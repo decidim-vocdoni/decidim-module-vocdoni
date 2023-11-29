@@ -16,14 +16,21 @@ module Decidim
         #
         # Broadcasts :ok if started
         def call
+          sdk.continueElection if sdk.electionMetadata["status"] == "PAUSED"
           start_election
-
           broadcast(:ok, election)
+        rescue StandardError => e
+          Rails.logger.error e.message
+          broadcast(:error, sdk.last_error)
         end
 
         private
 
         attr_reader :election
+
+        def sdk
+          @sdk ||= Decidim::Vocdoni::Sdk.new(election.organization, election)
+        end
 
         def start_election
           election.update(status: :vote)

@@ -23,7 +23,9 @@
         <div class="callout warning">
           <p class="flex-center"><%= t(".start_describe") %></p>
           <div class="flex-center">
-            <%= manual_start_button(manual_start_election_path(election), "media-play") %>
+            <%= link_to manual_start_election_path(election), class: "button", method: :post, data: { confirm: t("confirm", scope: "decidim.vocdoni.admin.steps.danger_zone") } do %>
+              <%= icon("media-play", class: "icon--before") %> <%= t("decidim.vocdoni.admin.steps.created.start_election").html_safe %>
+            <% end %>
           </div>
         </div>
       <% end %>

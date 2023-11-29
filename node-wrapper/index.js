@@ -84,13 +84,78 @@ const election = async (electionData, questionsData, censusData) => {
 }
 
 /**
+ * Returns the election metadata for vote monitoring
+ */
+const electionMetadata = async () => {
+  const client = vocdoniClient();
+  const metadata = await client.fetchElection();
+  return {
+    title: metadata.title,
+    description: metadata.description,
+    header: metadata.header,
+    streamUri: metadata.streamUri,
+    startDate: metadata.startDate,
+    endDate: metadata.endDate,
+    electionType: metadata.electionType,
+    voteType: metadata.voteType,
+    questions: metadata.questions,
+    maxCensusSize: metadata.maxCensusSize,
+    id: metadata.id,
+    organizationId: metadata.organizationId,
+    status: metadata.status,
+    voteCount: metadata.voteCount,
+    finalResults: metadata.finalResults,
+    results: metadata.results,
+    manuallyEnded: metadata.manuallyEnded,
+    fromArchive: metadata.fromArchive,
+    chainId: metadata.chainId,
+    creationTime: metadata.creationTime,
+    metadataURL: metadata.metadataURL,
+    isValid: metadata.isValid,
+    raw: metadata.raw
+  }
+};
+
+/**
  * Creates the election an returns the ID for the Vocdoni Blockchain
  */
 const createElection = async (electionData, questionsData, censusData) => {
   const client = vocdoniClient();
   const _election = await vocdoniElection(electionData, questionsData, censusData);
   return await client.createElection(_election);
-}
+};
+
+/**
+ * 
+ */
+const continueElection = async () => {
+  const client = vocdoniClient();
+  return await client.continueElection();
+};
+
+/**
+ * 
+ */ 
+const pauseElection = async () => {
+  const client = vocdoniClient();
+  return await client.pauseElection();
+};
+
+/**
+ * 
+ */
+const cancelElection = async () => {
+  const client = vocdoniClient();
+  return await client.cancelElection();
+};
+
+/**
+ * 
+ */
+const endElection = async () => {
+  const client = vocdoniClient();
+  return await client.endElection();
+};
 
 /**
  * This only works on stg/dev environments
