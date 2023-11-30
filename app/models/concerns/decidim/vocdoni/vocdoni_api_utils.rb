@@ -3,7 +3,6 @@
 module Decidim
   module Vocdoni
     module VocdoniApiUtils
-      include TranslationHelpers
       # Transform the locales to the required format with a default locale
       #
       # receives an array with the following format:
@@ -19,6 +18,13 @@ module Decidim
           values["default"] = values[locale] if organization.default_locale.to_s == locale
         end
         values
+      end
+
+      def translated(field, locale: I18n.locale)
+        return field if field.is_a?(String)
+        return if field.nil?
+
+        field[locale.to_s] || field.dig("machine_translations", locale.to_s)
       end
     end
   end
