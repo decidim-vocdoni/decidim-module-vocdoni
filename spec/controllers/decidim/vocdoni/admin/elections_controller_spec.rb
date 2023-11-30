@@ -14,6 +14,33 @@ describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
     sign_in user
   end
 
+  describe "GET show" do
+    let(:info) do
+      {
+        "clientInfo": {
+          "address": "address",
+          "nonce": "nonce",
+          "infoUrl": "infoUrl",
+          "balance": "balance",
+          "electionIndex": "electionIndex",
+          "metadata": "metadata",
+          "sik": "sik"
+        }
+        "vocdoniElectionId" => "123"
+     }
+    end
+    before do
+      allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:info).and_return(info)
+    end
+
+    it "returns the election info" do
+      get :show, params: { id: election.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to eq(info.to_json)
+    end
+  end
+
   describe "PATCH update" do
     let(:datetime_format) { I18n.t("time.formats.decidim_short") }
     let(:component) { create(:vocdoni_component) }
@@ -62,19 +89,6 @@ describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
           expect(response.body).to include("There was a problem updating this election")
         end
       end
-    end
-  end
-
-  describe "POST manual_start" do
-    let(:component) { create(:vocdoni_component) }
-    let(:election) { create(:vocdoni_election, :manual_start, component: component) }
-
-    it "manually starts the election" do
-      post :manual_start, params: { id: election.id }
-
-      expect(flash[:notice]).not_to be_empty
-      expect(response).to have_http_status(:found)
-      expect(response).to redirect_to(election_steps_path(election))
     end
   end
 end

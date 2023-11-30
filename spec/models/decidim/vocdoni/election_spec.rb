@@ -3,7 +3,8 @@
 require "spec_helper"
 
 describe Decidim::Vocdoni::Election do
-  subject(:election) { build :vocdoni_election }
+  subject(:election) { build :vocdoni_election, status: status }
+  let(:status) { nil }
 
   before do
     allow(Rails.application).to receive(:secret_key_base).and_return("a-secret-key-base")
@@ -193,6 +194,7 @@ describe Decidim::Vocdoni::Election do
   end
 
   describe "#times_set?" do
+    let(:status) { :created }
     context "when start and end times are present" do
       it "returns true" do
         expect(subject.times_set?).to be true
@@ -226,10 +228,10 @@ describe Decidim::Vocdoni::Election do
 
   describe "#census_ready?" do
     context "when census status is ready" do
-      let(:status) { instance_double(Decidim::Vocdoni::CsvCensus::Status, name: "ready") }
+      let(:census_status) { instance_double(Decidim::Vocdoni::CsvCensus::Status, name: "ready") }
 
       before do
-        allow(Decidim::Vocdoni::CsvCensus::Status).to receive(:new).with(election).and_return(status)
+        allow(Decidim::Vocdoni::CsvCensus::Status).to receive(:new).with(election).and_return(census_status)
       end
 
       it "returns true" do
@@ -281,7 +283,7 @@ describe Decidim::Vocdoni::Election do
 
   describe "#ready_for_publish_form?" do
     context "when ready for calendar form and times are set" do
-      subject(:election) { build(:vocdoni_election, :with_census) }
+      subject(:election) { build(:vocdoni_election, :with_census, status: :created) }
 
       let(:question) { create(:vocdoni_question, election: election) }
       let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }

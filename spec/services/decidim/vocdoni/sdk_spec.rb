@@ -8,7 +8,8 @@ module Decidim
       subject { described_class.new(organization, election) }
       let(:organization) { election.organization }
       let!(:wallet) { create :vocdoni_wallet, organization: organization, private_key: private_key }
-      let!(:election) { create :vocdoni_election }
+      let!(:election) { create :vocdoni_election, vocdoni_election_id: vocdoni_election_id }
+      let(:vocdoni_election_id) { '0x0000000000000000000000000000000000000001' }
       let(:private_key) { "0x0000000000000000000000000000000000000000000000000000000000000001" }
       let(:salt) { Rails.application.secret_key_base }
 
@@ -47,7 +48,7 @@ module Decidim
                                     "VOCDONI_WALLET_PRIVATE_KEY" => private_key,
                                     "VOCDONI_SALT" => salt,
                                     "VOCDONI_API_ENV" => "dev",
-                                    "VOCDONI_ELECTION_ID" => election.id.to_s,
+                                    "VOCDONI_ELECTION_ID" => vocdoni_election_id,
                                     "VOCDONI_WRAPPER_PATH" => "#{Decidim::Vocdoni::Engine.root}/node-wrapper"
                                   })
       end
@@ -60,7 +61,7 @@ module Decidim
                                       "VOCDONI_WALLET_PRIVATE_KEY" => "",
                                       "VOCDONI_SALT" => salt,
                                       "VOCDONI_API_ENV" => "dev",
-                                      "VOCDONI_ELECTION_ID" => election.id.to_s,
+                                      "VOCDONI_ELECTION_ID" => vocdoni_election_id,
                                       "VOCDONI_WRAPPER_PATH" => "#{Decidim::Vocdoni::Engine.root}/node-wrapper"
                                     })
         end
