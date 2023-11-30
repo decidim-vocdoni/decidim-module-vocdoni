@@ -106,7 +106,7 @@ module Decidim::Vocdoni
     #
     # Returns a boolean indicating if both the start time or manual_start and end time are present.
     def times_set?
-      !status.nil? && (start_time.present? || manual_start?) && end_time.present?
+      (start_time.present? || manual_start?) && end_time.present?
     end
 
     # Public: Checks if the census status for the election is "ready".

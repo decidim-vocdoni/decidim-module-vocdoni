@@ -264,19 +264,19 @@ en:
           danger_zone:
             action:
               cancel: Cancel the election (abort)
+              created: Start election
               end: End the election
               paused: Pause the election
-              start: Start election
               vote: Continue the election
             confirm: Are you sure you want to do this action?
             messages:
               cancel_end_html: The election is currently running. Press the cancel
                 button to <strong>invalidate (abort)</strong> it.<br>If you just want
                 to stop the voting period and get to the results, press the end button.
+              created: This election has been configured to start manually. Press
+                the button to begin the voting period.
               paused: The election is currently running. Press the button to pause
                 voting and temporarily prevent anyone from voting.
-              start: This election has been configured to start manually. Press the
-                button to begin the voting period.
               vote: The election is currently paused. No one can vote right now. Press
                 the button to resume voting.
             title: Danger zone

@@ -27,7 +27,7 @@ module Decidim
 
         def danger_zone_submit(form, action)
           ico, button_class = case action
-                              when "start"
+                              when "created"
                                 ["media-play", "primary"]
                               when "vote"
                                 ["media-play", "success"]

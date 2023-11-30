@@ -12,12 +12,8 @@ describe "Admin creates wallet", :slow, type: :system do
   context "when there isn't any wallet" do
     it "redirects to the wallet creation page" do
       visit_steps_page
-
       expect(page).to have_content("It's necessary to create a wallet for this organization")
-    end
-
-    it "creates a new wallet" do
-      visit_steps_page
+      expect(page).to have_content("New organization wallet")
       click_link "Create"
 
       expect(page).to have_content("The election has at least one question.")

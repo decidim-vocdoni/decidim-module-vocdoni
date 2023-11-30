@@ -70,11 +70,10 @@ module Decidim
         def create_or_start_election
           if election.misconfigured?
             CreateVocdoniElectionJob.perform_later(election.id)
-          elsif election.started?
-            election.status = "vote"
-          else
+          elsif !election.started?
             election.start_time = Time.current
           end
+          continue_election
         end
 
         def continue_election

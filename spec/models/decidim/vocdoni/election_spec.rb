@@ -195,8 +195,6 @@ describe Decidim::Vocdoni::Election do
   end
 
   describe "#times_set?" do
-    let(:status) { :created }
-
     context "when start and end times are present" do
       it "returns true" do
         expect(subject.times_set?).to be true
@@ -204,7 +202,7 @@ describe Decidim::Vocdoni::Election do
     end
 
     context "when start time or end time is not present" do
-      subject(:election) { build(:vocdoni_election, start_time: nil, end_time: 1.day.from_now) }
+      subject(:election) { build(:vocdoni_election, :auto_start, start_time: nil, end_time: 1.day.from_now) }
 
       it "returns false" do
         expect(subject.times_set?).to be false

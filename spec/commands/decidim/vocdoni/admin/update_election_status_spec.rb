@@ -5,7 +5,7 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::UpdateElectionStatus do
   subject { described_class.new(form) }
 
-  let(:election) { create :vocdoni_election }
+  let(:election) { create :vocdoni_election, status: :vote }
   let(:organization) { election.component.organization }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
   let(:form) do
@@ -17,6 +17,21 @@ describe Decidim::Vocdoni::Admin::UpdateElectionStatus do
     )
   end
   let(:invalid) { false }
+
+  let(:election_metadata) do
+    {
+      "status" => status
+    }
+  end
+  let(:status) { "ONGOING" }
+
+  before do
+    # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return(election_metadata)
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:pauseElection).and_return(true)
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:continueElection).and_return(true)
+    # rubocop:enable RSpec/AnyInstance
+  end
 
   it "updates the election" do
     subject.call
@@ -39,6 +54,15 @@ describe Decidim::Vocdoni::Admin::UpdateElectionStatus do
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:invalid)
+    end
+  end
+
+  context "when out of sync with Vocdoni" do
+    let(:status) { "ENDED" }
+
+    it "is not valid" do
+      expect { subject.call }.to broadcast(:status)
+      expect(election.status).to eq "vote_ended"
     end
   end
 end

@@ -5,7 +5,7 @@
 
   <%
     if !election.started? || election.created?
-      action = "start"
+      action = "created"
     elsif election.interruptible?
       action = "paused" if election.vote?
       action = "vote" if election.paused?

@@ -77,22 +77,19 @@ describe "Admin manages election steps", :slow, type: :system do
   end
 
   describe "election with manual start" do
-    let(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, component: current_component }
+    let(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, :configured, component: current_component }
+    let!(:wallet) { create :vocdoni_wallet, organization: organization }
 
     before do
       # rubocop:disable RSpec/AnyInstance
-      allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return({ "status" => "PAUSED" })
+      allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return({ "status" => "UPCOMING" })
       allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:continueElection).and_return(true)
       # rubocop:enable RSpec/AnyInstance
-      visit_steps_page
-      click_link "Create"
-      perform_enqueued_jobs do
-        click_button "Setup election"
-      end
     end
 
     it "performs the action successfully" do
-      click_link "Start election"
+      visit_steps_page
+      click_button "Start election"
       accept_confirm
 
       expect(page).to have_admin_callout("successfully")
