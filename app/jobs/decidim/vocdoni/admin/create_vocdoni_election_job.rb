@@ -26,10 +26,10 @@ module Decidim
 
         def update_election
           election.vocdoni_election_id = vocdoni_id
+          election.save!
           # set "paused" in vocdoni but not in decidim, this way we can simulate a "manual start"
           # Vocdoni does not provide an "idle" status, so we use "paused" to simulate it
           sdk.pauseElection if election.manual_start?
-          election.save!
         end
 
         # don't memoize this, we need a new instance always to ensure the election is updated

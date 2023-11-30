@@ -20,6 +20,7 @@ describe "Admin manages election steps", :slow, type: :system do
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:info).and_return(info)
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:createElection).and_return(vocdoni_election_id)
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:pauseElection).and_return(true)
     # rubocop:enable RSpec/AnyInstance
   end
 
