@@ -16,7 +16,7 @@ module Decidim
         organization.available_locales.each do |locale|
           locale = locale.to_s
           I18n.with_locale(locale) do
-            values[locale] = translated_attribute(translations, organization)
+            values[locale] = translated_attribute(translations, organization, true)
             values["default"] = values[locale] if organization.default_locale.to_s == locale
           end
         end
