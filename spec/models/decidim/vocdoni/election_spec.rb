@@ -25,18 +25,37 @@ describe Decidim::Vocdoni::Election do
   end
 
   it { is_expected.not_to be_started }
+  it { is_expected.not_to be_misconfigured }
   it { is_expected.not_to be_ongoing }
   it { is_expected.not_to be_finished }
-  it { is_expected.to be_auto_start }
-  it { is_expected.not_to be_manual_start }
+  it { is_expected.not_to be_auto_start }
+  it { is_expected.to be_manual_start }
   it { is_expected.to be_interruptible }
   it { is_expected.to be_secret_until_the_end }
+
+  context "when is configured" do
+    subject(:election) { build :vocdoni_election, :configured }
+
+    it { is_expected.not_to be_misconfigured }
+  end
 
   context "when manual start" do
     subject(:election) { build :vocdoni_election, :manual_start }
 
     it { is_expected.to be_manual_start }
     it { is_expected.not_to be_auto_start }
+    it { is_expected.to be_interruptible }
+    it { is_expected.to be_secret_until_the_end }
+    it { is_expected.not_to be_started }
+    it { is_expected.not_to be_ongoing }
+    it { is_expected.not_to be_finished }
+  end
+
+  context "when automaic start" do
+    subject(:election) { build :vocdoni_election, :auto_start }
+
+    it { is_expected.not_to be_manual_start }
+    it { is_expected.to be_auto_start }
     it { is_expected.to be_interruptible }
     it { is_expected.to be_secret_until_the_end }
     it { is_expected.not_to be_started }
@@ -88,7 +107,8 @@ describe Decidim::Vocdoni::Election do
     context "when it is paused" do
       subject(:election) { build :vocdoni_election, :started, :paused }
 
-      it { is_expected.not_to be_started }
+      it { is_expected.to be_started }
+      it { is_expected.to be_paused }
       it { is_expected.not_to be_ongoing }
       it { is_expected.not_to be_finished }
     end
@@ -185,6 +205,22 @@ describe Decidim::Vocdoni::Election do
       it "returns false" do
         expect(subject.times_set?).to be false
       end
+
+      context "when status" do
+        subject(:election) { build(:vocdoni_election, start_time: nil, end_time: 1.day.from_now, status: "vote") }
+
+        it "returns true" do
+          expect(subject.times_set?).to be true
+        end
+
+        context "and automaic start" do
+          subject(:election) { build(:vocdoni_election, start_time: nil, end_time: 1.day.from_now, status: "vote", election_type: { "auto_start" => true }) }
+
+          it "returns false" do
+            expect(subject.times_set?).to be false
+          end
+        end
+      end
     end
   end
 
@@ -261,6 +297,15 @@ describe Decidim::Vocdoni::Election do
           expect(subject.ready_for_publish_form?).to be false
         end
       end
+    end
+  end
+
+  describe "#build_answer_values!" do
+    let(:question) { create(:vocdoni_question, election: election) }
+    let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+
+    it "assigns a value to each answer" do
+      expect { subject.build_answer_values! }.to change { question.answers.pluck(:value) }.from([nil, nil]).to([0, 1])
     end
   end
 
@@ -356,6 +401,7 @@ describe Decidim::Vocdoni::Election do
     end
 
     it "returns questions in vocdoni format" do
+      election.build_answer_values!
       vocdoni = election.questions_to_vocdoni[0]
       first = election.questions.first
       expect(vocdoni[0]["en"]).to eq(first.title["en"])
@@ -365,7 +411,7 @@ describe Decidim::Vocdoni::Election do
       expect(vocdoni[1]["ca"]).to eq(first.description["ca"])
       expect(vocdoni[1]["default"]).to eq(first.description["en"])
       expect(vocdoni[2][0]["title"]["en"]).to eq(first.answers[0].title["en"])
-      expect(vocdoni[2][0]["value"]).to eq(first.answers[0].id)
+      expect(vocdoni[2][0]["value"]).to eq(first.answers[0].value)
     end
   end
 end

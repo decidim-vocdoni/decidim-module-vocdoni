@@ -25,6 +25,13 @@ module Decidim
         "question-#{id}"
       end
 
+      # ensure all the answer will have numeric consecutive values
+      def build_answer_values!
+        answers.each_with_index do |answer, index|
+          answer.update(value: index)
+        end
+      end
+
       # Vocdoni format is an array of [title, description, [{title:, value: }]
       def to_vocdoni
         [
@@ -33,7 +40,7 @@ module Decidim
           answers.map do |answer|
             {
               "title" => transform_locales(answer.title),
-              "value" => answer.id
+              "value" => answer.value.to_i
             }
           end
         ]

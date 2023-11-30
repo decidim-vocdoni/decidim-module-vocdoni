@@ -9,6 +9,7 @@
      data-vocdoni-election-id="<%= @election.vocdoni_election_id %>"
      <% end %>
      data-info-path="<%= election_path(election) %>"
+     data-results-path="<%= election_step_path(election, :results) %>"
      data-vocdoni-env="<%= Decidim::Vocdoni.api_endpoint_env %>">
 
   <div class="card-divider">
@@ -31,7 +32,7 @@
 </div>
 
 <% if @form %>
-  <%= decidim_form_for(@form, url: election_step_path(election, current_step), method: :patch, html: { class: "form step #{current_step}" }) do |f| %>
+  <%= decidim_form_for(@form, url: election_step_path(election, current_step), method: :patch, html: { id: "new_election_status_", class: "form step #{current_step}" }) do |f| %>
     <%= render partial: current_step.to_s, locals: { form: @form, f: f } %>
 
     <%= f.hidden_field :current_step %>
@@ -39,13 +40,7 @@
     <% if @form.main_button? %>
       <div class="button--double form-general-submit<%= " hide" if election.misconfigured? %>">
         <%= f.button type: :submit, class: "button", disabled: @form.invalid? do %>
-          <span class="hide loading">
-            <span class="loading-spinner"></span>
-            <%= t("steps.processing", scope: "decidim.vocdoni.admin") %>
-          </span>
-          <span class="text">
-            <%= t("steps.#{current_step}.submit", scope: "decidim.vocdoni.admin") %>
-          </span>
+          <%= t("steps.#{current_step}.submit", scope: "decidim.vocdoni.admin") %>
         <% end %>
       </div>
     <% end %>

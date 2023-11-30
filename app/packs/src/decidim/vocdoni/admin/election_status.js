@@ -2,9 +2,11 @@ const CREDIT_SPAN_SELECTOR = ".js-vocdoni-credits-balance";
 const CREATING_SPAN_SELECTOR = ".js-vocdoni-election-creating";
 const CREATING_ERROR_SPAN_SELECTOR = ".js-vocdoni-election-creating-error";
 const CREATED_SPAN_SELECTOR = ".js-vocdoni-election-created";
+const DANGER_ZONE_SELECTOR = ".js-danger-zone";
 const GENERAL_SUBMIT_SELECTOR = ".form-general-submit";
 const NO_TOKENS_MESSAGE_SELECTOR = ".js-vocdoni-credits-collect-faucet-tokens-section";
-const ACTIONS_BUTTONS_SELECTOR = ".js-vocdoni-interruptible, #new_setup_ button[type=submit]";
+const EXPLORER_URL_SELECTOR = ".js-vocdoni-explorer-url";
+const FORM_ID = "new_election_status_";
 const MAX_WAITING_TIME = 10000;
 let CHECK_STATUS = true;
 
@@ -25,9 +27,6 @@ const showAvailableCredits = async (creditsSpan, clientInfo) => {
 
   if (availableCredits === 0) {
     document.querySelector(NO_TOKENS_MESSAGE_SELECTOR).classList.remove("hide");
-    document.querySelectorAll(ACTIONS_BUTTONS_SELECTOR).forEach((element) => {
-      element.disabled = true;
-    });
   }
 
   creditsSpan.innerHTML = availableCredits;
@@ -37,6 +36,8 @@ const checkCreatingElection = async (creatingSpan, vocdoniElectionId) => {
   const creatingErrorSpan = document.querySelector(CREATING_ERROR_SPAN_SELECTOR);
   const createdSpan = document.querySelector(CREATED_SPAN_SELECTOR);
   const submit = document.querySelector(GENERAL_SUBMIT_SELECTOR);
+  const explorerLink = document.querySelector(EXPLORER_URL_SELECTOR);
+  const dangerZone = document.querySelector(DANGER_ZONE_SELECTOR);
   if (!creatingSpan) {
     return;
   }
@@ -44,6 +45,12 @@ const checkCreatingElection = async (creatingSpan, vocdoniElectionId) => {
   if (vocdoniElectionId) {
     creatingSpan.classList.add("hide");
     createdSpan.classList.remove("hide");
+    if (explorerLink) {
+      explorerLink.href = `${explorerLink.href.substr(0, explorerLink.href.indexOf("#") + 1)}/${vocdoniElectionId}`;
+    }
+    if (dangerZone) {
+      dangerZone.classList.remove("hide");
+    }
   } else if (CHECK_STATUS) {
     // try again in a few seconds
     setTimeout(async () => {
@@ -60,6 +67,68 @@ const checkCreatingElection = async (creatingSpan, vocdoniElectionId) => {
   }
 };
 
+const maskSubmitInAjax = () => {
+  const form = document.getElementById(FORM_ID);
+  const callout = document.querySelector(".callout-wrapper");
+  if (!form) {
+    return;
+  }
+  // We need to handle the event in JQuery because the confirmation dialog ends up
+  // submiting the form using JQuery too (see decidim-core/app/packs/src/decidim/confirm.js)
+  $(form).on("submit", async (evt) => {
+    const dangerZone = document.querySelector(DANGER_ZONE_SELECTOR);
+    if (!dangerZone) {
+      return;
+    }
+    evt.preventDefault();
+    dangerZone.classList.add("spinner-container");
+    const data = new FormData(evt.target);
+    data.set("authenticity_token", document.querySelector('meta[name="csrf-token"]').content);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: {
+        "Accept": "text/html"
+      }
+    });
+    const body = await response.text();
+    if (response.ok) {
+      let el = document.createElement("html");
+      el.innerHTML = body;
+      let newForm = el.querySelector(`#${FORM_ID}`);
+      // if no form, just reload the page
+      if (newForm) {
+        // redrawing the form
+        form.innerHTML = newForm.innerHTML;
+      }
+      // adding callouts
+      if (callout) {
+        callout.innerHTML = el.querySelector(".callout-wrapper").innerHTML;
+      }
+    } else {
+      console.error("Error submitting form", body);
+    }
+    dangerZone.classList.remove("spinner-container");
+  });
+
+  const buttons = document.querySelectorAll(".js-button-submit")
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const dangerZone = document.querySelector(DANGER_ZONE_SELECTOR);
+      if (dangerZone) {
+        dangerZone.classList.add("spinner-container");
+      }
+    });
+  });
+
+  $(document).on("closed.zf.reveal", "[data-reveal]", () => {
+    const dangerZone = document.querySelector(DANGER_ZONE_SELECTOR);
+    if (dangerZone) {
+      dangerZone.classList.remove("spinner-container");
+    }
+  });
+};
+
 document.addEventListener("DOMContentLoaded", async () => {
   const creatingSpan = document.querySelector(CREATING_SPAN_SELECTOR);
   const creditsSpan = document.querySelector(CREDIT_SPAN_SELECTOR);
@@ -74,4 +143,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }, MAX_WAITING_TIME);
     }
   }
+
+  maskSubmitInAjax();
 });

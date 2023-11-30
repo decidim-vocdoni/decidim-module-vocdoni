@@ -19,16 +19,8 @@
       <p><%= t(".message") %></p>
 
       <%= render partial: "action_buttons", locals: { election: election } %>
-      <% if election.manual_start? %>
-        <div class="callout warning">
-          <p class="flex-center"><%= t(".start_describe") %></p>
-          <div class="flex-center">
-            <%= link_to manual_start_election_path(election), class: "button", method: :post, data: { confirm: t("confirm", scope: "decidim.vocdoni.admin.steps.danger_zone") } do %>
-              <%= icon("media-play", class: "icon--before") %> <%= t("decidim.vocdoni.admin.steps.created.start_election").html_safe %>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>
+
+<%= render partial: "danger_zone", locals: { election: election, f: f } %>

@@ -107,20 +107,6 @@ module Decidim
           end
         end
 
-        def manual_start
-          enforce_permission_to :manual_start, :steps, election: election
-
-          ManualStartElection.call(election) do
-            on(:ok) do
-              flash[:notice] = I18n.t("admin.elections.manual_start.success", scope: "decidim.vocdoni")
-            end
-            on(:error) do |message|
-              flash[:alert] = I18n.t("admin.elections.manual_start.error", scope: "decidim.vocdoni", error: message)
-            end
-          end
-          redirect_to election_steps_path(election)
-        end
-
         def credits
           enforce_permission_to :read, :election, election: election
 

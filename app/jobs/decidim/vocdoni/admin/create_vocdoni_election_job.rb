@@ -11,6 +11,7 @@ module Decidim
 
           # json format
           begin
+            election.build_answer_values!
             vocdoni_id = sdk.createElection(election.to_vocdoni, election.questions_to_vocdoni, election.census_status.all_wallets)
             election.update(vocdoni_election_id: vocdoni_id)
             Rails.logger.info "CreateVocdoniElectionJob: Election #{election_id} created at Vocdoni with id #{vocdoni_id}"

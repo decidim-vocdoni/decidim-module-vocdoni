@@ -25,13 +25,20 @@ module Decidim
           end
         end
 
-        def manual_start_button(link, icon)
-          button_to link,
-                    class: "button js-vocdoni-interruptible",
-                    method: :post,
-                    data: { action: %w(continue success), confirm: t("confirm", scope: "decidim.vocdoni.admin.steps.danger_zone") } do
-            "#{icon(icon, class: "icon--before")} #{I18n.t("decidim.vocdoni.admin.steps.created.start_election")}".html_safe
-          end
+        def danger_zone_submit(form, action)
+          ico, button_class = case action
+                              when "start"
+                                ["media-play", "primary"]
+                              when "vote"
+                                ["media-play", "success"]
+                              when "paused"
+                                ["media-pause", "warning"]
+                              end
+          text = t(action, scope: "decidim.vocdoni.admin.steps.danger_zone.action")
+          text = "#{icon(ico, class: "icon--before")} #{text}".html_safe
+
+          form.submit text, class: "button #{button_class}",
+                            data: { confirm: t("confirm", scope: "decidim.vocdoni.admin.steps.danger_zone") }
         end
 
         private

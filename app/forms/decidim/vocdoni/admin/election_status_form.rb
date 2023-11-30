@@ -7,7 +7,7 @@ module Decidim
       class ElectionStatusForm < Decidim::Form
         attribute :status, String
 
-        validates :status, inclusion: { in: %w(paused canceled vote vote_ended) }
+        validates :status, inclusion: { in: %w(created paused vote canceled end) }
         validate :election_type_interruptible
 
         delegate :election, to: :context
@@ -15,7 +15,7 @@ module Decidim
         def current_step; end
 
         def main_button?
-          false
+          election.status.nil? || election.misconfigured?
         end
 
         private

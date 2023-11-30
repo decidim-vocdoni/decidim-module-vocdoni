@@ -29,7 +29,7 @@ module Decidim::Vocdoni
     # Returns a boolean.
     def started?
       return false if status.nil?
-      return false if paused?
+      return false if start_time.nil?
 
       start_time <= Time.current
     end
@@ -47,14 +47,14 @@ module Decidim::Vocdoni
     end
 
     def misconfigured?
-      (created? || paused?) && vocdoni_election_id.blank?
+      !status.nil? && vocdoni_election_id.blank?
     end
 
     # Public: Checks if the election ongoing now
     #
     # Returns a boolean.
     def ongoing?
-      started? && !finished?
+      started? && !paused? && !finished?
     end
 
     # Public: Checks if the election has a blocked_at value
@@ -106,7 +106,7 @@ module Decidim::Vocdoni
     #
     # Returns a boolean indicating if both the start time or manual_start and end time are present.
     def times_set?
-      (start_time.present? || manual_start?) && end_time.present?
+      !status.nil? && (start_time.present? || manual_start?) && end_time.present?
     end
 
     # Public: Checks if the census status for the election is "ready".
@@ -177,6 +177,10 @@ module Decidim::Vocdoni
       "https://#{Decidim::Vocdoni.explorer_vote_domain}/processes/show/#/#{vocdoni_election_id}"
     end
 
+    def build_answer_values!
+      questions.each(&:build_answer_values!)
+    end
+
     # Public: the Vocdoni's format to create a new election
     # https://developer.vocdoni.io/sdk#creating-a-voting-process
     # The process to create an election still needs to add the keys "census" and "questions"
@@ -187,7 +191,7 @@ module Decidim::Vocdoni
         "description" => transform_locales(description),
         "header" => photo&.attached_uploader(:file)&.url(host: organization.host).to_s,
         "streamUri" => stream_uri,
-        "startDate" => start_time.iso8601,
+        "startDate" => start_time&.iso8601,
         "endDate" => end_time.iso8601,
         "electionType" => {
           "autoStart" => auto_start?,

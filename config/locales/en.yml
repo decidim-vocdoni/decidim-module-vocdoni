@@ -138,9 +138,6 @@ en:
               and anonymity. <a href="https://vocdoni.io" target="_blank" rel="noreferrer
               noopener">Learn more about Vocdoni</a>.
             title: Elections (Vocdoni)
-          manual_start:
-            error: 'There was a problem starting the election: [%{error}]'
-            success: The election has been successfully started.
           new:
             basic_info: Basic info
             census: Census
@@ -199,8 +196,10 @@ en:
             success: Question successfully updated
         steps:
           canceled:
+            invalid: There was a problem canceling this election
             message: This election has been canceled prematurely. There aren't any
               results.
+            success: The election has been successfully canceled.
             title: Canceled
           create_election:
             description: Your voting process is secured using the advanced digital
@@ -247,11 +246,9 @@ en:
                 ID couldn't be obtained. Please check the application logs for details.
               title: Vocdoni communication error
             explorer_vote: View at Explorer Vote
+            invalid: There was a problem starting this election
             message: The election has been created. We're waiting for the start date
               time to arrive.
-            start_describe: This election has been configured to start manually, please
-              press the button to begin the voting period.
-            start_election: Start election
             submit: Try to resend the election data to the Vocdoni API
             success: The election data has been successfully sent to the Vocdoni API.
               Please wait a few seconds for the election to be ready.
@@ -266,25 +263,40 @@ en:
               on the button below.
           danger_zone:
             action:
-              cancel: Cancel
-              continue: Continue
-              end: End
-              pause: Pause
+              cancel: Cancel the election (abort)
+              end: End the election
+              paused: Pause the election
+              start: Start election
+              vote: Continue the election
             confirm: Are you sure you want to do this action?
-            message: The election can be interrupted
+            messages:
+              cancel_end_html: The election is currently running. Press the cancel
+                button to <strong>invalidate (abort)</strong> it.<br>If you just want
+                to stop the voting period and get to the results, press the end button.
+              paused: The election is currently running. Press the button to pause
+                voting and temporarily prevent anyone from voting.
+              start: This election has been configured to start manually. Press the
+                button to begin the voting period.
+              vote: The election is currently paused. No one can vote right now. Press
+                the button to resume voting.
             title: Danger zone
+          end:
+            invalid: There was a problem ending this election
+            success: The election has been successfully ended.
           ended:
             title: Ended
           index:
             title: Steps dashboard
+          invalid_status: The election was out of sync with the Vocdoni API. The status
+            has been updated to "%{status}". Please refresh the page.
           paused:
+            invalid: There was a problem pausing this election
             message: The election is paused
-            success: The election has been successfully continued.
+            success: The election has been successfully paused.
             title: Paused
           powered_by_html: This module makes use of Vocdoni Protocol, an open-source
             voting technology to organize elections<br>with the highest standards
             of security, universal verifiability, censorship-resistance, and anonymity.
-          processing: Processing...
           ready:
             title: Ready
           results_published:
@@ -293,10 +305,11 @@ en:
             result: Result
             title: Results published
           vote:
+            invalid: There was a problem starting this election
             message: We're on the vote period until %{end_time}.
             secret_until_the_end: The election results will be secret until the end
               of the voting period.
-            success: The election has been successfully paused.
+            success: The election has been successfully resumed.
             title: Vote period
           vote_ended:
             error:

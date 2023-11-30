@@ -29,13 +29,18 @@ FactoryBot.define do
     status { nil }
     election_type do
       {
-        "auto_start" => true,
+        "auto_start" => false,
         "dynamic_census" => false,
         "interruptible" => true,
         "secret_until_the_end" => true
       }
     end
     component { create(:vocdoni_component, organization: organization) }
+
+    trait :configured do
+      status { "created" }
+      vocdoni_election_id { Faker::Blockchain::Ethereum.address }
+    end
 
     trait :upcoming do
       start_time { 1.day.from_now }
@@ -44,6 +49,18 @@ FactoryBot.define do
     trait :started do
       status { "vote" }
       start_time { 2.days.ago }
+    end
+
+    trait :auto_start do
+      start_time { 2.days.ago }
+      election_type do
+        {
+          "auto_start" => true,
+          "dynamic_census" => false,
+          "interruptible" => true,
+          "secret_until_the_end" => true
+        }
+      end
     end
 
     trait :manual_start do
@@ -127,6 +144,7 @@ FactoryBot.define do
     end
 
     trait :ready_for_setup do
+      configured
       upcoming
       published
       complete
