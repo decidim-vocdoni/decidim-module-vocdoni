@@ -15,7 +15,7 @@ module Decidim
         def current_step; end
 
         def main_button?
-          election.status.nil? || election.misconfigured?
+          election.vocdoni_election_id.blank?
         end
 
         private

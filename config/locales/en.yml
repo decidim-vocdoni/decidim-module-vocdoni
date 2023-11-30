@@ -292,6 +292,7 @@ en:
           paused:
             invalid: There was a problem pausing this election
             message: The election is paused
+            submit: Try to resend the election data to the Vocdoni API
             success: The election has been successfully paused.
             title: Paused
           powered_by_html: This module makes use of Vocdoni Protocol, an open-source
@@ -309,6 +310,7 @@ en:
             message: We're on the vote period until %{end_time}.
             secret_until_the_end: The election results will be secret until the end
               of the voting period.
+            submit: Try to resend the election data to the Vocdoni API
             success: The election has been successfully resumed.
             title: Vote period
           vote_ended:

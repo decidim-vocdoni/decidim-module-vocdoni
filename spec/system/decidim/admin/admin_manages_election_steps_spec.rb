@@ -21,6 +21,8 @@ describe "Admin manages election steps", :slow, type: :system do
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:info).and_return(info)
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:createElection).and_return(vocdoni_election_id)
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:pauseElection).and_return(true)
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return({ "status" => "UPCOMING" })
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:continueElection).and_return(true)
     # rubocop:enable RSpec/AnyInstance
   end
 
@@ -72,7 +74,7 @@ describe "Admin manages election steps", :slow, type: :system do
         election.update(vocdoni_election_id: "0x0000000000000000000000000000000000000002")
 
         expect(page).not_to have_content("Vocdoni communication error")
-        expect(page).to have_content("The election has been created")
+        expect(page).to have_content("The election has been successfully resumed")
       end
     end
   end
@@ -80,13 +82,6 @@ describe "Admin manages election steps", :slow, type: :system do
   describe "election with manual start" do
     let!(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, :configured, component: current_component }
     let!(:wallet) { create :vocdoni_wallet, organization: organization }
-
-    before do
-      # rubocop:disable RSpec/AnyInstance
-      allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return({ "status" => "UPCOMING" })
-      allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:continueElection).and_return(true)
-      # rubocop:enable RSpec/AnyInstance
-    end
 
     it "performs the action successfully" do
       visit_steps_page

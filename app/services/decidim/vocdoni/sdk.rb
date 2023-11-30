@@ -53,6 +53,7 @@ module Decidim
       end
 
       def method_missing(function, *args)
+        Rails.logger.debug { "Vocdoni SDK: Calling #{function} with #{args}" }
         secrets_env.each do |key, value|
           ENV[key] = value
         end
