@@ -24,6 +24,13 @@ describe "Admin manages election steps", :slow, type: :system do
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return({ "status" => "UPCOMING" })
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:continueElection).and_return(true)
     # rubocop:enable RSpec/AnyInstance
+
+    stub_request(:any, "app-dev.vocdoni.io")
+      .to_return(status: 200, body: "{}", headers: {})
+    stub_request(:any, "api-dev.faucet.vocdoni.net")
+      .to_return(status: 200, body: "{}", headers: {})
+    stub_request(:any, "api-dev.vocdoni.net")
+      .to_return(status: 200, body: "{}", headers: {})
   end
 
   include_context "when managing a component as an admin"
