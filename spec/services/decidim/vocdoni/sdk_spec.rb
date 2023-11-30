@@ -9,7 +9,7 @@ module Decidim
       let(:organization) { election.organization }
       let!(:wallet) { create :vocdoni_wallet, organization: organization, private_key: private_key }
       let!(:election) { create :vocdoni_election, vocdoni_election_id: vocdoni_election_id }
-      let(:vocdoni_election_id) { '0x0000000000000000000000000000000000000001' }
+      let(:vocdoni_election_id) { "0x0000000000000000000000000000000000000001" }
       let(:private_key) { "0x0000000000000000000000000000000000000000000000000000000000000001" }
       let(:salt) { Rails.application.secret_key_base }
 

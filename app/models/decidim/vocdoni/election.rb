@@ -54,7 +54,7 @@ module Decidim::Vocdoni
     #
     # Returns a boolean.
     def ongoing?
-      started?  && !paused? && !finished?
+      started? && !paused? && !finished?
     end
 
     # Public: Checks if the election has a blocked_at value

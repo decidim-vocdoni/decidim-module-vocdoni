@@ -4,6 +4,7 @@ require "spec_helper"
 
 describe Decidim::Vocdoni::Election do
   subject(:election) { build :vocdoni_election, status: status }
+
   let(:status) { nil }
 
   before do
@@ -195,6 +196,7 @@ describe Decidim::Vocdoni::Election do
 
   describe "#times_set?" do
     let(:status) { :created }
+
     context "when start and end times are present" do
       it "returns true" do
         expect(subject.times_set?).to be true

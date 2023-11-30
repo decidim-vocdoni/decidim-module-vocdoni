@@ -17,20 +17,23 @@ describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
   describe "GET show" do
     let(:info) do
       {
-        "clientInfo": {
-          "address": "address",
-          "nonce": "nonce",
-          "infoUrl": "infoUrl",
-          "balance": "balance",
-          "electionIndex": "electionIndex",
-          "metadata": "metadata",
-          "sik": "sik"
-        }
+        clientInfo: {
+          address: "address",
+          nonce: "nonce",
+          infoUrl: "infoUrl",
+          balance: "balance",
+          electionIndex: "electionIndex",
+          metadata: "metadata",
+          sik: "sik"
+        },
         "vocdoniElectionId" => "123"
-     }
+      }
     end
+
     before do
+      # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:info).and_return(info)
+      # rubocop:enable RSpec/AnyInstance
     end
 
     it "returns the election info" do
