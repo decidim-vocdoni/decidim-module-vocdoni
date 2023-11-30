@@ -26,7 +26,7 @@ describe "Admin manages election steps", :slow, type: :system do
   include_context "when managing a component as an admin"
 
   describe "setup an election" do
-    let(:election) { create :vocdoni_election, :ready_for_setup, component: current_component, title: { en: "English title", es: "" } }
+    let!(:election) { create :vocdoni_election, :ready_for_setup, component: current_component, title: { en: "English title", es: "" } }
 
     it "performs the action successfully" do
       visit_steps_page
@@ -77,7 +77,7 @@ describe "Admin manages election steps", :slow, type: :system do
   end
 
   describe "election with manual start" do
-    let(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, :configured, component: current_component }
+    let!(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, :configured, component: current_component }
     let!(:wallet) { create :vocdoni_wallet, organization: organization }
 
     before do
@@ -100,8 +100,6 @@ describe "Admin manages election steps", :slow, type: :system do
   private
 
   def visit_steps_page
-    election
-
     relogin_as user, scope: :user
     visit_component_admin
 

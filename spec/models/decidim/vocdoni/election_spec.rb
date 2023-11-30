@@ -312,11 +312,6 @@ describe Decidim::Vocdoni::Election do
   end
 
   describe "#to_vocdoni" do
-    before do
-      # this is to ensure system tests do not mess with the translated_attribute which, unfortunatelly is no state-less operating
-      RequestStore.store[:toggle_machine_translations] = false
-    end
-
     let(:election) { create(:vocdoni_election, :with_photos, :simple, election_type: type, component: component, title: title, description: description) }
     let!(:voter) { create(:vocdoni_voter, election: election, wallet_address: "0x0000000000000000000000000000000000000001") }
     let(:component) { create(:vocdoni_component, participatory_space: participatory_process) }
@@ -325,9 +320,10 @@ describe Decidim::Vocdoni::Election do
     let(:title) do
       {
         en: "English title",
-        es: "",
+        ca: "Catalan title",
         machine_translations: {
-          ca: "Catalan title"
+          ca: "Translated Catalan title",
+          es: "Spanish title"
         }
       }
     end
@@ -347,8 +343,8 @@ describe Decidim::Vocdoni::Election do
 
     it "returns the election as json" do
       # expect(json["id"]).to eq election.id
-      expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "English title", "default" => "English title" })
-      expect(json["description"]).to eq({ "en" => "English description", "ca" => "Catalan description", "es" => "English description", "default" => "English description" })
+      expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "Spanish title", "default" => "English title" })
+      expect(json["description"]).to eq({ "en" => "English description", "ca" => "Catalan description", "es" => "", "default" => "English description" })
       expect(json["header"]).to eq election.photo.attached_uploader(:file).url(host: organization.host)
       expect(json["streamUri"]).to match(%r{^https?://})
       expect(json["startDate"]).to eq(election.start_time.iso8601)
@@ -366,10 +362,10 @@ describe Decidim::Vocdoni::Election do
     end
 
     context "when no attachments" do
-      let(:election) { create(:vocdoni_election, title: title, component: component) }
+      let(:election) { create(:vocdoni_election, :simple, election_type: type, component: component, title: title, description: description) }
 
       it "returns the election as json" do
-        expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "English title", "default" => "English title" })
+        expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "Spanish title", "default" => "English title" })
         expect(json["header"]).to eq("")
       end
     end

@@ -3,7 +3,7 @@
 module Decidim
   module Vocdoni
     module VocdoniApiUtils
-      include TranslatableAttributes
+      include TranslationHelpers
       # Transform the locales to the required format with a default locale
       #
       # receives an array with the following format:
@@ -15,10 +15,8 @@ module Decidim
         values = {}
         organization.available_locales.each do |locale|
           locale = locale.to_s
-          I18n.with_locale(locale) do
-            values[locale] = translated_attribute(translations, organization)
-            values["default"] = values[locale] if organization.default_locale.to_s == locale
-          end
+          values[locale] = translated(translations, locale: locale).to_s
+          values["default"] = values[locale] if organization.default_locale.to_s == locale
         end
         values
       end
