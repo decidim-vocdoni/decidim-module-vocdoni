@@ -313,8 +313,10 @@ describe Decidim::Vocdoni::Election do
 
   describe "#to_vocdoni" do
     before do
+      # this is to ensure system tests do not mess with the translated_attribute which, unfortunatelly is no state-less operating
       RequestStore.store[:toggle_machine_translations] = false
     end
+
     let(:election) { create(:vocdoni_election, :with_photos, :simple, election_type: type, component: component, title: title, description: description) }
     let!(:voter) { create(:vocdoni_voter, election: election, wallet_address: "0x0000000000000000000000000000000000000001") }
     let(:component) { create(:vocdoni_component, participatory_space: participatory_process) }
