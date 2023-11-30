@@ -6,6 +6,8 @@ describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
   routes { Decidim::Vocdoni::AdminEngine.routes }
 
   let(:user) { create(:user, :confirmed, :admin, organization: component.organization) }
+  let(:component) { create(:vocdoni_component) }
+  let(:election) { create(:vocdoni_election, component: component) }
 
   before do
     request.env["decidim.current_organization"] = component.organization
@@ -46,8 +48,6 @@ describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
 
   describe "PATCH update" do
     let(:datetime_format) { I18n.t("time.formats.decidim_short") }
-    let(:component) { create(:vocdoni_component) }
-    let(:election) { create(:vocdoni_election, component: component) }
     let(:election_title) { election.title }
     let(:election_params) do
       {

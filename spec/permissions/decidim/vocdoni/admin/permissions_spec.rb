@@ -83,7 +83,7 @@ describe Decidim::Vocdoni::Admin::Permissions do
     end
 
     context "when everything is ok" do
-      let(:election) { create :vocdoni_election, :with_census, component: elections_component }
+      let(:election) { create :vocdoni_election, :with_census, status: :created, component: elections_component }
       let(:question) { create :vocdoni_question, election: election }
       let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
 
@@ -112,7 +112,7 @@ describe Decidim::Vocdoni::Admin::Permissions do
   end
 
   describe "election unpublish" do
-    let(:election) { create :vocdoni_election, :with_census, :published, component: elections_component }
+    let(:election) { create :vocdoni_election, :with_census, :published, status: :created, component: elections_component }
     let(:question) { create :vocdoni_question, election: election }
     let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
     let(:action) do
