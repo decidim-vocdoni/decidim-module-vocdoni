@@ -102,6 +102,9 @@ module Decidim
 
         def fix_status!
           status = STATUSES[vocdoni_status]
+          # no need to panic, this means is a manual start
+          return if election.status == "created" && status == "paused"
+
           raise StatusError, status if election.status != status
         end
 
