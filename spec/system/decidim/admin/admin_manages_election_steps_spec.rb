@@ -24,13 +24,6 @@ describe "Admin manages election steps", :slow, type: :system do
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return({ "status" => "UPCOMING" })
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:continueElection).and_return(true)
     # rubocop:enable RSpec/AnyInstance
-
-    stub_request(:any, "app-dev.vocdoni.io")
-      .to_return(status: 200, body: "{}", headers: {})
-    stub_request(:any, "api-dev.faucet.vocdoni.net")
-      .to_return(status: 200, body: "{}", headers: {})
-    stub_request(:any, "api-dev.vocdoni.net")
-      .to_return(status: 200, body: "{}", headers: {})
   end
 
   include_context "when managing a component as an admin"
@@ -56,7 +49,6 @@ describe "Admin manages election steps", :slow, type: :system do
 
       expect(page).to have_content("The election is being sent to the Vocdoni API")
       perform_enqueued_jobs
-      election.reload
 
       expect(page).to have_admin_callout("successfully")
       expect(page).not_to have_content("Vocdoni communication error")
@@ -70,10 +62,13 @@ describe "Admin manages election steps", :slow, type: :system do
         visit_steps_page
 
         click_link "Create"
+        expect(page).to have_admin_callout("Wallet successfully created")
+
         within "form.create_election" do
           click_button "Setup election"
         end
 
+        expect(page).to have_content("The election is being sent to the Vocdoni API")
         perform_enqueued_jobs
         expect(page).to have_content("Vocdoni communication error")
 
@@ -89,10 +84,12 @@ describe "Admin manages election steps", :slow, type: :system do
 
   describe "election with manual start" do
     let!(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, :configured, component: current_component }
-    let!(:wallet) { create :vocdoni_wallet, organization: organization }
 
     it "performs the action successfully" do
       visit_steps_page
+      click_link "Create"
+      expect(page).to have_admin_callout("Wallet successfully created")
+
       click_button "Start election"
       accept_confirm
 
