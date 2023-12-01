@@ -3,7 +3,7 @@
 module Decidim
   module Vocdoni
     module Admin
-      class CreateVoterWalletsJob < ApplicationJob
+      class CreateVoterWalletsJob < VocdoniSdkBaseJob
         def perform(election_id)
           @election_id = election_id
 
@@ -25,18 +25,6 @@ module Decidim
 
         def voters
           Decidim::Vocdoni::Voter.inside(election)
-        end
-
-        def sdk
-          @sdk ||= Sdk.new(organization, election)
-        end
-
-        def organization
-          @organization ||= election&.organization
-        end
-
-        def election
-          @election ||= Decidim::Vocdoni::Election.find_by(id: @election_id)
         end
       end
     end

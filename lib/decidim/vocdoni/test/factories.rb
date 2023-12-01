@@ -52,7 +52,7 @@ FactoryBot.define do
     end
 
     trait :auto_start do
-      start_time { 2.days.ago }
+      start_time { 15.minutes.from_now }
       election_type do
         {
           "auto_start" => true,

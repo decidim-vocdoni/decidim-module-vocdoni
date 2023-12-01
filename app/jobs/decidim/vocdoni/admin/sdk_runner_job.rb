@@ -3,7 +3,7 @@
 module Decidim
   module Vocdoni
     module Admin
-      class SdkRunnerJob < ApplicationJob
+      class SdkRunnerJob < VocdoniSdkBaseJob
         def perform(organization_id:, command:, election_id: nil)
           @organization_id = organization_id
           @election_id = election_id
@@ -16,10 +16,6 @@ module Decidim
 
         def organization
           @organization ||= Decidim::Organization.find(@organization_id)
-        end
-
-        def election
-          @election ||= Decidim::Election.find_by(id: @election_id)
         end
       end
     end

@@ -29,7 +29,7 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
-          fix_status!
+          fix_vocdoni_status!
           transaction do
             update_status
             election.save!
@@ -100,7 +100,7 @@ module Decidim
           end
         end
 
-        def fix_status!
+        def fix_vocdoni_status!
           status = STATUSES[vocdoni_status]
           # no need to panic, this means is a manual start
           return if election.status == "created" && status == "paused"

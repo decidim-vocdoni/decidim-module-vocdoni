@@ -3,7 +3,7 @@
 module Decidim
   module Vocdoni
     module Admin
-      class CreateVocdoniElectionJob < ApplicationJob
+      class CreateVocdoniElectionJob < VocdoniSdkBaseJob
         def perform(election_id)
           @election_id = election_id
 
@@ -30,19 +30,6 @@ module Decidim
           # set "paused" in vocdoni but not in decidim, this way we can simulate a "manual start"
           # Vocdoni does not provide an "idle" status, so we use "paused" to simulate it
           sdk.pauseElection if election.manual_start?
-        end
-
-        # don't memoize this, we need a new instance always to ensure the election is updated
-        def sdk
-          Sdk.new(organization, election)
-        end
-
-        def organization
-          @organization ||= election&.organization
-        end
-
-        def election
-          @election ||= Decidim::Vocdoni::Election.find_by(id: @election_id)
         end
       end
     end

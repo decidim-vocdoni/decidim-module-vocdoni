@@ -9,7 +9,8 @@
      data-vocdoni-election-id="<%= @election.vocdoni_election_id %>"
      <% end %>
      data-info-path="<%= election_path(election) %>"
-     data-results-path="<%= election_step_path(election, :results) %>"
+     data-results-path="<%= election_step_path(election, :results, format: :json) %>"
+     data-html-results-path="<%= election_step_path(election, :results, format: :html) %>"
      data-vocdoni-env="<%= Decidim::Vocdoni.api_endpoint_env %>">
 
   <div class="card-divider">

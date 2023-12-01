@@ -280,9 +280,6 @@ en:
               vote: The election is currently paused. No one can vote right now. Press
                 the button to resume voting.
             title: Danger zone
-          end:
-            invalid: There was a problem ending this election
-            success: The election has been successfully ended.
           ended:
             title: Ended
           index:
@@ -301,10 +298,12 @@ en:
           ready:
             title: Ready
           results_published:
+            success: The election results have been successfully published.
+            title: Results published
+          results_stats:
             answer: Answer
             question: Question
             result: Result
-            title: Results published
           vote:
             invalid: There was a problem starting this election
             message: We're on the vote period until %{end_time}.
@@ -316,9 +315,9 @@ en:
           vote_ended:
             error:
               fetch: There are no results yet. Try again later.
-              invalid: There was a problem publishing the results. Try again later.
+            invalid: There was a problem ending this election
             submit: Publish results
-            success: Results successfully published
+            success: The election has been successfully ended.
             text: The vote period has ended. You can publish the results.
             title: Vote period ended
           vote_stats:

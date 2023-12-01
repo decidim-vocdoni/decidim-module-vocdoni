@@ -22,8 +22,13 @@ module Decidim
         def show
           enforce_permission_to :read, :steps, election: election
 
-          info = Sdk.new(election.organization, election).electionMetadata[params[:id]]
-          render json: { election: info }, status: info ? :ok : :unprocessable_entity
+          respond_to do |format|
+            format.html { render partial: "decidim/vocdoni/admin/steps/results_stats" }
+            format.json do
+              info = Sdk.new(election.organization, election).electionMetadata[params[:id]]
+              render json: { election: info }, status: info ? :ok : :unprocessable_entity
+            end
+          end
         end
 
         def update
