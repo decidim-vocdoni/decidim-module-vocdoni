@@ -1,0 +1,13 @@
+XHRGET
+https://api-dev.vocdoni.net/v2/chain/transactions/reference/c3e00575ff6ff303b234780f5c0af9e00a58117e21d90229fefe47f14bfd0a6d
+[HTTP/2 200  47ms]
+
+ 
+1
+
+{"transactionNumber":9744,"transactionHash":"c3e00575ff6ff303b234780f5c0af9e00a58117e21d90229fefe47f14bfd0a6d","blockHeight":158251,"transactionIndex":0,"transactionType":"setAccount"}
+
+2
+
+​
+

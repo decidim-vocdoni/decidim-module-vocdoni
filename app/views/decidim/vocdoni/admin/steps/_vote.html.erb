@@ -15,7 +15,7 @@
 </div>
 
 <% unless election.election_type.fetch("secret_until_the_end") %>
-  <%= render(partial: "vote_stats", locals: { polling: "true" }) %>
+  <%= render(partial: "vote_stats") %>
 <% end %>
 
 <%= render partial: "danger_zone", locals: { election: election, f: f } %>

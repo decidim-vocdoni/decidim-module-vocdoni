@@ -6,32 +6,60 @@ describe Decidim::Vocdoni::Admin::SaveResults do
   subject { described_class.new(form) }
 
   let(:election) { create :vocdoni_election }
-  let(:question) { create :vocdoni_question, election: election }
-  let(:answer1) { create :vocdoni_election_answer, question: question }
-  let(:answer2) { create :vocdoni_election_answer, question: question }
+  let(:question1) { create :vocdoni_question, election: election, weight: 1 }
+  let!(:answer11) { create :vocdoni_election_answer, question: question1, value: 1 }
+  let!(:answer12) { create :vocdoni_election_answer, question: question1, value: 0 }
+  let(:question2) { create :vocdoni_question, election: election, weight: 0 }
+  let!(:answer21) { create :vocdoni_election_answer, question: question2, value: 0 }
+  let!(:answer22) { create :vocdoni_election_answer, question: question2, value: 1 }
+
   let(:organization) { election.component.organization }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
   let(:form) do
     double(
-      invalid?: invalid,
       election: election,
-      current_user: user,
-      results: results,
-      status: "vote_period"
+      current_user: user
     )
   end
   let(:results) do
     [
-      { id: answer1.id, votes: 100 },
-      { id: answer2.id, votes: 99 }
+      [2, 71],
+      [3, 14]
     ]
   end
-  let(:invalid) { false }
+
+  before do
+    # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return({ "results" => results })
+    # rubocop:enable RSpec/AnyInstance
+  end
 
   it "saves the results" do
-    subject.call
-    expect(answer1.reload.votes).to eq 100
-    expect(answer2.reload.votes).to eq 99
+    expect(answer11.votes).to be_nil
+    expect(answer12.votes).to be_nil
+    expect(answer21.votes).to be_nil
+    expect(answer22.votes).to be_nil
+    perform_enqueued_jobs { subject.call }
+    expect(answer11.reload.votes).to eq 14
+    expect(answer12.reload.votes).to eq 3
+    expect(answer21.reload.votes).to eq 2
+    expect(answer22.reload.votes).to eq 71
+  end
+
+  context "when results does not match" do
+    let(:results) do
+      [
+        [2, 71]
+      ]
+    end
+
+    it "completes what's available" do
+      perform_enqueued_jobs { subject.call }
+      expect(answer11.reload.votes).to be_nil
+      expect(answer12.reload.votes).to be_nil
+      expect(answer21.reload.votes).to eq 2
+      expect(answer22.reload.votes).to eq 71
+    end
   end
 
   it "updates the election" do
@@ -42,43 +70,12 @@ describe Decidim::Vocdoni::Admin::SaveResults do
   it "traces the action", versioning: true do
     expect(Decidim.traceability)
       .to receive(:perform_action!)
-      .with(:save_results, election, user, extra: { results: results, status: "results_published" })
+      .with(:save_results, election, user, extra: { status: "results_published" })
       .and_call_original
 
     expect { subject.call }.to change(Decidim::ActionLog, :count)
     action_log = Decidim::ActionLog.last
     expect(action_log.version).to be_present
     expect(action_log.version.event).to eq "update"
-  end
-
-  context "when the results are empty" do
-    let(:results) do
-      []
-    end
-
-    it "is not valid" do
-      expect { subject.call }.to broadcast(:invalid)
-    end
-  end
-
-  context "when the results don't correspond with the Answers" do
-    let(:results) do
-      [
-        { id: 101, votes: 100 },
-        { id: 102, votes: 99 }
-      ]
-    end
-
-    it "is not valid" do
-      expect { subject.call }.to broadcast(:invalid)
-    end
-  end
-
-  context "when the form is not valid" do
-    let(:invalid) { true }
-
-    it "is not valid" do
-      expect { subject.call }.to broadcast(:invalid)
-    end
   end
 end

@@ -8,13 +8,22 @@
   </p>
 </div>
 
-<div class="hide card-section js-vocdoni-credits-collect-faucet-tokens-section">
-  <div class="callout alert">
-    <p>
-    <%= t("warning", scope: "decidim.vocdoni.admin.steps.credits") %>
-    </p>
+<div class="card-section">
+  <div class="hide js-vocdoni-credits-collect-faucet-tokens-section">
+    <div class="callout alert">
+      <p>
+      <%= t("warning", scope: "decidim.vocdoni.admin.steps.credits") %>
+      </p>
+    </div>
   </div>
-  <%= link_to "#", class: "button primary js-vocdoni-credits-collect-faucet-tokens" do %>
+  <% unless Decidim::Vocdoni.api_endpoint_env == "prd" %>
+    <div class="callout warning">
+      <p>
+        <%= t("dev_mode", scope: "decidim.vocdoni.admin.steps.credits", env: "<strong>#{Decidim::Vocdoni.api_endpoint_env}</strong>").html_safe %>
+      </p>
+    </div>
+  <% end %>
+  <%= link_to credits_election_path(election), method: :remote, class: "button primary js-vocdoni-credits-collect-faucet-tokens" do %>
     <%= icon "euro", role: "img", "aria-hidden": true %>&nbsp;
     <%= t("get_more", scope: "decidim.vocdoni.admin.steps.credits") %>
   <% end %>

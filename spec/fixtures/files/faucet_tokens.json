@@ -1,0 +1,13 @@
+XHRGET
+https://api-dev.faucet.vocdoni.net/v2/open/claim/0xC32dd52AA9F18efa0f28628e7f6b7f77aD6D7dd4
+[HTTP/2 200  203ms]
+
+ 
+1
+
+{"amount":"500","faucetPackage":"eyJmYXVjZXRQYXlsb2FkIjoiQ09uait2NENFaFRETGRVcXFmR08rZzhvWW81L2EzOTNyVzE5MUJqMEF3PT0iLCJzaWduYXR1cmUiOiI3aHpVZFZlS0lNWmRPOHFBdmhrRlBpVVcxNm1LNXhxMkdldVhyT1lrVm5NZ3FhcXVXdXk4M1BBb0JqWVIycXZmUGRseStLQnpPWE1pN0VUMEwxNHpsQUE9In0="}
+
+2
+
+​
+

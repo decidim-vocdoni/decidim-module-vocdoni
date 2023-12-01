@@ -38,7 +38,7 @@ module Decidim
       end
 
       def vocdoni_client
-        @vocdoni_client ||= VocdoniClient.new(vocdoni_election_id: election.vocdoni_election_id)
+        @vocdoni_client ||= Api.new(vocdoni_election_id: election.vocdoni_election_id)
       end
 
       def election_metadata

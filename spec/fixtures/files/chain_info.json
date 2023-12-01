@@ -1,0 +1,13 @@
+XHRGET
+https://api-dev.vocdoni.net/v2/chain/info
+[HTTP/2 200  46ms]
+
+ 
+1
+
+{"chainId":"vocdoni/DEV/29","blockTime":[10000,10526,10374,10399,10400],"electionCount":2341,"organizationCount":1146,"genesisTime":"2023-11-08T01:00:00Z","height":158250,"syncing":false,"blockTimestamp":1701162878,"transactionCount":9743,"validatorCount":3,"voteCount":5684,"cicuitConfigurationTag":"dev","maxCensusSize":100000,"networkCapacity":20000}
+
+2
+
+​
+

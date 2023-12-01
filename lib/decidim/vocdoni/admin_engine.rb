@@ -16,10 +16,9 @@ module Decidim
             get :publish_page, path: "publish_election"
             put :publish
             put :unpublish
-            post :answers_values
-            post :manual_start
+            post :credits
           end
-          resources :steps, only: [:index, :update]
+          resources :steps, only: [:index, :show, :update]
           resources :questions do
             resources :answers
           end

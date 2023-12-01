@@ -2,7 +2,7 @@
 
 module Decidim
   module Vocdoni
-    class VocdoniClient
+    class Api
       attr_reader :vocdoni_election_id
 
       def initialize(vocdoni_election_id:)

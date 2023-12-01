@@ -11,7 +11,7 @@ describe Decidim::Vocdoni::ElectionMCell, type: :cell do
   let(:cell_html) { my_cell.call }
   let(:start_time) { 2.days.ago }
   let(:end_time) { 1.day.from_now }
-  let!(:election) { create(:vocdoni_election, :ongoing, start_time: start_time, end_time: end_time) }
+  let!(:election) { create(:vocdoni_election, :ongoing, :auto_start, start_time: start_time, end_time: end_time) }
   let(:model) { election }
   let(:user) { create :user, organization: election.participatory_space.organization }
 

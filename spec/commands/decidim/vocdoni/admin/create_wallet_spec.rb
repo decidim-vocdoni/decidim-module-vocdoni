@@ -3,21 +3,11 @@
 require "spec_helper"
 
 describe Decidim::Vocdoni::Admin::CreateWallet do
-  subject { described_class.new(form) }
+  subject { described_class.new(user) }
 
   let(:organization) { create :organization, available_locales: [:en, :ca, :es], default_locale: :en }
   let(:user) { create :user, :admin, :confirmed, organization: organization }
-  let(:form) do
-    double(
-      invalid?: invalid,
-      private_key: private_key,
-      current_organization: organization,
-      current_user: user
-    )
-  end
-  let(:invalid) { false }
-  let(:private_key) { Faker::Blockchain::Ethereum.address }
-  let(:wallet) { Decidim::Vocdoni::Wallet.last }
+  let(:wallet) { Decidim::Vocdoni::Wallet.find_by(organization: organization) }
 
   it "creates the wallet" do
     expect { subject.call }.to change(Decidim::Vocdoni::Wallet, :count).by(1)
@@ -25,8 +15,21 @@ describe Decidim::Vocdoni::Admin::CreateWallet do
 
   it "stores the given data" do
     subject.call
-    expect(wallet.private_key).to eq private_key
+    expect(wallet.private_key).to match(/\A0x[a-fA-F0-9]*\z/)
     expect(wallet.organization).to eq organization
+  end
+
+  it "stores a deterministic wallet" do
+    subject.call
+    first = wallet.private_key
+    wallet.destroy
+    described_class.new(user).call
+    expect(Decidim::Vocdoni::Wallet.find_by(organization: organization).private_key).to eq first
+  end
+
+  it "two equal private keys cannot be stored" do
+    subject.call
+    expect { subject.call }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
   it "traces the action", versioning: true do
@@ -45,11 +48,19 @@ describe Decidim::Vocdoni::Admin::CreateWallet do
     expect(action_log.version.event).to eq "create"
   end
 
-  context "when the form is not valid" do
-    let(:invalid) { true }
+  context "when errors" do
+    before do
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:deterministicWallet).and_return("invalid")
+      # rubocop:enable RSpec/AnyInstance
+    end
 
-    it "is not valid" do
+    it "broadcasts invalid" do
       expect { subject.call }.to broadcast(:invalid)
+    end
+
+    it "doesn't create the wallet" do
+      expect { subject.call }.not_to change(Decidim::Vocdoni::Wallet, :count)
     end
   end
 end

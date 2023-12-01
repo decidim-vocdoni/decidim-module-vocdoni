@@ -8,7 +8,7 @@ describe "Results online", type: :system do
   let(:organization) { component.organization }
   let!(:elections) { create_list(:vocdoni_election, 2, :vote, component: component) } # prevents redirect to single election page
   let(:router) { Decidim::EngineRouter.main_proxy(component).decidim_participatory_process_vocdoni }
-  let!(:wallet) { create(:wallet, organization: organization, private_key: private_key) }
+  let!(:wallet) { create(:vocdoni_wallet, organization: organization, private_key: private_key) }
   let(:private_key) { Faker::Blockchain::Ethereum.address }
 
   before do
@@ -28,13 +28,6 @@ describe "Results online", type: :system do
 
     before do
       stub_request(:get, "https://api-dev.vocdoni.net/v2/elections/#{vocdoni_election_id}")
-        .with(
-          headers: {
-            "Accept" => "*/*",
-            "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-            "User-Agent" => "Faraday v2.7.11"
-          }
-        )
         .to_return(status: 200, body: <<~JSON, headers: {})
               {
           "electionId": "12345",

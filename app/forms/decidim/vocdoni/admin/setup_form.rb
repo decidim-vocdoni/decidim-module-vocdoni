@@ -7,8 +7,6 @@ module Decidim
       class SetupForm < Decidim::Form
         mimic :setup
 
-        attribute :vocdoni_election_id, String
-
         validate do
           validations.each do |message, t_args, valid|
             errors.add(message, I18n.t("steps.create_election.errors.#{message}", **t_args, scope: "decidim.vocdoni.admin")) unless valid

@@ -9,6 +9,7 @@ module Decidim::Vocdoni
     include Decidim::TranslatableResource
     include Decidim::Publicable
     include Decidim::Traceable
+    include VocdoniApiUtils
 
     enum status: [:created, :vote, :paused, :vote_ended, :results_published, :canceled].index_with(&:to_s)
 
@@ -28,7 +29,7 @@ module Decidim::Vocdoni
     # Returns a boolean.
     def started?
       return false if status.nil?
-      return false if paused?
+      return false if start_time.nil?
 
       start_time <= Time.current
     end
@@ -45,11 +46,15 @@ module Decidim::Vocdoni
       end_time < Time.current
     end
 
+    def misconfigured?
+      !status.nil? && vocdoni_election_id.blank?
+    end
+
     # Public: Checks if the election ongoing now
     #
     # Returns a boolean.
     def ongoing?
-      started? && !finished?
+      started? && !paused? && !finished?
     end
 
     # Public: Checks if the election has a blocked_at value
@@ -79,6 +84,10 @@ module Decidim::Vocdoni
       election_type&.fetch("secret_until_the_end", false)
     end
 
+    def anonymous?
+      election_type&.fetch("anonymous", false)
+    end
+
     # Public: Checks if the number of answers are minimum 2 for each question
     #
     # Returns a boolean.
@@ -104,7 +113,7 @@ module Decidim::Vocdoni
     #
     # Returns a boolean indicating if the census status equals "ready".
     def census_ready?
-      census_status == "ready" || (internal_census? && verification_types.empty?) || (internal_census? && voters.empty?)
+      census_status&.name == "ready" || (internal_census? && verification_types.empty?) || (internal_census? && voters.empty?)
     end
 
     # Public: Checks if the election is ready for the census step
@@ -144,6 +153,11 @@ module Decidim::Vocdoni
       questions.map(&:answers).flatten.pluck(:value).none? nil
     end
 
+    # Public: Checks if theres votes set in the answers
+    def answers_have_votes?
+      questions.map(&:answers).flatten.pluck(:votes).any? Integer
+    end
+
     # Public: Gets the voting period status of the election
     #
     # Returns one of these symbols: upcoming, ongoing or finished
@@ -168,10 +182,45 @@ module Decidim::Vocdoni
       "https://#{Decidim::Vocdoni.explorer_vote_domain}/processes/show/#/#{vocdoni_election_id}"
     end
 
-    private
+    def build_answer_values!
+      questions.each(&:build_answer_values!)
+    end
+
+    # Public: the Vocdoni's format to create a new election
+    # https://developer.vocdoni.io/sdk#creating-a-voting-process
+    # The process to create an election still needs to add the keys "census" and "questions"
+    # This is done using the Vocdoni SDK
+    def to_vocdoni
+      {
+        "title" => transform_locales(title),
+        "description" => transform_locales(description),
+        "header" => photo&.attached_uploader(:file)&.url(host: organization.host).to_s,
+        "streamUri" => stream_uri,
+        "startDate" => start_time&.iso8601,
+        "endDate" => end_time.iso8601,
+        "electionType" => {
+          "autoStart" => auto_start?,
+          # For the moment, we consider all censuses dynamic so admins can update them
+          "dynamicCensus" => true,
+          "interruptible" => interruptible?,
+          "secretUntilTheEnd" => secret_until_the_end?,
+          "anonymous" => anonymous?
+        },
+        "voteType" => {
+          # uniqueChoices: false, # if the choices are unique when voting
+          # costFromWeight: false, # for cuadrating voting
+          # costExponent: 10000, # for cuadrating voting
+          "maxVoteOverwrites" => Decidim::Vocdoni.votes_overwrite_max.to_i
+        }
+      }
+    end
 
     def census_status
-      @census_status ||= CsvCensus::Status.new(self)&.name
+      @census_status ||= CsvCensus::Status.new(self)
+    end
+
+    def questions_to_vocdoni
+      questions.map(&:to_vocdoni)
     end
   end
 end

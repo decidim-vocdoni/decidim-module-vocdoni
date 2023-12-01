@@ -3,7 +3,13 @@
 require "spec_helper"
 
 describe Decidim::Vocdoni::Election do
-  subject(:election) { build :vocdoni_election }
+  subject(:election) { build :vocdoni_election, status: status }
+
+  let(:status) { nil }
+
+  before do
+    allow(Rails.application).to receive(:secret_key_base).and_return("a-secret-key-base")
+  end
 
   it { is_expected.to be_valid }
 
@@ -21,18 +27,37 @@ describe Decidim::Vocdoni::Election do
   end
 
   it { is_expected.not_to be_started }
+  it { is_expected.not_to be_misconfigured }
   it { is_expected.not_to be_ongoing }
   it { is_expected.not_to be_finished }
-  it { is_expected.to be_auto_start }
-  it { is_expected.not_to be_manual_start }
+  it { is_expected.not_to be_auto_start }
+  it { is_expected.to be_manual_start }
   it { is_expected.to be_interruptible }
   it { is_expected.to be_secret_until_the_end }
+
+  context "when is configured" do
+    subject(:election) { build :vocdoni_election, :configured }
+
+    it { is_expected.not_to be_misconfigured }
+  end
 
   context "when manual start" do
     subject(:election) { build :vocdoni_election, :manual_start }
 
     it { is_expected.to be_manual_start }
     it { is_expected.not_to be_auto_start }
+    it { is_expected.to be_interruptible }
+    it { is_expected.to be_secret_until_the_end }
+    it { is_expected.not_to be_started }
+    it { is_expected.not_to be_ongoing }
+    it { is_expected.not_to be_finished }
+  end
+
+  context "when automaic start" do
+    subject(:election) { build :vocdoni_election, :auto_start }
+
+    it { is_expected.not_to be_manual_start }
+    it { is_expected.to be_auto_start }
     it { is_expected.to be_interruptible }
     it { is_expected.to be_secret_until_the_end }
     it { is_expected.not_to be_started }
@@ -84,7 +109,8 @@ describe Decidim::Vocdoni::Election do
     context "when it is paused" do
       subject(:election) { build :vocdoni_election, :started, :paused }
 
-      it { is_expected.not_to be_started }
+      it { is_expected.to be_started }
+      it { is_expected.to be_paused }
       it { is_expected.not_to be_ongoing }
       it { is_expected.not_to be_finished }
     end
@@ -176,20 +202,36 @@ describe Decidim::Vocdoni::Election do
     end
 
     context "when start time or end time is not present" do
-      subject(:election) { build(:vocdoni_election, start_time: nil, end_time: 1.day.from_now) }
+      subject(:election) { build(:vocdoni_election, :auto_start, start_time: nil, end_time: 1.day.from_now) }
 
       it "returns false" do
         expect(subject.times_set?).to be false
+      end
+
+      context "when status" do
+        subject(:election) { build(:vocdoni_election, start_time: nil, end_time: 1.day.from_now, status: "vote") }
+
+        it "returns true" do
+          expect(subject.times_set?).to be true
+        end
+
+        context "and automaic start" do
+          subject(:election) { build(:vocdoni_election, start_time: nil, end_time: 1.day.from_now, status: "vote", election_type: { "auto_start" => true }) }
+
+          it "returns false" do
+            expect(subject.times_set?).to be false
+          end
+        end
       end
     end
   end
 
   describe "#census_ready?" do
     context "when census status is ready" do
-      let(:status) { instance_double(Decidim::Vocdoni::CsvCensus::Status, name: "ready") }
+      let(:census_status) { instance_double(Decidim::Vocdoni::CsvCensus::Status, name: "ready") }
 
       before do
-        allow(Decidim::Vocdoni::CsvCensus::Status).to receive(:new).with(election).and_return(status)
+        allow(Decidim::Vocdoni::CsvCensus::Status).to receive(:new).with(election).and_return(census_status)
       end
 
       it "returns true" do
@@ -241,7 +283,7 @@ describe Decidim::Vocdoni::Election do
 
   describe "#ready_for_publish_form?" do
     context "when ready for calendar form and times are set" do
-      subject(:election) { build(:vocdoni_election, :with_census) }
+      subject(:election) { build(:vocdoni_election, :with_census, status: :created) }
 
       let(:question) { create(:vocdoni_question, election: election) }
       let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
@@ -257,6 +299,122 @@ describe Decidim::Vocdoni::Election do
           expect(subject.ready_for_publish_form?).to be false
         end
       end
+    end
+  end
+
+  describe "#build_answer_values!" do
+    let(:question) { create(:vocdoni_question, election: election) }
+    let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+
+    it "assigns a value to each answer" do
+      expect { subject.build_answer_values! }.to change { question.answers.pluck(:value) }.from([nil, nil]).to([0, 1])
+    end
+  end
+
+  describe "#to_vocdoni" do
+    let(:election) { create(:vocdoni_election, :with_photos, :simple, election_type: type, component: component, title: title, description: description) }
+    let!(:voter) { create(:vocdoni_voter, election: election, wallet_address: "0x0000000000000000000000000000000000000001") }
+    let(:component) { create(:vocdoni_component, participatory_space: participatory_process) }
+    let(:participatory_process) { create(:participatory_process, organization: organization) }
+    let(:organization) { create(:organization, enable_machine_translations: true) }
+    let(:title) do
+      {
+        en: "English title",
+        ca: "Catalan title",
+        machine_translations: {
+          ca: "Translated Catalan title",
+          es: "Spanish title"
+        }
+      }
+    end
+    let(:description) do
+      {
+        en: "English description",
+        machine_translations: {
+          ca: "Catalan description"
+        }
+      }
+    end
+    let(:type) do
+      { "anonymous" => false, "auto_start" => false, "interruptible" => true, "dynamic_census" => false, "secret_until_the_end" => false }
+    end
+
+    let(:json) { election.to_vocdoni }
+
+    it "returns the election as json" do
+      # expect(json["id"]).to eq election.id
+      expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "Spanish title", "default" => "English title" })
+      expect(json["description"]).to eq({ "en" => "English description", "ca" => "Catalan description", "es" => "", "default" => "English description" })
+      expect(json["header"]).to eq election.photo.attached_uploader(:file).url(host: organization.host)
+      expect(json["streamUri"]).to match(%r{^https?://})
+      expect(json["startDate"]).to eq(election.start_time.iso8601)
+      expect(json["endDate"]).to eq(election.end_time.iso8601)
+      expect(json["electionType"]).to eq({
+                                           "autoStart" => false,
+                                           "interruptible" => true,
+                                           "dynamicCensus" => true,
+                                           "secretUntilTheEnd" => false,
+                                           "anonymous" => false
+                                         })
+      expect(json["voteType"]).to eq({
+                                       "maxVoteOverwrites" => 10
+                                     })
+    end
+
+    context "when no attachments" do
+      let(:election) { create(:vocdoni_election, :simple, election_type: type, component: component, title: title, description: description) }
+
+      it "returns the election as json" do
+        expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "Spanish title", "default" => "English title" })
+        expect(json["header"]).to eq("")
+      end
+    end
+
+    context "when diffrent election type" do
+      let(:type) do
+        { "anonymous" => true, "auto_start" => true, "interruptible" => false, "dynamic_census" => true, "secret_until_the_end" => true }
+      end
+
+      it "returns the election as json" do
+        expect(json["startDate"]).to eq(election.start_time.iso8601)
+        expect(json["electionType"]).to eq({
+                                             "autoStart" => true,
+                                             "dynamicCensus" => true,
+                                             "interruptible" => false,
+                                             "secretUntilTheEnd" => true,
+                                             "anonymous" => true
+                                           })
+      end
+    end
+
+    context "when diffrent configuration" do
+      before do
+        allow(Decidim::Vocdoni).to receive(:votes_overwrite_max).and_return(5)
+      end
+
+      it "returns the election as json" do
+        expect(json["voteType"]).to eq({
+                                         "maxVoteOverwrites" => 5
+                                       })
+      end
+    end
+
+    it "returns census as wallets" do
+      expect(election.census_status.all_wallets).to eq(["0x0000000000000000000000000000000000000001"])
+    end
+
+    it "returns questions in vocdoni format" do
+      election.build_answer_values!
+      vocdoni = election.questions_to_vocdoni[0]
+      first = election.questions.first
+      expect(vocdoni[0]["en"]).to eq(first.title["en"])
+      expect(vocdoni[0]["ca"]).to eq(first.title["ca"])
+      expect(vocdoni[0]["default"]).to eq(first.title["en"])
+      expect(vocdoni[1]["en"]).to eq(first.description["en"])
+      expect(vocdoni[1]["ca"]).to eq(first.description["ca"])
+      expect(vocdoni[1]["default"]).to eq(first.description["en"])
+      expect(vocdoni[2][0]["title"]["en"]).to eq(first.answers[0].title["en"])
+      expect(vocdoni[2][0]["value"]).to eq(first.answers[0].value)
     end
   end
 end

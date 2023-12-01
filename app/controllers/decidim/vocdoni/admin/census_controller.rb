@@ -9,7 +9,9 @@ module Decidim
         def index
           enforce_permission_to :index, :census, election: election
 
-          @form = current_step_form_instance
+          return render json: status.to_json if request.xhr?
+
+          @form = form(CensusDataForm).instance
           @census_permissions_form = form(CensusPermissionsForm).instance
         end
 
@@ -31,41 +33,6 @@ module Decidim
         end
 
         private
-
-        class CredentialCensusData
-          attr_accessor :credentials
-
-          def initialize(credentials:)
-            @credentials = credentials
-          end
-        end
-
-        def current_step_form_instance
-          @current_step_form_instance ||= case current_step
-                                          when "pending_upload"
-                                            form(current_step_form_class).instance
-                                          when "pending_generation"
-                                            form(current_step_form_class).from_model(
-                                              CredentialCensusData.new(credentials: Voter.where(election: election))
-                                            )
-                                          when "ready"
-                                            nil
-                                          end
-        end
-
-        def current_step_form_class
-          @current_step_form_class ||= {
-            "pending_upload" => CensusDataForm,
-            "pending_generation" => CensusCredentialsForm
-          }[current_step]
-        end
-
-        def current_step_command_class
-          @current_step_command_class ||= {
-            "pending_upload" => CreateCensusData,
-            "pending_generation" => CreateCensusCredentials
-          }[current_step]
-        end
 
         def status
           @status = CsvCensus::Status.new(election)
@@ -90,14 +57,17 @@ module Decidim
         end
 
         def handle_census_csv
-          @form = form(current_step_form_class).from_params(params)
+          @form = form(CensusDataForm).from_params(params)
 
-          process_form(@form, current_step_command_class, success_message_for(@form, error_method: :errors), :index)
+          process_form(@form, CreateCensusData, success_message_for(@form, error_method: :errors), :index)
         end
 
         def process_form(form, command_class, success_message, failure_template)
           command_class.call(form, election) do
-            on(:ok) { set_flash_and_redirect(:notice, success_message) }
+            on(:ok) do
+              set_flash_and_redirect(:notice, success_message) 
+              CreateVoterWalletsJob.perform_later(election.id) if command_class == CreateCensusData
+            end
             on(:invalid) { set_flash_and_render(:alert, t(".error"), failure_template) }
           end
         end

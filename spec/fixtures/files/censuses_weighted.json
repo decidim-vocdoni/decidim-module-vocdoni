@@ -1,0 +1,13 @@
+XHRPOST
+https://api-dev.vocdoni.net/v2/censuses/weighted
+[HTTP/2 200  48ms]
+
+ 
+1
+
+{"censusID":"83c8ddcc2baee4a0ed8a4f00c63c544f17e299c3500b074dffa6fd4726a8dda6"}
+
+2
+
+​
+

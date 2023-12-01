@@ -4,16 +4,27 @@
   </div>
 
   <div class="card-section">
-    <p><%= t(".message") %></p>
-
-    <%= render partial: "action_buttons", locals: { election: election } %>
-    <% if election.manual_start? %>
-      <div class="callout warning">
-        <p class="flex-center"><%= t(".start_describe") %></p>
-        <div class="flex-center">
-          <%= manual_start_button(manual_start_election_path(election), "media-play") %>
-        </div>
+    <% if election.vocdoni_election_id.blank? %>
+      <div class="callout success js-vocdoni-election-creating">
+        <span class="loading-spinner"></span>
+        <%= t(".creating") %>
+      </div>
+      <div class="callout alert hide js-vocdoni-election-creating-error">
+        <h2><%= t(".error_vocdoni.title") %></h2>
+        <p><%= t(".error_vocdoni.message") %></p>
       </div>
     <% end %>
+
+    <div class="js-vocdoni-election-created<%= " hide" if election.vocdoni_election_id.blank? %>">
+      <p>
+        <%= t(".message") %>
+        <%= t(".help.manual_start") if election.manual_start? %>
+        <%= t(".help.auto_start", date: l(election.start_time, format: :decidim_short)) if election.auto_start? %>
+      </p>
+
+      <%= render partial: "action_buttons", locals: { election: election } %>
+    </div>
   </div>
 </div>
+
+<%= render partial: "danger_zone", locals: { election: election, f: f } %>

@@ -1,0 +1,13 @@
+XHRPOST
+https://api-dev.vocdoni.net/v2/accounts
+[HTTP/2 200  175ms]
+
+ 
+1
+
+{"txHash":"c3e00575ff6ff303b234780f5c0af9e00a58117e21d90229fefe47f14bfd0a6d","metadataURL":"ipfs://bafybeigv4mfmn3tyusbwmskfn6xhoyvv2i2svdq7pns6dphdivefr62k3q"}
+
+2
+
+​
+
