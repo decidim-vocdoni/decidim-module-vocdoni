@@ -86,7 +86,7 @@ const maskSubmitInAjax = () => {
     evt.preventDefault();
     dangerZone.classList.add("spinner-container");
     const data = new FormData(target);
-    if(token) {
+    if (token) {
       data.set("authenticity_token", token.content);
     }
     const response = await fetch(form.action, {
