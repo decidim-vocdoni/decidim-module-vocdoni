@@ -56,6 +56,7 @@ describe "Admin manages election steps", :slow, type: :system do
 
       expect(page).to have_content("The election is being sent to the Vocdoni API")
       perform_enqueued_jobs
+      election.reload
 
       expect(page).to have_admin_callout("successfully")
       expect(page).not_to have_content("Vocdoni communication error")
