@@ -16,7 +16,11 @@
     <% end %>
 
     <div class="js-vocdoni-election-created<%= " hide" if election.vocdoni_election_id.blank? %>">
-      <p><%= t(".message") %></p>
+      <p>
+        <%= t(".message") %>
+        <%= t(".help.manual_start") if election.manual_start? %>
+        <%= t(".help.auto_start", date: l(election.start_time, format: :decidim_short)) if election.auto_start? %>
+      </p>
 
       <%= render partial: "action_buttons", locals: { election: election } %>
     </div>

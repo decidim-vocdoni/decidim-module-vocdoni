@@ -70,6 +70,7 @@ const checkCreatingElection = async (creatingSpan, vocdoniElectionId) => {
 const maskSubmitInAjax = () => {
   const form = document.getElementById(FORM_ID);
   const callout = document.querySelector(".callout-wrapper");
+  const progress = document.querySelector(".progress-indicator");
   if (!form) {
     return;
   }
@@ -80,10 +81,14 @@ const maskSubmitInAjax = () => {
     if (!dangerZone) {
       return;
     }
+    const token = document.querySelector('meta[name="csrf-token"]');
+    const target = evt.currentTarget || evt.target || form;
     evt.preventDefault();
     dangerZone.classList.add("spinner-container");
-    const data = new FormData(evt.target);
-    data.set("authenticity_token", document.querySelector('meta[name="csrf-token"]').content);
+    const data = new FormData(target);
+    if(token) {
+      data.set("authenticity_token", token.content);
+    }
     const response = await fetch(form.action, {
       method: form.method,
       body: data,
@@ -96,14 +101,22 @@ const maskSubmitInAjax = () => {
       let el = document.createElement("html");
       el.innerHTML = body;
       let newForm = el.querySelector(`#${FORM_ID}`);
-      // if no form, just reload the page
+      let newCallout = el.querySelector(".callout-wrapper");
+      let newProgress = el.querySelector(".progress-indicator");
       if (newForm) {
         // redrawing the form
         form.innerHTML = newForm.innerHTML;
-      }
-      // adding callouts
-      if (callout) {
-        callout.innerHTML = el.querySelector(".callout-wrapper").innerHTML;
+        // adding callouts
+        if (callout && newCallout) {
+          callout.innerHTML = newCallout.innerHTML;
+        }
+        // adding progress indicator
+        if (progress && newProgress) {
+          progress.innerHTML = newProgress.innerHTML;
+        }
+      } else {
+        // if no form, just reload the page
+        window.location.reload();
       }
     } else {
       console.error("Error submitting form", body);

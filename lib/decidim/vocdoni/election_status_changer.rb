@@ -13,7 +13,7 @@ module Decidim
       def update_ongoing_elections!
         elections = Decidim::Vocdoni::Election
                     .where(status: "created")
-                    .where("(election_type->>'auto_start')::boolean = ? ", true)
+                    .where("(election_type->>'auto_start')::boolean = ?", true)
                     .where("start_time <= ?", Time.zone.now)
                     .where("end_time >= ?", Time.zone.now)
         update_elections_status(elections, "vote")

@@ -59,7 +59,7 @@ describe "Admin manages election steps", :slow, type: :system do
 
       expect(page).to have_admin_callout("successfully")
       expect(page).not_to have_content("Vocdoni communication error")
-      expect(page).to have_content("The election has been created")
+      expect(page).to have_content("The election has been created. We are waiting for the election to start")
       expect(page).not_to have_content("This election has been configured to start manually")
     end
 
@@ -81,7 +81,7 @@ describe "Admin manages election steps", :slow, type: :system do
 
         expect(page).to have_admin_callout("successfully")
         expect(page).not_to have_content("Vocdoni communication error")
-        expect(page).to have_content("The election has been created")
+        expect(page).to have_content('The election has been created. The election will start manually. Press the button "Start election" to begin the voting period.')
         expect(page).to have_content("This election has been configured to start manually")
 
         click_button "Start election"
