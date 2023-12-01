@@ -79,6 +79,11 @@
           <p class="help-text"><%= t("permissions_warning", scope: "decidim.vocdoni.admin.census") %></p>
           <%= render partial: "decidim_permissions_form", locals: { form: @census_permissions_form, election: election, current_organization: current_organization } %>
         </div>
+    <% else %>
+      <div class="flex--cc">
+        <% if allowed_to?(:edit, :election_calendar, election: election) && election.ready_for_calendar_form? %>
+          <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: "button form-general-submit" %>
+        <% end %>
       </div>
     <% end %>
     <% unless status.name == "ready" ||
