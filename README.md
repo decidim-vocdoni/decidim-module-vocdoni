@@ -54,15 +54,25 @@ status are checked every 15 minutes, you can do it with this configuration:
 ```
 ## Node JS required: Vocdoni API
 
-> **TL;DR** Ensure you have a working NodeJs installation in the Decidim Production server
+> **TL;DR** Ensure you have a working NodeJs installation in the Decidim Production server with the package `@vocdoni/sdk` installed.
 > (Node is already a requirement in order to precompile the Rails assets but it is not strictly necessary for running Decidim in production).
 > **If you want to use this plugin, you'll need to have NodeJs installed in the production server**.
 
-This module needs to comunicate with the [Vocdoni API](https://vocdoni.io/api). For that, it used the [SDK provided](https://developer.vocdoni.io/sdk) by Vocdoni that is written in Javascript and available as an [NPM package](https://www.npmjs.com/package/@vocdoni/sdk).
+This module needs to communicate with the [Vocdoni API](https://vocdoni.io/api). For that, it used the [SDK provided](https://developer.vocdoni.io/sdk) by Vocdoni that is written in Javascript and available as an [NPM package](https://www.npmjs.com/package/@vocdoni/sdk).
 
 This plugin uses this SDK using a wrapper around it by calling a [Node](https://nodejs.org/en/) instance under the hood.
 
-So, ensure you have a working NodeJs application accessible by the Decidim installation.
+So, ensure you have a working NodeJs application accessible by the Decidim installation with the package `@vocdoni/sdk` installed. Note that using the default auto-generated `package.json` should work but it installs dependencies only needed to compile the Rails assets. If you want to optimize your production server, you can install only the dependencies needed by the SDK by running `npm install @vocdoni/sdk` in the Decidim installation path or using a custom package.json file like this:
+
+```json
+{
+  "dependencies": {
+    "@vocdoni/sdk": "^0.5.3"
+  }
+}
+```
+
+## Cron based tasks
 
 ## Configuration
 
