@@ -6,13 +6,13 @@ const { Election, PlainCensus } = require("@vocdoni/sdk");
  */
 const vocdoniElection = async (electionData, questionsData, censusData) => {
   const census = new PlainCensus();
-  // add census
+  // Add census
   censusData.forEach((entry) => census.add(entry));
   electionData.census = census;
 
   const election = await Election.from(electionData);
 
-  // add questions
+  // Add questions
   questionsData.forEach((question) => election.addQuestion(...question));
 
   return election;

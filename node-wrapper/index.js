@@ -35,7 +35,7 @@ const deterministicWallet = (token) => {
 };
 
 /**
- * Info about the env (mostly for testing purposes)
+ * Information about the environment (mostly for testing purposes)
  */ 
 const env = () => {
   return {
@@ -48,7 +48,7 @@ const env = () => {
 };
 
 /**
- * Info about the client
+ * Information about the client
  */
 const info = async () => {
   const _info = await clientInfo();
@@ -84,7 +84,7 @@ const election = async (electionData, questionsData, censusData) => {
 }
 
 /**
- * Returns the election metadata for vote monitoring
+ * Gives the election metadata for vote monitoring
  */
 const electionMetadata = async () => {
   const client = vocdoniClient();
@@ -126,7 +126,7 @@ const createElection = async (electionData, questionsData, censusData) => {
 };
 
 /**
- * 
+ * Continues the election (if paused)
  */
 const continueElection = async () => {
   const client = vocdoniClient();
@@ -134,7 +134,7 @@ const continueElection = async () => {
 };
 
 /**
- * 
+ * Pauses the election (if running)
  */ 
 const pauseElection = async () => {
   const client = vocdoniClient();
@@ -142,7 +142,7 @@ const pauseElection = async () => {
 };
 
 /**
- * 
+ * Cancels the election (thus invalidating it)
  */
 const cancelElection = async () => {
   const client = vocdoniClient();
@@ -150,7 +150,7 @@ const cancelElection = async () => {
 };
 
 /**
- * 
+ * Ends the election (and publishes results in the Vocdoni Blockchain)
  */
 const endElection = async () => {
   const client = vocdoniClient();

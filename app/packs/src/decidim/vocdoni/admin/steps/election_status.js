@@ -6,7 +6,7 @@ const DANGER_ZONE_SELECTOR = ".js-danger-zone";
 const GENERAL_SUBMIT_SELECTOR = ".form-general-submit";
 const NO_TOKENS_MESSAGE_SELECTOR = ".js-vocdoni-credits-collect-faucet-tokens-section";
 const EXPLORER_URL_SELECTOR = ".js-vocdoni-explorer-url";
-const FORM_ID = "new_election_status_";
+const FORM_SELECTOR = ".js-form-election-status";
 const MAX_WAITING_TIME = 10000;
 let CHECK_STATUS = true;
 
@@ -52,7 +52,7 @@ const checkCreatingElection = async (creatingSpan, vocdoniElectionId) => {
       dangerZone.classList.remove("hide");
     }
   } else if (CHECK_STATUS) {
-    // try again in a few seconds
+    // Try again in a few seconds
     setTimeout(async () => {
       const electionInfo = await getElectionInfo();
       checkCreatingElection(creatingSpan, electionInfo.vocdoniElectionId);
@@ -68,7 +68,7 @@ const checkCreatingElection = async (creatingSpan, vocdoniElectionId) => {
 };
 
 const maskSubmitInAjax = () => {
-  const form = document.getElementById(FORM_ID);
+  const form = document.querySelector(FORM_SELECTOR);
   const callout = document.querySelector(".callout-wrapper");
   const progress = document.querySelector(".progress-indicator");
   if (!form) {
@@ -100,7 +100,7 @@ const maskSubmitInAjax = () => {
     if (response.ok) {
       let el = document.createElement("html");
       el.innerHTML = body;
-      let newForm = el.querySelector(`#${FORM_ID}`);
+      let newForm = el.querySelector(FORM_SELECTOR);
       let newCallout = el.querySelector(".callout-wrapper");
       let newProgress = el.querySelector(".progress-indicator");
       if (newForm) {

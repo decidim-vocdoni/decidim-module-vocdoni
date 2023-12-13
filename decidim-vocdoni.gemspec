@@ -20,5 +20,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "decidim-core", Decidim::Vocdoni::DECIDIM_VERSION
   s.add_dependency "node-runner", "~> 1.1"
+
   s.metadata["rubygems_mfa_required"] = "true"
 end

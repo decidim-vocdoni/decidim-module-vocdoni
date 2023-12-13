@@ -33,7 +33,7 @@
 </div>
 
 <% if @form %>
-  <%= decidim_form_for(@form, url: election_step_path(election, current_step), method: :patch, html: { id: "new_election_status_", class: "form step #{current_step}" }) do |f| %>
+  <%= decidim_form_for(@form, url: election_step_path(election, current_step), method: :patch, html: { class: "form step #{current_step} js-form-election-status" }) do |f| %>
     <%= render partial: current_step.to_s, locals: { form: @form, f: f } %>
 
     <%= f.hidden_field :current_step %>

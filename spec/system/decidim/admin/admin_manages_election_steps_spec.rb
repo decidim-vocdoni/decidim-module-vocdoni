@@ -126,7 +126,7 @@ describe "Admin manages election steps", :slow, type: :system do
         expect(page).to have_content("Vocdoni communication error")
 
         click_button "Try to resend the election data to the Vocdoni API"
-        # simulate the job
+        # Simulates the job
         election.update(vocdoni_election_id: "1234567890")
 
         expect(page).not_to have_content("Vocdoni communication error")

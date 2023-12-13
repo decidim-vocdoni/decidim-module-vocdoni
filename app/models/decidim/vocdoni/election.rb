@@ -187,7 +187,7 @@ module Decidim::Vocdoni
     end
 
     # Public: the Vocdoni's format to create a new election
-    # https://developer.vocdoni.io/sdk#creating-a-voting-process
+    # @see https://developer.vocdoni.io/sdk#creating-a-voting-process
     # The process to create an election still needs to add the keys "census" and "questions"
     # This is done using the Vocdoni SDK
     def to_vocdoni
