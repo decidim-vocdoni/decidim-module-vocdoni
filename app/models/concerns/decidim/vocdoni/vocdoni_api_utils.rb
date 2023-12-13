@@ -6,7 +6,7 @@ module Decidim
       # Transform the locales to the required format with a default locale
       #
       # @param translations [Array] An array with the following format:
-      #                             [{"text": "Nom", "locale": "ca"}, 
+      #                             [{"text": "Nom", "locale": "ca"},
       #                              {"text": "Name","locale": "en"}]
       #
       # @return [Hash] A hash with the following format:

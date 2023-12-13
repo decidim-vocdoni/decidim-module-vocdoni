@@ -21,13 +21,11 @@ module Decidim
           ENV["NODE_PATH"] = @modules_path
           ENV["NODE_DEBUG"] = "http:*,http2:*"
           stdout, stderr, status = Open3.capture3("#{binary} #{filename}")
-          open('node_debug.log', 'a') { |f| f.puts stderr }
+          open("node_debug.log", "a") { |f| f.puts stderr }
 
-          if status.success?
-            stdout
-          else
-            raise exec_runtime_error(stderr)
-          end
+          raise exec_runtime_error(stderr) unless status.success?
+
+          stdout
         end
       end
 
