@@ -9,7 +9,6 @@ module Decidim
 
           Rails.logger.info "SaveVocdoniElectionResultsJob: Saving results for election #{election_id} at Vocdoni env #{Decidim::Vocdoni.api_endpoint_env}"
 
-          # json format
           begin
             @metadata = sdk.electionMetadata
             update_results

@@ -104,9 +104,9 @@ en:
               more participants), its necessary to first delete all census data.
             percentage_complete: Completed %{percentage}% of %{count} total records.
             processing_html: The census is curently being processed for its use in
-              the blockchain. Once it's ready, you will be able to create the election.
+              the Blockchain. Once it's ready, you will be able to create the election.
             ready_to_setup_html: The census data is uploaded and prepared for its
-              use in the Vocdoni blockchain.
+              use in the Vocdoni Blockchain.
             title: Current census data
         election_calendar:
           edit:

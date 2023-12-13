@@ -5,11 +5,12 @@ module Decidim
     module VocdoniApiUtils
       # Transform the locales to the required format with a default locale
       #
-      # receives an array with the following format:
-      #    [{"text": "Nom", "locale": "ca"}, {"text": "Name","locale": "en"}]
+      # @param translations [Array] An array with the following format:
+      #                             [{"text": "Nom", "locale": "ca"}, 
+      #                              {"text": "Name","locale": "en"}]
       #
-      # @returns {object} An object with the following format:
-      #    {ca: "Nom", default: "Name"}
+      # @return [Hash] A hash with the following format:
+      #                {ca: "Nom", en: "Name", default: "Name"}
       def transform_locales(translations)
         values = {}
         organization.available_locales.each do |locale|

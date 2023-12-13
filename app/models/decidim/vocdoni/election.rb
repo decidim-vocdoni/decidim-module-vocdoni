@@ -153,7 +153,7 @@ module Decidim::Vocdoni
       questions.map(&:answers).flatten.pluck(:value).none? nil
     end
 
-    # Public: Checks if theres votes set in the answers
+    # Public: Checks if there are votes set in the answers
     def answers_have_votes?
       questions.map(&:answers).flatten.pluck(:votes).any? Integer
     end

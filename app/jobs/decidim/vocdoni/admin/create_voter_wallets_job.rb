@@ -15,7 +15,7 @@ module Decidim
             if voter.save
               ok += 1
             else
-              Rails.logger.error "CreateVoterWalletsJob: Error updaing the private key for voter #{voter.id}"
+              Rails.logger.error "CreateVoterWalletsJob: Error updating the private key for voter #{voter.id}"
             end
           end
           Rails.logger.info "CreateVoterWalletsJob: Succesfully processed #{ok} voters. #{count - ok} errors for election #{election_id}"
