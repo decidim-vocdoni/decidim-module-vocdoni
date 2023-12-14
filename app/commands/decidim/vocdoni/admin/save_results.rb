@@ -18,7 +18,6 @@ module Decidim
         def call
           transaction do
             SaveVocdoniElectionResultsJob.perform_later(election.id)
-            change_election_status
             log_action
           end
 
@@ -32,11 +31,6 @@ module Decidim
         attr_reader :form
 
         delegate :election, to: :form
-
-        def change_election_status
-          election.status = :results_published
-          election.save!
-        end
 
         def log_action
           Decidim.traceability.perform_action!(

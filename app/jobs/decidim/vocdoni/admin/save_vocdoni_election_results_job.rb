@@ -11,7 +11,8 @@ module Decidim
 
           begin
             @metadata = sdk.electionMetadata
-            update_results
+            update_results!
+            change_election_status!
             Rails.logger.info "SaveVocdoniElectionResultsJob: Results for election #{election_id}: #{results}"
           rescue Sdk::NodeError => e
             Rails.logger.error "SaveVocdoniElectionResultsJob: Error updating results for election #{election_id} at Vocdoni: #{e.message}"
@@ -22,7 +23,7 @@ module Decidim
 
         private
 
-        def update_results
+        def update_results!
           return unless results
 
           election.questions.each_with_index do |question, idx|
@@ -35,6 +36,11 @@ module Decidim
               answer.update(votes: answer_results[answer.value])
             end
           end
+        end
+
+        def change_election_status!
+          election.status = :results_published
+          election.save!
         end
 
         def results

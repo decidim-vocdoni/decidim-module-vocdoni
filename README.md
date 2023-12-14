@@ -5,7 +5,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/126b8ece66b8292802f3/maintainability)](https://codeclimate.com/github/decidim-vocdoni/decidim-module-vocdoni/maintainability)
 [![codecov](https://codecov.io/gh/decidim-vocdoni/decidim-module-vocdoni/branch/main/graph/badge.svg?token=LRT4MJBNVY)](https://codecov.io/gh/decidim-vocdoni/decidim-module-vocdoni)
 
-
 :warning: This module is under development and is not ready to be used in production.
 
 An elections component for Decidim's participatory spaces based on the [Vocdoni](https://vocdoni.app).
@@ -41,6 +40,8 @@ bin/rails decidim_vocdoni:webpacker:install
 bin/rails db:migrate
 ```
 
+## Cron based tasks
+
 For some of the Elections status changes, you'll need to add a task to the schedule tasks
 configuration of your hosting provider.
 
@@ -52,6 +53,7 @@ status are checked every 15 minutes, you can do it with this configuration:
 # Change Elections status on decidim-vocdoni
 0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status > /dev/null
 ```
+
 ## Node.js required: Vocdoni API
 
 > **TL;DR** Ensure you have a working Node.js installation in the Decidim Production server with the package `@vocdoni/sdk` installed.
@@ -72,8 +74,6 @@ So, ensure you have a working Node.js application accessible by the Decidim inst
 }
 ```
 
-## Cron based tasks
-
 ## Configuration
 
 By default, the module is configured to read the configuration from ENV variables.
@@ -86,8 +86,6 @@ Currently, the following ENV variables are supported:
 | VOCDONI_MINUTES_BEFORE_START | How many minutes should the setup be run before the election starts (when configured automatically) | `10` |
 | VOCDONI_MANUAL_START_DELAY | How many seconds after the action of starting an election manually people will be allowed to vote. Note that this time is needed in order to configure the election in the blockchain. You might want to increase it if communication with the Vocdoni API is slow. | `30` |
 | DECIDIM_VOCDONI_SDK_DEBUG | This is for development purposes. If set to `true`, any call to the Vocdoni API using the SDK ruby wrapper will be logged into the `node_debug.log` file (on the application main folder). | `false` |
-
-
 
 It is also possible to configure the module using the `decidim-vocdoni` initializer:
 

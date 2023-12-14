@@ -65,7 +65,7 @@ module Decidim
           end
         end
 
-        # this case is a safe guard for misconfigured database in case of misconfigured election
+        # This case is a safe guard for misconfigured database in case of misconfigured election
         # Note that the createElection in the Vocdoni SDK is idempotent, in case of already existing it just returns the election id
         def create_or_start_election
           if election.misconfigured?
