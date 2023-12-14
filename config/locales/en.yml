@@ -320,7 +320,8 @@ en:
               fetch: There are no results yet. Try again later.
             invalid: There was a problem ending this election
             submit: Publish results
-            success: The election has been ended, the results will be published in a few seconds.
+            success: The election has been ended, the results will be published in
+              a few seconds.
             text: The vote period has ended. You can publish the results.
             title: Vote period ended
           vote_stats:
