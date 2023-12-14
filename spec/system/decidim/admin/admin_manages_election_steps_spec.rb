@@ -206,7 +206,7 @@ describe "Admin manages election steps", :slow, type: :system do
       click_link "End the election"
       accept_confirm
 
-      expect(page).to have_admin_callout("The election has been successfully ended")
+      expect(page).to have_admin_callout("The election has been ended, the results will be published in a few seconds.")
       expect(page).to have_content("The vote period has ended. You can publish the results")
       expect(page).to have_selector("li.text-warning", text: "Vote period ended")
     end
@@ -227,7 +227,7 @@ describe "Admin manages election steps", :slow, type: :system do
         click_button "Publish results"
       end
 
-      expect(page).to have_admin_callout("The election results have been successfully published")
+      expect(page).to have_admin_callout("The election has been ended, the results will be published in a few seconds.")
       expect(page).to have_selector("li.text-warning", text: "Results published")
       expect(page).to have_content("Results published")
 
