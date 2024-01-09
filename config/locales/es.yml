@@ -71,21 +71,17 @@ es:
             invalid: Se ha producido un error al actualizar esta respuesta
             success: Respuesta actualizada correctamente
         census:
-          confirm:
-            submit: Confirmar los datos del censo
           create:
             error: Se ha producido un error al importar o generar el censo.
             success:
-              generate: Censo generado correctamente
-              import: Se han importado correctamente %{count} elementos (%{errors} errores)
+              import: Successfully imported %{count} items (%{errors} errors). Please wait a moment while these records are being processed.
           destroy:
             confirm: Eliminar todo el censo no se puede deshacer. ¿Seguro que quieres continuar?
             title: Borrar todos los datos de censo
           destroy_all:
             success: Se han eliminado todos los datos del censo
           index:
-            census_warning: The census is not ready yet. You can <b>upload and confirm</b> it from the census page.
-            info: Para crear el censo para una elección de Vocdoni, debes subir el censo y confirmarlo.
+            info: For setting up the census for a Vocdoni Election, you need to upload the census.
             title: Censo para una votación de Vocdoni
           new:
             file: "Archivo .csv con los correos electrónicos"
@@ -94,7 +90,9 @@ es:
             title: Subir un censo nuevo
           status:
             data: Hay %{count} registros cargados en total. La última fecha de subida fue el %{due_date}. Si quieres modificar el censo (por ejemplo, agregar más participantes), es necesario eliminar primero todos los datos cargados.
-            ready_to_setup_html: The census data is uploaded and confirmed.
+            percentage_complete: Completed %{percentage}% of %{count} total records.
+            processing_html: The census is curently being processed for its use in the Blockchain. Once it's ready, you will be able to create the election.
+            ready_to_setup_html: The census data is uploaded and prepared for its use in the Vocdoni Blockchain.
             title: Datos de censo actuales
         election_calendar:
           edit:
@@ -108,6 +106,8 @@ es:
           create:
             invalid: Se ha producido un error al crear la elección
             success: La elección se ha creado correctamente
+          credits:
+            success: More credits have been requested. They will be available soon, refresh the page in a few seconds in case they don't appear yet.
           destroy:
             invalid: Se ha producido un error al eliminar la elección
             success: La elección se ha eliminado correctamente
@@ -116,8 +116,6 @@ es:
           index:
             description_html: Con este módulo de votación, puedes organizar fácilmente una amplia gama de procesos de votación con altas garantías. El módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones con los más altos estándares de seguridad, verificación universal, resistencia a la censura y anonimato. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Más información sobre Vocdoni</a>.
             title: Elecciones (Vocdoni)
-          manual_start:
-            success: The election has been successfully started.
           new:
             basic_info: Basic info
             census: Census
@@ -175,7 +173,9 @@ es:
             success: Pregunta correctamente actualizada
         steps:
           canceled:
+            invalid: There was a problem canceling this election
             message: Esta elección ha sido cancelada prematuramente. No hay resultados.
+            success: The election has been successfully canceled.
             title: Cancelada
           create_election:
             description: El proceso de votación es seguro utilizando la avanzada tecnología digital de votación del Protocolo de Vocdoni. Por favor, ten paciencia, ya que el proceso de configuración puede tardar algún tiempo.
@@ -206,56 +206,76 @@ es:
               time_before: La configuración se está realizando <strong>al menos %{minutes} minutos</strong> antes de que comience la elección.
               valid_end_time: The election <strong>end time</strong> is valid.
             submit: Configurar elección
-            success: Elección enviada con éxito a la API de Vocdoni
+            success: The election data has been successfully sent to the Vocdoni API. Please wait a few seconds for the election to be ready.
             title: Configurar elección
           created:
+            creating: The election is being sent to the Vocdoni API. This might take a few moments. This page will refresh automatically.
+            error_vocdoni:
+              message: There was a problem creating the election. The Vocdoni Election ID couldn't be obtained. Please check the application logs for details.
+              title: Vocdoni communication error
             explorer_vote: Ver en el explorador de voto
-            message: La elección ha sido creada. Estamos esperando a que llegue la fecha de inicio.
-            start_describe: This election has been configured to start manually, please press the button to begin the voting period.
-            start_election: Start election
+            help:
+              auto_start: We are waiting for the election to start on %{date}.
+              manual_start: The election will start manually. Press the button "Start election" to begin the voting period.
+            invalid: There was a problem starting this election
+            message: The election has been created.
+            submit: Try to resend the election data to the Vocdoni API
+            success: The election data has been successfully sent to the Vocdoni API. Please wait a few seconds for the election to be ready.
             title: Elección creada
             view: Ver página de inicio
           credits:
             available: Créditos disponibles
+            dev_mode: You are using Vocdoni in the %{env} environment. It is possible to collect credits for free (without any warranty)
             get_more: Obtener más créditos
             warning: No te quedan créditos. Puedes obtener más créditos haciendo clic en el botón de abajo.
           danger_zone:
             action:
-              cancel: Cancelar
-              continue: Continuar
-              end: Finalizar
-              pause: Pausar
+              cancel: Cancel the election (abort)
+              created: Start election
+              end: End the election
+              paused: Pause the election
+              vote: Continue the election
             confirm: '¿Seguro que quieres realizar esta acción?'
-            message: La elección puede interrumpirse
+            messages:
+              cancel_end_html: The election is currently running. Press the cancel button to <strong>invalidate (abort)</strong> it.<br>If you just want to stop the voting period and get to the results, press the end button.
+              created: This election has been configured to start manually. Press the button to begin the voting period.
+              paused: The election is currently running. Press the button to pause voting and temporarily prevent anyone from voting.
+              vote: The election is currently paused. No one can vote right now. Press the button to resume voting.
             title: Zona de peligro
           ended:
             title: Terminada
           index:
             title: Panel de control
+          invalid_status: The election was out of sync with the Vocdoni API. The status has been updated to "%{status}". Please refresh the page.
           paused:
+            invalid: There was a problem pausing this election
             message: La elección está en pausa
-            success: La elección se ha reanudado correctamente.
+            submit: Try to resend the election data to the Vocdoni API
+            success: The election has been successfully paused.
             title: Pausada
           powered_by_html: Este módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones<br>con los más altos estándares de seguridad, verificabilidad universal, resistencia a la censura y anonimato.
-          processing: Procesando...
           ready:
             title: Preparada
           results_published:
-            answer: Respuesta
-            question: Pregunta
-            result: Resultado
+            success: The election results have been successfully published.
             title: Resultados publicados
+          results_stats:
+            answer: Answer
+            question: Question
+            result: Result
           vote:
+            invalid: There was a problem starting this election
             message: Estamos en el período de votación hasta %{end_time}.
             secret_until_the_end: Los resultados de la elección serán secretos hasta el final del período de votación.
-            success: La elección se ha pausado correctamente.
+            submit: Try to resend the election data to the Vocdoni API
+            success: The election has been successfully resumed.
             title: Período de votación
           vote_ended:
             error:
               fetch: Aún no hay resultados. Inténtalo de nuevo más tarde.
-              invalid: Hubo un problema al publicar los resultados. Inténtalo de nuevo más tarde.
+            invalid: There was a problem ending this election
             submit: Publicar resultados
-            success: Resultados publicados correctamente
+            success: The election has been ended, the results will be published in a few seconds.
             text: El período de votación ha terminado. Puedes publicar los resultados.
             title: Período de votación terminado
           vote_stats:
