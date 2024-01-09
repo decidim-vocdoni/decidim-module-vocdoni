@@ -6,6 +6,16 @@ module Decidim
       # This command gets called when saving the election status from the admin panel
       # To be used only when the election is interruptible
       class UpdateElectionStatus < Decidim::Command
+        class StatusError < StandardError; end
+
+        STATUSES = {
+          "RESULTS" => "results_published",
+          "ENDED" => "vote_ended",
+          "CANCELED" => "canceled",
+          "PAUSED" => "paused",
+          "ONGOING" => "vote",
+          "UPCOMING" => "created"
+        }.freeze
         # Public: Initializes the command.
         #
         # form - An ElectionStatusForm object with the status to update
@@ -19,14 +29,20 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
+          fix_vocdoni_status!
           transaction do
-            change_election_status
+            update_status
+            election.save!
             log_action
           end
 
           broadcast(:ok, election)
+        rescue StatusError => e
+          election.update(status: e.message)
+          broadcast(:status, e.message)
         rescue StandardError => e
-          broadcast(:invalid, e.message)
+          Rails.logger.error e.message
+          broadcast(:invalid, sdk.last_error)
         end
 
         private
@@ -34,10 +50,70 @@ module Decidim
         attr_reader :form
 
         delegate :election, to: :form
+        def update_status
+          case form.status
+          when "created"
+            create_or_start_election
+          when "vote"
+            continue_election
+          when "paused"
+            pause_election
+          when "canceled"
+            cancel_election
+          when "end"
+            end_election
+          end
+        end
 
-        def change_election_status
-          election.status = form.status
-          election.save!
+        # This case is a safe guard for misconfigured database in case of misconfigured election
+        # Note that the createElection in the Vocdoni SDK is idempotent, in case of already existing it just returns the election id
+        def create_or_start_election
+          if election.misconfigured?
+            CreateVocdoniElectionJob.perform_later(election.id)
+          elsif !election.started?
+            election.start_time = Time.current
+          end
+          continue_election
+        end
+
+        def continue_election
+          sdk.continueElection unless vocdoni_status == "ONGOING"
+          election.status = "vote"
+        end
+
+        def pause_election
+          sdk.pauseElection unless vocdoni_status == "PAUSED"
+          election.status = "paused"
+        end
+
+        def cancel_election
+          unless vocdoni_status.in?(%w(RESULTS ENDED CANCELED))
+            sdk.cancelElection
+            election.status = "canceled"
+          end
+        end
+
+        def end_election
+          unless vocdoni_status.in?(%w(RESULTS ENDED CANCELED))
+            sdk.endElection
+            election.status = "vote_ended"
+          end
+        end
+
+        def fix_vocdoni_status!
+          status = STATUSES[vocdoni_status]
+          # no need to panic, this means is a manual start
+          return if election.status == "created" && status == "paused"
+
+          raise StatusError, status if election.status != status
+        end
+
+        def vocdoni_status
+          @vocdoni_status ||= sdk.electionMetadata["status"]
+        end
+
+        def sdk
+          @sdk ||= Decidim::Vocdoni::Sdk.new(election.organization, election)
         end
 
         def log_action

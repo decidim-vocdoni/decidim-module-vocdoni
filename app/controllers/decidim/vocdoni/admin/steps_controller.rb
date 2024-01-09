@@ -13,10 +13,21 @@ module Decidim
 
         def index
           enforce_permission_to :read, :steps, election: election
-
           if current_step_form_class
-            @form = form(current_step_form_class).instance(election: election)
+            @form = form(current_step_form_class).from_params({ status: election.status }, election: election)
             @form.valid?
+          end
+        end
+
+        def show
+          enforce_permission_to :read, :steps, election: election
+
+          respond_to do |format|
+            format.html { render partial: "decidim/vocdoni/admin/steps/results_stats" }
+            format.json do
+              info = Sdk.new(election.organization, election).electionMetadata[params[:id]]
+              render json: { election: info }, status: info ? :ok : :unprocessable_entity
+            end
           end
         end
 
@@ -26,11 +37,15 @@ module Decidim
 
           current_step_command_class.call(@form) do
             on(:ok) do
-              flash[:notice] = I18n.t("steps.#{current_step}.success", scope: "decidim.vocdoni.admin")
+              flash[:notice] = I18n.t("steps.#{election.status}.success", scope: "decidim.vocdoni.admin")
               return redirect_to election_steps_path(election)
             end
             on(:invalid) do |message|
               flash.now[:alert] = message || I18n.t("steps.#{current_step}.invalid", scope: "decidim.vocdoni.admin")
+            end
+            on(:status) do |status|
+              flash[:alert] = I18n.t("steps.invalid_status", scope: "decidim.vocdoni.admin", status: status)
+              return redirect_to election_steps_path(election)
             end
           end
           render :index
@@ -49,6 +64,7 @@ module Decidim
         def current_step_form_class
           @current_step_form_class ||= {
             "create_election" => SetupForm,
+            "created" => ElectionStatusForm, # This allows for resending data to vocdoni if there's been a problem
             "paused" => ElectionStatusForm,
             "vote" => ElectionStatusForm,
             "vote_ended" => ResultsForm
@@ -58,6 +74,7 @@ module Decidim
         def current_step_command_class
           @current_step_command_class ||= {
             "create_election" => SetupElection,
+            "created" => UpdateElectionStatus,
             "paused" => UpdateElectionStatus,
             "vote" => UpdateElectionStatus,
             "vote_ended" => SaveResults
@@ -65,11 +82,7 @@ module Decidim
         end
 
         def current_step
-          if election.manual_start? && election.status == "paused"
-            @current_step = "created"
-          else
-            @current_step ||= election.status || "create_election"
-          end
+          @current_step ||= election.status || "create_election"
         end
 
         def elections

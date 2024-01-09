@@ -5,20 +5,16 @@ require "spec_helper"
 describe "Admin creates wallet", :slow, type: :system do
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create :vocdoni_component }
-  let(:election) { create :vocdoni_election, :ready_for_setup, component: current_component, title: { en: "English title" } }
+  let!(:election) { create :vocdoni_election, :ready_for_setup, component: current_component, title: { en: "English title" } }
 
   include_context "when managing a component as an admin"
 
   context "when there isn't any wallet" do
     it "redirects to the wallet creation page" do
       visit_steps_page
-
       expect(page).to have_content("It's necessary to create a wallet for this organization")
-    end
-
-    it "creates a new wallet" do
-      visit_steps_page
-      click_button "Create"
+      expect(page).to have_content("New organization wallet")
+      click_link "Create"
 
       expect(page).to have_content("The election has at least one question.")
       expect(Decidim::Vocdoni::Wallet.last.private_key.length).to eq 66
@@ -26,7 +22,7 @@ describe "Admin creates wallet", :slow, type: :system do
   end
 
   context "when there is a wallet" do
-    let!(:wallet) { create :wallet, organization: current_component.organization }
+    let!(:wallet) { create :vocdoni_wallet, organization: current_component.organization }
 
     it "goes to the step page" do
       visit_steps_page
@@ -44,8 +40,6 @@ describe "Admin creates wallet", :slow, type: :system do
   end
 
   def visit_steps_page
-    election
-
     relogin_as user, scope: :user
     visit_component_admin
 

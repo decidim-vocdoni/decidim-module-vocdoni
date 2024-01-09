@@ -8,7 +8,7 @@ describe "Explore elections", :slow, type: :system do
 
   let(:elections_count) { 5 }
   let!(:elections) do
-    create_list(:vocdoni_election, elections_count, :complete, :published, :ongoing, component: component)
+    create_list(:vocdoni_election, elections_count, :complete, :published, :auto_start, :ongoing, component: component)
   end
 
   describe "index" do
@@ -17,7 +17,7 @@ describe "Explore elections", :slow, type: :system do
         Decidim::Vocdoni::Election.destroy_all
       end
 
-      let!(:single_elections) { create_list(:vocdoni_election, 1, :complete, :published, :ongoing, component: component) }
+      let!(:single_elections) { create_list(:vocdoni_election, 1, :complete, :published, :auto_start, :ongoing, component: component) }
 
       it "redirects to the only election" do
         visit_component

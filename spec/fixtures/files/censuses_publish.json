@@ -1,0 +1,13 @@
+XHRPOST
+https://api-dev.vocdoni.net/v2/censuses/83c8ddcc2baee4a0ed8a4f00c63c544f17e299c3500b074dffa6fd4726a8dda6/publish
+[HTTP/2 200  64ms]
+
+ 
+1
+
+{"censusID":"6f986026ec740ff551c63200969c8774e139b3cc2bf2a864e3bd9897fccd848a","uri":"ipfs://bafybeibi7bjsipwqto276rj6phlsgo6fvwjpy5n4lv2scl5zcjimgsshki"}
+
+2
+
+​
+

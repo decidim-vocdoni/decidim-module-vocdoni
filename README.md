@@ -5,7 +5,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/126b8ece66b8292802f3/maintainability)](https://codeclimate.com/github/decidim-vocdoni/decidim-module-vocdoni/maintainability)
 [![codecov](https://codecov.io/gh/decidim-vocdoni/decidim-module-vocdoni/branch/main/graph/badge.svg?token=LRT4MJBNVY)](https://codecov.io/gh/decidim-vocdoni/decidim-module-vocdoni)
 
-
 :warning: This module is under development and is not ready to be used in production.
 
 An elections component for Decidim's participatory spaces based on the [Vocdoni](https://vocdoni.app).
@@ -41,6 +40,8 @@ bin/rails decidim_vocdoni:webpacker:install
 bin/rails db:migrate
 ```
 
+## Cron based tasks
+
 For some of the Elections status changes, you'll need to add a task to the schedule tasks
 configuration of your hosting provider.
 
@@ -51,6 +52,26 @@ status are checked every 15 minutes, you can do it with this configuration:
 ```crontab
 # Change Elections status on decidim-vocdoni
 0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status > /dev/null
+```
+
+## Node.js required: Vocdoni API
+
+> **TL;DR** Ensure you have a working Node.js installation in the Decidim Production server with the package `@vocdoni/sdk` installed.
+> (Node.js is already a requirement in order to precompile the Rails assets but it is not strictly necessary for running Decidim in production).
+> **If you want to use this plugin, you'll need to have Node.js installed in the production server**.
+
+This module needs to communicate with the [Vocdoni API](https://vocdoni.io/api). For that, it used the [SDK provided](https://developer.vocdoni.io/sdk) by Vocdoni that is written in Javascript and available as an [NPM package](https://www.npmjs.com/package/@vocdoni/sdk).
+
+This plugin uses this SDK using a wrapper around it by calling a [Node.js](https://nodejs.org/en/) instance under the hood.
+
+So, ensure you have a working Node.js application accessible by the Decidim installation with the package `@vocdoni/sdk` installed. Note that using the default auto-generated `package.json` should work but it installs dependencies only needed to compile the Rails assets. If you want to optimize your production server, you can install only the dependencies needed by the SDK by running `npm install @vocdoni/sdk` in the Decidim installation path or using a custom package.json file like this:
+
+```json
+{
+  "dependencies": {
+    "@vocdoni/sdk": "^0.5.3"
+  }
+}
 ```
 
 ## Configuration
@@ -64,6 +85,7 @@ Currently, the following ENV variables are supported:
 | VOCDONI_API_ENDPOINT_ENV | The environment of the Vocdoni API. Only two values are accepted: `dev`, `stg`. Read more on [Vocdoni SDK Usage Environment](https://github.com/vocdoni/vocdoni-sdk#environment) | `stg` |
 | VOCDONI_MINUTES_BEFORE_START | How many minutes should the setup be run before the election starts (when configured automatically) | `10` |
 | VOCDONI_MANUAL_START_DELAY | How many seconds after the action of starting an election manually people will be allowed to vote. Note that this time is needed in order to configure the election in the blockchain. You might want to increase it if communication with the Vocdoni API is slow. | `30` |
+| DECIDIM_VOCDONI_SDK_DEBUG | This is for development purposes. If set to `true`, any call to the Vocdoni API using the SDK ruby wrapper will be logged into the `node_debug.log` file (on the application main folder). | `false` |
 
 It is also possible to configure the module using the `decidim-vocdoni` initializer:
 

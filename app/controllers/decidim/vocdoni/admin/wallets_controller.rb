@@ -9,14 +9,12 @@ module Decidim
 
         def new
           enforce_permission_to :create, :wallet
-          @form = form(WalletForm).instance
         end
 
         def create
           enforce_permission_to :create, :wallet
-          @form = form(WalletForm).from_params(params)
 
-          CreateWallet.call(@form) do
+          CreateWallet.call(current_user) do
             on(:ok) do
               flash[:notice] = I18n.t("wallet.create.success", scope: "decidim.vocdoni.admin")
               redirect_to redirect_location

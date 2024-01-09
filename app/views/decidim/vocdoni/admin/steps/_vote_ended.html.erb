@@ -9,18 +9,9 @@
     <div class="callout warning js-votes-results-error-fetch hide">
       <p><%= t(".error.fetch") %></p>
     </div>
+
+    <%= render partial: "action_buttons", locals: { election: election } %>
   </div>
 </div>
 
-<%= render(partial: "vote_stats", locals: { polling: "false" }) %>
-
-<div class="js-votes-results hide">
-  <% f.object.election.questions.each_with_index do |question, idx| %>
-    <% question.answers.each do |answer| %>
-      <%= f.fields_for "results[]", answer do |result_form| %>
-        <%= result_form.number_field :id %>
-        <%= result_form.number_field :votes, "data-question-idx" => idx, "data-answer-id" => answer.id, "data-answer-value" => answer.value, value: 0 %>
-      <% end %>
-    <% end %>
-  <% end %>
-</div>
+<%= render(partial: "vote_stats") %>

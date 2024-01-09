@@ -8,8 +8,8 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
   let(:component) { create(:vocdoni_component) }
   let(:election) { create(:vocdoni_election, :published, component: component) }
   let(:user) { create(:user, :confirmed, organization: component.organization) }
-  let!(:wallet) { create(:wallet, organization: component.organization, private_key: Faker::Blockchain::Ethereum.address) }
-  let(:vocdoni_client) { double("VocdoniClient") }
+  let!(:wallet) { create(:vocdoni_wallet, organization: component.organization, private_key: Faker::Blockchain::Ethereum.address) }
+  let(:vocdoni_client) { double("Api") }
 
   before do
     request.env["decidim.current_organization"] = component.organization
@@ -48,12 +48,12 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
 
   describe "#vocdoni_client" do
     before do
-      allow(Decidim::Vocdoni::VocdoniClient).to receive(:new)
+      allow(Decidim::Vocdoni::Api).to receive(:new)
         .with(vocdoni_election_id: election.vocdoni_election_id)
         .and_return(vocdoni_client)
     end
 
-    it "returns a VocdoniClient instance" do
+    it "returns a Api instance" do
       get :show, params: { id: election.id }
       expect(controller.send(:vocdoni_client)).to eq(vocdoni_client)
     end
@@ -69,7 +69,7 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
       let(:election_metadata) { { data: "election metadata" } }
 
       before do
-        allow(Decidim::Vocdoni::VocdoniClient).to receive(:new)
+        allow(Decidim::Vocdoni::Api).to receive(:new)
           .with(vocdoni_election_id: election.vocdoni_election_id)
           .and_return(vocdoni_client)
         allow(vocdoni_client).to receive(:fetch_election).and_return(election_metadata)

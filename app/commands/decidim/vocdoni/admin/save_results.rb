@@ -16,14 +16,7 @@ module Decidim
         #
         # Broadcasts :ok if setup, :invalid otherwise.
         def call
-          return broadcast(:invalid) if form.invalid?
-          return broadcast(:invalid) if form.results.empty?
-
-          transaction do
-            save_results
-            change_election_status
-            log_action
-          end
+          SaveVocdoniElectionResultsJob.perform_later(election.id, form.current_user.id)
 
           broadcast(:ok, election)
         rescue StandardError => e
@@ -35,31 +28,6 @@ module Decidim
         attr_reader :form
 
         delegate :election, to: :form
-
-        def save_results
-          form.results.each do |result|
-            answer = Decidim::Vocdoni::Answer.find(result.fetch(:id))
-            answer.votes = result.fetch(:votes)
-            answer.save!
-          end
-        end
-
-        def change_election_status
-          election.status = :results_published
-          election.save!
-        end
-
-        def log_action
-          Decidim.traceability.perform_action!(
-            :save_results,
-            election,
-            form.current_user,
-            extra: {
-              results: form.results,
-              status: election.status
-            }
-          )
-        end
       end
     end
   end

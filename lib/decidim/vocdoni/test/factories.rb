@@ -3,9 +3,9 @@
 require "decidim/core/test/factories"
 
 FactoryBot.define do
-  factory :wallet, class: "Decidim::Vocdoni::Wallet" do
+  factory :vocdoni_wallet, class: "Decidim::Vocdoni::Wallet" do
     organization
-    private_key { Faker::Blockchain::Ethereum.address }
+    private_key { "0x0000000000000000000000000000000000000000000000000000000000000001" }
   end
 
   factory :vocdoni_component, parent: :component do
@@ -29,13 +29,18 @@ FactoryBot.define do
     status { nil }
     election_type do
       {
-        "auto_start" => true,
+        "auto_start" => false,
         "dynamic_census" => false,
         "interruptible" => true,
         "secret_until_the_end" => true
       }
     end
     component { create(:vocdoni_component, organization: organization) }
+
+    trait :configured do
+      status { "created" }
+      vocdoni_election_id { Faker::Blockchain::Ethereum.address }
+    end
 
     trait :upcoming do
       start_time { 1.day.from_now }
@@ -44,6 +49,18 @@ FactoryBot.define do
     trait :started do
       status { "vote" }
       start_time { 2.days.ago }
+    end
+
+    trait :auto_start do
+      start_time { 15.minutes.from_now }
+      election_type do
+        {
+          "auto_start" => true,
+          "dynamic_census" => false,
+          "interruptible" => true,
+          "secret_until_the_end" => true
+        }
+      end
     end
 
     trait :manual_start do
@@ -118,14 +135,15 @@ FactoryBot.define do
 
     trait :with_census do
       after(:build) do |election, _evaluator|
-        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
-        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
-        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
-        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
-        election.voters << build(:vocdoni_voter, :with_credentials, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
       end
     end
 
+    # everything in place exect the vocdoni_election_id
     trait :ready_for_setup do
       upcoming
       published
@@ -214,7 +232,7 @@ FactoryBot.define do
     token { Faker::String.random(length: 4) }
     association :election, factory: :vocdoni_election
 
-    trait :with_credentials do
+    trait :with_wallet do
       wallet_address { Faker::Blockchain::Ethereum.address }
     end
   end

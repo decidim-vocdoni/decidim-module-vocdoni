@@ -8,7 +8,7 @@ on:
 
 env:
   CI: "true"
-  RUBY_VERSION: 3.0.5
+  RUBY_VERSION: 3.0.6
   NODE_VERSION: 16.9.1
   CODECOV_TOKEN: 3dc89116-a8ed-4df4-bf06-812fc0d8854d
 
@@ -33,13 +33,17 @@ jobs:
       DATABASE_PASSWORD: postgres
       DATABASE_HOST: localhost
     steps:
-      - uses: actions/checkout@v2.0.0
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
+      - uses: nanasess/setup-chromedriver@v2
+        with:
+          chromedriver-version: 119.0.6045.105
 
       - uses: actions/setup-node@v3
         with:
@@ -79,4 +83,11 @@ jobs:
         with:
           name: screenshots
           path: ./spec/decidim_dummy_app/tmp/screenshots
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: Test logs
+          path: ./spec/decidim_dummy_app/log/test.log
           if-no-files-found: ignore

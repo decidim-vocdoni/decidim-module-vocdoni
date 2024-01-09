@@ -1,0 +1,13 @@
+XHRPOST
+https://api-dev.vocdoni.net/v2/wallet/add/c7c0e708f086ad4c70754d7404b424a18ad85c398a62790a799ae7780945c19c
+[HTTP/2 200  53ms]
+
+ 
+1
+
+{"address":"ed593fb31822bb3b61fbb5a8dc70426cee3cada2","nonce":0,"balance":0,"electionIndex":0,"token":"a047dcd9-6930-4d7b-9c58-27a6e94093eb","sik":""}
+
+2
+
+​
+

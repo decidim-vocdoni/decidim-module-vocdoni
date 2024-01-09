@@ -102,7 +102,7 @@ module Decidim
         let(:query) { "{ autoStart }" }
 
         it "returns the election's autoStart setting" do
-          expect(response["autoStart"]).to be_truthy
+          expect(response["autoStart"]).to be_falsey
         end
       end
 

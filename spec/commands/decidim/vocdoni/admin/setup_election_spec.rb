@@ -45,8 +45,8 @@ describe Decidim::Vocdoni::Admin::SetupElection do
       expect(election.blocked_at).to be_within(1.second).of election.updated_at
     end
 
-    it "updates the vocdoni_election_id attribute" do
-      expect { subject.call }.to change(election, :vocdoni_election_id).from(nil).to("12345")
+    it "do not update the vocdoni_election_id attribute" do
+      expect { subject.call }.not_to change(election, :vocdoni_election_id)
     end
   end
 

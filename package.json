@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint -c .eslintrc.json --ext .js app/packs/",
-    "lint-fix": "eslint -c .eslintrc.json --ext .js app/packs/ --fix",
+    "lint": "eslint -c .eslintrc.json --ext .js app/packs/ node-wrapper",
+    "lint-fix": "eslint -c .eslintrc.json --ext .js app/packs/ node-wrapper --fix",
     "stylelint": "stylelint **/*.scss",
     "stylelint-fix": "stylelint **/*.scss --fix"
   },
@@ -46,7 +46,6 @@
     "sass-embedded": "~1.57.1"
   },
   "dependencies": {
-    "@ethersproject/wallet": "^5.7.0",
-    "@vocdoni/sdk": "^0.0.16"
+    "@vocdoni/sdk": "^0.5.3"
   }
 }

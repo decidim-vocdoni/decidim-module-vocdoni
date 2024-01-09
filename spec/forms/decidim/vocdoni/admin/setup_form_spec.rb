@@ -13,7 +13,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
       current_step: "create_election"
     }
   end
-  let(:election) { create :vocdoni_election, :ready_for_setup, component: component }
+  let(:election) { create :vocdoni_election, :ready_for_setup, :auto_start, start_time: 1.day.from_now, component: component }
   let(:component) { create :vocdoni_component }
   let(:attributes) { {} }
   let(:router) { Decidim::EngineRouter.admin_proxy(election.component) }
@@ -43,7 +43,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   end
 
   context "when the election is not ready for the setup" do
-    let(:election) { create :vocdoni_election, start_time: 10.days.ago }
+    let(:election) { create :vocdoni_election, :auto_start, start_time: 10.days.ago }
 
     it { is_expected.to be_invalid }
 
