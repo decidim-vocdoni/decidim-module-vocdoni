@@ -6,13 +6,5 @@ import "src/decidim/vocdoni/admin/steps/election_status"
 import "src/decidim/vocdoni/admin/steps/vote"
 import "src/decidim/vocdoni/admin/steps/results"
 
-import "src/decidim/vocdoni/admin/steps/election_status"
-import "src/decidim/vocdoni/admin/steps/vote"
-import "src/decidim/vocdoni/admin/steps/results"
-
-import "src/decidim/vocdoni/admin/steps/election_status"
-import "src/decidim/vocdoni/admin/steps/vote"
-import "src/decidim/vocdoni/admin/steps/results"
-
 // Images
 require.context("../../images", true)

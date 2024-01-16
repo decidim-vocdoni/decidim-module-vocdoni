@@ -23,7 +23,7 @@
     "url": "https://github.com/decidim-vocdoni/decidim-module-vocdoni/issues"
   },
   "homepage": "https://github.com/decidim-vocdoni/decidim-module-vocdoni#readme",
-    "stylelint": {
+  "stylelint": {
     "extends": "@decidim/stylelint-config"
   },
   "devDependencies": {
