@@ -65,7 +65,7 @@ module Decidim
         def process_form(form, command_class, success_message, failure_template)
           command_class.call(form, election) do
             on(:ok) do
-              set_flash_and_redirect(:notice, success_message) 
+              set_flash_and_redirect(:notice, success_message)
               CreateVoterWalletsJob.perform_later(election.id) if command_class == CreateCensusData
             end
             on(:invalid) { set_flash_and_render(:alert, t(".error"), failure_template) }

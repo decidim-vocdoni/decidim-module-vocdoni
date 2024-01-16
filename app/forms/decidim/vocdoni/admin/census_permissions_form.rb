@@ -12,16 +12,16 @@ module Decidim
           verification_types.select! { |type| valid_types.include?(type) }
 
           users = context.current_organization.users.not_deleted.confirmed
-          unless verification_types.blank?
+          if verification_types.present?
             verified_users = Decidim::Authorization.select(:decidim_user_id)
-                             .where(decidim_user_id: users.select(:id))
-                             .where.not(granted_at: nil)
-                             .where(name: verification_types)
-                             .group(:decidim_user_id)
-                             .having("COUNT(distinct name) = ?", verification_types.count)
+                                                   .where(decidim_user_id: users.select(:id))
+                                                   .where.not(granted_at: nil)
+                                                   .where(name: verification_types)
+                                                   .group(:decidim_user_id)
+                                                   .having("COUNT(distinct name) = ?", verification_types.count)
             users = users.where(id: verified_users)
           end
-          
+
           users
         end
       end
