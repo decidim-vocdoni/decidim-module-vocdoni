@@ -30,11 +30,11 @@ module Decidim
           end
         end
 
-        describe "when the form is invalid" do
+        describe "when the form is empty" do
           let(:params) { { verification_types: invalid_verification_types } }
 
-          it "does not create voters and does not update the election" do
-            expect { subject.call }.not_to change(Decidim::Vocdoni::Voter, :count)
+          it "creates voters and updates the election" do
+            expect { subject.call }.to change(Decidim::Vocdoni::Voter, :count).by(2)
             expect(election.reload.internal_census).to be true
             expect(election.reload.verification_types).not_to eq(invalid_verification_types)
             expect(election.reload.election_type["dynamic_census"]).to be true

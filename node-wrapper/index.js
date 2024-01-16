@@ -11,12 +11,12 @@ const { vocdoniElection } = require(`${process.env.VOCDONI_WRAPPER_PATH}/electio
 
 /**
  * Creates a random Wallet and returns the private key
- */ 
+ */
 const randomWallet = (name) => {
   const wallet = Wallet.createRandom();
   return {
-    address: wallet.address, 
-    privateKey: wallet.privateKey, 
+    address: wallet.address,
+    privateKey: wallet.privateKey,
     publicKey: wallet.publicKey
   };
 };
@@ -28,15 +28,15 @@ const randomWallet = (name) => {
 const deterministicWallet = (token) => {
   const wallet = VocdoniSDKClient.generateWalletFromData(`${token}-${process.env.VOCDONI_SALT}`);
   return {
-    address: wallet.address, 
-    privateKey: wallet.privateKey, 
+    address: wallet.address,
+    privateKey: wallet.privateKey,
     publicKey: wallet.publicKey
   };
 };
 
 /**
- * Info about the env (mostly for testing purposes)
- */ 
+ * Information about the environment (mostly for testing purposes)
+ */
 const env = () => {
   return {
     "VOCDONI_WALLET_PRIVATE_KEY": process.env.VOCDONI_WALLET_PRIVATE_KEY,
@@ -48,7 +48,7 @@ const env = () => {
 };
 
 /**
- * Info about the client
+ * Information about the client
  */
 const info = async () => {
   const _info = await clientInfo();
@@ -84,7 +84,7 @@ const election = async (electionData, questionsData, censusData) => {
 }
 
 /**
- * Returns the election metadata for vote monitoring
+ * Gives the election metadata for vote monitoring
  */
 const electionMetadata = async () => {
   const client = vocdoniClient();
@@ -126,7 +126,7 @@ const createElection = async (electionData, questionsData, censusData) => {
 };
 
 /**
- * 
+ * Continues the election (if paused)
  */
 const continueElection = async () => {
   const client = vocdoniClient();
@@ -134,15 +134,15 @@ const continueElection = async () => {
 };
 
 /**
- * 
- */ 
+ * Pauses the election (if running)
+ */
 const pauseElection = async () => {
   const client = vocdoniClient();
   return await client.pauseElection();
 };
 
 /**
- * 
+ * Cancels the election (thus invalidating it)
  */
 const cancelElection = async () => {
   const client = vocdoniClient();
@@ -150,7 +150,7 @@ const cancelElection = async () => {
 };
 
 /**
- * 
+ * Ends the election (and publishes results in the Vocdoni Blockchain)
  */
 const endElection = async () => {
   const client = vocdoniClient();
@@ -160,7 +160,7 @@ const endElection = async () => {
 /**
  * This only works on stg/dev environments
  * Collects more credits for free
- */ 
+ */
 const collectFaucetTokens = async () => {
   const client = vocdoniClient();
   return await client.collectFaucetTokens();

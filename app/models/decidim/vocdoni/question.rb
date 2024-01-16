@@ -25,7 +25,7 @@ module Decidim
         "question-#{id}"
       end
 
-      # ensure all the answer will have numeric consecutive values
+      # Make sure all the answers have numeric consecutive values
       def build_answer_values!
         answers.each_with_index do |answer, index|
           answer.update(value: index)

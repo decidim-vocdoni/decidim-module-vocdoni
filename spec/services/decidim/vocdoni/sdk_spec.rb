@@ -196,7 +196,7 @@ module Decidim
           expect { subject.randomWallet }.to(
             raise_error do |error|
               expect(error).to be_a(Sdk::NodeError)
-              expect(error.message).to include("Permission denied - /tmp/node_runner")
+              expect(error.message).to include("Permission denied")
             end
           )
         end

@@ -2,30 +2,31 @@
 
 require "node-runner"
 
-# This is helper around the javascript SDK interface that runs with node
-# Reads the file from node-wrapper/index.js and translates every function in that file
+# This is helper around the javascript SDK interface that runs with Node.js
+# It reads the file from node-wrapper/index.js and translates every function in that file
 # to an equivalent method in ruby
-# Uses https://github.com/bridgetownrb/node-runner under the hood
+# Uses node-runner under the hood
+# @see https://github.com/bridgetownrb/node-runner
 module Decidim
   module Vocdoni
     class Sdk
       class NodeError < NodeRunnerError; end
 
-      # debug all http calls to a file
+      # Debug all HTTP calls to a file
       class Executor < NodeRunner::Executor
-        # uncomment to debug all http calls into development_app/node_debug.log
-        # def exec(filename)
-        #   ENV["NODE_PATH"] = @modules_path
-        #   ENV["NODE_DEBUG"] = "http:*,http2:*"
-        #   stdout, stderr, status = Open3.capture3("#{binary} #{filename}")
-        #   open('node_debug.log', 'a') { |f| f.puts stderr }
+        # Set the env DECIDIM_VOCDONI_SDK_DEBUG=1 to debug all http calls into development_app/node_debug.log
+        def exec(filename)
+          return super(filename) unless ENV.fetch("DECIDIM_VOCDONI_SDK_DEBUG", false)
 
-        #   if status.success?
-        #     stdout
-        #   else
-        #     raise exec_runtime_error(stderr)
-        #   end
-        # end
+          ENV["NODE_PATH"] = @modules_path
+          ENV["NODE_DEBUG"] = "http:*,http2:*"
+          stdout, stderr, status = Open3.capture3("#{binary} #{filename}")
+          open("node_debug.log", "a") { |f| f.puts stderr }
+
+          raise exec_runtime_error(stderr) unless status.success?
+
+          stdout
+        end
       end
 
       def self.runner(file = "index.js")

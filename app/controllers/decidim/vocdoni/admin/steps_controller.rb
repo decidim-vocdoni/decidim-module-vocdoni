@@ -82,11 +82,7 @@ module Decidim
         end
 
         def current_step
-          # if election.manual_start? && !election.started?
-          #   @current_step = "created"
-          # else
           @current_step ||= election.status || "create_election"
-          # end
         end
 
         def elections

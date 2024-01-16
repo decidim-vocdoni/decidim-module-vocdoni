@@ -50,7 +50,7 @@ describe "Admin manages census", :slow, type: :system do
         expect(page).to have_content("Current census data")
         expect(page).to have_content("Completed 0% of 5 total records")
 
-        # simulate the percentage of completion
+        # Simulates the percentage of completion
         wallet = Decidim::Vocdoni::Sdk.new(organization, election).deterministicWallet([voter1.email, voter1.token])["address"]
         voter1.update(wallet_address: wallet)
         voter1.reload
@@ -156,7 +156,7 @@ describe "Admin manages census", :slow, type: :system do
       end
 
       it "has success message" do
-        expect(page).to have_admin_callout("Successfully imported 0 items (0 errors)")
+        expect(page).to have_admin_callout("Successfully imported 3 items (0 errors)")
       end
 
       it "goes to the next step" do

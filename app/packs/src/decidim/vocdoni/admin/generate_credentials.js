@@ -1,7 +1,3 @@
-/**
- * @returns {void}
- */
-
 const checkCredentialsGenerationProgress = async () => {
   const container = document.getElementById("census-processing-percentage");
   if (!container) {

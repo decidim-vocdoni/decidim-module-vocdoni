@@ -95,6 +95,8 @@ en:
           destroy_all:
             success: All census data have been deleted
           index:
+            census_warning: The census is not ready yet. You can <b>upload and confirm</b>
+              it from the census page.
             info: For setting up the census for a Vocdoni Election, you need to upload
               the census.
             title: Census for a Vocdoni election
@@ -114,9 +116,9 @@ en:
               more participants), its necessary to first delete all census data.
             percentage_complete: Completed %{percentage}% of %{count} total records.
             processing_html: The census is curently being processed for its use in
-              the blockchain. Once it's ready, you will be able to create the election.
+              the Blockchain. Once it's ready, you will be able to create the election.
             ready_to_setup_html: The census data is uploaded and prepared for its
-              use in the Vocdoni blockchain.
+              use in the Vocdoni Blockchain.
             title: Current census data
         election_calendar:
           edit:
@@ -330,7 +332,8 @@ en:
               fetch: There are no results yet. Try again later.
             invalid: There was a problem ending this election
             submit: Publish results
-            success: The election has been successfully ended.
+            success: The election has been ended, the results will be published in
+              a few seconds.
             text: The vote period has ended. You can publish the results.
             title: Vote period ended
           vote_stats:

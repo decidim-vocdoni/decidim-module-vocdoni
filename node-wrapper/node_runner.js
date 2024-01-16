@@ -1,10 +1,12 @@
 #{source}
 
+/**
+ * This file overrides the original node_runner.js from the node-runner gem
+ * in order to handle promises (the original does not)
+ * */
 try {
   const args = #{args}
-  // const output = JSON.stringify(['ok', #{func}(...args), []])
-  // process.stdout.write(output)
-  Promise.resolve(#{func}(...args)).then(result => {
+    Promise.resolve(#{func}(...args)).then(result => {
     const output = JSON.stringify(['ok', result, []])
     process.stdout.write(output)
   })

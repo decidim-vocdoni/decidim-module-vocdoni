@@ -4,6 +4,9 @@ module Decidim
   module Vocdoni
     module Admin
       class SdkRunnerJob < VocdoniSdkBaseJob
+        # @param organization_id [Integer]
+        # @param command [String]
+        # @param election_id [Integer]
         def perform(organization_id:, command:, election_id: nil)
           @organization_id = organization_id
           @election_id = election_id

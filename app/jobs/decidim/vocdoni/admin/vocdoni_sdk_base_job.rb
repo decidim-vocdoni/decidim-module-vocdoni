@@ -10,7 +10,7 @@ module Decidim
 
         private
 
-        # don't memoize this, we need a new instance always to ensure the election is updated
+        # Don't memoize this, we need a new instance always to ensure the election is updated
         def sdk
           Sdk.new(organization, election)
         end

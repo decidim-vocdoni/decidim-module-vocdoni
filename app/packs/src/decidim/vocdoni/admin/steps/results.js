@@ -1,3 +1,4 @@
+
 const RESULTS_SPAN_SELECTOR = ".js-votes-results";
 
 export const getElectionResults = async () => {
@@ -17,7 +18,7 @@ const checkResultsElection = async (resultsSpan) => {
     resultsSpan.classList.remove("spinner-container")
   }
   else {
-    // try again in a few seconds
+    // Try again in a few seconds
     setTimeout(() => {
       checkResultsElection(resultsSpan);
     }, 3000);
@@ -31,4 +32,3 @@ document.addEventListener("DOMContentLoaded", () => {
     checkResultsElection(resultsSpan);
   }
 });
-

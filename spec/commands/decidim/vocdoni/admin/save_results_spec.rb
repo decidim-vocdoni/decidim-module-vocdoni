@@ -63,7 +63,7 @@ describe Decidim::Vocdoni::Admin::SaveResults do
   end
 
   it "updates the election" do
-    subject.call
+    perform_enqueued_jobs { subject.call }
     expect(election.reload.status).to eq "results_published"
   end
 
@@ -73,7 +73,7 @@ describe Decidim::Vocdoni::Admin::SaveResults do
       .with(:save_results, election, user, extra: { status: "results_published" })
       .and_call_original
 
-    expect { subject.call }.to change(Decidim::ActionLog, :count)
+    expect { perform_enqueued_jobs { subject.call } }.to change(Decidim::ActionLog, :count)
     action_log = Decidim::ActionLog.last
     expect(action_log.version).to be_present
     expect(action_log.version.event).to eq "update"
