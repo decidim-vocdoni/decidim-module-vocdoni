@@ -114,15 +114,18 @@ describe "Admin manages census", :slow, type: :system do
     context "when selected any permission" do
       before do
         check(id_document_handler_name.humanize)
-        click_button "Save census"
+        perform_enqueued_jobs do
+          click_button "Save census"
+        end
+        sleep 1
       end
 
       it "has success message" do
         expect(page).to have_admin_callout("Successfully imported 1 items (0 errors)")
       end
 
-      it "has confirm button" do
-        expect(page).to have_content("Confirm the census data")
+      it "checks for text about uploading data to the Vocdoni blockchain" do
+        expect(page).to have_content("The census data is uploaded and prepared for its use in the Vocdoni Blockchain.")
       end
 
       it "has the message that the records loaded" do
