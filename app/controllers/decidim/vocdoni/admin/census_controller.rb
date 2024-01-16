@@ -66,7 +66,7 @@ module Decidim
           command_class.call(form, election) do
             on(:ok) do
               set_flash_and_redirect(:notice, success_message)
-              CreateVoterWalletsJob.perform_later(election.id) if command_class == CreateCensusData
+              CreateVoterWalletsJob.perform_later(election.id) if [Decidim::Vocdoni::Admin::CreateCensusData, Decidim::Vocdoni::Admin::CreateInternalCensus].include?(command_class)
             end
             on(:invalid) { set_flash_and_render(:alert, t(".error"), failure_template) }
           end
