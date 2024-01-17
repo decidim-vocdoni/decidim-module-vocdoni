@@ -45,10 +45,7 @@
               <p><strong id="census-processing-percentage"><%= t("status.percentage_complete", scope: "decidim.vocdoni.admin.census", count: status.count, percentage: status.percentage_complete) %></strong></p>
             </div>
           <% end %>
-          <p><%= t("decidim.vocdoni.admin.census.status.data", count: status.count,
-                   due_date: l(status.last_import_at, format: :long)) %>
-          </p>
-
+          <p><%= t("decidim.vocdoni.admin.census.status.data", count: status.count, due_date: l(status.last_import_at, format: :long)) %></p>
           <%= link_to t("decidim.vocdoni.admin.census.destroy.title"),
                       destroy_all_election_census_path(election),
                       method: :delete,
@@ -82,6 +79,7 @@
           <p class="help-text"><%= t("permissions_warning", scope: "decidim.vocdoni.admin.census") %></p>
           <%= render partial: "decidim_permissions_form", locals: { form: @census_permissions_form, election: election, current_organization: current_organization } %>
         </div>
+      </div>
     <% else %>
       <div class="flex--cc">
         <% if allowed_to?(:edit, :election_calendar, election: election) && election.ready_for_calendar_form? %>
@@ -92,14 +90,26 @@
     <% unless status.name == "ready" ||
       (election.internal_census? && election.verification_types.empty?) ||
       election.internal_census? && election.voters.empty? %>
-    <div class="card-section">
-      <div class="callout alert">
-        <%= t("census_warning", scope: "decidim.vocdoni.admin.census.index").html_safe %>
+      <div class="card-section">
+        <div class="callout alert">
+          <%= t("census_warning", scope: "decidim.vocdoni.admin.census.index").html_safe %>
+        </div>
       </div>
-    </div>
+    <% end %>
+    <% if election.internal_census? && election.verification_types.any? && election.voters.empty? %>
+      <div class="card-section">
+        <div class="callout warning">
+          <%= t("census_empty", scope: "decidim.vocdoni.admin.census.index") %>
+        </div>
+        <div class="flex--cc">
+          <% if allowed_to?(:edit, :election_calendar, election: election) && election.ready_for_calendar_form? %>
+            <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: "button form-general-submit" %>
+          <% end %>
+        </div>
+      </div>
     <% end %>
   </div>
-
+  </div>
 </div>
 
 <%= javascript_pack_tag "decidim_vocdoni_admin" %>
