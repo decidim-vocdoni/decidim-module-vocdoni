@@ -33,6 +33,8 @@ module Decidim
 
         def voter_verified?
           required_authorizations = census_authorize_methods.map(&:name)
+          return true if election.internal_census? && required_authorizations.empty?
+
           required_authorizations.present? && required_authorizations.all? { |auth| user_authorizations&.include?(auth) }
         end
 
