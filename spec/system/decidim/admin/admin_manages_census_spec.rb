@@ -31,7 +31,7 @@ describe "Admin manages census", :slow, type: :system do
       expect(page).to have_content("There are 2 records loaded in total")
 
       expect(voter1.wallet_address).to eq("0x0b9eA6587591d888f0b3a2D67f3d416246BB9304")
-      expect(voter2.wallet_address).to eq("0xEb41E436E768b814102902ABF1fd155e007f94D3")
+      expect(voter2.wallet_address).to eq("0x5D38b06B50412294532b9A2C0127AD1455Af7934")
     end
   end
 
