@@ -27,19 +27,19 @@ module Decidim
 
       it "can generate a deterministic wallet" do
         expect(subject.deterministicWallet).to eq({
-                                                    "address" => "0x287bB1F264E11aF871d9c0C32F6bc1Bc59f811dD",
-                                                    "privateKey" => "0x6d166f16c5b5acf8472eb1e6e7d3c366adc38d7f651a203dbd978cfe6ff3c853",
-                                                    "publicKey" => "0x043160d65e3ce0090183a9ec8a1fc43fc2677e0c7d61609dad27dcb5460c5e1f9f9e3c35177ee441164df3052a6adb85cc9f977e0d4fcf6f4b3c365791728c3d32"
+                                                    "address" => "0x5747fbA7EAc126176e7EDBBd0CaacFC26f6770E0",
+                                                    "privateKey" => "0x019726c6babc1de231f26fd6cbb2df2c912784a2e1ba55295496269a6d3ff651",
+                                                    "publicKey" => "0x04b95585db8921a0cc94200c83463c8ad43edc9fb3214accf5b4c49731ef96c7ff424d7ce7a764355b38af56afa3c38e7d588148e1a85acd64d5e5cc79942ee041"
                                                   })
         expect(subject.deterministicWallet("one parameter")).to eq({
-                                                                     "address" => "0xD5c53CD9080C2c5bF0Ac29029A66ce51b560A3c7",
-                                                                     "privateKey" => "0xd92e6ff88ebfe3aa646b5bfcce7a1cd0e879646782bdba2131ac0e64055318be",
-                                                                     "publicKey" => "0x0472c8bc391802be3b7d612fb36dc4aa170736e1aea09512216bfd8f3942e3f8ad522cc0db214072123328dd36a2cecb9281cfe3906aa739d186ba0c16249fb2bc"
+                                                                     "address" => "0x031f6cF902FbfD87D305eA05702201F30c8503B9",
+                                                                     "privateKey" => "0x474bb92a5c7c525225abdfdd63611c4e7b23306fbe40f70db4533f06d177ba0f",
+                                                                     "publicKey" => "0x04c79bafda0295523e5d9aa5dffe2360af10c36ef2a0310b71064880ca2253dd04324bac92b05f0f25b83bd5c36f7d77e5de4766ccf035f6c91c31c5f873df8571"
                                                                    })
         expect(subject.deterministicWallet(["array 0", "array 1"])).to eq({
-                                                                            "address" => "0xFa62E4A17D20174e44Aaa1Ad8f075c7CdD65ee77",
-                                                                            "privateKey" => "0xf8986555559e7839baacf121f0d68e6fc7efa34792fa763a52e25afa44e288b4",
-                                                                            "publicKey" => "0x04312dad046327f763fbaa0b6bae75910e78805d15825d2ad1a9884de879c2a06a63ed33c726fa358a022da7d5a631f1489c71da3e255ce70acaec96a7e7cb9276"
+                                                                            "address" => "0x22C3174a986A5c60ADfe12149b3c4762987a8C70",
+                                                                            "privateKey" => "0xa8ab766416e930db53996985218b3adf894e0cabb9a7261de375c25ad1618693",
+                                                                            "publicKey" => "0x0461912971112e85aae89e8f586ab2b81397439d0f8d8efd369d806ab6b049f132c928d902d92d96bb2e6e59800d9d1e26e725e348a83e222bdbf4c7e4e1d374f3"
                                                                           })
       end
 
