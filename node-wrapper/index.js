@@ -26,7 +26,7 @@ const randomWallet = (name) => {
  * The wallet is secured by adding a salt provided in the env variable VOCDONI_SALT
  */
 const deterministicWallet = (token) => {
-  const wallet = VocdoniSDKClient.generateWalletFromData(`${token}-${process.env.VOCDONI_SALT}`);
+  const wallet = VocdoniSDKClient.generateWalletFromData(token);
   return {
     address: wallet.address,
     privateKey: wallet.privateKey,
