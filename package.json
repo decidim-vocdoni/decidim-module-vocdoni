@@ -46,6 +46,6 @@
     "sass-embedded": "~1.57.1"
   },
   "dependencies": {
-    "@vocdoni/sdk": "^0.7.2"
+    "@vocdoni/sdk": "^0.7.3"
   }
 }

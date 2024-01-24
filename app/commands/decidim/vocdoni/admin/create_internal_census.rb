@@ -19,7 +19,7 @@ module Decidim
         def call
           return broadcast(:invalid) unless @form.valid?
 
-          users_data = fetch_verified_users
+          users_data = anyone_verified? ? fetch_verified_users : create_technical_voter
 
           # rubocop:disable Rails/SkipsModelValidations
           Voter.insert_all(@election, users_data) if users_data.present?
@@ -33,10 +33,19 @@ module Decidim
 
         private
 
+        def anyone_verified?
+          @form.data.any?
+        end
+
         def fetch_verified_users
           @form.data.map do |user|
             [user.email, token_for_voter(user.email)]
           end
+        end
+
+        def create_technical_voter
+          unique_email = "voter_#{Time.current.to_i}@example.com"
+          [[unique_email, token_for_voter(unique_email)]]
         end
 
         def token_for_voter(email)
