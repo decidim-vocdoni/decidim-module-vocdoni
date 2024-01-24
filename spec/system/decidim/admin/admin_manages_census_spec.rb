@@ -92,7 +92,9 @@ describe "Admin manages census", :slow, type: :system do
 
   describe "internal census" do
     let!(:authorization_handler_name) { "dummy_authorization_handler" }
-    let!(:id_document_handler_name) { "id_document_handler" }
+    let!(:id_document_handler_name) { "another_dummy_authorization_handler" }
+    let(:translated_authorization_handler_name) { I18n.t("decidim.authorization_handlers.#{authorization_handler_name}.name") }
+    let(:translated_id_document_handler_name) { I18n.t("decidim.authorization_handlers.#{id_document_handler_name}.name") }
     let!(:organization) { create(:organization, available_authorizations: available_authorizations) }
     let!(:available_authorizations) { [authorization_handler_name, id_document_handler_name] }
     let(:authorizations_count) { organization.available_authorizations.count }
@@ -113,7 +115,7 @@ describe "Admin manages census", :slow, type: :system do
 
     context "when selected any permission" do
       before do
-        check(id_document_handler_name.humanize)
+        check(translated_id_document_handler_name)
         perform_enqueued_jobs do
           click_button "Save census"
         end
@@ -135,8 +137,8 @@ describe "Admin manages census", :slow, type: :system do
 
     context "when selected a few permissions" do
       before do
-        check(authorization_handler_name.humanize)
-        check(id_document_handler_name.humanize)
+        check(translated_authorization_handler_name)
+        check(translated_id_document_handler_name)
         perform_enqueued_jobs do
           click_button "Save census"
         end
