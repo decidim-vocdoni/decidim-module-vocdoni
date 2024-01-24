@@ -65,6 +65,8 @@ This plugin uses this SDK using a wrapper around it by calling a [Node](https://
 
 So, ensure you have a working NodeJs application accessible by the Decidim installation.
 
+When using dynamic census (when we the census can change during the election vote period), it is necessary to update it in to the Vocdoni blockchain. In order not to overflow the Vocdoni API by sending census updates one by one, this process is done periodically by sending all the users accumulated during that period. A common scenario for this is when you select an authorization method in order to be able to vote and people dynamically authorize themselves in order to vote. This introduces a waiting period that can be reduced to about a minute if these batch update are send every minute in a cron job.
+
 To configure Vocdoni to automatically send batch updates, add the following line to your crontab. This will allow updates to be sent every minute, reducing the waiting time for participants to a maximum of 70 seconds.
 
 ```crontab
