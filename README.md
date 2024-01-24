@@ -53,17 +53,6 @@ status are checked every 15 minutes, you can do it with this configuration:
 # Change Elections status on decidim-vocdoni
 0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status > /dev/null
 ```
-## Node JS required: Vocdoni API
-
-> **TL;DR** Ensure you have a working NodeJs installation in the Decidim Production server
-> (Node is already a requirement in order to precompile the Rails assets but it is not strictly necessary for running Decidim in production).
-> **If you want to use this plugin, you'll need to have NodeJs installed in the production server**.
-
-This module needs to comunicate with the [Vocdoni API](https://vocdoni.io/api). For that, it used the [SDK provided](https://developer.vocdoni.io/sdk) by Vocdoni that is written in Javascript and available as an [NPM package](https://www.npmjs.com/package/@vocdoni/sdk).
-
-This plugin uses this SDK using a wrapper around it by calling a [Node](https://nodejs.org/en/) instance under the hood.
-
-So, ensure you have a working NodeJs application accessible by the Decidim installation.
 
 When using dynamic census (when we the census can change during the election vote period), it is necessary to update it in to the Vocdoni blockchain. In order not to overflow the Vocdoni API by sending census updates one by one, this process is done periodically by sending all the users accumulated during that period. A common scenario for this is when you select an authorization method in order to be able to vote and people dynamically authorize themselves in order to vote. This introduces a waiting period that can be reduced to about a minute if these batch update are send every minute in a cron job.
 
