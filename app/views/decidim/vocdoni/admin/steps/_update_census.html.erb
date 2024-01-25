@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.steps.census") %></h2>
+  </div>
+
+  <div class="card-section">
+    <p><%= t("description", scope: "decidim.vocdoni.admin.steps.census") %></p>
+
+    <p>TODO: last update was...</p>
+    <p>TODO: the census needs updating info</p>
+
+    <%= link_to update_census_election_steps_path(election), class: "button primary alert", method: :put do %>
+      <%= icon "people", role: "img", aria_label: t("actions.preview", scope: "decidim.vocdoni"), target: :blank %>
+      <%= t("update_census", scope: "decidim.vocdoni.admin.steps.census") %>
+    <% end %>
+
+  </div>
+</div>

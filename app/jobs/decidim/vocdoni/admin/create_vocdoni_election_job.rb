@@ -12,7 +12,13 @@ module Decidim
           # json format
           begin
             election.build_answer_values!
-            @vocdoni_id = sdk.createElection(election.to_vocdoni, election.questions_to_vocdoni, election.census_status.all_wallets)
+            result = sdk.createElection(election.to_vocdoni, election.questions_to_vocdoni, election.census_status.all_wallets)
+            @vocdoni_id = result["electionId"]
+            @census_identifier = result["censusIdentifier"]
+            @census_address = result["censusAddress"]
+            @census_private_key = result["censusPrivateKey"]
+            @census_public_key = result["censusPublicKey"]
+
             update_election
             Rails.logger.info "CreateVocdoniElectionJob: Election #{election_id} created at Vocdoni with id #{vocdoni_id}"
           rescue Sdk::NodeError => e
@@ -26,6 +32,12 @@ module Decidim
 
         def update_election
           election.vocdoni_election_id = vocdoni_id
+          election.census_attributes = {
+            identifier: @census_identifier,
+            address: @census_address,
+            private_key: @census_private_key,
+            public_key: @census_public_key
+          }
           election.save!
           # set "paused" in vocdoni but not in decidim, this way we can simulate a "manual start"
           # Vocdoni does not provide an "idle" status, so we use "paused" to simulate it

@@ -7,7 +7,6 @@ module Decidim
 
       def perform
         election_authorization_data = group_authorization_data_by_election
-
         election_authorization_data.each do |election_id, authorizations|
           process_election_authorizations(election_id, authorizations)
         end
@@ -37,6 +36,8 @@ module Decidim
         Decidim::Vocdoni::Voter.insert_all(election, user_data) if user_data.any?
         # rubocop:enable Rails/SkipsModelValidations
 
+        update_census!(election, user_data)
+
         # rubocop:disable Rails/Output
         puts "Processed authorization data for election with id: #{election.id}"
         puts "Election voters count: #{election.voters.count}"
@@ -47,6 +48,10 @@ module Decidim
 
       def token_for_voter(email, election_id)
         "#{email}-#{election_id}-#{SecureRandom.hex(16)}"
+      end
+
+      def update_census!(election, user_data)
+        Sdk.new(election.organization, election).updateCensus(user_data)
       end
     end
   end

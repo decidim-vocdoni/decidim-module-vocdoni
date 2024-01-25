@@ -7,7 +7,7 @@
 const { VocdoniSDKClient } = require("@vocdoni/sdk");
 const { Wallet } = require("@ethersproject/wallet");
 const { vocdoniClient, clientInfo } = require(`${process.env.VOCDONI_WRAPPER_PATH}/client.js`);
-const { vocdoniElection } = require(`${process.env.VOCDONI_WRAPPER_PATH}/election.js`);
+const { vocdoniElection, updateElectionCensus } = require(`${process.env.VOCDONI_WRAPPER_PATH}/election.js`);
 
 /**
  * Creates a random Wallet and returns the private key
@@ -35,7 +35,7 @@ const deterministicWallet = (token) => {
 };
 
 /**
- * Information about the environment (mostly for testing purposes)
+ * Information about the environment
  */
 const env = () => {
   return {
@@ -122,7 +122,19 @@ const electionMetadata = async () => {
 const createElection = async (electionData, questionsData, censusData) => {
   const client = vocdoniClient();
   const _election = await vocdoniElection(electionData, questionsData, censusData);
-  return await client.createElection(_election);
+  const electionId = await client.createElection(_election);
+  return {
+    electionId: electionId, 
+    censusIdentifier: client.censusService.auth.identifier, 
+    censusAddress: client.censusService.auth.wallet.address,
+    censusPrivateKey: client.censusService.auth.wallet.privateKey,
+    censusPublicKey: client.censusService.auth.wallet.publicKey
+  }
+};
+
+const updateCensus = async (censusAttributes, censusData) => {
+  const client = vocdoniClient();
+  return await updateElectionCensus(client, censusAttributes, censusData);
 };
 
 /**
@@ -165,3 +177,4 @@ const collectFaucetTokens = async () => {
   const client = vocdoniClient();
   return await client.collectFaucetTokens();
 };
+

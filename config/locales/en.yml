@@ -214,6 +214,12 @@ en:
               results.
             success: The election has been successfully canceled.
             title: Canceled
+          census:
+            description: This election is using this Decidim internal census, it is
+              possible to update it during the duration of the election but it requires
+              your manual action as it might cost some credits.
+            title: Dynamic census
+            update_census: Update census now!
           create_election:
             description: Your voting process is secured using the advanced digital
               voting technology of the Vocdoni Protocol. Please be patient, as the

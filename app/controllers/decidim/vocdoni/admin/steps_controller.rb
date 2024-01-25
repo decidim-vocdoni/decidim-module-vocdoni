@@ -51,6 +51,13 @@ module Decidim
           render :index
         end
 
+        def update_census
+          # TODO: check elction internal_census, permissions...
+          # TODO flash message "updating census"
+          UpdateElectionCensusJob.perform_later(election)
+          redirect_to election_steps_path(election)
+        end
+
         private
 
         def ensure_wallet_created

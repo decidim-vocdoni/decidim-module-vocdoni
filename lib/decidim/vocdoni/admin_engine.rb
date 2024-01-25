@@ -18,7 +18,11 @@ module Decidim
             put :unpublish
             post :credits
           end
-          resources :steps, only: [:index, :show, :update]
+          resources :steps, only: [:index, :show, :update] do
+            collection do
+              put :update_census
+            end
+          end
           resources :questions do
             resources :answers
           end

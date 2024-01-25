@@ -34,6 +34,9 @@
 
 <% if @form %>
   <%= decidim_form_for(@form, url: election_step_path(election, current_step), method: :patch, html: { id: "new_election_status_", class: "form step #{current_step}" }) do |f| %>
+
+    <%= render partial: "update_census" if @election.internal_census? && @election.started? %>
+
     <%= render partial: current_step.to_s, locals: { form: @form, f: f } %>
 
     <%= f.hidden_field :current_step %>
