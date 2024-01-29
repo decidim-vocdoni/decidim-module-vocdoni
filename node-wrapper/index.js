@@ -125,7 +125,8 @@ const createElection = async (electionData, questionsData, censusData) => {
   const electionId = await client.createElection(_election);
   return {
     electionId: electionId, 
-    censusIdentifier: client.censusService.auth.identifier, 
+    censusId: electionData.census.id,
+    censusIdentifier: client.censusService.auth.identifier,
     censusAddress: client.censusService.auth.wallet.address,
     censusPrivateKey: client.censusService.auth.wallet.privateKey,
     censusPublicKey: client.censusService.auth.wallet.publicKey

@@ -92,14 +92,15 @@ console.log(await checkAddress(service, censusId, censusWallet))
 console.log("Is the new addres in census?")
 console.log(await checkAddress(service, censusId, newCensusWallet))
 
+let censusDetails = null;
 try {
 	console.log("Adding the new census...");
 	newCensus = await service.create(CensusType.WEIGHTED);
 	console.log(newCensus)
 	const add = await service.add(newCensus.id, [{ key: newCensusWallet, weight: BigInt(1) }]);
-	console.log(add);
-	const publish = await service.publish(newCensus.id);
-	console.log(publish);
+	console.log("ADD", add);
+	censusDetails = await service.publish(newCensus.id);
+	console.log("censusDetails", censusDetails);
 } catch(e) {
 	console.error("Error adding new census", e.message);
 	process.exit();
@@ -111,7 +112,7 @@ console.log("Is the new addres in census?")
 console.log(await checkAddress(service, newCensus.id, newCensusWallet))
 
 try {
-	await client.changeElectionCensus(electionData["id"], newCensus.id, newCensus.uri);
+	await client.changeElectionCensus(electionData["id"], censusDetails.censusID, censusDetails.uri);
 } catch(e) {
 	console.error("Error updating election census", e);
 }
