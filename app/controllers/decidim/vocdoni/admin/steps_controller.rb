@@ -58,7 +58,7 @@ module Decidim
 
           non_voter_ids = new_users_with_authorizations_and_voters[:non_voters].pluck(:id)
 
-          UpdateElectionCensusJob.perform_later(election, non_voter_ids)
+          UpdateElectionCensusJob.perform_later(election.id, non_voter_ids, current_user.id)
           redirect_to election_steps_path(election)
         end
 
@@ -141,7 +141,7 @@ module Decidim
                                           .where.not(wallet_address: [nil, ""])
           voter_emails = voters.pluck(:email)
           non_voters = users.where.not(email: voter_emails)
-          {non_voters: non_voters}
+          { non_voters: non_voters }
         end
       end
     end

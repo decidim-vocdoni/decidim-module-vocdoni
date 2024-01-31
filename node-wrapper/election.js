@@ -20,33 +20,28 @@ const vocdoniElection = async (electionData, questionsData, censusData) => {
 };
 
 const updateElectionCensus = async (client, censusAttributes, censusData) => {
-  const censusWallet = new Wallet(censusAttributes["privateKey"]);
-  const censusIdentifier = censusAttributes["identifier"];
-  const service = new CensusService({ 
-    url: client.censusService.url, 
-    chunk_size: client.censusService.chunk_size,
-    auth: {
-      identifier: censusIdentifier,
-      wallet: censusWallet
-    } 
-  });
-  const newCensus = await service.create(CensusType.WEIGHTED);
-  await service.add(
-    newCensus.id,
-    censusData.map((wallet) => ({ key: wallet, weight: BigInt(1) }))
-  );
-  // Publish the new census
-  const info = await service.publish(newCensus.id);
-  // return await client.changeElectionCensus(client.electionId, info.censusID, info.uri);
-
-  // Updating the election census and waiting for the transaction to complete.
-  client.changeElectionCensus(censusAttributes["electionId"], info.censusID, info.uri)
-      .then(txHash => {
-        return client.chainService.waitForTransaction(txHash, 1000 , 1);
-      })
-      .catch(error => {
-        console.error("Error changing election census", error);
-      });
+  try {
+    const censusWallet = new Wallet(censusAttributes["privateKey"]);
+    const censusIdentifier = censusAttributes["identifier"];
+    const service = new CensusService({
+      url: client.censusService.url,
+      chunk_size: client.censusService.chunk_size,
+      auth: {
+        identifier: censusIdentifier,
+        wallet: censusWallet
+      }
+    });
+    const newCensus = await service.create(CensusType.WEIGHTED);
+    await service.add(
+      newCensus.id,
+      censusData.map((wallet) => ({ key: wallet, weight: BigInt(1) }))
+    );
+    const info = await service.publish(newCensus.id);
+    await client.changeElectionCensus(censusAttributes["electionId"], info.censusID, info.uri);
+    return JSON.stringify({ success: true, count: censusData.length, timestamp: new Date(), newCensusId: info.censusID});
+  } catch (error) {
+    return JSON.stringify({ success: false, error: error.message, count: 0, timestamp: new Date() });
+  }
 };
 
 module.exports.vocdoniElection = vocdoniElection;
