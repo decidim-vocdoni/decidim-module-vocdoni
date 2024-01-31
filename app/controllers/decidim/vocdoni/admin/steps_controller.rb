@@ -7,7 +7,8 @@ module Decidim
       class StepsController < Admin::ApplicationController
         helper Decidim::ApplicationHelper
         helper StepsHelper
-        helper_method :elections, :election, :current_step
+        helper_method :elections, :election, :current_step, :census_needs_update?,
+                      :new_users_with_authorizations_and_voters, :users_awaiting_census
 
         before_action :ensure_wallet_created
 
@@ -54,7 +55,10 @@ module Decidim
         def update_census
           # TODO: check elction internal_census, permissions...
           # TODO flash message "updating census"
-          UpdateElectionCensusJob.perform_later(election)
+
+          non_voter_ids = new_users_with_authorizations_and_voters[:non_voters].pluck(:id)
+
+          UpdateElectionCensusJob.perform_later(election, non_voter_ids)
           redirect_to election_steps_path(election)
         end
 
@@ -102,6 +106,42 @@ module Decidim
 
         def current_vocdoni_wallet
           @current_vocdoni_wallet ||= Decidim::Vocdoni::Wallet.find_by(decidim_organization_id: current_organization.id)
+        end
+
+        def census_needs_update?
+          return false unless election.internal_census?
+
+          true if new_users_with_authorizations_and_voters[:non_voters].count.positive?
+        end
+
+        def users_awaiting_census
+          new_users_with_authorizations_and_voters[:non_voters].count
+        end
+
+        def new_users_with_authorizations
+          verification_types = election.verification_types
+
+          users = current_organization.users.not_deleted.confirmed
+          if verification_types.present?
+            verified_users = Decidim::Authorization.select(:decidim_user_id)
+                                                   .where(decidim_user_id: users.select(:id))
+                                                   .where.not(granted_at: nil)
+                                                   .where(name: verification_types)
+                                                   .group(:decidim_user_id)
+                                                   .having("COUNT(distinct name) = ?", verification_types.count)
+            users = users.where(id: verified_users)
+          end
+
+          users
+        end
+
+        def new_users_with_authorizations_and_voters
+          users = new_users_with_authorizations
+          voters = Decidim::Vocdoni::Voter.where(email: users.select(:email), in_vocdoni_census: true)
+                                          .where.not(wallet_address: [nil, ""])
+          voter_emails = voters.pluck(:email)
+          non_voters = users.where.not(email: voter_emails)
+          {non_voters: non_voters}
         end
       end
     end

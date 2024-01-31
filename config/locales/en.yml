@@ -220,6 +220,8 @@ en:
               your manual action as it might cost some credits.
             title: Dynamic census
             update_census: Update census now!
+            users_awaiting_census: There are <strong>%{count}</strong> users waiting to be added to
+              the census.
           create_election:
             description: Your voting process is secured using the advanced digital
               voting technology of the Vocdoni Protocol. Please be patient, as the

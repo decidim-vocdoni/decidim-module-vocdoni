@@ -37,7 +37,16 @@ const updateElectionCensus = async (client, censusAttributes, censusData) => {
   );
   // Publish the new census
   const info = await service.publish(newCensus.id);
-  return await client.changeElectionCensus(client.electionId, info.censusID, info.uri);
+  // return await client.changeElectionCensus(client.electionId, info.censusID, info.uri);
+
+  // Updating the election census and waiting for the transaction to complete.
+  client.changeElectionCensus(censusAttributes["electionId"], info.censusID, info.uri)
+      .then(txHash => {
+        return client.chainService.waitForTransaction(txHash, 1000 , 1);
+      })
+      .catch(error => {
+        console.error("Error changing election census", error);
+      });
 };
 
 module.exports.vocdoniElection = vocdoniElection;
