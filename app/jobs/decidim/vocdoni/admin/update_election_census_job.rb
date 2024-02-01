@@ -10,20 +10,16 @@ module Decidim
           @election_id = election_id
           @non_voter_ids = non_voter_ids
           @current_user_id = current_user_id
-          byebug
+
           return unless election&.internal_census?
 
           # rubocop:disable Rails/SkipsModelValidations
           Voter.insert_all(@election, fetch_verified_users(non_voter_ids)) if fetch_verified_users(non_voter_ids).present?
           # rubocop:enable Rails/SkipsModelValidations
 
-          CreateVoterWalletsJob.perform_later(election_id)
+          CreateVoterWalletsJob.perform_now(election_id)
 
-          if all_voters_processed?
-            update_census!
-          else
-            self.class.set(wait: 10.seconds).perform_later(election_id, non_voter_ids, current_user_id)
-          end
+          update_census! if all_voters_processed?
         end
 
         private
@@ -71,9 +67,9 @@ module Decidim
           if result["success"]
             attributes = {
               last_census_update_records_added: @non_voter_ids.count,
-              census_last_updated_at: Time.current
+              census_last_updated_at: result["timestamp"]
             }
-            byebug
+
             Decidim.traceability.update!(
               election,
               current_user,
