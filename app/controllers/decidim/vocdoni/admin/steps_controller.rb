@@ -56,7 +56,7 @@ module Decidim
           # TODO: check elction internal_census, permissions...
           # TODO flash message "updating census"
 
-          non_voter_ids = new_users_with_authorizations_and_voters[:non_voters].pluck(:id)
+          non_voter_ids = non_voters_users_with_authorizations(election).pluck(:id)
 
           UpdateElectionCensusJob.perform_later(election.id, non_voter_ids, current_user.id)
           redirect_to election_steps_path(election)
@@ -111,14 +111,14 @@ module Decidim
         def census_needs_update?
           return false unless election.internal_census?
 
-          true if new_users_with_authorizations_and_voters[:non_voters].count.positive?
+          true if non_voters_users_with_authorizations(election).count.positive?
         end
 
-        def users_awaiting_census
-          new_users_with_authorizations_and_voters[:non_voters].count
+        def users_awaiting_census(election)
+          non_voters_users_with_authorizations(election).count
         end
 
-        def new_users_with_authorizations
+        def new_users_with_authorizations(election)
           verification_types = election.verification_types
 
           users = current_organization.users.not_deleted.confirmed
@@ -135,13 +135,14 @@ module Decidim
           users
         end
 
-        def new_users_with_authorizations_and_voters
-          users = new_users_with_authorizations
-          voters = Decidim::Vocdoni::Voter.where(email: users.select(:email), in_vocdoni_census: true)
+        def non_voters_users_with_authorizations(election)
+          users = new_users_with_authorizations(election)
+
+          voters = Decidim::Vocdoni::Voter.where(decidim_vocdoni_election_id: election.id)
+                                          .where(email: users.select(:email), in_vocdoni_census: true)
                                           .where.not(wallet_address: [nil, ""])
           voter_emails = voters.pluck(:email)
-          non_voters = users.where.not(email: voter_emails)
-          { non_voters: non_voters }
+          users.where.not(email: voter_emails)
         end
       end
     end

@@ -10,7 +10,7 @@ module Decidim
           @election_id = election_id
           @non_voter_ids = non_voter_ids
           @current_user_id = current_user_id
-
+          byebug
           return unless election&.internal_census?
 
           # rubocop:disable Rails/SkipsModelValidations
@@ -22,7 +22,7 @@ module Decidim
           if all_voters_processed?
             update_census!
           else
-            self.class.set(wait: 10.seconds).perform_later(election_id, non_voter_ids)
+            self.class.set(wait: 10.seconds).perform_later(election_id, non_voter_ids, current_user_id)
           end
         end
 
@@ -73,7 +73,7 @@ module Decidim
               last_census_update_records_added: @non_voter_ids.count,
               census_last_updated_at: Time.current
             }
-
+            byebug
             Decidim.traceability.update!(
               election,
               current_user,
@@ -85,8 +85,6 @@ module Decidim
           else
             Rails.logger.error "Error updating census: #{result["error"]}"
           end
-        rescue StandardError => e
-          Rails.logger.error "Error updating census: #{e.message}"
         end
       end
     end

@@ -12,7 +12,7 @@
       <span><%= t("records_added", scope: scope) %>:
         <strong><%= election.last_census_update_records_added || t("none", scope: scope) %></strong></span>
     </p>
-    <p><%= t("users_awaiting_census", count: users_awaiting_census, scope: scope).html_safe %></p>
+    <p><%= t("users_awaiting_census", count: users_awaiting_census(election), scope: scope).html_safe %></p>
     <%= link_to_if census_needs_update?, t("update_census", scope: scope), update_census_election_steps_path(election), class: "button primary alert", method: :put do
       content_tag(:span, t("update_census", scope: scope), class: "button primary alert disabled")
     end %>
