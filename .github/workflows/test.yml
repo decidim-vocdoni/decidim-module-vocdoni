@@ -41,7 +41,7 @@ jobs:
         with:
           bundler-cache: true
 
-      - uses: browser-actions/setup-chrome@v2
+      - uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: 121.0.6167.85
 
