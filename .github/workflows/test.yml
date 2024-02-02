@@ -41,14 +41,13 @@ jobs:
         with:
           bundler-cache: true
 
-      - uses: browser-actions/setup-chrome@v1
+      - uses: browser-actions/setup-chrome@v2
         with:
-          chrome-version: stable
+          chrome-version: 121.0.6167.85
 
-      - name: Setup ChromeDriver
-        uses: nanasess/setup-chromedriver@v1
+      - uses: nanasess/setup-chromedriver@v2
         with:
-          chromedriver-version: stable
+          chromedriver-version: 121.0.6167.85
 
       - run: |
           echo "Chrome has been installed at path ${{ steps.setup-chrome.outputs.chrome-path }}"
