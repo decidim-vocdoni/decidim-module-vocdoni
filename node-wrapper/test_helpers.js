@@ -1,13 +1,12 @@
 const { Election, PlainCensus } = require("@vocdoni/sdk");
-const { Wallet } = require("@ethersproject/wallet");
 
 const newElection = async (client, participants) => {
   const census = new PlainCensus();
   // Add census
   participants.forEach((entry) => census.add(entry));
   const election = Election.from({
-    title: 'Election test #' + Math.round(Math.random()*1000000),
-    description: 'Election test census',
+    title: `Election test #${Math.round(Math.random() * 1000000)}`,
+    description: "Election test census",
     endDate: new Date(Date.now() + 1000 * 60 * 60 * 24),
     census,
     electionType: {
@@ -19,14 +18,14 @@ const newElection = async (client, participants) => {
     }
   });
 
-  election.addQuestion('Ain\'t this census awesome?', 'Question description', [
+  election.addQuestion("Ain't this census awesome?", "Question description", [
     {
-      title: 'Yes',
-      value: 0,
+      title: "Yes",
+      value: 0
     },
     {
-      title: 'No',
-      value: 1,
+      title: "No",
+      value: 1
     }
   ]);
 
@@ -37,18 +36,23 @@ const newElection = async (client, participants) => {
     "censusIdentifier": client.censusService.auth.identifier,
     "censusAddress": client.censusService.auth.wallet.address,
     "censusPrivateKey": client.censusService.auth.wallet.privateKey,
-    "censusPublicKey": client.censusService.auth.wallet.publicKey,
+    "censusPublicKey": client.censusService.auth.wallet.publicKey
   }
   return electionData;
 };
 
 const checkAddress = async (service, censusId, wallet) => {
   try {
-    return await service.fetchProof(censusId, wallet) ? "Yes" : "No";
-  } catch(e) {
+    const proof = await service.fetchProof(censusId, wallet);
+    if (proof) {
+      return "Yes";
+    }
     return "No";
+  } catch (error) {
+    return error.message;
   }
 };
+
 
 module.exports.newElection = newElection;
 module.exports.checkAddress = checkAddress;

@@ -12,5 +12,11 @@
     "react": {
       "version": "17.0.2"
     }
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "env": {
+    "es2020": true
   }
 }
