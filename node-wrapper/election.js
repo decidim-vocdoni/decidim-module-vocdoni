@@ -25,7 +25,8 @@ const updateElectionCensus = async (client, censusAttributes, censusData) => {
     const censusIdentifier = censusAttributes.identifier;
     const service = new CensusService({
       url: client.censusService.url,
-      chunkSize: client.censusService.chunk_size,
+      // eslint-disable-next-line camelcase
+      chunk_size: client.censusService.chunk_size,
       auth: {
         identifier: censusIdentifier,
         wallet: censusWallet

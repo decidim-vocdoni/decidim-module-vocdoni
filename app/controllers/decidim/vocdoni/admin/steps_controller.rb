@@ -8,7 +8,7 @@ module Decidim
         helper Decidim::ApplicationHelper
         helper StepsHelper
         helper_method :elections, :election, :current_step, :census_needs_update?,
-                      :new_users_with_authorizations_and_voters, :users_awaiting_census
+                      :non_voters_users_with_authorizations, :users_awaiting_census
 
         before_action :ensure_wallet_created
 
@@ -53,12 +53,14 @@ module Decidim
         end
 
         def update_census
-          # TODO: check elction internal_census, permissions...
-          # TODO flash message "updating census"
+          enforce_permission_to :update, :steps, election: election
+
+          return unless election.internal_census?
 
           non_voter_ids = non_voters_users_with_authorizations(election).pluck(:id)
-
           UpdateElectionCensusJob.perform_later(election.id, non_voter_ids, current_user.id)
+          flash[:notice] = I18n.t("steps.census_update.success", scope: "decidim.vocdoni.admin")
+
           redirect_to election_steps_path(election)
         end
 
@@ -97,7 +99,7 @@ module Decidim
         end
 
         def elections
-          @elections ||= Decidim::Vocdoni::Election.where(component: current_component)
+          @elections ||= Decidim::Vocdoni::Election.includes(:component).where(component: current_component)
         end
 
         def election
@@ -109,13 +111,11 @@ module Decidim
         end
 
         def census_needs_update?
-          return false unless election.internal_census?
-
-          true if non_voters_users_with_authorizations(election).count.positive?
+          @census_needs_update ||= election.internal_census? && non_voters_users_with_authorizations(election).count.positive?
         end
 
         def users_awaiting_census(election)
-          non_voters_users_with_authorizations(election).count
+          @users_awaiting_census ||= non_voters_users_with_authorizations(election).count
         end
 
         def new_users_with_authorizations(election)
@@ -137,12 +137,10 @@ module Decidim
 
         def non_voters_users_with_authorizations(election)
           users = new_users_with_authorizations(election)
+          voters = Decidim::Vocdoni::Voter.where(decidim_vocdoni_election_id: election.id, in_vocdoni_census: true)
+                                          .where.not(wallet_address: [nil, ""]).pluck(:email)
 
-          voters = Decidim::Vocdoni::Voter.where(decidim_vocdoni_election_id: election.id)
-                                          .where(email: users.select(:email), in_vocdoni_census: true)
-                                          .where.not(wallet_address: [nil, ""])
-          voter_emails = voters.pluck(:email)
-          users.where.not(email: voter_emails)
+          users.where.not(email: voters)
         end
       end
     end
