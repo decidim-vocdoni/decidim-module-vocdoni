@@ -43,7 +43,13 @@ jobs:
 
       - uses: browser-actions/setup-chrome@v1
         with:
-          chrome-version: 120
+          chrome-version: stable
+        id: setup-chrome
+
+      - run: |
+          echo "Chrome has been installed at path ${{ steps.setup-chrome.outputs.chrome-path }}"
+          ${{ steps.setup-chrome.outputs.chrome-path }} --version
+        name: Check Chrome Version
 
       - uses: actions/setup-node@v3
         with:
