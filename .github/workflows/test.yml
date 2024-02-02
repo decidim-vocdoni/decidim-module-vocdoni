@@ -43,12 +43,12 @@ jobs:
 
       - uses: browser-actions/setup-chrome@v1
         with:
-          chrome-version: 121.0.6167.85
+          chrome-version: stable
 
       - name: Setup ChromeDriver
         uses: nanasess/setup-chromedriver@v1
         with:
-          chromedriver-version: 121.0.6167.85
+          chromedriver-version: stable
 
       - run: |
           echo "Chrome has been installed at path ${{ steps.setup-chrome.outputs.chrome-path }}"
