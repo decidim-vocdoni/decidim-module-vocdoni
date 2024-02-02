@@ -49,11 +49,6 @@ jobs:
         with:
           chromedriver-version: 121.0.6167.85
 
-      - run: |
-          echo "Chrome has been installed at path ${{ steps.setup-chrome.outputs.chrome-path }}"
-          ${{ steps.setup-chrome.outputs.chrome-path }} --version
-        name: Check Chrome Version
-
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
