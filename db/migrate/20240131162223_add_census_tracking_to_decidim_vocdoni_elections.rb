@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # This migration comes from decidim_vocdoni (originally 20240131162223)
 
 class AddCensusTrackingToDecidimVocdoniElections < ActiveRecord::Migration[6.1]

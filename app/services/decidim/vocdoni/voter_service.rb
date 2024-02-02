@@ -5,7 +5,10 @@ module Decidim
     class VoterService
       def self.verify_and_insert(election, non_voter_ids)
         verified_users = fetch_verified_users(election, non_voter_ids)
+
+        # rubocop:disable Rails/SkipsModelValidations
         Voter.insert_all(election, verified_users) if verified_users.any?
+        # rubocop:enable Rails/SkipsModelValidations
       end
 
       def self.fetch_verified_users(election, non_voter_ids)
