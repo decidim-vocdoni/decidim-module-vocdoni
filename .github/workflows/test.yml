@@ -41,9 +41,9 @@ jobs:
         with:
           bundler-cache: true
 
-      - uses: nanasess/setup-chromedriver@v2
+      - uses: browser-actions/setup-chrome@v1
         with:
-          chromedriver-version: 119.0.6045.105
+          chrome-version: 120
 
       - uses: actions/setup-node@v3
         with:
