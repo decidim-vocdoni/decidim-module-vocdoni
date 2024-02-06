@@ -3,9 +3,15 @@ const WAIT_TIME_MS = 30000;
 
 // Fetch the votes from the API
 export const getElectionResults = async () => {
-  const resultsPath = document.querySelector(".js-vocdoni-client").dataset.resultsPath;
-  const response = await fetch(resultsPath);
-  return response.json();
+  const vocdoniClientElement = document.querySelector(".js-vocdoni-client");
+  if (vocdoniClientElement) {
+    const resultsPath = vocdoniClientElement.dataset.resultsPath;
+    if (resultsPath) {
+      const response = await fetch(resultsPath);
+      return response.json();
+    }
+  }
+  return null;
 };
 
 // Update the DOM with the answer for a specific question index
@@ -25,8 +31,11 @@ const fetchAndDisplayVotes = async (questionIdx) => {
 // Process each accordion element to fetch and display stats if it's open
 const processAccordion = async (accordion) => {
   if (accordion.style.display !== "none") {
-    const questionIdx = accordion.querySelector("td[data-question-idx]").dataset.questionIdx;
-    await fetchAndDisplayVotes(questionIdx);
+    const questionIdxCell = accordion.querySelector("td[data-question-idx]");
+    if (questionIdxCell) {
+      const questionIdx = questionIdxCell.dataset.questionIdx;
+      await fetchAndDisplayVotes(questionIdx);
+    }
   }
 };
 
@@ -44,11 +53,15 @@ document.addEventListener("DOMContentLoaded", () => {
 // Set up event listeners on accordion titles to fetch stats when they are opened
 document.querySelectorAll(".accordion-title").forEach((title) => {
   title.addEventListener("click", async (event) => {
-    const accordionContent = event.target.closest(".accordion-item").querySelector(".accordion-content");
+    const accordionItem = event.target.closest(".accordion-item");
+    const accordionContent = accordionItem.querySelector(".accordion-content");
     const isExpanded = accordionContent.getAttribute("aria-expanded") === "true";
     if (!isExpanded) {
-      const questionIdx = accordionContent.querySelector("td[data-question-idx]").dataset.questionIdx;
-      await fetchAndDisplayVotes(questionIdx);
+      const questionIdxCell = accordionContent.querySelector("td[data-question-idx]");
+      if (questionIdxCell) {
+        const questionIdx = questionIdxCell.dataset.questionIdx;
+        await fetchAndDisplayVotes(questionIdx);
+      }
     }
   });
 });

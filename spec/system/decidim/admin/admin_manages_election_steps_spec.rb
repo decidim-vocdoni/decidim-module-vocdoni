@@ -13,7 +13,7 @@ describe "Admin manages election steps", :slow, type: :system do
       }
     }
   end
-  let(:balance) { 50 }
+  let(:balance) { 500 }
   let(:vocdoni_status) { "UPCOMING" }
   let(:vocdoni_election_id) { "123456789" }
   let!(:wallet) { create :vocdoni_wallet, organization: current_component.organization }
@@ -22,11 +22,20 @@ describe "Admin manages election steps", :slow, type: :system do
       [3, 14]
     ]
   end
+  let!(:create_election_result) do
+    {
+      "electionId" => vocdoni_election_id,
+      "censusIdentifier" => "cfe4e3d3-3e3e-4e3e-3e3e-3e3e3e3e3e3e",
+      "censusAddress" => "0x0000000000000000000000000000000000000002",
+      "censusPrivateKey" => "0x0000000000000000000000000000000000000003",
+      "censusPublicKey" => "0x0000000000000000000000000000000000000004"
+    }
+  end
 
   before do
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:info).and_return(info)
-    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:createElection).and_return(vocdoni_election_id)
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:createElection).and_return(create_election_result)
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:pauseElection).and_return(true)
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return({ "status" => vocdoni_status, "results" => results })
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:continueElection).and_return(true)

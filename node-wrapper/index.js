@@ -178,4 +178,3 @@ const collectFaucetTokens = async () => {
   const client = vocdoniClient();
   return await client.collectFaucetTokens();
 };
-
