@@ -127,5 +127,28 @@ describe "Vote online in an election", type: :system do
         end
       end
     end
+
+    context "when the census was created without authorized users" do
+      context "when the census is not updated" do
+        let!(:election) { create :vocdoni_election, :ongoing, :published, :with_internal_census, component: component, verification_types: verification_types }
+        let(:another_user) { create(:user, :confirmed, organization: organization) }
+        let!(:voter) { create(:vocdoni_voter, election: election, email: another_user.email, in_vocdoni_census: false) }
+        let(:non_voter_ids) { [voter.id] }
+        let(:admin) { create(:user, :admin, organization: organization) }
+
+        before do
+          login_as user, scope: :user
+          visit_component
+          click_link translated(election.title)
+          click_link "Start voting"
+        end
+
+        it "shows a message to update the census" do
+          expect(page).to have_content("To vote, we'll need to check that you're on the census")
+        end
+      end
+
+      # TODO: Add context when a user is authorized after the election is created
+    end
   end
 end
