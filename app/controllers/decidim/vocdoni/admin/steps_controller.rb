@@ -64,6 +64,16 @@ module Decidim
           redirect_to election_steps_path(election)
         end
 
+        def census_data
+          info = {
+            census_last_updated_at: election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || I18n.t("steps.census_update.none", scope: "decidim.vocdoni.admin"),
+            last_census_update_records_added: election.last_census_update_records_added,
+            users_awaiting_census: I18n.t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe
+          }
+
+          render json: { info: info }, status: info ? :ok : :unprocessable_entity
+        end
+
         private
 
         def ensure_wallet_created

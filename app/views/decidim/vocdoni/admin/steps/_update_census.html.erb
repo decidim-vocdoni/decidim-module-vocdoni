@@ -1,4 +1,5 @@
-<div class="card">
+<div  class="card js-census-data"
+      data-update-census-url="<%= census_data_election_steps_path(election_id: election.id, format: :json) %>">
   <div class="card-divider">
     <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.steps.census") %></h2>
   </div>
@@ -7,14 +8,22 @@
     <p><%= t("description", scope: "decidim.vocdoni.admin.steps.census") %></p>
     <p>
       <%= t("last_update", scope: "decidim.vocdoni.admin.steps.census") %>:
-      <strong><%= election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong> |
+      <strong id="census-last-updated"><%= election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong> |
       <span><%= t("records_added", scope: "decidim.vocdoni.admin.steps.census") %>:
-        <strong><%= election.last_census_update_records_added || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong></span>
+    <strong id="census-records-added"><%= election.last_census_update_records_added || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong></span>
     </p>
-    <p><%= t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe %></p>
-    <%= link_to_if census_needs_update?, t("update_census", scope: "decidim.vocdoni.admin.steps.census"), update_census_election_steps_path(election), class: "button primary alert", method: :put do
-      content_tag(:span, t("update_census", scope: "decidim.vocdoni.admin.steps.census"), class: "button primary alert disabled")
-    end %>
-
+    <p data-users-awaiting-census>
+      <%= t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe %>
+    </p>
+    <div id="census-update-container">
+      <%= link_to_if census_needs_update?,
+                     t("update_census", scope: "decidim.vocdoni.admin.steps.census"),
+                     update_census_election_steps_path(election_id: election.id),
+                     class: "button primary alert",
+                     method: :put,
+                     id: "update-census-link" do %>
+        <%= content_tag(:span, t("update_census", scope: "decidim.vocdoni.admin.steps.census"), class: "button primary alert disabled") %>
+      <% end %>
+    </div>
   </div>
 </div>

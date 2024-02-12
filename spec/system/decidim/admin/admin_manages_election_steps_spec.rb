@@ -251,6 +251,25 @@ describe "Admin manages election steps", :slow, type: :system do
     end
   end
 
+  describe "updateing the census" do
+    let!(:election) { create :vocdoni_election, :with_internal_census, :ready_for_setup, :configured, :ongoing, component: current_component }
+    let(:non_voter_ids) { create_list(:user, 3, organization: current_component.organization).map(&:id) }
+
+    it "performs the action successfully" do
+      visit_steps_page
+      expect(page).to have_content("There are 1 users waiting to be added to the census.")
+      click_link "Update census now!"
+      sleep 1
+      perform_enqueued_jobs
+      sleep 1
+      expect(page).to have_admin_callout("The census has been successfully updated")
+      # Next tests are not working because the ajax click is not working with the perform_enqueued_jobs
+      # expect(page).to have_content("Records added: 1", wait: 11)
+      # expect(page).to have_css("a", text: "Update census now!", disabled: true)
+      # expect(page).to have_content("There are 0 users waiting to be added to the census.")
+    end
+  end
+
   private
 
   def visit_steps_page

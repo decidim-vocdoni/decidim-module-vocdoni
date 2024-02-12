@@ -21,6 +21,7 @@ module Decidim
           resources :steps, only: [:index, :show, :update] do
             collection do
               put :update_census
+              get :census_data, defaults: { format: :json }
             end
           end
           resources :questions do
