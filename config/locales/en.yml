@@ -76,8 +76,8 @@ en:
             success: Answer successfully updated
         census:
           census_type:
-            external: External (CSV)
-            internal: Internal (Decidim registered users)
+            external: External (upload a CSV file)
+            internal: Internal (all registered participants)
           create:
             error: There was an error importing or generating the census.
             submit_permissions: Save census
@@ -95,9 +95,8 @@ en:
               you selected, they will be added to the census.
             census_warning: The census is not ready yet. You can <b>upload and confirm</b>
               it from the census page.
-            info: For setting up the census for a Vocdoni Election, you need to upload
-              the census.
-            title: Census for a Vocdoni election
+            info: Choose the type of census you want to use for this election
+            title: Type of census
           new:
             file: ".csv file with emails data"
             info: 'Must be a file in CSV format with only two columns, one with the
@@ -106,15 +105,18 @@ en:
               (;):'
             submit: Upload file
             title:
-              external: Upload a new census
-              internal: Required authorizations to vote
-          permissions_warning: Note that users will need to fulfill all selected authorizations
-            in order to vote (leaving all checkboxes empty will allow to vote anyone
-            registered).
+              external: Upload a CSV file
+              internal: Additional required authorizations to vote (optional)
+          permissions_warning_html: You can restrict participation in the election
+            to participants who have an authorization.<br>Note that participants will
+            need to fulfill the selected authorizations in order to vote (leaving
+            all checkboxes empty will allow to vote anyone registered).
           status:
             data: There are %{count} records loaded in total. Last upload date was
               on %{due_date}. If you want to change the census (for instance, adding
               more participants), its necessary to first delete all census data.
+            internal_census_ready_to_setup_html: 'Selected census: <strong>Internal</strong>'
+            no_additional_authorizations: no additional authorizations are required
             percentage_complete: Completed %{percentage}% of %{count} total records.
             processing_html: The census is curently being processed for its use in
               the Blockchain. Once it's ready, you will be able to create the election.

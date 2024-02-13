@@ -35,7 +35,16 @@
           </h2>
         </div>
         <div class="card-section">
-          <% if status.ready_to_setup? %>
+          <% if status.ready_to_setup? && election.internal_census? %>
+            <div class="callout success">
+              <p><%= t("status.internal_census_ready_to_setup_html", scope: "decidim.vocdoni.admin.census", steps_path: election_steps_path(election)) %>
+                <span>(<%= election.verification_types.empty? ?
+                             t("status.no_additional_authorizations", scope: "decidim.vocdoni.admin.census") :
+                             election.verification_types.map { |type| t("decidim.authorization_handlers.#{type}.name") }.join(", ") %>)
+                </span>
+              </p>
+            </div>
+        <% elsif status.ready_to_setup? %>
             <div class="callout success">
               <p><%= t("status.ready_to_setup_html", scope: "decidim.vocdoni.admin.census", steps_path: election_steps_path(election)) %></p>
             </div>
@@ -69,16 +78,16 @@
         </div>
       </div>
 
-      <div id="permissions_select" class="card" style="display: none;">
+      <div id="permissions_select" class="" style="display: none;">
         <div class="card-divider">
           <h2 class="card-title">
             <%= t("new.title.internal", scope: "decidim.vocdoni.admin.census") %>
           </h2>
         </div>
-        <div class="card-section">
-          <p class="help-text"><%= t("permissions_warning", scope: "decidim.vocdoni.admin.census") %></p>
+        <div class="card-section card">
+          <p class="help-text"><%= t("permissions_warning_html", scope: "decidim.vocdoni.admin.census") %></p>
           <%= render partial: "decidim_permissions_form", locals: { form: @census_permissions_form, election: election, current_organization: current_organization } %>
-        </div>
+        <!--closing tag moved to the form-->
       </div>
     <% else %>
       <div class="flex--cc">
@@ -90,14 +99,14 @@
     <% unless status.name == "ready" ||
       (election.internal_census? && election.verification_types.empty?) ||
       election.internal_census? && election.voters.empty? %>
-      <div class="card-section">
+      <div class="mt-s">
         <div class="callout alert">
           <%= t("census_warning", scope: "decidim.vocdoni.admin.census.index").html_safe %>
         </div>
       </div>
     <% end %>
     <% if election.internal_census? && election.verification_types.any? && election.voters.empty? %>
-      <div class="card-section">
+      <div class="mt-s">
         <div class="callout warning">
           <%= t("census_empty", scope: "decidim.vocdoni.admin.census.index") %>
         </div>
