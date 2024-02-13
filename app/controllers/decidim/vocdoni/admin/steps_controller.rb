@@ -65,9 +65,11 @@ module Decidim
         end
 
         def census_data
+          none_text = I18n.t("steps.census.none", scope: "decidim.vocdoni.admin")
+
           info = {
-            census_last_updated_at: election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || I18n.t("steps.census_update.none", scope: "decidim.vocdoni.admin"),
-            last_census_update_records_added: election.last_census_update_records_added,
+            census_last_updated_at: election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || none_text,
+            last_census_update_records_added: election.last_census_update_records_added || none_text,
             users_awaiting_census: I18n.t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe
           }
 
