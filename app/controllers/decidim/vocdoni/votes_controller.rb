@@ -11,7 +11,7 @@ module Decidim
 
       helper VotesHelper
       helper_method :exit_path, :elections, :election, :questions, :questions_count, :vote,
-                    :preview_mode?, :election_unique_id, :vocdoni_api_endpoint_env
+                    :preview_mode?, :election_unique_id, :vocdoni_api_endpoint_env, :voter_not_yet_in_census?
 
       delegate :count, to: :questions, prefix: true
 
@@ -77,6 +77,12 @@ module Decidim
         enforce_permission_to :vote, :election, election: election
 
         true
+      end
+
+      def voter_not_yet_in_census?(election)
+        return false unless current_user
+
+        Decidim::Vocdoni::Voter.find_by(email: current_user.email, decidim_vocdoni_election_id: election.id).nil?
       end
     end
   end
