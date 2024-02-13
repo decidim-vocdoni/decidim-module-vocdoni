@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const censusDataElement = document.querySelector(".js-census-data");
   const censusDataPath = censusDataElement.dataset.updateCensusUrl;
-  const updateCensusContainer = document.getElementById("census-update-container");
 
   const updateCensusInfo = async () => {
     try {
@@ -20,14 +19,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document.querySelector("[data-users-awaiting-census]").innerHTML = data.info.users_awaiting_census;
 
-      let censusUpdateElement = "";
-      if (usersAwaitingCount > 0) {
-        censusUpdateElement = `<a href="${censusDataPath}" class="button primary alert" data-method="put" data-remote="true" id="update-census-link">${window.translations.updateCensusNow}</a>`;
-      } else {
-        censusUpdateElement = `<span class="button primary alert disabled">${window.translations.updateCensusNow}</span>`;
-      }
+      const updateCensusElement = document.getElementById("update-census-link");
 
-      updateCensusContainer.innerHTML = censusUpdateElement;
+      if (updateCensusElement) {
+        if (updateCensusElement.tagName === "A") {
+          if (usersAwaitingCount > 0) {
+            updateCensusElement.classList.remove("disabled");
+          } else {
+            updateCensusElement.classList.add("disabled");
+          }
+        } else if (updateCensusElement.tagName === "SPAN") {
+          if (usersAwaitingCount > 0) {
+            updateCensusElement.classList.remove("disabled");
+          } else {
+            updateCensusElement.classList.add("disabled");
+          }
+        }
+      }
     } catch (error) {
       console.error("Error:", error);
     }
