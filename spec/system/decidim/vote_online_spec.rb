@@ -144,7 +144,8 @@ describe "Vote online in an election", type: :system do
         end
 
         it "shows a message to update the census" do
-          expect(page).to have_content("To vote, we'll need to check that you're on the census")
+          # TODO: This text should be changed
+          expect(page).to have_content("The administrator has not yet added your wallet to the census. Please try again later")
         end
       end
 
