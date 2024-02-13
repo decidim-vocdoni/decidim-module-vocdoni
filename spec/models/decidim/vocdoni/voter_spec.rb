@@ -7,11 +7,29 @@ describe Decidim::Vocdoni::Voter do
 
   let(:election) { create :vocdoni_election }
 
+  describe "#validations" do
+    it "is invalid without a valid email" do
+      voter.email = "invalid_email"
+      expect(voter).not_to be_valid
+    end
+
+    it "is invalid without a token" do
+      voter.token = nil
+      expect(voter).not_to be_valid
+    end
+
+    it "does not allow duplicate emails within the same election" do
+      create(:vocdoni_voter, election: election, email: "user@example.com")
+      new_voter = build(:vocdoni_voter, election: election, email: "user@example.com")
+      expect(new_voter).not_to be_valid
+    end
+  end
+
   describe ".insert_all" do
     let(:values) do
       [
-        ["user1@example.org", "123456"],
-        ["user2@example.org", "abcxyz"]
+        %w(user1@example.org 123456),
+        %w(user2@example.org abc xyz)
       ]
     end
 
@@ -79,6 +97,12 @@ describe Decidim::Vocdoni::Voter do
 
     it "removes all voters for a specific election" do
       expect { Decidim::Vocdoni::Voter.clear(election) }.to change(Decidim::Vocdoni::Voter, :count).by(-3)
+    end
+  end
+
+  describe ".clear with empty voters list" do
+    it "does not raise error when no voters to clear" do
+      expect { Decidim::Vocdoni::Voter.clear(election) }.not_to raise_error
     end
   end
 
