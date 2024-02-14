@@ -100,9 +100,11 @@
       (election.internal_census? && election.verification_types.empty?) ||
       election.internal_census? && election.voters.empty? %>
       <div class="mt-s">
-        <div class="callout alert">
-          <%= t("census_warning", scope: "decidim.vocdoni.admin.census.index").html_safe %>
-        </div>
+        <div class="callout alert census_warning_text"></div>
+      </div>
+      <div id="translations"
+           data-csv-warning="<%= t("census_warning_for_csv_html", scope: "decidim.vocdoni.admin.census.index") %>"
+           data-permissions-warning="<%= t("census_warning_for_internal_census_html", scope: "decidim.vocdoni.admin.census.index") %>">
       </div>
     <% end %>
     <% if election.internal_census? && election.verification_types.any? && election.voters.empty? %>

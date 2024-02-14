@@ -113,6 +113,10 @@ describe "Admin manages census", :slow, type: :system do
       expect(authorizations_checkboxes.count).to eq(authorizations_count)
     end
 
+    it "has warning content for the internal census" do
+      expect(page).to have_content("The census is not ready yet. You can upload the CSV file to processed.")
+    end
+
     context "when selected any permission" do
       before do
         check(translated_id_document_handler_name)

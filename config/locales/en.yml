@@ -93,8 +93,10 @@ en:
           index:
             census_empty: The census is currently empty. When users pass the authorizations
               you selected, they will be added to the census.
-            census_warning: The census is not ready yet. You can <b>upload and confirm</b>
-              it from the census page.
+            census_warning_for_csv_html: The census is not ready yet. You can <b>upload
+              the CSV file</b> to processed.
+            census_warning_for_internal_census_html: The census is not ready yet.
+              You can <b>save it</b> to processed.
             info: Choose the type of census you want to use for this election
             title: Type of census
           new:
@@ -256,6 +258,8 @@ en:
             invalid: There was a problem setting up this election
             requirements:
               census_ready: The census is <strong>ready</strong>.
+              internal_census_ready_html: 'The census is <strong>ready</strong>. Selected
+                census is: <strong>Internal (%{verification_types}</strong>).'
               manual_start: The election <strong>will start manually.</strong>
               minimum_answers: Each question has <strong>at least two answers</strong>.
               minimum_questions: The election has <strong>at least one question</strong>.

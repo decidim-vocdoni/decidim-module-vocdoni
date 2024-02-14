@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const censusDataElement = document.querySelector(".js-census-data");
+  if (!censusDataElement) {
+    return;
+  }
+
   const censusDataPath = censusDataElement.dataset.updateCensusUrl;
 
   const updateCensusInfo = async () => {

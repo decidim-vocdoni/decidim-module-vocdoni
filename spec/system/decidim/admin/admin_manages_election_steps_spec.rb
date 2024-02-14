@@ -142,6 +142,19 @@ describe "Admin manages election steps", :slow, type: :system do
         expect(page).not_to have_content("Vocdoni communication error")
       end
     end
+
+    context "when the internal census" do
+      let!(:election) { create :vocdoni_election, :with_internal_census, :ready_for_setup, component: current_component }
+
+      it "has another message for internal census" do
+        visit_steps_page
+
+        within "form.create_election" do
+          expect(page).to have_content("The census is ready. Selected census is: Internal (no additional authorizations are required).")
+          expect(page).not_to have_link("Fix it")
+        end
+      end
+    end
   end
 
   describe "when continuing the election" do
