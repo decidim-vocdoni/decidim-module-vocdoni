@@ -5,7 +5,21 @@
   </div>
 
   <div class="card-section">
-    <p><%= t("description", scope: "decidim.vocdoni.admin.steps.census") %></p>
+    <div class="census-info">
+      <p><%= t("census_info_title", scope: "decidim.vocdoni.admin.steps.census") %></p>
+      <% if election.verification_types.empty? %>
+        <p><%= t("status.no_additional_authorizations", scope: "decidim.vocdoni.admin.census") %></p>
+      <% else %>
+        <ul>
+          <% election.verification_types.each do |type| %>
+            <li><%= t("decidim.authorization_handlers.#{type}.name") %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <div class="callout warning">
+      <p><%= t("description", scope: "decidim.vocdoni.admin.steps.census") %></p>
+    </div>
     <p>
       <%= t("last_update", scope: "decidim.vocdoni.admin.steps.census") %>:
       <strong id="census-last-updated"><%= election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong> |

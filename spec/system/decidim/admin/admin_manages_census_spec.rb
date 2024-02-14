@@ -114,7 +114,7 @@ describe "Admin manages census", :slow, type: :system do
     end
 
     it "has warning content for the internal census" do
-      expect(page).to have_content("The census is not ready yet. You can upload the CSV file to processed.")
+      expect(page).to have_content("The census is not ready yet. You can save it to processed.")
     end
 
     context "when selected any permission" do

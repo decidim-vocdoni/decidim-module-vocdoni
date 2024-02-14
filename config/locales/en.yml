@@ -219,9 +219,9 @@ en:
             success: The election has been successfully canceled.
             title: Canceled
           census:
-            description: This election is using this Decidim internal census, it is
-              possible to update it during the duration of the election but it requires
-              your manual action as it might cost some credits.
+            census_info_title: 'This election is using the census:'
+            description: It is possible to update it during the duration of the election
+              but it requires your manual action as it might cost some credits.
             last_update: Last census update
             none: none
             records_added: Records added
