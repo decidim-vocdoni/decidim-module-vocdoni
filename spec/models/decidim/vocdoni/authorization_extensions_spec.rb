@@ -32,9 +32,9 @@ describe Decidim::Vocdoni::AuthorizationExtensions, type: :model do
 
         context "when granted_at is not changed" do
           it "does not create Vocdoni authorizations data" do
-            expect {
+            expect do
               authorization.save
-            }.not_to change(Decidim::Vocdoni::AuthorizationsData, :count)
+            end.not_to change(Decidim::Vocdoni::AuthorizationsData, :count)
           end
         end
       end
