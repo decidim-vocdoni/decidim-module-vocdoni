@@ -40,7 +40,7 @@
               <p><%= t("status.internal_census_ready_to_setup_html", scope: "decidim.vocdoni.admin.census", steps_path: election_steps_path(election)) %>
                 <span>(<%= election.verification_types.empty? ?
                              t("status.no_additional_authorizations", scope: "decidim.vocdoni.admin.census") :
-                             election.verification_types.map { |type| t("decidim.authorization_handlers.#{type}.name") }.join(", ") %>)
+                             election.verification_types.map { |type| t("decidim.authorization_handlers.#{type}.name").downcase }.join(", ") %>)
                 </span>
               </p>
             </div>

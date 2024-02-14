@@ -24,7 +24,7 @@ module Decidim
       end
 
       def self.insert_all(election, values)
-        values.each { |value| create!(email: value.first.downcase, election: election, token: value.second.downcase) }
+        values.each { |value| create(email: value.first.downcase, election: election, token: value.second.downcase) }
       end
 
       def self.clear(election)

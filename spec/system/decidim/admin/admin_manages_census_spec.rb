@@ -20,7 +20,7 @@ describe "Admin manages census", :slow, type: :system do
     it "uploads the census" do
       visit_census_page
 
-      expect(page).to have_content("Upload a new census")
+      expect(page).to have_content("Upload a CSV file")
 
       attach_file("census_data[file]", valid_census_file)
       perform_enqueued_jobs do
@@ -109,7 +109,7 @@ describe "Admin manages census", :slow, type: :system do
     end
 
     it "has Decidim permissions content" do
-      expect(page).to have_content("Internal (Decidim registered users)")
+      expect(page).to have_content("Internal (all registered participants")
       expect(authorizations_checkboxes.count).to eq(authorizations_count)
     end
 
@@ -127,7 +127,7 @@ describe "Admin manages census", :slow, type: :system do
       end
 
       it "checks for text about uploading data to the Vocdoni blockchain" do
-        expect(page).to have_content("The census data is uploaded and prepared for its use in the Vocdoni Blockchain.")
+        expect(page).to have_content("Selected census: Internal (another example authorization)")
       end
 
       it "has the message that the records loaded" do
@@ -150,7 +150,7 @@ describe "Admin manages census", :slow, type: :system do
       end
 
       it "has the message that the data is uploaded and prepared" do
-        expect(page).to have_content("The census data is uploaded and prepared for its use in the Vocdoni Blockchain.")
+        expect(page).to have_content("Selected census: Internal (example authorization, another example authorization)")
       end
 
       it "has the message that the records loaded (a technical user)" do
@@ -201,7 +201,7 @@ describe "Admin manages census", :slow, type: :system do
       click_link "OK"
     end
 
-    expect(page).to have_content("Upload a new census")
+    expect(page).to have_content("Upload a CSV file")
   end
 
   def visit_census_page

@@ -29,7 +29,7 @@ describe Decidim::Vocdoni::Voter do
     let(:values) do
       [
         %w(user1@example.org 123456),
-        %w(user2@example.org abc xyz)
+        %w(user2@example.org abcxyz)
       ]
     end
 
