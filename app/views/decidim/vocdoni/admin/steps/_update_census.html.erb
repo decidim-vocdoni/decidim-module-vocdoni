@@ -26,6 +26,9 @@
       <span><%= t("records_added", scope: "decidim.vocdoni.admin.steps.census") %>:
     <strong id="census-records-added"><%= election.last_census_update_records_added || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong></span>
     </p>
+    <div id="census-update-message" class="callout success" style="display: none;">
+      <p id="census-update-message-text"></p>
+    </div>
     <p data-users-awaiting-census>
       <%= t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe %>
     </p>
@@ -36,7 +39,7 @@
                      class: "button primary alert",
                      method: :put,
                      id: "update-census-link" do %>
-        <%= content_tag(:span, t("update_census", scope: "decidim.vocdoni.admin.steps.census"), class: "button primary alert disabled") %>
+        <%= content_tag(:span, t("update_census", scope: "decidim.vocdoni.admin.steps.census"), class: "button primary alert disabled update-census-span") %>
       <% end %>
     </div>
   </div>

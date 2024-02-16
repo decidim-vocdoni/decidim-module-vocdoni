@@ -59,18 +59,19 @@ module Decidim
 
           non_voter_ids = non_voters_users_with_authorizations(election).pluck(:id)
           UpdateElectionCensusJob.perform_later(election.id, non_voter_ids, current_user.id)
-          flash[:notice] = I18n.t("steps.census_update.success", scope: "decidim.vocdoni.admin")
 
           redirect_to election_steps_path(election)
         end
 
         def census_data
           none_text = I18n.t("steps.census.none", scope: "decidim.vocdoni.admin")
+          success_message = I18n.t("status.processing_html", scope: "decidim.vocdoni.admin.census")
 
           info = {
             census_last_updated_at: election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || none_text,
             last_census_update_records_added: election.last_census_update_records_added || none_text,
-            users_awaiting_census: I18n.t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe
+            users_awaiting_census: I18n.t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe,
+            update_message: success_message
           }
 
           render json: { info: info }, status: info ? :ok : :unprocessable_entity

@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  let previousUpdateDate = null;
   const censusDataPath = censusDataElement.dataset.updateCensusUrl;
 
   const updateCensusInfo = async () => {
@@ -12,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "GET"
       });
       if (!response.ok) {
-        throw new Error("Сетевой ответ был не ok.");
+        throw new Error("Network response was not ok");
       }
       const data = await response.json();
 
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document.querySelector("[data-users-awaiting-census]").innerHTML = data.info.users_awaiting_census;
 
-      const updateCensusElement = document.getElementById("update-census-link");
+      const updateCensusElement = document.getElementById("update-census-link") || document.querySelector(".update-census-span");
 
       if (updateCensusElement) {
         if (updateCensusElement.tagName === "A") {
@@ -40,6 +41,16 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       }
+
+      const currentDate = data.info.census_last_updated_at;
+
+      if (previousUpdateDate !== null && previousUpdateDate !== currentDate) {
+        document.getElementById("census-update-message-text").innerHTML = data.info.update_message;
+        document.getElementById("census-update-message").style.display = "block";
+      }
+
+      previousUpdateDate = currentDate;
+      console.log("previousUpdateDate", previousUpdateDate);
     } catch (error) {
       console.error("Error:", error);
     }
