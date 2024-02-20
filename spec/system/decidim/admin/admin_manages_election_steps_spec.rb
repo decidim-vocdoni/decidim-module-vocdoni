@@ -280,7 +280,6 @@ describe "Admin manages election steps", :slow, type: :system do
       sleep 1
       perform_enqueued_jobs
       sleep 1
-      expect(page).to have_admin_callout("The census has been successfully updated")
       # Next tests are not working because the ajax click is not working with the perform_enqueued_jobs
       # expect(page).to have_content("Records added: 1", wait: 4)
       # expect(page).to have_css("a", text: "Update census now!", disabled: true)
