@@ -144,12 +144,27 @@ describe "Vote online in an election", type: :system do
         end
 
         it "shows a message to update the census" do
-          # TODO: This text should be changed
           expect(page).to have_content("The administrator has not yet added your wallet to the census. Please try again later")
         end
       end
+    end
 
-      # TODO: Add context when a user is authorized after the election is created
+    context "when the census was created with authorized users" do
+      let!(:user) { create(:user, :confirmed, organization: organization) }
+      let!(:authorization) { create(:authorization, user: user, name: "dummy_authorization_handler") }
+      let!(:voter) { create(:vocdoni_voter, election: election, email: user.email, in_vocdoni_census: true) }
+      let!(:election) { create :vocdoni_election, :ongoing, :published, :with_internal_census, component: component, verification_types: verification_types }
+
+      before do
+        login_as user, scope: :user
+        visit_component
+        click_link translated(election.title)
+        click_link "Start voting"
+      end
+
+      it "shows a message to update the census" do
+        expect(page).to have_content("We are verifying that you are eligible to vote in this election. Please wait a few seconds.")
+      end
     end
   end
 end

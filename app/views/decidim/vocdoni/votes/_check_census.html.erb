@@ -2,17 +2,8 @@
 
 <div class="focus__content evote">
   <div class="row">
-    <% if (voter_not_yet_in_census?(election) && election.internal_census?) || election.verification_types.empty? %>
-      <h1 class="heading2">
-        <%= t(".title") %>
-      </h1>
-      <p><%= t(".verification") %></p>
-    <% else %>
-      <h1 class="heading2">
-        <%= t(".title") %>
-      </h1>
-      <p><%= t(".description") %></p>
-    <% end %>
+    <%= identification_title(election) %>
+    <%= identification_description(election) %>
     <div class="evote__content">
       <div class="evote__grid">
         <% unless election.internal_census? %>

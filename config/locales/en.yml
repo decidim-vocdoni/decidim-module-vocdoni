@@ -485,8 +485,12 @@ en:
             later.
           failed: Check that the provided data is correct and try again
           form_title: Enter your data
-          verification: We are verifying that you are eligible to vote in this election. Please wait a few seconds.
+          login_title: Verify your identity
           title: Identification
+          verifications_check: We are verifying that you are eligible to vote in this
+            election. Please wait a few seconds.
+          with_verifications: The administrator has not yet added your wallet to the
+            census. Please try again later
         confirm:
           answer: Answer
           answer_number: answer %{number}
