@@ -48,7 +48,7 @@ module Decidim
 
           it "creates a technical voter and updates the election" do
             expect { subject.call }.to change(Decidim::Vocdoni::Voter, :count).by(1)
-            expect(technical_voter.email).to match(/\Avoter_\d+@example.com\z/)
+            expect(technical_voter.email).to match(/\Atechnical_voter_election_\d+@techvoters\.example\.com\z/)
             expect(election.reload.internal_census).to be true
             expect(election.reload.verification_types).to eq(another_verification_types)
             expect(election.reload.election_type["dynamic_census"]).to be true
