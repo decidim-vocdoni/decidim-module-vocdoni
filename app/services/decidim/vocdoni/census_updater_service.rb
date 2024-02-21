@@ -45,9 +45,18 @@ module Decidim
           current_user = Decidim::User.find_by(id: @current_user_id)
           Decidim.traceability.update!(@election, current_user, attributes, visibility: "all")
           Rails.logger.info("Census updated for election #{@election.id}, adding #{result["count"]} voters.")
+
+          delete_technical_voter
         else
           Rails.logger.error("Error updating census: #{result["error"]}")
         end
+      end
+
+      def delete_technical_voter
+        technical_voter_email = "technical_voter_election_#{@election.id}@techvoters.example.com"
+        technical_voter = @election.voters.find_by(email: technical_voter_email)
+        technical_voter&.destroy
+        Rails.logger.info("Technical voter #{technical_voter_email} deleted successfully.") if technical_voter
       end
     end
   end

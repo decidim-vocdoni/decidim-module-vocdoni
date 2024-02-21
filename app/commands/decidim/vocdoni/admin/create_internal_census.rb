@@ -44,7 +44,7 @@ module Decidim
         end
 
         def create_technical_voter
-          unique_email = "voter_#{Time.current.to_i}@example.com"
+          unique_email = "technical_voter_election_#{@election.id}@techvoters.example.com"
           [[unique_email, token_for_voter(unique_email)]]
         end
 

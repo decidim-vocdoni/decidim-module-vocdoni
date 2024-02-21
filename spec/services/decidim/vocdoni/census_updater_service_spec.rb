@@ -25,6 +25,20 @@ RSpec.describe Decidim::Vocdoni::CensusUpdaterService do
         expect { service.update_census }.to change { election.reload.census_last_updated_at }.from(nil)
       end
 
+      it "deletes technical voter successfully when it does not exist" do
+        fake_response = { "success" => true, "timestamp" => Time.zone.now }.to_json
+
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:updateCensus).and_return(fake_response)
+        # rubocop:enable RSpec/AnyInstance
+
+        expect(Rails.logger).not_to receive(:info).with(/Technical voter .* deleted successfully./)
+        expect { service.update_census }.not_to raise_error
+
+        technical_voter_email = "technical_voter_election_#{election.id}@techvoters.example.com"
+        expect(Decidim::Vocdoni::Voter.where(email: technical_voter_email, election: election)).not_to exist
+      end
+
       it "logs an error if the SDK response is unsuccessful" do
         fake_response = { "success" => false, "error" => "Some error" }.to_json
         # rubocop:disable RSpec/AnyInstance
