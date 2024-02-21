@@ -37,9 +37,9 @@ module Decidim
       end
 
       def identification_description(election)
-        key_suffix = if election.verification_types.empty? || (!voter_not_yet_in_census?(election) && election.internal_census?)
+        key_suffix = if election.verification_types.empty? || (!voter_not_yet_in_census? && election.internal_census?)
                        "verifications_check"
-                     elsif voter_not_yet_in_census?(election) && election.internal_census?
+                     elsif voter_not_yet_in_census? && election.internal_census?
                        "with_verifications"
                      else
                        "description"

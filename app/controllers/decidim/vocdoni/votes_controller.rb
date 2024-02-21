@@ -10,7 +10,7 @@ module Decidim
       include FormFactory
 
       helper VotesHelper
-      helper_method :exit_path, :elections, :election, :questions, :questions_count, :vote,
+      helper_method :exit_path, :elections, :election, :questions, :questions_count,
                     :preview_mode?, :election_unique_id, :vocdoni_api_endpoint_env, :voter_not_yet_in_census?
 
       delegate :count, to: :questions, prefix: true
@@ -79,10 +79,8 @@ module Decidim
         true
       end
 
-      def voter_not_yet_in_census?(election)
-        return false unless current_user
-
-        Decidim::Vocdoni::Voter.find_by(email: current_user.email, decidim_vocdoni_election_id: election.id).nil?
+      def voter_not_yet_in_census?
+        voter.nil?
       end
     end
   end
