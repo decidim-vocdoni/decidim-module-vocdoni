@@ -120,11 +120,12 @@ en:
             internal_census_ready_to_setup_html: 'Selected census: <strong>Internal</strong>'
             no_additional_authorizations: no additional authorizations are required
             percentage_complete: Completed %{percentage}% of %{count} total records.
-            processing_html: The census is curently being processed for its use in
+            processing_html: The census is currently being processed for its use in
               the Blockchain. Once it's ready, you will be able to create the election.
             ready_to_setup_html: The census data is uploaded and prepared for its
               use in the Vocdoni Blockchain.
             title: Current census data
+            update_census_result_html: The census successfully updated.
         election_calendar:
           edit:
             after_voting_note: Show results only when the election is closed

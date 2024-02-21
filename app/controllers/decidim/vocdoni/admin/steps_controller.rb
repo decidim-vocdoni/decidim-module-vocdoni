@@ -65,7 +65,7 @@ module Decidim
 
         def census_data
           none_text = I18n.t("steps.census.none", scope: "decidim.vocdoni.admin")
-          success_message = I18n.t("status.processing_html", scope: "decidim.vocdoni.admin.census")
+          success_message = I18n.t("status.update_census_result_html", scope: "decidim.vocdoni.admin.census")
 
           info = {
             census_last_updated_at: election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || none_text,
