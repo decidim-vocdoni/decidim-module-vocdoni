@@ -6,8 +6,8 @@ require "decidim/vocdoni/version"
 
 Gem::Specification.new do |s|
   s.version = Decidim::Vocdoni.version
-  s.authors = ["Andrés Pereira de Lucena"]
-  s.email = ["andreslucena@gmail.com"]
+  s.authors = ["Andrés Pereira de Lucena", "Anna Topalidi", "Ivan Vergés"]
+  s.email = ["andreslucena@gmail.com", "anna@pokecode.net", "ivan@pokecode.net"]
   s.license = "AGPL-3.0"
   s.homepage = "https://github.com/decidim-vocdoni/decidim-module-vocdoni"
   s.required_ruby_version = ">= 3.0"
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,db,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 
-  s.add_dependency "decidim-core", Decidim::Vocdoni::DECIDIM_VERSION
+  s.add_dependency "decidim-core", Decidim::Vocdoni::DECIDIM_COMPAT_VERSION
   s.add_dependency "node-runner", "~> 1.1"
   s.metadata["rubygems_mfa_required"] = "true"
 end
