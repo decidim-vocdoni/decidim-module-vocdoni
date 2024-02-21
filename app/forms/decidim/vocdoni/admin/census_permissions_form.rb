@@ -11,7 +11,7 @@ module Decidim
 
           verification_types.select! { |type| valid_types.include?(type) }
 
-          users = context.current_organization.users.not_deleted.confirmed
+          users = context.current_organization.users.not_deleted.not_blocked.confirmed
           if verification_types.present?
             verified_users = Decidim::Authorization.select(:decidim_user_id)
                                                    .where(decidim_user_id: users.select(:id))
