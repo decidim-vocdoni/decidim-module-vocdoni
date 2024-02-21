@@ -240,10 +240,4 @@ FactoryBot.define do
       wallet_address { Faker::Blockchain::Ethereum.address }
     end
   end
-
-  factory :vocdoni_authorizations_data, class: "Decidim::Vocdoni::AuthorizationsData" do
-    association :authorization, factory: :authorization
-    association :election, factory: :vocdoni_election
-    processed { false }
-  end
 end
