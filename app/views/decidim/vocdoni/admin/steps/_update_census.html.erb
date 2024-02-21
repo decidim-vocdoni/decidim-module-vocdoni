@@ -32,7 +32,7 @@
     <p data-users-awaiting-census>
       <%= t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe %>
     </p>
-    <div id="census-update-container">
+    <div id="census-update-container" data-update-url=<%= update_census_election_steps_path(election_id: election.id) %>>
       <%= link_to_if census_needs_update?,
                      t("update_census", scope: "decidim.vocdoni.admin.steps.census"),
                      update_census_election_steps_path(election_id: election.id),
