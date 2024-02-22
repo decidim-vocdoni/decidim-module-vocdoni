@@ -40,6 +40,12 @@ bin/rails decidim_vocdoni:webpacker:install
 bin/rails db:migrate
 ```
 
+Depending on your Decidim version, you can choose the corresponding version to ensure compatibility:
+
+| Version | Compatible Decidim versions |
+|-------|---|
+| 1.x   | 0.27.x |
+
 ## Cron based tasks
 
 For some of the Elections status changes, you'll need to add a task to the schedule tasks

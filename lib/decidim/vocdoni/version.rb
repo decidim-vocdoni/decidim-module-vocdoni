@@ -7,7 +7,7 @@ module Decidim
     DECIDIM_COMPAT_VERSION = ">= 0.27"
 
     def self.version
-      "0.27.5"
+      "1.0"
     end
   end
 end
