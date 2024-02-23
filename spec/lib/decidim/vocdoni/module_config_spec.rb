@@ -45,7 +45,7 @@ module Decidim
       it "has the correct endpoint url" do
         expect(Decidim::Vocdoni::API_ENDPOINTS["stg"]).to eq("https://api-stg.vocdoni.net/v2")
         expect(Decidim::Vocdoni::API_ENDPOINTS["dev"]).to eq("https://api-dev.vocdoni.net/v2")
-        expect(Decidim::Vocdoni::API_ENDPOINTS["prd"]).to eq("https://api.vocdoni.net/v2")
+        expect(Decidim::Vocdoni::API_ENDPOINTS["prod"]).to eq("https://api.vocdoni.io/v2")
       end
 
       context "when enpoint is wrong" do
