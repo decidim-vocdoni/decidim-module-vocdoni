@@ -49,10 +49,12 @@ module Decidim
       true
     end
 
+    # Public: Setting to configure the reseller name
     config_accessor :vocdoni_reseller_name do
       ENV.fetch("VOCDONI_RESELLER_NAME", "Decidim Association")
     end
 
+    # Public: Setting to configure the reseller email
     config_accessor :vocdoni_reseller_email do
       ENV.fetch("VOCDONI_RESELLER_EMAIL", "vocdoni@decidim.org")
     end
