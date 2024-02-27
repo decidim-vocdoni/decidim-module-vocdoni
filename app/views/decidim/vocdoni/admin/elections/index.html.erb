@@ -2,10 +2,10 @@
 
 <div class="card">
   <div class="card-divider">
-    <h2 class="card-title">
+    <h2 class="item_show__header-title">
       <%= t(".title") %>
 
-      <%= link_to t("actions.new", scope: "decidim.vocdoni", name: t("models.election.name", scope: "decidim.vocdoni.admin")), new_election_path, class: "button tiny button--title" if allowed_to? :create, :election %>
+      <%= link_to t("actions.new", scope: "decidim.vocdoni", name: t("models.election.name", scope: "decidim.vocdoni.admin")), new_election_path, class: "button button__sm button__secondary" if allowed_to? :create, :election %>
     </h2>
   </div>
 

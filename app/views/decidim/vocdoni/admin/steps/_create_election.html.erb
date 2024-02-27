@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-divider">
-    <h2 class="card-title"><%= t(".title") %></h2>
+    <h2 class="item_show__header-title"><%= t(".title") %></h2>
   </div>
   <div class="card-section js-election-setup">
     <% unless @form.invalid? %>
@@ -33,11 +33,11 @@
         <tr>
           <% if form.errors.include?(key) %>
             <% Array(form.errors[key]).each do |error| %>
-              <td><%= icon "x", class: "text-alert", role: "img", "aria-hidden": true %> <%= error.to_s.html_safe %></td>
-              <td class="table-list__actions"><%= fix_it_button_with_icon(value[:link], "wrench") %></td>
+              <td><%= icon "close-line", class: "text-alert", role: "img", "aria-hidden": true %> <%= error.to_s.html_safe %></td>
+              <td class="table-list__actions"><%= fix_it_button_with_icon(value[:link], "hammer-line") %></td>
             <% end %>
           <% else %>
-            <td><%= icon "check", class: "text-success", role: "img", "aria-hidden": true %>&nbsp;<%= value[:message].html_safe %></td>
+            <td><%= icon "check-line", class: "text-success", role: "img", "aria-hidden": true %>&nbsp;<%= value[:message].html_safe %></td>
             <td></td>
           <% end %>
         </tr>

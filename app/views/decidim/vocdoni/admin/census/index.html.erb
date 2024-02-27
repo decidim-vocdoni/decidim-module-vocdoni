@@ -8,7 +8,7 @@
     <% if status.pending_upload? %>
       <div class="card">
         <div class="card-divider">
-          <h2 class="card-title">
+          <h2 class="item_show__header-title">
             <%= t("index.title", scope: "decidim.vocdoni.admin.census") %>
           </h2>
         </div>
@@ -30,7 +30,7 @@
     <% if status.count > 0 %>
       <div class="card">
         <div class="card-divider">
-          <h2 class="card-title">
+          <h2 class="item_show__header-title">
             <%= t("status.title", scope: "decidim.vocdoni.admin.census") %>
           </h2>
         </div>
@@ -68,7 +68,7 @@
       <div id="csv_upload" class="card">
         <div class="card">
           <div class="card-divider">
-            <h2 class="card-title">
+            <h2 class="item_show__header-title">
               <%= t("new.title.external", scope: "decidim.vocdoni.admin.census") %>
             </h2>
           </div>
@@ -80,7 +80,7 @@
 
       <div id="permissions_select" class="" style="display: none;">
         <div class="card-divider">
-          <h2 class="card-title">
+          <h2 class="item_show__header-title">
             <%= t("new.title.internal", scope: "decidim.vocdoni.admin.census") %>
           </h2>
         </div>
@@ -123,5 +123,5 @@
   </div>
 </div>
 
-<%= javascript_pack_tag "decidim_vocdoni_admin" %>
-<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
+<%= append_javascript_pack_tag "decidim_vocdoni_admin" %>
+<%= append_stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

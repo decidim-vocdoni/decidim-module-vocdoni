@@ -1,11 +1,13 @@
-<div class="card-divider">
-  <p class="label secondary">
-  <%= icon "credit-card", role: "img", "aria-hidden": true %>&nbsp;
-  <%= t("available", scope: "decidim.vocdoni.admin.steps.credits") %>:&nbsp;
-  <span class="js-vocdoni-credits-balance">
-    <span class="loading-spinner"></span>
-  </span>
-  </p>
+<div class="bg-gray-5 p-4">
+  <div class="flex items-center">
+  <%= icon "bank-card-line", role: "img", "aria-hidden": true %>&nbsp;
+    <p class="ml-2 flex-1">
+      <%= t("available", scope: "decidim.vocdoni.admin.steps.credits") %>:&nbsp;
+      <span class="js-vocdoni-credits-balance">
+        <span class="loading-spinner"></span>
+      </span>
+    </p>
+  </div>
 </div>
 
 <div class="card-section">
@@ -49,8 +51,8 @@
     </p>
   </div>
   <% end %>
-  <%= link_to credits_election_path(election), method: :remote, class: "button primary js-vocdoni-credits-collect-faucet-tokens" do %>
-    <%= icon "euro", role: "img", "aria-hidden": true %>&nbsp;
+  <%= link_to credits_election_path(election), method: :remote, class: "button button__lg button__secondary js-vocdoni-credits-collect-faucet-tokens" do %>
+    <%= icon "coin-line", role: "img", "aria-hidden": true %>&nbsp;
     <%= t("get_more", scope: "decidim.vocdoni.admin.steps.credits") %>
   <% end %>
 </div>
