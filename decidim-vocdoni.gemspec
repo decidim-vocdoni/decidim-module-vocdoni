@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ["andreslucena@gmail.com", "anna@pokecode.net", "ivan@pokecode.net"]
   s.license = "AGPL-3.0"
   s.homepage = "https://github.com/decidim-vocdoni/decidim-module-vocdoni"
-  s.required_ruby_version = ">= 3.0"
+  s.required_ruby_version = ">= 3.1"
 
   s.name = "decidim-vocdoni"
   s.summary = "A decidim vocdoni module"

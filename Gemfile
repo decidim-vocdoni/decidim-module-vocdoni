@@ -4,14 +4,20 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-DECIDIM_VERSION = "0.27.5"
+# Inside the development app, the relative require has to be one level up, as
+# the Gemfile is copied to the development_app folder (almost) as is.
+base_path = ""
+base_path = "../" if File.basename(__dir__) == "development_app"
+require_relative "#{base_path}lib/decidim/vocdoni/version"
+
+DECIDIM_VERSION = Decidim::Vocdoni::DECIDIM_VERSION
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-vocdoni", path: "."
 
 gem "bootsnap", "~> 1.7"
-gem "faker", "~> 2.14"
-gem "puma", "~> 5.6.2"
+gem "faker", "~> 3.2"
+gem "puma", "~> 6.3.1"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
@@ -20,7 +26,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "i18n-tasks", "~> 0.9.37"
+  gem "i18n-tasks", "~> 1.0"
   gem "letter_opener_web", "~> 2.0"
   gem "listen", "~> 3.1"
   gem "rubocop-faker", "~> 1.1"
@@ -30,5 +36,5 @@ group :development do
 end
 
 group :test do
-  gem "codecov", "~> 0.6.0", require: false
+  gem "codecov", require: false
 end

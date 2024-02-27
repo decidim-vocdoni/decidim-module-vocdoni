@@ -2,6 +2,7 @@
 
 require "rails"
 require "decidim/core"
+require "active_support/all"
 
 module Decidim
   module Vocdoni

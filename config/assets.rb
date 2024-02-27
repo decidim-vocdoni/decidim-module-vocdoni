@@ -27,7 +27,7 @@ Decidim::Webpacker.register_entrypoints(
   decidim_vocdoni_voter_setup_vote: "#{base_path}/app/packs/entrypoints/decidim_vocdoni_voter_setup-vote.js"
 )
 
-Decidim::Webpacker.register_stylesheet_import("stylesheets/decidim/vocdoni/vocdoni")
+# Decidim::Webpacker.register_stylesheet_import("stylesheets/decidim/vocdoni/vocdoni")
 
 # If you want to import some extra SCSS files in the Decidim main SCSS file
 # without adding any extra stylesheet inclusion tags, you can use the following
