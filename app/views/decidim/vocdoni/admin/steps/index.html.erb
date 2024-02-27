@@ -13,14 +13,14 @@
      data-html-results-path="<%= election_step_path(election, :results, format: :html) %>"
      data-vocdoni-env="<%= Decidim::Vocdoni.api_endpoint_env %>">
 
-  <div class="card-divider">
+  <div class="item_show__header">
     <h2 class="item_show__header-title">
-      <%= link_to translated_attribute(election.title), elections_path %> &gt;
+      <%= link_to translated_attribute(election.title), elections_path, class: "contents" %> &gt;
       <%= t("index.title", scope: "decidim.vocdoni.admin.steps") %>
     </h2>
   </div>
 
-  <div class="card-section">
+  <div class="card-section mt-16 mb-8">
     <ol class="progress-indicator">
       <% steps(current_step).each_with_index do |step, i| %>
         <li class="<%= step.last %>" data-step="">
@@ -42,7 +42,7 @@
     <%= f.hidden_field :current_step %>
 
     <% if @form.main_button? %>
-      <div class="button--double form-general-submit<%= " hide" if election.misconfigured? %>">
+      <div class="flex justify-center mt-8 form-general-submit<%= " hide" if election.misconfigured? %>">
         <%= f.button type: :submit, class: "button button__sm button__secondary", disabled: @form.invalid? do %>
           <%= t("steps.#{current_step}.submit", scope: "decidim.vocdoni.admin") %>
         <% end %>
