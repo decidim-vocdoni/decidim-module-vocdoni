@@ -36,9 +36,9 @@
                 <%= icon_link_to "list", election_question_answers_path(election, question), t("actions.manage_answers", scope: "decidim.vocdoni"), class: "action-icon--manage-answers" %>
 
                 <% if allowed_to? :update, :question, election: election, question: question %>
-                  <%= icon_link_to "pencil", edit_election_question_path(election, question), t("actions.edit", scope: "decidim.vocdoni"), class: "action-icon--edit" %>
+                  <%= icon_link_to "pencil-line", edit_election_question_path(election, question), t("actions.edit", scope: "decidim.vocdoni"), class: "action-icon--edit" %>
                 <% else %>
-                  <%= icon "pencil", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.edit", scope: "decidim.vocdoni") %>
+                  <%= icon "pencil-line", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.edit", scope: "decidim.vocdoni") %>
                 <% end %>
 
                 <% if allowed_to? :delete, :question, election: election, question: question %>
