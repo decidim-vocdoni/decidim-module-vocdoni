@@ -477,7 +477,9 @@ GEM
     node-runner (1.1.0)
     nokogiri (1.16.2-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.2-x86_64-darwin)
+    nokogiri (1.13.10-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.13.10-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
@@ -772,9 +774,10 @@ GEM
     zeitwerk (2.6.13)
 
 PLATFORMS
-   arm64-darwin-22
-   x86_64-darwin-22
-   x86_64-linux
+  arm64-darwin-22
+  x86_64-darwin-22
+  x86_64-linux
+  arm64-darwin-23
 
 DEPENDENCIES
   bootsnap (~> 1.7)

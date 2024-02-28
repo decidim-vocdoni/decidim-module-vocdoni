@@ -6,7 +6,7 @@
 <%= decidim_form_for([election, @form], html: { class: "form edit_question" }) do |f| %>
   <%= render partial: "form", object: f, locals: { title: t(".title") } %>
 
-  <div class="button--double form-general-submit">
+  <div class="button button__sm button__secondary">
     <%= f.submit t(".update") %>
   </div>
 <% end %>
