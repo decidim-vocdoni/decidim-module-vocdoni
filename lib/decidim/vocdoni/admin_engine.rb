@@ -18,7 +18,12 @@ module Decidim
             put :unpublish
             post :credits
           end
-          resources :steps, only: [:index, :show, :update]
+          resources :steps, only: [:index, :show, :update] do
+            collection do
+              put :update_census
+              get :census_data, defaults: { format: :json }
+            end
+          end
           resources :questions do
             resources :answers
           end
@@ -28,6 +33,15 @@ module Decidim
           resource :calendar, controller: "election_calendar", only: [:edit, :update]
         end
         root to: "elections#index"
+      end
+
+      initializer "decidim_admin.register_icons" do
+        Decidim.icons.register(name: "coin-line", icon: "coin-line", category: "system", description: "", engine: :core)
+        Decidim.icons.register(name: "hammer-line", icon: "hammer-line", category: "system", description: "", engine: :core)
+        Decidim.icons.register(name: "bank-card-line", icon: "bank-card-line", category: "system", description: "", engine: :core)
+        Decidim.icons.register(name: "pause-circle-line", icon: "pause-circle-line", category: "system", description: "", engine: :core)
+        Decidim.icons.register(name: "play-circle-line", icon: "play-circle-line", category: "system", description: "", engine: :core)
+        Decidim.icons.register(name: "stop-circle-line", icon: "stop-circle-line", category: "system", description: "", engine: :core)
       end
 
       def load_seed

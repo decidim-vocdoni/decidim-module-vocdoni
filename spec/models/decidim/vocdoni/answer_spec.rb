@@ -34,4 +34,20 @@ describe Decidim::Vocdoni::Answer do
       end
     end
   end
+
+  describe "#slug" do
+    subject(:answer) { build(:vocdoni_election_answer, id: 123) }
+
+    it "returns the correct slug" do
+      expect(subject.slug).to eq("answer-123")
+    end
+  end
+
+  describe "#component" do
+    subject(:answer) { create(:vocdoni_election_answer) }
+
+    it "returns the component" do
+      expect(subject.component).to eq(subject.election.component)
+    end
+  end
 end

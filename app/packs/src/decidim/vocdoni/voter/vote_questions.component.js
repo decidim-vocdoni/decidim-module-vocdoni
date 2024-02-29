@@ -12,8 +12,9 @@ export default class VoteQuestionsComponent {
     this.$currentStepMaxSelection = "";
     this.$answerCounter = 0;
     this.voteCasted = false;
+    this.unsavedChanges = false;
     window.onbeforeunload = () => {
-      if (this.voteCasted) {
+      if (this.voteCasted || !this.unsavedChanges) {
         return null;
       }
       return "";

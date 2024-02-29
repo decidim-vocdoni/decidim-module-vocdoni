@@ -1,0 +1,16 @@
+<%= render("focus_header", header_title: t("decidim.vocdoni.votes.header.login")) %>
+
+<div class="focus__content evote">
+  <div class="row">
+    <%= identification_title(election) %>
+    <%= identification_description(election) %>
+    <div class="evote__content">
+      <div class="evote__grid">
+        <% unless election.internal_census? %>
+          <%= render partial: "login", locals: { form: @form } %>
+        <% end %>
+      </div>
+    </div>
+    <%= render partial: "vocdoni_logo" %>
+  </div>
+</div>

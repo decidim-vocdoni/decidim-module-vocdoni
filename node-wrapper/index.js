@@ -7,16 +7,16 @@
 const { VocdoniSDKClient } = require("@vocdoni/sdk");
 const { Wallet } = require("@ethersproject/wallet");
 const { vocdoniClient, clientInfo } = require(`${process.env.VOCDONI_WRAPPER_PATH}/client.js`);
-const { vocdoniElection } = require(`${process.env.VOCDONI_WRAPPER_PATH}/election.js`);
+const { vocdoniElection, updateElectionCensus } = require(`${process.env.VOCDONI_WRAPPER_PATH}/election.js`);
 
 /**
  * Creates a random Wallet and returns the private key
- */ 
+ */
 const randomWallet = (name) => {
   const wallet = Wallet.createRandom();
   return {
-    address: wallet.address, 
-    privateKey: wallet.privateKey, 
+    address: wallet.address,
+    privateKey: wallet.privateKey,
     publicKey: wallet.publicKey
   };
 };
@@ -26,17 +26,17 @@ const randomWallet = (name) => {
  * The wallet is secured by adding a salt provided in the env variable VOCDONI_SALT
  */
 const deterministicWallet = (token) => {
-  const wallet = VocdoniSDKClient.generateWalletFromData(`${token}-${process.env.VOCDONI_SALT}`);
+  const wallet = VocdoniSDKClient.generateWalletFromData(token);
   return {
-    address: wallet.address, 
-    privateKey: wallet.privateKey, 
+    address: wallet.address,
+    privateKey: wallet.privateKey,
     publicKey: wallet.publicKey
   };
 };
 
 /**
- * Information about the environment (mostly for testing purposes)
- */ 
+ * Information about the environment
+ */
 const env = () => {
   return {
     "VOCDONI_WALLET_PRIVATE_KEY": process.env.VOCDONI_WALLET_PRIVATE_KEY,
@@ -122,7 +122,20 @@ const electionMetadata = async () => {
 const createElection = async (electionData, questionsData, censusData) => {
   const client = vocdoniClient();
   const _election = await vocdoniElection(electionData, questionsData, censusData);
-  return await client.createElection(_election);
+  const electionId = await client.createElection(_election);
+  return {
+    electionId: electionId, 
+    censusId: electionData.census.id,
+    censusIdentifier: client.censusService.auth.identifier,
+    censusAddress: client.censusService.auth.wallet.address,
+    censusPrivateKey: client.censusService.auth.wallet.privateKey,
+    censusPublicKey: client.censusService.auth.wallet.publicKey
+  }
+};
+
+const updateCensus = async (censusAttributes, censusData) => {
+  const client = vocdoniClient();
+  return await updateElectionCensus(client, censusAttributes, censusData);
 };
 
 /**
@@ -135,7 +148,7 @@ const continueElection = async () => {
 
 /**
  * Pauses the election (if running)
- */ 
+ */
 const pauseElection = async () => {
   const client = vocdoniClient();
   return await client.pauseElection();
@@ -160,7 +173,7 @@ const endElection = async () => {
 /**
  * This only works on stg/dev environments
  * Collects more credits for free
- */ 
+ */
 const collectFaucetTokens = async () => {
   const client = vocdoniClient();
   return await client.collectFaucetTokens();

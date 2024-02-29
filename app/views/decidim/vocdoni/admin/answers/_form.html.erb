@@ -1,22 +1,26 @@
-<div class="card">
-  <div class="card-divider">
-    <h2 class="card-title">
-      <%= title %>
-      <%= question_with_link(question, election) %>
-    </h2>
-  </div>
+<div class="form__wrapper">
+  <div class="card pt-4">
+    <div class="card-section">
+      <div class="item_show__header">
+        <h2 class="item_show__header-title">
+          <%= title %>
+          <%= question_with_link(question, election) %>
+        </h2>
+      </div>
 
-  <div class="card-section">
-    <div class="row column">
-      <%= form.translated :text_field, :title, autofocus: true %>
-    </div>
+      <div class="card-section">
+        <div class="row column">
+          <%= form.translated :text_field, :title, autofocus: true %>
+        </div>
 
-    <div class="row column">
-      <%= form.translated :editor, :description %>
-    </div>
+        <div class="row column">
+          <%= form.translated :editor, :description %>
+        </div>
 
-    <div class="row column">
-      <%= form.number_field :weight %>
+        <div class="row column">
+          <%= form.number_field :weight %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

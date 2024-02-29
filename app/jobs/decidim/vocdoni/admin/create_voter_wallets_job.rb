@@ -18,7 +18,7 @@ module Decidim
               Rails.logger.error "CreateVoterWalletsJob: Error updating the private key for voter #{voter.id}"
             end
           end
-          Rails.logger.info "CreateVoterWalletsJob: Succesfully processed #{ok} voters. #{count - ok} errors for election #{election_id}"
+          Rails.logger.info "CreateVoterWalletsJob: Successfully processed #{ok} voters. #{count - ok} errors for election #{election_id}"
         end
 
         private

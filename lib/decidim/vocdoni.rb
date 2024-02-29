@@ -14,7 +14,7 @@ module Decidim
 
     # Hash constant defining the Vocdoni API endpoints for each environment.
     API_ENDPOINTS = {
-      "prd" => "https://api.vocdoni.net/v2",
+      "prod" => "https://api.vocdoni.io/v2",
       "stg" => "https://api-stg.vocdoni.net/v2",
       "dev" => "https://api-dev.vocdoni.net/v2"
     }.freeze
@@ -47,6 +47,16 @@ module Decidim
     # Public: Setting to configure the interruptible elections
     config_accessor :interruptible_elections do
       true
+    end
+
+    # Public: Setting to configure the reseller name
+    config_accessor :vocdoni_reseller_name do
+      ENV.fetch("VOCDONI_RESELLER_NAME", "Decidim Association")
+    end
+
+    # Public: Setting to configure the reseller email
+    config_accessor :vocdoni_reseller_email do
+      ENV.fetch("VOCDONI_RESELLER_EMAIL", "vocdoni@decidim.org")
     end
 
     # Public: Returns the API endpoint URL based on the environment specified in the configuration.

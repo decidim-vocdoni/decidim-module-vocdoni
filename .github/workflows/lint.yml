@@ -7,12 +7,12 @@ on:
   pull_request:
 
 env:
-  RUBY_VERSION: 3.0.6
-  NODE_VERSION: 16.9.1
+  RUBY_VERSION: 3.1.1
+  NODE_VERSION: 18.17.1
 
 jobs:
   lint-report:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:

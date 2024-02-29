@@ -13,11 +13,13 @@ ignore_unused:
   - "decidim.vocdoni.admin.wallets.ready.title"
   - "decidim.vocdoni.admin_log.election.{create,delete,end_vote,publish,publish_results,setup,start_vote,unpublish,update}"
   - "decidim.vocdoni.admin_log.wallet.create"
+  - "decidim.vocdoni.admin.census.create.{error,success.generate,success.import}"
   - "decidim.vocdoni.election_m.badge_name.{finished,ongoing,upcoming,paused,canceled}"
   - "decidim.vocdoni.election_m.questions"
   - "decidim.vocdoni.elections.show.action_button.{change_vote,vote,vote_again}"
   - "decidim.vocdoni.elections.show.preview"
   - "decidim.vocdoni.elections.show.verify.{already_voted,verify_here,will_verify}"
+  - "decidim.vocdoni.votes.check_census.{access,close_modal,election_not_open,failed,form_title}"
   - "decidim.vocdoni.votes.new.can_vote_again"
   - "decidim.vocdoni.votes.new.can_vote_one_more_time"
   - "decidim.vocdoni.votes.new.no_more_votes_left"
@@ -32,4 +34,6 @@ ignore_unused:
   - "decidim.admin.shared.gallery.gallery_legend"
 
 ignore_missing:
-  - decidim.participatory_processes.scopes.global
+  - "decidim.participatory_processes.scopes.global"
+  - "decidim.vocdoni.admin.census.process_form.error"
+  - "decidim.vocdoni.admin.census.success_message_for.success.{generate,import}"

@@ -92,7 +92,7 @@ def uses_the_voting_booth(census_data)
 end
 
 def login_step(census_data)
-  within "#login" do
+  within "#check_census" do
     fill_in :login_email, with: census_data.fetch(:email)
     fill_in :login_token, with: census_data.fetch(:token)
 

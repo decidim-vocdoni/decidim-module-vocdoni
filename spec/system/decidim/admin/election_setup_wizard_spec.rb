@@ -93,7 +93,7 @@ describe "Election setup wizard", :slow, type: :system do
         end
 
         it "goes to the next step" do
-          expect(page).to have_content("Upload a new census")
+          expect(page).to have_content("Upload a CSV file")
           expect(page).not_to have_content("Questions must have at least two answers in order to go to the next step.")
         end
       end
@@ -133,7 +133,7 @@ describe "Election setup wizard", :slow, type: :system do
       end
 
       it "has form fields" do
-        expect(page).to have_content("Upload a new census")
+        expect(page).to have_content("Upload a CSV file")
       end
 
       it "can edit previous steps" do

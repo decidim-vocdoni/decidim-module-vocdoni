@@ -48,3 +48,24 @@ $white: #fff;
     left: 47%;
   }
 }
+
+.button__warning {
+  @apply bg-warning;
+
+    &:hover {
+      @apply opacity-80;
+    }
+}
+
+.start-time-field-container input,
+.end-time-field-container input {
+  display: block !important;
+}
+
+.item__edit-form.vocdoni-elections label {
+  @apply text-md;
+}
+
+.publish-text p {
+  @apply mb-2
+}

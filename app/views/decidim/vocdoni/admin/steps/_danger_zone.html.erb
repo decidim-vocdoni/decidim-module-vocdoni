@@ -1,6 +1,6 @@
 <div class="card js-danger-zone<%= " hide" if election.misconfigured? %>">
   <div class="card-divider">
-    <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.steps.danger_zone") %></h2>
+    <h2 class="item_show__header-title"><%= t("title", scope: "decidim.vocdoni.admin.steps.danger_zone") %></h2>
   </div>
 
   <%
@@ -30,12 +30,12 @@
 
         <%= link_to election_step_path(election, :cancel, status: :canceled), method: :patch, class: "button alert js-button-submit",
             data: { status: "canceled", confirm: t("confirm",  scope: "decidim.vocdoni.admin.steps.danger_zone") } do %>
-            <%= icon("x", class: "icon--before") %>
+            <%= icon("close-circle-line", class: "icon--before") %>
             <%= t("cancel", scope: "decidim.vocdoni.admin.steps.danger_zone.action") %>
         <% end %>
         <%= link_to election_step_path(election, :end, status: :end), method: :patch, class: "button alert js-button-submit",
             data: { status: "end", confirm: t("confirm",  scope: "decidim.vocdoni.admin.steps.danger_zone") } do %>
-            <%= icon("media-stop", class: "icon--before") %>
+            <%= icon("stop-circle-line", class: "icon--before") %>
             <%= t("end", scope: "decidim.vocdoni.admin.steps.danger_zone.action") %>
         <% end %>
       </div>

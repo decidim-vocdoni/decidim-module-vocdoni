@@ -40,6 +40,12 @@ bin/rails decidim_vocdoni:webpacker:install
 bin/rails db:migrate
 ```
 
+Depending on your Decidim version, you can choose the corresponding version to ensure compatibility:
+
+| Version | Compatible Decidim versions |
+|-------|---|
+| 1.x   | 0.27.x |
+
 ## Cron based tasks
 
 For some of the Elections status changes, you'll need to add a task to the schedule tasks
@@ -54,6 +60,14 @@ status are checked every 15 minutes, you can do it with this configuration:
 0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status > /dev/null
 ```
 
+## Dynamic censuses
+
+When using dynamic census (when we the census can change during the election vote period), it is necessary to update it in to the Vocdoni blockchain. 
+A common scenario for this is when you want the internal Decidim userbase to be the census. Then,an authorization method is selected in order to be able to vote and, people dynamically authorize themselves in order to vote (because they might not have the proper authorization in the moment of voting).
+
+This process can have a cost of a few tokens so it is not done automatically. The admin is responsible to update the census in the Vocdoni blockchain in the admin's monitoring page. The process of updating the census effectively removes the current census and creates a new one for the ongoing election, so it is advisable to do it with care and properly inform the voters at which time slots this will performed.
+
+> In summary, the admin is responsible to update the census at all times, this is not an automatic process. Also, remember that this might have a monetary cost in terms of tokens.
 ## Node.js required: Vocdoni API
 
 > **TL;DR** Ensure you have a working Node.js installation in the Decidim Production server with the package `@vocdoni/sdk` installed.
@@ -74,6 +88,15 @@ So, ensure you have a working Node.js application accessible by the Decidim inst
 }
 ```
 
+## Pricing
+
+The usage of the Vocdoni platform has some economic costs, as its using a Blockchain.
+
+For using it in a production environment with guaranties, you need to contact the Decidim Association to vocdoni [at] decidim.org asking for a pricing. It depends in your usage (mostly in your census size).
+
+As there could be other resellers and not only the Decidim Association, this needs to be configured through the ENV
+variables: VOCDONI_RESELLER_NAME, VOCDONI_RESELLER_EMAIL
+
 ## Configuration
 
 By default, the module is configured to read the configuration from ENV variables.
@@ -86,6 +109,8 @@ Currently, the following ENV variables are supported:
 | VOCDONI_MINUTES_BEFORE_START | How many minutes should the setup be run before the election starts (when configured automatically) | `10` |
 | VOCDONI_MANUAL_START_DELAY | How many seconds after the action of starting an election manually people will be allowed to vote. Note that this time is needed in order to configure the election in the blockchain. You might want to increase it if communication with the Vocdoni API is slow. | `30` |
 | DECIDIM_VOCDONI_SDK_DEBUG | This is for development purposes. If set to `true`, any call to the Vocdoni API using the SDK ruby wrapper will be logged into the `node_debug.log` file (on the application main folder). | `false` |
+| VOCDONI_RESELLER_NAME          | The name of the Vocdoni reseller, the organization that manages the tokens to work with the Vocdoni platform. | `Decidim Association`     |
+| VOCDONI_RESELLER_EMAIL         | The email of the Vocdoni reseller. | vocdoni@decidim.org |
 
 It is also possible to configure the module using the `decidim-vocdoni` initializer:
 

@@ -12,7 +12,6 @@ module Decidim
         attribute :secret_until_the_end, Boolean, default: false
         attribute :result_type, String
         attribute :interruptible, Boolean, default: true
-        attribute :dynamic_census, Boolean, default: false
         attribute :anonymous, Boolean, default: false
 
         validates :start_time, presence: true, unless: :manual_start?

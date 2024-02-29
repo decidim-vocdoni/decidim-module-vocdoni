@@ -113,7 +113,7 @@ module Decidim::Vocdoni
     #
     # Returns a boolean indicating if the census status equals "ready".
     def census_ready?
-      census_status&.name == "ready"
+      census_status&.name == "ready" || (internal_census? && verification_types.empty?) || (internal_census? && voters.empty?)
     end
 
     # Public: Checks if the election is ready for the census step

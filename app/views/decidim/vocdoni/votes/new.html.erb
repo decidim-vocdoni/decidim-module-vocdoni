@@ -1,14 +1,16 @@
 <div class="vote-wrapper"
      id="vote-wrapper"
+     data-internal-census="<%= election.internal_census? %>"
      data-vocdoni-env="<%= vocdoni_api_endpoint_env %>"
      data-url="<%= votes_left_election_votes_path(election.id) %>"
      data-election-unique-id="<%== election_unique_id %>"
+     data-check-verification-url="<%= check_verification_election_votes_path(election.id) %>"
      data-scheme-name="vocdoni"
      data-election-id="<%= election.id %>"
      data-preview="<%= preview_mode? %>">
 
-  <div id="login" class="focus__step" data-toggler=".hide">
-    <%= render("login") %>
+  <div id="check_census" class="focus__step" data-toggler=".hide">
+    <%= render("check_census") %>
   </div>
 
   <% questions.each_with_index do |step_question, step_index| %>
@@ -73,7 +75,6 @@
   <div id="vote_failed" class="hide focus__step" data-redirect_url=".hide">
     <%= render("show_failed") %>
   </div>
-
 </div>
 
 <% content_for :js_content do %>

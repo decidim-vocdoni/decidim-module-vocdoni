@@ -7,11 +7,29 @@ describe Decidim::Vocdoni::Voter do
 
   let(:election) { create :vocdoni_election }
 
+  describe "#validations" do
+    it "is invalid without a valid email" do
+      voter.email = "invalid_email"
+      expect(voter).not_to be_valid
+    end
+
+    it "is invalid without a token" do
+      voter.token = nil
+      expect(voter).not_to be_valid
+    end
+
+    it "does not allow duplicate emails within the same election" do
+      create(:vocdoni_voter, election: election, email: "user@example.com")
+      new_voter = build(:vocdoni_voter, election: election, email: "user@example.com")
+      expect(new_voter).not_to be_valid
+    end
+  end
+
   describe ".insert_all" do
     let(:values) do
       [
-        ["user1@example.org", "123456"],
-        ["user2@example.org", "abcxyz"]
+        %w(user1@example.org 123456),
+        %w(user2@example.org abcxyz)
       ]
     end
 
@@ -55,6 +73,53 @@ describe Decidim::Vocdoni::Voter do
       it "is normalized" do
         expect(Decidim::Vocdoni::Voter.first.token).to eq("abcxyz")
       end
+    end
+  end
+
+  describe ".inside" do
+    let!(:voter) { create(:vocdoni_voter, election: election) }
+
+    it "returns voters for a specific election" do
+      expect(Decidim::Vocdoni::Voter.inside(election)).to include(voter)
+    end
+  end
+
+  describe ".search_user_email" do
+    let!(:voter) { create(:vocdoni_voter, election: election, email: "user@example.com") }
+
+    it "returns the voter for a specific election and email" do
+      expect(Decidim::Vocdoni::Voter.search_user_email(election, "user@example.com")).to eq(voter)
+    end
+  end
+
+  describe ".clear" do
+    before { create_list(:vocdoni_voter, 3, election: election, token: "some_token") }
+
+    it "removes all voters for a specific election" do
+      expect { Decidim::Vocdoni::Voter.clear(election) }.to change(Decidim::Vocdoni::Voter, :count).by(-3)
+    end
+  end
+
+  describe ".clear with empty voters list" do
+    it "does not raise error when no voters to clear" do
+      expect { Decidim::Vocdoni::Voter.clear(election) }.not_to raise_error
+    end
+  end
+
+  describe "#update_in_vocdoni_census!" do
+    context "when the wallet address changes" do
+      it "updates the in_vocdoni_census flag" do
+        subject.wallet_address = "new_address"
+        subject.save!
+        expect(subject.in_vocdoni_census).to be true
+      end
+    end
+  end
+
+  describe "#sent_to_vocdoni?" do
+    it "returns the in_vocdoni_census value" do
+      subject.in_vocdoni_census = true
+      expect(subject.sent_to_vocdoni?).to be true
     end
   end
 end

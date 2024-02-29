@@ -1,8 +1,12 @@
-<div class="card">
-  <ul class="tabs">
+<div class="card bg-white rounded-md overflow-hidden my-4">
+  <ul class="tabs flex divide-x-4 divide-white">
     <% tabs_info.each do |tab_name, info| %>
-      <li class="<%= tab_class(tab_name, active_class) %>">
-        <%= link_to t(info[:translation], scope: "decidim.vocdoni.admin.elections.new"), info[:path], class: tab_link_class(tab_name, election) %>
+      <li class="<%= "#{tab_class(tab_name, active_class)} #{'bg-gray-5 text-black' if tab_name == active_class} bg-gray-3 text-black p-4 first:rounded-l-md last:rounded-r-md" %>">
+        <%
+          link_classes = tab_link_class(tab_name, election)
+          tab_name == active_class ? link_classes += " text-gray-8" : link_classes += " hover:bg-blue-7 hover:text-white" unless link_classes.include?("disabled")
+        %>
+        <%= link_to t(info[:translation], scope: "decidim.vocdoni.admin.elections.new"), info[:path], class: link_classes %>
       </li>
     <% end %>
   </ul>

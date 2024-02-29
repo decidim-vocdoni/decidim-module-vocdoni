@@ -20,7 +20,7 @@ module Decidim
         end
 
         def fix_it_button_with_icon(link, icon)
-          link_to link, class: "button tiny" do
+          link_to link, class: "button button__xs button__secondary" do
             "#{icon(icon)} #{I18n.t("decidim.vocdoni.admin.steps.create_election.errors.fix_it_text")}".html_safe
           end
         end
@@ -28,11 +28,11 @@ module Decidim
         def danger_zone_submit(form, action)
           ico, button_class = case action
                               when "created"
-                                ["media-play", "primary"]
+                                ["play-circle-line", "primary"]
                               when "vote"
-                                ["media-play", "success"]
+                                ["play-circle-line", "success"]
                               when "paused"
-                                ["media-pause", "warning"]
+                                ["pause-circle-line", "warning"]
                               end
           text = t(action, scope: "decidim.vocdoni.admin.steps.danger_zone.action")
           text = "#{icon(ico, class: "icon--before")} #{text}".html_safe

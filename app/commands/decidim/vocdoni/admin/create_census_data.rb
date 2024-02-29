@@ -25,8 +25,15 @@ module Decidim
           # rubocop:disable Rails/SkipsModelValidations
           Voter.insert_all(@election, data.values)
           # rubocop:enable Rails/SkipsModelValidations
+          update_census_type
 
           broadcast(:ok)
+        end
+
+        private
+
+        def update_census_type
+          @election.update!(internal_census: false)
         end
       end
     end

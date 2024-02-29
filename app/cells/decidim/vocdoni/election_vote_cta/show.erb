@@ -13,9 +13,12 @@
     </div>
     <span class="button button--sc disabled"><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></span>
   <% elsif model.ongoing? %>
-    <%= link_to new_election_vote_path, resource: model, class: "button button--sc" do %>
+    <%= link_to new_election_vote_path,
+                class: "button button--sc vote-button",
+                **link_attributes_for_voting(election, voter_verified?, modal_id) do %>
       <%= vote_action_button_text %>
     <% end %>
+    <%= cell "decidim/vocdoni/census_authorization_modal", model %>
   <% elsif !model.finished? %>
     <span class="button button--sc disabled"><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></span>
   <% end %>
@@ -36,3 +39,5 @@
   <span class="disabled"><%= t("verify.will_verify", scope: "decidim.vocdoni.elections.show") %></span>
 <% end %>
 </div>
+
+<%= javascript_pack_tag "decidim_vocdoni_voter_new_vote" %>

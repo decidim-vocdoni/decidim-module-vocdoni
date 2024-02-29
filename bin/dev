@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+# frozen_string_literal: true
+
+cd development_app
+
+./bin/dev
