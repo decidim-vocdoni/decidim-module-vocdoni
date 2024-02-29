@@ -7,7 +7,7 @@
   <div class="card-section">
     <% if status.pending_upload? %>
       <div class="card">
-        <div class="card-divider">
+        <div class="item_show__header">
           <h2 class="item_show__header-title">
             <%= t("index.title", scope: "decidim.vocdoni.admin.census") %>
           </h2>
@@ -17,13 +17,18 @@
             <%= t("index.info", scope: "decidim.vocdoni.admin.census") %>
           </p>
         </div>
-        <div class="card-section collection-input">
-          <%= radio_button_tag "census_type", "csv", !election.internal_census?, id: "csv_radio_button" %>
-          <%= label_tag "csv_radio_button", t("census_type.external", scope: "decidim.vocdoni.admin.census") %>
+        <div class="card-section collection-input flex items-center">
+          <div class="flex items-center mr-8">
+            <%= radio_button_tag "census_type", "csv", !election.internal_census?, id: "csv_radio_button", class: "mr-2" %>
+            <%= label_tag "csv_radio_button", t("census_type.external", scope: "decidim.vocdoni.admin.census") %>
+          </div>
 
-          <%= radio_button_tag "census_type", "permissions", election.internal_census?, id: "permissions_radio_button" %>
-          <%= label_tag "permissions_radio_button", t("census_type.internal", scope: "decidim.vocdoni.admin.census") %>
+          <div class="flex items-center">
+            <%= radio_button_tag "census_type", "permissions", election.internal_census?, id: "permissions_radio_button", class: "mr-2" %>
+            <%= label_tag "permissions_radio_button", t("census_type.internal", scope: "decidim.vocdoni.admin.census") %>
+          </div>
         </div>
+
       </div>
     <% end %>
 
@@ -54,11 +59,11 @@
               <p><strong id="census-processing-percentage"><%= t("status.percentage_complete", scope: "decidim.vocdoni.admin.census", count: status.count, percentage: status.percentage_complete) %></strong></p>
             </div>
           <% end %>
-          <p><%= t("decidim.vocdoni.admin.census.status.data", count: status.count, due_date: l(status.last_import_at, format: :long)) %></p>
+          <p class="mb-4"><%= t("decidim.vocdoni.admin.census.status.data", count: status.count, due_date: l(status.last_import_at, format: :long)) %></p>
           <%= link_to t("decidim.vocdoni.admin.census.destroy.title"),
                       destroy_all_election_census_path(election),
                       method: :delete,
-                      class: "button alert",
+                      class: "button button__sm button__primary",
                       data: { confirm: t("decidim.vocdoni.admin.census.destroy.confirm") } %>
         </div>
       </div>
@@ -86,13 +91,21 @@
         </div>
         <div class="card-section card">
           <p class="help-text"><%= t("permissions_warning_html", scope: "decidim.vocdoni.admin.census") %></p>
-          <%= render partial: "decidim_permissions_form", locals: { form: @census_permissions_form, election: election, current_organization: current_organization } %>
+          <div class="item__edit item__edit-1col">
+            <div class="item__edit-form mt-4">
+              <%= render partial: "decidim_permissions_form", locals: { form: @census_permissions_form, election: election, current_organization: current_organization } %>
+            </div>
+          </div>
         <!--closing tag moved to the form-->
       </div>
     <% else %>
       <div class="flex--cc">
         <% if allowed_to?(:edit, :election_calendar, election: election) && election.ready_for_calendar_form? %>
-          <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: "button form-general-submit" %>
+          <div class="item__edit-sticky">
+            <div class="item__edit-sticky-container">
+              <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: "button button__sm button__secondary" %>
+            </div>
+          </div>
         <% end %>
       </div>
     <% end %>
@@ -114,7 +127,7 @@
         </div>
         <div class="flex--cc">
           <% if allowed_to?(:edit, :election_calendar, election: election) && election.ready_for_calendar_form? %>
-            <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: "button form-general-submit" %>
+            <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: "button button__sm button__secondary" %>
           <% end %>
         </div>
       </div>

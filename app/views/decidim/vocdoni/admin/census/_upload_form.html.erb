@@ -1,10 +1,14 @@
-<p><%= t("decidim.vocdoni.admin.census.new.info") %></p>
+<p class="mb-4"><%= t("decidim.vocdoni.admin.census.new.info") %></p>
 <pre class="code-block">
 email;token
 user@example.org;123456
 user2@example.org;ABCXYZ</pre>
-<%= decidim_form_for form, url: election_census_path(election), multipart: true do |form| %>
-  <%= label_tag :file, t("new.file", scope: "decidim.vocdoni.admin.census") %>
-  <%= form.file_field :file, required: true %>
-  <%= submit_tag t("new.submit", scope: "decidim.vocdoni.admin.census"), class: "button" %>
+<%= decidim_form_for form, url: election_census_path(election), multipart: true, html: { class: "form edit_election form-defaults" } do |form| %>
+ <div class="row column">
+   <%= label_tag :file, t("new.file", scope: "decidim.vocdoni.admin.census") %>
+   <%= form.file_field :file, required: true %>
+ </div>
+  <div class="mt-8">
+    <%= submit_tag t("new.submit", scope: "decidim.vocdoni.admin.census"), class: "button button__sm button__secondary" %>
+  </div>
 <% end %>
