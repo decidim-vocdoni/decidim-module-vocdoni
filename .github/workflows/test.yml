@@ -8,8 +8,8 @@ on:
 
 env:
   CI: "true"
-  RUBY_VERSION: 3.0.6
-  NODE_VERSION: 16.9.1
+  RUBY_VERSION: 3.1.1
+  NODE_VERSION: 18.17.1
   CODECOV_TOKEN: 3dc89116-a8ed-4df4-bf06-812fc0d8854d
 
 jobs:

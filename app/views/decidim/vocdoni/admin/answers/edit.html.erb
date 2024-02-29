@@ -3,13 +3,17 @@
 
 <%= render partial: "decidim/vocdoni/admin/shared/election_title" %>
 <%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "questions", election: election } %>
-<div class="card">
-  <%= decidim_form_for([election, question, @form], html: { class: "form edit_answer" }) do |f| %>
-    <%= render partial: "form", object: f, locals: { title: t(".title") } %>
+<div class="item__edit item__edit-1col">
+  <div class="item__edit-form mt-4 vocdoni-elections">
+    <%= decidim_form_for([election, question, @form], html: { class: "form edit_answer form-defaults" }) do |f| %>
+      <%= render partial: "form", object: f, locals: { title: t(".title") } %>
 
-    <div class="button--double form-general-submit">
-      <%= f.submit t(".update") %>
-    </div>
-  <% end %>
+      <div class="item__edit-sticky">
+        <div class="item__edit-sticky-container">
+          <%= f.submit t(".update"), class: "button button__sm button__secondary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 <%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

@@ -1,6 +1,6 @@
 <% add_decidim_page_title(t(".title")) %>
 
-<div class="card-divider mb-s">
+<div class="item_show__header">
   <h2 class="item_show__header-title">
     <%= t("title", scope: "decidim.vocdoni.admin.elections.publish") %>
     "<%= translated_attribute(election.title) %>"
@@ -10,35 +10,39 @@
 <div class="card">
   <div class="card-section">
     <% if election.published? %>
-      <div class="card-section">
-        <h2><%= t("publish_title", scope: "decidim.vocdoni.admin.elections.new") %></h2>
+      <div class="card-section publish-text">
+        <h4 class="h4 my-4"><%= t("publish_title", scope: "decidim.vocdoni.admin.elections.new") %></h4>
         <%= t("publish_text_all_done_html", scope: "decidim.vocdoni.admin.elections.new") %>
       </div>
       <div class="card-section">
-        <div class="flex--sc">
-          <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), election_steps_path(election), class: "button form-general-submit" %>
+        <div class="mt-l">
+          <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), election_steps_path(election), class: "button button__sm button__secondary" %>
         </div>
       </div>
     <% else %>
-      <%= t("publish_text_html", scope: "decidim.vocdoni.admin.elections.new") %>
+      <div class="publish-text">
+        <%= t("publish_text_html", scope: "decidim.vocdoni.admin.elections.new") %>
+      </div>
     <% end %>
   </div>
 </div>
 <% if allowed_to?(:publish, :election, election: election) %>
-  <div class="flex--cc">
-    <% if election.published? %>
-      <% if allowed_to?(:unpublish, :election, election: election) %>
-        <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), url_for(action: :unpublish, id: election, controller: "elections"), class: "button muted", method: :put %>
+  <div class="item__edit-sticky">
+    <div class="item__edit-sticky-container">
+      <% if election.published? %>
+        <% if allowed_to?(:unpublish, :election, election: election) %>
+          <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), url_for(action: :unpublish, id: election, controller: "elections"), class: "button button__sm button__secondary muted", method: :put %>
+        <% else %>
+          <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), "#", class: "button button__sm button__secondary muted disabled" %>
+        <% end %>
       <% else %>
-        <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), "#", class: "button muted disabled" %>
+        <% if allowed_to?(:publish, :election, election: election) %>
+          <%= link_to t("actions.publish", scope: "decidim.vocdoni"), url_for(action: :publish, id: election, controller: "elections"), class: "button button__sm button__secondary hollow", method: :put %>
+        <% else %>
+          <%= link_to t("actions.publish", scope: "decidim.vocdoni"), "#", class: "button button__sm button__secondary disabled" %>
+        <% end %>
       <% end %>
-    <% else %>
-      <% if allowed_to?(:publish, :election, election: election) %>
-        <%= link_to t("actions.publish", scope: "decidim.vocdoni"), url_for(action: :publish, id: election, controller: "elections"), class: "button hollow", method: :put %>
-      <% else %>
-        <%= link_to t("actions.publish", scope: "decidim.vocdoni"), "#", class: "button hollow disabled" %>
-      <% end %>
-    <% end %>
+    </div>
   </div>
 <% end %>
 <%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
