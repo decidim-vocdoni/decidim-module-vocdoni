@@ -1,17 +1,19 @@
-<div class="card">
-  <div class="card-section">
-    <div class="row column">
-      <%= form.translated :text_field, :title, autofocus: true %>
-    </div>
+<div class="form__wrapper">
+  <div class="card pt-4">
+    <div class="card-section">
+      <div class="row column">
+        <%= form.translated :text_field, :title, autofocus: true %>
+      </div>
 
-    <div class="row column">
-      <%= form.translated :editor, :description %>
-    </div>
+      <div class="row column">
+        <%= form.translated :editor, :description %>
+      </div>
 
-    <%= render partial: "decidim/admin/shared/gallery", locals: { form: form } %>
+      <%= render partial: "decidim/admin/shared/gallery", locals: { form: form } %>
 
-    <div class="row column">
-      <%= form.text_field :stream_uri %>
+      <div class="row column">
+        <%= form.text_field :stream_uri %>
+      </div>
     </div>
   </div>
 </div>

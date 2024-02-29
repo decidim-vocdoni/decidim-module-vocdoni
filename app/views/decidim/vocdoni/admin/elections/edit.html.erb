@@ -3,11 +3,16 @@
 
 <%= render partial: "decidim/vocdoni/admin/shared/election_title" %>
 <%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "basic_info", election: election } %>
-<%= decidim_form_for(@form, html: { class: "form edit_election" }) do |f| %>
-  <%= render partial: "form", object: f, locals: { title: t(".title") } %>
-
-  <div class="button button__sm button__secondary">
-    <%= f.submit t("save_button", scope: "decidim.vocdoni.admin.elections.new") %>
+<div class="item__edit item__edit-1col">
+  <div class="item__edit-form">
+    <%= decidim_form_for(@form, html: { class: "form edit_election form-defaults" }) do |f| %>
+      <%= render partial: "form", object: f, locals: { title: t(".title") } %>
+      <div class="item__edit-sticky">
+        <div class="item__edit-sticky-container">
+          <%= f.submit t("save_button", scope: "decidim.vocdoni.admin.elections.new"), class: "button button__sm button__secondary" %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
 <%= append_stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

@@ -1,7 +1,7 @@
 <% add_decidim_page_title(t(".title")) %>
 
 <div class="card">
-  <div class="card-divider">
+  <div class="item_show__header">
     <h2 class="item_show__header-title">
       <%= t(".title") %>
 
@@ -14,7 +14,7 @@
       <p>
         <%= t(".description_html") %>
     </div>
-    <div class="table-scroll">
+    <div class="table-scroll mt-16">
       <table class="table-list">
         <thead>
           <tr>
@@ -31,12 +31,12 @@
               <td>
                 <%= link_to translated_attribute(election.title), resource_locator(election).path %>
               </td>
-              <td>
+              <td class="table-list__date">
                 <% if election.start_time %>
                   <%= l election.start_time, format: :long %>
                 <% end %>
               </td>
-              <td>
+              <td class="table-list__date">
                 <% if election.end_time %>
                   <%= l election.end_time, format: :long %>
                 <% end %>

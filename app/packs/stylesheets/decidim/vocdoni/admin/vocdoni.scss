@@ -48,3 +48,11 @@ $white: #fff;
     left: 47%;
   }
 }
+
+.button__warning {
+  @apply bg-warning;
+
+    &:hover {
+      @apply opacity-80;
+    }
+}
