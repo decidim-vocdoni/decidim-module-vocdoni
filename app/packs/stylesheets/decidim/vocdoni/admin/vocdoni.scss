@@ -56,3 +56,12 @@ $white: #fff;
       @apply opacity-80;
     }
 }
+
+.start-time-field-container input,
+.end-time-field-container input {
+  display: block !important;
+}
+
+.item__edit-form.vocdoni-elections label {
+  @apply text-md;
+}

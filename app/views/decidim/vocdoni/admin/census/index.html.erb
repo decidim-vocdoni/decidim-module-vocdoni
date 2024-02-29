@@ -92,7 +92,7 @@
         <div class="card-section card">
           <p class="help-text"><%= t("permissions_warning_html", scope: "decidim.vocdoni.admin.census") %></p>
           <div class="item__edit item__edit-1col">
-            <div class="item__edit-form mt-4">
+            <div class="item__edit-form mt-4 vocdoni-elections">
               <%= render partial: "decidim_permissions_form", locals: { form: @census_permissions_form, election: election, current_organization: current_organization } %>
             </div>
           </div>
