@@ -19,36 +19,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document.getElementById("census-last-updated").textContent = data.info.census_last_updated_at;
       document.getElementById("census-records-added").textContent = data.info.last_census_update_records_added;
-
-      const usersAwaitingCount = parseInt(data.info.users_awaiting_census.match(/\d+/)[0], 10);
-
       document.querySelector("[data-users-awaiting-census]").innerHTML = data.info.users_awaiting_census;
 
-      const updateCensusElement = document.getElementById("update-census-link") || document.querySelector(".update-census-span");
+      const usersAwaitingCount = parseInt(data.info.users_awaiting_census.match(/\d+/)[0], 10);
+      const updateContainer = document.getElementById("census-update-container");
+      let updateLink = document.getElementById("update-census-link");
 
-      if (updateCensusElement) {
-        if (updateCensusElement.tagName === "A") {
-          if (usersAwaitingCount > 0) {
-            updateCensusElement.classList.remove("disabled");
-          } else {
-            updateCensusElement.remove();
-          }
-        } else if (updateCensusElement.tagName === "SPAN") {
-          if (usersAwaitingCount > 0) {
-            updateCensusElement.classList.remove("disabled");
-            const linkElement = document.createElement("a");
-            linkElement.href = updateCensusElement.parentNode.getAttribute("data-update-url");
-            linkElement.id = "update-census-link";
-            linkElement.className = "button primary";
-            linkElement.textContent = window.translations.updateCensusNow;
-            linkElement.setAttribute("data-method", "put");
-            linkElement.setAttribute("rel", "nofollow");
-            linkElement.setAttribute("data-accessibility-violation", "true");
-            updateCensusElement.parentNode.replaceChild(linkElement, updateCensusElement);
-          } else {
-            updateCensusElement.remove();
-          }
+      if (usersAwaitingCount > 0) {
+        if (!updateLink) {
+          // Создаем кнопку, если она не существует
+          updateLink = document.createElement("a");
+          updateLink.href = updateContainer.getAttribute("data-update-url");
+          updateLink.textContent = window.translations.updateCensusNow;
+          updateLink.className = "button primary";
+          updateLink.id = "update-census-link";
+          updateLink.setAttribute("data-method", "put");
+          updateLink.setAttribute("rel", "nofollow");
+          updateContainer.appendChild(updateLink);
+          updateContainer.style.display = "";
         }
+      } else {
+        if (updateLink) {
+          updateLink.remove();
+        }
+        updateContainer.style.display = "none";
       }
 
       const currentDate = data.info.census_last_updated_at;

@@ -32,15 +32,8 @@
     <p data-users-awaiting-census>
       <%= t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe %>
     </p>
-    <div id="census-update-container" data-update-url="<%= update_census_election_steps_path(election_id: election.id) %>">
-    <%= link_to_if census_needs_update?,
-                     t("update_census", scope: "decidim.vocdoni.admin.steps.census"),
-                     update_census_election_steps_path(election_id: election.id),
-                     class: "button primary alert",
-                     method: :put,
-                     id: "update-census-link" do %>
-        <%= content_tag(:span, t("update_census", scope: "decidim.vocdoni.admin.steps.census"), class: "button primary alert disabled update-census-span") %>
-      <% end %>
+    <div id="census-update-container" data-update-url="<%= update_census_election_steps_path(election_id: election.id) %>" style="display: none;">
+      <!-- The button will be added here via JavaScript if needed -->
     </div>
   </div>
 </div>
