@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const linkElement = document.createElement("a");
             linkElement.href = updateCensusElement.parentNode.getAttribute("data-update-url");
             linkElement.id = "update-census-link";
-            linkElement.className = "button primary alert";
+            linkElement.className = "button primary";
             linkElement.textContent = window.translations.updateCensusNow;
             linkElement.setAttribute("data-method", "put");
             linkElement.setAttribute("rel", "nofollow");

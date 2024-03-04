@@ -77,7 +77,7 @@ en:
         census:
           census_type:
             external: External (upload a CSV file)
-            internal: Internal (all registered participants)
+            internal: Internal (registered participants)
           create:
             error: There was an error importing or generating the census.
             submit_permissions: Save census
@@ -111,8 +111,8 @@ en:
               internal: Additional required authorizations to vote (optional)
           permissions_warning_html: You can restrict participation in the election
             to participants who have an authorization.<br>Note that participants will
-            need to fulfill the selected authorizations in order to vote (leaving
-            all checkboxes empty will allow to vote anyone registered).
+            need to fulfill the selected authorizations in order to vote. Leaving
+            all checkboxes empty will allow to vote anyone registered.
           status:
             data: There are %{count} records loaded in total. Last upload date was
               on %{due_date}. If you want to change the census (for instance, adding

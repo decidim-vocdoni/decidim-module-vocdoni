@@ -111,7 +111,7 @@ module Decidim::Vocdoni
 
     # Public: Checks if the census status for the election is "ready".
     #
-    # Returns a boolean indicating if the census status equals "ready".
+    # Returns a boolean indicating if the census status equals "ready" or if it's an internal census selection and there are not verification types or voters.
     def census_ready?
       census_status&.name == "ready" || (internal_census? && verification_types.empty?) || (internal_census? && voters.empty?)
     end

@@ -6,7 +6,7 @@
  * */
 try {
   const args = #{args}
-    Promise.resolve(#{func}(...args)).then(result => {
+  Promise.resolve(#{func}(...args)).then(result => {
     const output = JSON.stringify(['ok', result, []])
     process.stdout.write(output)
   })
