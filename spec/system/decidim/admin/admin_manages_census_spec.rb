@@ -109,7 +109,7 @@ describe "Admin manages census", :slow, type: :system do
     end
 
     it "has Decidim permissions content" do
-      expect(page).to have_content("Internal (all registered participants")
+      expect(page).to have_content("Internal (registered participants")
       expect(authorizations_checkboxes.count).to eq(authorizations_count)
     end
 
