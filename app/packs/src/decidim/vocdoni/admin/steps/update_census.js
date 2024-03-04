@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (usersAwaitingCount > 0) {
             updateCensusElement.classList.remove("disabled");
           } else {
-            updateCensusElement.classList.add("disabled");
+            updateCensusElement.remove();
           }
         } else if (updateCensusElement.tagName === "SPAN") {
           if (usersAwaitingCount > 0) {
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             linkElement.setAttribute("data-accessibility-violation", "true");
             updateCensusElement.parentNode.replaceChild(linkElement, updateCensusElement);
           } else {
-            updateCensusElement.classList.add("disabled");
+            updateCensusElement.remove();
           }
         }
       }

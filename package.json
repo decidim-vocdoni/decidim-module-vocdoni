@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint -c .eslintrc.json --ext .js app/packs/ node-wrapper",
-    "lint-fix": "eslint -c .eslintrc.json --ext .js app/packs/ node-wrapper --fix",
+    "lint": "eslint -c .eslintrc.json --ext .js --ext .mjs app/packs/ node-wrapper/",
+    "lint-fix": "eslint -c .eslintrc.json --ext .js --ext .mjs app/packs/ node-wrapper/ --fix",
     "stylelint": "stylelint **/*.scss",
     "stylelint-fix": "stylelint **/*.scss --fix"
   },
