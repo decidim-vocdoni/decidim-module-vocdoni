@@ -94,9 +94,9 @@ en:
             census_empty: The census is currently empty. When users pass the authorizations
               you selected, they will be added to the census.
             census_warning_for_csv_html: The census is not ready yet. You can <b>upload
-              the CSV file</b> to processed.
+              the CSV file</b> to proceed.
             census_warning_for_internal_census_html: The census is not ready yet.
-              You need <b>save it</b> to processed.
+              You need <b>save it</b> to proceed.
             info: Choose the type of census you want to use for this election
             title: Type of census
           new:
