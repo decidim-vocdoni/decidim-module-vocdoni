@@ -15,5 +15,6 @@
       <%= form.label :verification_types, t("decidim.authorization_handlers.#{authorization}.name"), for: checkbox_id %>
     </div>
   <% end %>
+  </div> <!-- closing tag for card-section -->
   <%= form.submit t("create.submit_permissions", scope: "decidim.vocdoni.admin.census") %>
 <% end %>

@@ -96,7 +96,7 @@ en:
             census_warning_for_csv_html: The census is not ready yet. You can <b>upload
               the CSV file</b> to processed.
             census_warning_for_internal_census_html: The census is not ready yet.
-              You can <b>save it</b> to processed.
+              You need <b>save it</b> to processed.
             info: Choose the type of census you want to use for this election
             title: Type of census
           new:
