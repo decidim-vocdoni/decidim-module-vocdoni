@@ -3,8 +3,8 @@
  * @returns {undefined}
  */
 const toggleSectionsBasedOnRadioButton = function() {
-  const csvRadioButton = document.getElementById("csv_radio_button");
-  const permissionsRadioButton = document.getElementById("permissions_radio_button");
+  const csvRadioButton = document.querySelector("[data-csv-radio-button]");
+  const permissionsRadioButton = document.querySelector("[data-permissions-radio-button]");
   const csvUploadDiv = document.getElementById("csv_upload");
   const permissionsSelectDiv = document.getElementById("permissions_select");
   const warningDiv = document.querySelector(".census_warning_text");

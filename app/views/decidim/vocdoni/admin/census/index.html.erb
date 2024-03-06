@@ -18,10 +18,10 @@
           </p>
         </div>
         <div class="card-section collection-input">
-          <%= radio_button_tag "census_type", "csv", !election.internal_census?, id: "csv_radio_button" %>
+          <%= radio_button_tag "census_type", "csv", !election.internal_census?, id: "csv_radio_button", data: { csv_radio_button: true } %>
           <%= label_tag "csv_radio_button", t("census_type.external", scope: "decidim.vocdoni.admin.census") %>
 
-          <%= radio_button_tag "census_type", "permissions", election.internal_census?, id: "permissions_radio_button" %>
+          <%= radio_button_tag "census_type", "permissions", election.internal_census?, id: "permissions_radio_button", data: { permissions_radio_button: true } %>
           <%= label_tag "permissions_radio_button", t("census_type.internal", scope: "decidim.vocdoni.admin.census") %>
         </div>
       </div>

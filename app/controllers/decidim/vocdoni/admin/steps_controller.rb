@@ -7,8 +7,7 @@ module Decidim
       class StepsController < Admin::ApplicationController
         helper Decidim::ApplicationHelper
         helper StepsHelper
-        helper_method :elections, :election, :current_step, :census_needs_update?,
-                      :non_voters_users_with_authorizations, :users_awaiting_census
+        helper_method :elections, :election, :current_step, :users_awaiting_census
 
         before_action :ensure_wallet_created
 
@@ -121,10 +120,6 @@ module Decidim
 
         def current_vocdoni_wallet
           @current_vocdoni_wallet ||= Decidim::Vocdoni::Wallet.find_by(decidim_organization_id: current_organization.id)
-        end
-
-        def census_needs_update?
-          @census_needs_update ||= election.internal_census? && non_voters_users_with_authorizations(election).count.positive?
         end
 
         def users_awaiting_census(election)

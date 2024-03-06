@@ -139,7 +139,7 @@ describe "Admin manages census", :slow, type: :system do
       end
     end
 
-    context "when selected a few permissions" do
+    context "when admin selects a few permissions" do
       before do
         check(translated_authorization_handler_name)
         check(translated_id_document_handler_name)
@@ -170,7 +170,7 @@ describe "Admin manages census", :slow, type: :system do
       end
     end
 
-    context "when don't select any permissions" do
+    context "when admin doesn't select any permissions" do
       before do
         perform_enqueued_jobs do
           click_button "Save census"

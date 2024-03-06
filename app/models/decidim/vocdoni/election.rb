@@ -222,5 +222,10 @@ module Decidim::Vocdoni
     def questions_to_vocdoni
       questions.map(&:to_vocdoni)
     end
+
+    # Technical voter e-mail is used when the internal census is without voters
+    def technical_voter_email
+      "technical_voter_election_#{id}@techvoters.example.com"
+    end
   end
 end

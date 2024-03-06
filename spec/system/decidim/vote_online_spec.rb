@@ -88,8 +88,6 @@ describe "Vote online in an election", type: :system do
         visit_component
         click_link translated(election.title)
 
-        expect(page).to have_link("Start voting")
-
         click_link "Start voting"
 
         expect(page).to have_content("Please sign in")

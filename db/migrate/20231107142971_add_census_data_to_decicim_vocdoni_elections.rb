@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddCensusDataToDecicidVocdoniElections < ActiveRecord::Migration[6.1]
+class AddCensusDataToDecidimVocdoniElections < ActiveRecord::Migration[6.1]
   def change
     add_column :decidim_vocdoni_elections, :internal_census, :boolean, default: false
     add_column :decidim_vocdoni_elections, :verification_types, :string, array: true, default: []
