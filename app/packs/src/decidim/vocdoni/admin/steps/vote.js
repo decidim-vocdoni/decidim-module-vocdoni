@@ -60,11 +60,15 @@ document.querySelectorAll(".accordion-title").forEach((title) => {
     const accordionContent = accordionItem.querySelector(".accordion-content");
     const isExpanded = accordionContent.getAttribute("aria-expanded") === "true";
 
-    if (isExpanded) return;
+    if (isExpanded) {
+      return;
+    }
 
     const questionIdxCell = accordionContent.querySelector("td[data-question-idx]");
 
-    if (!questionIdxCell) return;
+    if (!questionIdxCell) {
+      return;
+    }
 
     const questionIdx = questionIdxCell.dataset.questionIdx;
     await fetchAndDisplayVotes(questionIdx);
