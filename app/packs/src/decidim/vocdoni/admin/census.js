@@ -5,16 +5,16 @@
 const toggleSectionsBasedOnRadioButton = function() {
   const csvRadioButton = document.querySelector("[data-csv-radio-button]");
   const permissionsRadioButton = document.querySelector("[data-permissions-radio-button]");
-  const csvUploadDiv = document.getElementById("csv_upload");
-  const permissionsSelectDiv = document.getElementById("permissions_select");
-  const warningDiv = document.querySelector(".census_warning_text");
+  const csvUploadDiv = document.querySelector("[data-csv-upload]")
+  const permissionsSelectDiv = document.querySelector("[data-permissions-select]")
+  const warningDiv = document.querySelector("[data-census-warning-text]");
 
   if (!csvRadioButton || !permissionsRadioButton || !csvUploadDiv || !permissionsSelectDiv) {
     return;
   }
 
   const updateWarningMessage = () => {
-    const translations = document.getElementById("translations");
+    const translations = document.querySelector("[data-translations]");
     const csvWarningText = translations.getAttribute("data-csv-warning");
     const permissionsWarningText = translations.getAttribute("data-permissions-warning");
 

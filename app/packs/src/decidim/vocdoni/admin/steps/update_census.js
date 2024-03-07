@@ -17,12 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       const data = await response.json();
 
-      document.getElementById("census-last-updated").textContent = data.info.census_last_updated_at;
-      document.getElementById("census-records-added").textContent = data.info.last_census_update_records_added;
+      document.querySelector("[data-census-last-updated]").textContent = data.info.census_last_updated_at;
+      document.querySelector("[data-census-records-added]").textContent = data.info.last_census_update_records_added;
       document.querySelector("[data-users-awaiting-census]").innerHTML = data.info.users_awaiting_census;
 
       const usersAwaitingCount = parseInt(data.info.users_awaiting_census.match(/\d+/)[0], 10);
-      const updateContainer = document.getElementById("census-update-container");
+      const updateContainer = document.querySelector("[data-update-census-container]");
       let updateLink = document.getElementById("update-census-link");
 
       if (usersAwaitingCount > 0) {
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const currentDate = data.info.census_last_updated_at;
 
       const showMessage = () => {
-        const messageElement = document.getElementById("census-update-message");
+        const messageElement = document.querySelector("[data-census-update-message]")
         messageElement.style.display = "block";
         setTimeout(() => {
           messageElement.style.display = "none";
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       if (previousUpdateDate !== null && previousUpdateDate !== currentDate) {
-        document.getElementById("census-update-message-text").innerHTML = data.info.update_message;
+        document.querySelector("[data-census-update-message-text]").innerHTML = data.info.update_message;
         showMessage();
       }
 
