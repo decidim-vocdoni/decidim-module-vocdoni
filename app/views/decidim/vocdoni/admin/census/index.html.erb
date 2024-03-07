@@ -96,9 +96,7 @@
         <% end %>
       </div>
     <% end %>
-    <% unless status.name == "ready" ||
-      (election.internal_census? && election.verification_types.empty?) ||
-      election.internal_census? && election.voters.empty? %>
+    <% unless election.census_ready? %>
       <div class="mt-s">
         <div class="callout alert census_warning_text" data-census-warning-text></div>
       </div>

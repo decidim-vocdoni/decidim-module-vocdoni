@@ -123,7 +123,6 @@ describe "Admin manages census", :slow, type: :system do
         perform_enqueued_jobs do
           click_button "Save census"
         end
-        sleep 1
       end
 
       it "has success message" do
@@ -146,7 +145,6 @@ describe "Admin manages census", :slow, type: :system do
         perform_enqueued_jobs do
           click_button "Save census"
         end
-        sleep 1
       end
 
       it "has message" do
@@ -175,7 +173,6 @@ describe "Admin manages census", :slow, type: :system do
         perform_enqueued_jobs do
           click_button "Save census"
         end
-        sleep 1
       end
 
       it "has success message" do

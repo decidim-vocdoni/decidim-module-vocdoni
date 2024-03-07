@@ -93,14 +93,6 @@ module Decidim
             t(".success.generate")
           end
         end
-
-        def census_type
-          if params[:census_permissions]
-            "internal"
-          else
-            "external"
-          end
-        end
       end
     end
   end
