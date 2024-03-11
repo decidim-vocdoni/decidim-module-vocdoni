@@ -1,8 +1,20 @@
 <%= decidim_form_for form, url: election_census_path(election), method: :post do |form| %>
   <%= form.hidden_field :census_permissions_form, value: true %>
-  <% current_organization.available_authorizations.each do |authorization| %>
-    <%= form.check_box :verification_types, { label: t("decidim.authorization_handlers.#{authorization}.name"), multiple: true, include_hidden: false, checked: election.verification_types.include?(authorization) }, authorization %>
+  <% current_organization.available_authorizations.each_with_index do |authorization, index| %>
+    <% checkbox_id = "verification_type_#{authorization}_#{index}" %>
+    <div class="row column">
+      <%= form.check_box :verification_types,
+                         { id: checkbox_id,
+                           multiple: true,
+                           include_hidden: false,
+                           checked: election.verification_types.include?(authorization),
+                           label: false
+                         },
+                         authorization,
+                         false %>
+      <%= form.label :verification_types, t("decidim.authorization_handlers.#{authorization}.name"), for: checkbox_id %>
+    </div>
   <% end %>
-  </div>
+  </div> <!-- closing tag for card-section -->
   <%= form.submit t("create.submit_permissions", scope: "decidim.vocdoni.admin.census") %>
 <% end %>

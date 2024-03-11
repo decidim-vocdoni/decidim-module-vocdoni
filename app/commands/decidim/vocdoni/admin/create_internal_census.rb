@@ -43,8 +43,9 @@ module Decidim
           end
         end
 
+        # As Vocdoni elections need a census with at least one voter to be created, we do so with a dummy voter called the technical voter
         def create_technical_voter
-          unique_email = "technical_voter_election_#{@election.id}@techvoters.example.com"
+          unique_email = @election.technical_voter_email
           [[unique_email, token_for_voter(unique_email)]]
         end
 

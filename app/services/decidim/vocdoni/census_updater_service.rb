@@ -53,7 +53,7 @@ module Decidim
       end
 
       def delete_technical_voter
-        technical_voter_email = "technical_voter_election_#{@election.id}@techvoters.example.com"
+        technical_voter_email = @election.technical_voter_email
         technical_voter = @election.voters.find_by(email: technical_voter_email)
         technical_voter&.destroy
         Rails.logger.info("Technical voter #{technical_voter_email} deleted successfully.") if technical_voter

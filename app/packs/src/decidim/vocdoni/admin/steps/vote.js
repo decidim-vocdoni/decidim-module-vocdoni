@@ -4,14 +4,14 @@ const WAIT_TIME_MS = 30000;
 // Fetch the votes from the API
 export const getElectionResults = async () => {
   const vocdoniClientElement = document.querySelector(".js-vocdoni-client");
-  if (vocdoniClientElement) {
-    const resultsPath = vocdoniClientElement.dataset.resultsPath;
-    if (resultsPath) {
-      const response = await fetch(resultsPath);
-      return response.json();
-    }
+
+  if (!vocdoniClientElement || !vocdoniClientElement.dataset.resultsPath) {
+    return null;
   }
-  return null;
+
+  const resultsPath = vocdoniClientElement.dataset.resultsPath;
+  const response = await fetch(resultsPath);
+  return response.json();
 };
 
 // Update the DOM with the answer for a specific question index
@@ -30,13 +30,17 @@ const fetchAndDisplayVotes = async (questionIdx) => {
 
 // Process each accordion element to fetch and display stats if it's open
 const processAccordion = async (accordion) => {
-  if (accordion.style.display !== "none") {
-    const questionIdxCell = accordion.querySelector("td[data-question-idx]");
-    if (questionIdxCell) {
-      const questionIdx = questionIdxCell.dataset.questionIdx;
-      await fetchAndDisplayVotes(questionIdx);
-    }
+  if (accordion.style.display === "none") {
+    return;
   }
+
+  const questionIdxCell = accordion.querySelector("td[data-question-idx]");
+  if (!questionIdxCell) {
+    return;
+  }
+
+  const questionIdx = questionIdxCell.dataset.questionIdx;
+  await fetchAndDisplayVotes(questionIdx);
 };
 
 // Check and fetch statistics for each accordion content on DOMContentLoaded
@@ -56,12 +60,18 @@ document.querySelectorAll(".accordion-title").forEach((title) => {
     const accordionItem = event.target.closest(".accordion-item");
     const accordionContent = accordionItem.querySelector(".accordion-content");
     const isExpanded = accordionContent.getAttribute("aria-expanded") === "true";
-    if (!isExpanded) {
-      const questionIdxCell = accordionContent.querySelector("td[data-question-idx]");
-      if (questionIdxCell) {
-        const questionIdx = questionIdxCell.dataset.questionIdx;
-        await fetchAndDisplayVotes(questionIdx);
-      }
+
+    if (isExpanded) {
+      return;
     }
+
+    const questionIdxCell = accordionContent.querySelector("td[data-question-idx]");
+
+    if (!questionIdxCell) {
+      return;
+    }
+
+    const questionIdx = questionIdxCell.dataset.questionIdx;
+    await fetchAndDisplayVotes(questionIdx);
   });
 });

@@ -4,7 +4,7 @@ module Decidim
   module Vocdoni
     module Admin
       class CensusController < Admin::ApplicationController
-        helper_method :elections, :election, :census_path, :status, :census_type
+        helper_method :elections, :election, :status
 
         def index
           enforce_permission_to :index, :census, election: election
@@ -65,10 +65,14 @@ module Decidim
         def process_form(form, command_class, success_message, failure_template)
           command_class.call(form, election) do
             on(:ok) do
-              set_flash_and_redirect(:notice, success_message)
+              flash[:notice] = success_message
+              redirect_to election_census_path(election)
               CreateVoterWalletsJob.perform_later(election.id) if [CreateCensusData, CreateInternalCensus].include?(command_class)
             end
-            on(:invalid) { set_flash_and_render(:alert, t(".error"), failure_template) }
+            on(:invalid) do
+              flash[:alert] = t(".error")
+              render failure_template
+            end
           end
         end
 
@@ -87,24 +91,6 @@ module Decidim
             t(".success.import", count: count, errors: error_count)
           else
             t(".success.generate")
-          end
-        end
-
-        def set_flash_and_redirect(type, message)
-          flash[type] = message
-          redirect_to election_census_path(election)
-        end
-
-        def set_flash_and_render(type, message, template)
-          flash[type] = message
-          render template
-        end
-
-        def census_type
-          if params[:census_permissions]
-            "internal"
-          else
-            "external"
           end
         end
       end

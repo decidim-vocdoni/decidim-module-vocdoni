@@ -109,12 +109,12 @@ describe "Admin manages census", :slow, type: :system do
     end
 
     it "has Decidim permissions content" do
-      expect(page).to have_content("Internal (all registered participants")
+      expect(page).to have_content("Internal (registered participants")
       expect(authorizations_checkboxes.count).to eq(authorizations_count)
     end
 
     it "has warning content for the internal census" do
-      expect(page).to have_content("The census is not ready yet. You can save it to processed.")
+      expect(page).to have_content("The census is not ready yet. You need save it to proceed.")
     end
 
     context "when selected any permission" do
@@ -123,7 +123,6 @@ describe "Admin manages census", :slow, type: :system do
         perform_enqueued_jobs do
           click_button "Save census"
         end
-        sleep 1
       end
 
       it "has success message" do
@@ -139,14 +138,13 @@ describe "Admin manages census", :slow, type: :system do
       end
     end
 
-    context "when selected a few permissions" do
+    context "when admin selects a few permissions" do
       before do
         check(translated_authorization_handler_name)
         check(translated_id_document_handler_name)
         perform_enqueued_jobs do
           click_button "Save census"
         end
-        sleep 1
       end
 
       it "has message" do
@@ -170,12 +168,11 @@ describe "Admin manages census", :slow, type: :system do
       end
     end
 
-    context "when don't select any permissions" do
+    context "when admin doesn't select any permissions" do
       before do
         perform_enqueued_jobs do
           click_button "Save census"
         end
-        sleep 1
       end
 
       it "has success message" do
