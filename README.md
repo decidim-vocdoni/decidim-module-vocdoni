@@ -216,6 +216,14 @@ can add these environment variables to the root directory of the project in a
 file named `.rbenv-vars`. In this case, you can omit defining these in the
 commands shown above.
 
+We also have some tests for the Javascript code. To run them, you can use the
+following commands:
+
+```bash
+npm ci
+npm run test
+```
+
 ### Test code coverage
 
 Code coverage report is generated automatically after running the test suite, in a folder

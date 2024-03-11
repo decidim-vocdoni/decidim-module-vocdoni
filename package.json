@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ENV=dev WALLET=random node node-wrapper/test_census.mjs",
     "lint": "eslint -c .eslintrc.json --ext .js --ext .mjs app/packs/ node-wrapper/",
     "lint-fix": "eslint -c .eslintrc.json --ext .js --ext .mjs app/packs/ node-wrapper/ --fix",
     "stylelint": "stylelint **/*.scss",
