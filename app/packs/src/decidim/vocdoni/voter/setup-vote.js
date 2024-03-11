@@ -33,7 +33,7 @@ const submitVote = async (options) => {
   // and if it's a bug in the SDK, we should fix it there
   switch (options.env) {
   case "prd":
-    client.url = "https://api.vocdoni.net/v2";
+    client.url = "https://api.vocdoni.io/v2";
     break;
   case "stg":
     client.url = "https://api-stg.vocdoni.net/v2";

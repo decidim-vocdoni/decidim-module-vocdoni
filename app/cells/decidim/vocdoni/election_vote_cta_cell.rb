@@ -6,6 +6,8 @@ module Decidim
     # for a given instance of an Election
     class ElectionVoteCtaCell < Decidim::ViewModel
       include Decidim::Vocdoni::HasVoteFlow
+      include Decidim::Vocdoni::VoterVerifications
+      include Decidim::Vocdoni::Engine.routes.url_helpers
 
       delegate :current_user,
                :current_participatory_space,
@@ -18,6 +20,12 @@ module Decidim
       # This is needed by HasVoteFlow
       def election
         model
+      end
+
+      def modal_id
+        return "loginModal" unless current_user
+
+        options[:modal_id] || "internalCensusModal"
       end
 
       def new_election_vote_path
@@ -46,6 +54,16 @@ module Decidim
 
       def key_participatory_space_slug
         "#{current_participatory_space.underscored_name}_slug".to_sym
+      end
+
+      def link_attributes_for_voting(election, voter_verified, modal_id)
+        if election.verification_types.empty?
+          {}
+        elsif (election.internal_census? && !voter_verified) || !current_user
+          { data: { open: modal_id }, "aria-controls" => modal_id, "aria-haspopup" => "dialog", tabindex: "0" }
+        else
+          { is_verified: voter_verified }
+        end
       end
 
       def engine_router

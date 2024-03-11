@@ -15,7 +15,7 @@ env:
 jobs:
   test-report:
     name: Tests
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     services:
       postgres:
@@ -44,6 +44,13 @@ jobs:
       - uses: nanasess/setup-chromedriver@v2
         with:
           chromedriver-version: 119.0.6045.105
+
+      - name: Remove Chrome
+        run: sudo apt remove google-chrome-stable
+
+      - uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 119.0.6045.105
 
       - uses: actions/setup-node@v3
         with:

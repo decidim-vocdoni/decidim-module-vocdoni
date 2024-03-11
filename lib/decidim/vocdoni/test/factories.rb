@@ -42,6 +42,10 @@ FactoryBot.define do
       vocdoni_election_id { Faker::Blockchain::Ethereum.address }
     end
 
+    trait :with_internal_census do
+      internal_census { true }
+    end
+
     trait :upcoming do
       start_time { 1.day.from_now }
     end

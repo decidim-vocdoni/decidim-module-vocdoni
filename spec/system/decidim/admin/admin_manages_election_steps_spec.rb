@@ -13,7 +13,7 @@ describe "Admin manages election steps", :slow, type: :system do
       }
     }
   end
-  let(:balance) { 50 }
+  let(:balance) { 500 }
   let(:vocdoni_status) { "UPCOMING" }
   let(:vocdoni_election_id) { "123456789" }
   let!(:wallet) { create :vocdoni_wallet, organization: current_component.organization }
@@ -22,11 +22,20 @@ describe "Admin manages election steps", :slow, type: :system do
       [3, 14]
     ]
   end
+  let!(:create_election_result) do
+    {
+      "electionId" => vocdoni_election_id,
+      "censusIdentifier" => "cfe4e3d3-3e3e-4e3e-3e3e-3e3e3e3e3e3e",
+      "censusAddress" => "0x0000000000000000000000000000000000000002",
+      "censusPrivateKey" => "0x0000000000000000000000000000000000000003",
+      "censusPublicKey" => "0x0000000000000000000000000000000000000004"
+    }
+  end
 
   before do
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:info).and_return(info)
-    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:createElection).and_return(vocdoni_election_id)
+    allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:createElection).and_return(create_election_result)
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:pauseElection).and_return(true)
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:electionMetadata).and_return({ "status" => vocdoni_status, "results" => results })
     allow_any_instance_of(Decidim::Vocdoni::Sdk).to receive(:continueElection).and_return(true)
@@ -126,10 +135,25 @@ describe "Admin manages election steps", :slow, type: :system do
         expect(page).to have_content("Vocdoni communication error")
 
         click_button "Try to resend the election data to the Vocdoni API"
+
         # Simulates the job
         election.update(vocdoni_election_id: "1234567890")
 
         expect(page).not_to have_content("Vocdoni communication error")
+      end
+    end
+
+    context "when the internal census without authorizations" do
+      let!(:election) { create :vocdoni_election, :with_internal_census, :ready_for_setup, component: current_component }
+
+      it "has another message for internal census" do
+        visit_steps_page
+
+        within "form.create_election" do
+          expect(page).to have_content("The census is ready. Selected census is: Internal (no additional authorizations are required).")
+          expect(page).not_to have_link("Fix it")
+          expect(page).to have_content("no additional authorizations are required")
+        end
       end
     end
   end
@@ -238,6 +262,26 @@ describe "Admin manages election steps", :slow, type: :system do
       within find(:xpath, "//td[contains(text(),'#{translated(answer2.title)}')]/following-sibling::td") do
         expect(page).to have_content("14")
       end
+    end
+  end
+
+  describe "updating the census" do
+    let!(:election) { create :vocdoni_election, :with_internal_census, :ready_for_setup, :configured, :ongoing, component: current_component, verification_types: verification_types }
+    let(:non_voter_ids) { create_list(:user, 3, organization: current_component.organization).map(&:id) }
+    let(:authorization) { create(:authorization, user: user, name: "dummy_authorization_handler") }
+    let(:verification_types) { [authorization.name] }
+
+    it "performs the action successfully" do
+      visit_steps_page
+      expect(page).to have_content("There are 1 users waiting to be added to the census.")
+      expect(page).to have_content("It is possible to update it during the duration of the election but it requires your manual action as it might cost some credits.")
+      expect(page).to have_content("Example authorization")
+      click_link "Update census now!"
+      sleep 1
+      perform_enqueued_jobs
+      sleep 1
+      expect(page).not_to have_css("a", text: "Update census now!")
+      expect(page).to have_content("There are 0 users waiting to be added to the census.")
     end
   end
 

@@ -19,7 +19,7 @@ module Decidim
           @validations ||= [
             [:minimum_questions, { link: router.election_questions_path(election) }, election.questions.any?],
             [:minimum_answers, { link: router.election_questions_path(election) }, election.minimum_answers?],
-            [:census_ready, { link: router.election_census_path(election) }, census.ready_to_setup?],
+            census_ready,
             time_before_validation,
             [:published, { link: router.publish_page_election_path(election) }, election.published_at.present?]
           ].freeze
@@ -43,6 +43,12 @@ module Decidim
           true
         end
 
+        def census_ready
+          key = election.internal_census? ? :internal_census_ready_html : :census_ready
+
+          [key, { link: router.election_census_path(election), **census_ready_validation_args }, census.ready_to_setup?]
+        end
+
         private
 
         def router
@@ -58,6 +64,29 @@ module Decidim
             [:manual_start, { link: router.edit_election_calendar_path(election), minutes: time_before_minutes }, true]
           else
             [:time_before, { link: router.edit_election_calendar_path(election), minutes: time_before_minutes }, election.minimum_minutes_before_start?]
+          end
+        end
+
+        def census_ready_validation_args
+          if election.internal_census?
+            {
+              link: router.election_census_path(election),
+              verification_types: formatted_verification_types
+            }
+          else
+            {
+              link: router.election_census_path(election)
+            }
+          end
+        end
+
+        def formatted_verification_types
+          if election.verification_types.empty?
+            I18n.t("status.no_additional_authorizations", scope: "decidim.vocdoni.admin.census")
+          else
+            election.verification_types.map do |type|
+              I18n.t("decidim.authorization_handlers.#{type}.name").downcase
+            end.join(", ")
           end
         end
       end

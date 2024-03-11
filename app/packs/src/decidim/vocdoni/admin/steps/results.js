@@ -1,3 +1,4 @@
+
 const RESULTS_SPAN_SELECTOR = ".js-votes-results";
 
 export const getElectionResults = async () => {
@@ -31,4 +32,3 @@ document.addEventListener("DOMContentLoaded", () => {
     checkResultsElection(resultsSpan);
   }
 });
-

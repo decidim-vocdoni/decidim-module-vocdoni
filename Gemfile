@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-DECIDIM_VERSION = "0.27.1"
+DECIDIM_VERSION = "0.27.5"
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-vocdoni", path: "."

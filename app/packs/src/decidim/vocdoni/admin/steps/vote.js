@@ -1,41 +1,76 @@
-const ELECTION_VOTES_SELECTOR = ".js-votes-count";
-// Wait for 30s between stats refresh
+// Interval time in milliseconds for refreshing the statistics
 const WAIT_TIME_MS = 30000;
 
+// Fetch the votes from the API
 export const getElectionResults = async () => {
-  const vocdoniClientMetadata = document.querySelector(".js-vocdoni-client");
-  const resultsPath = vocdoniClientMetadata.dataset.resultsPath;
+  const vocdoniClientElement = document.querySelector(".js-vocdoni-client");
+  if (!vocdoniClientElement || !vocdoniClientElement.dataset.resultsPath) {
+    return null;
+  }
+
+  const resultsPath = vocdoniClientElement.dataset.resultsPath;
   const response = await fetch(resultsPath);
-  const result = await response.json();
-  return result;
+  return response.json();
 };
 
-// Fetch the votes from the API and show them in the UI
-const fetchTheVotesStats = async () => {
-  const electionVotesMetadataTable = document.querySelector(ELECTION_VOTES_SELECTOR);
-  if (!electionVotesMetadataTable) {
+// Update the DOM with the answer for a specific question index
+const updateDomWithAnswer = (questionIdx, answer, value) => {
+  const dom = document.querySelector(`td[data-question-idx="${questionIdx}"][data-answer-value="${value}"]`);
+  if (dom) {
+    dom.innerHTML = answer;
+  }
+};
+
+// Fetch and display vote statistics for a given question index
+const fetchAndDisplayVotes = async (questionIdx) => {
+  const { election } = await getElectionResults();
+  election[questionIdx]?.forEach(updateDomWithAnswer.bind(null, questionIdx));
+};
+
+// Process each accordion element to fetch and display stats if it's open
+const processAccordion = async (accordion) => {
+  if (accordion.style.display === "none") {
     return;
   }
 
-  // Fetch the votes stats from the Vocdoni API
-  const fetchVotesStats = async () => {
-    const { election } = await getElectionResults();
-    console.log("ELECTION METADATA => ", election);
-    console.group("Partial Results");
-    election.forEach((question, idx) => {
-      question.forEach((answer, value) => {
-        const dom = document.querySelector(`td[data-question-idx="${idx}"][data-answer-value="${value}"]`);
-        console.log(`Question ${idx} - ANSWER ${value} VOTES ${answer}`, dom);
-        dom.innerHTML = answer;
-      });
-    });
-    console.groupEnd();
-  };
+  const questionIdxCell = accordion.querySelector("td[data-question-idx]");
+  if (!questionIdxCell) {
+    return;
+  }
 
-  fetchVotesStats();
-  setInterval(fetchVotesStats, WAIT_TIME_MS);
+  const questionIdx = questionIdxCell.dataset.questionIdx;
+  await fetchAndDisplayVotes(questionIdx);
 };
 
+// Check and fetch statistics for each accordion content on DOMContentLoaded
+const checkAndFetchStats = async () => {
+  document.querySelectorAll(".accordion-content").forEach(processAccordion);
+};
+
+// Set up initial fetch for all open accordions on page load
 document.addEventListener("DOMContentLoaded", () => {
-  fetchTheVotesStats();
+  checkAndFetchStats().then(() => console.log("Initial stats fetched"));
+  setInterval(checkAndFetchStats, WAIT_TIME_MS);
+});
+
+// Set up event listeners on accordion titles to fetch stats when they are opened
+document.querySelectorAll(".accordion-title").forEach((title) => {
+  title.addEventListener("click", async (event) => {
+    const accordionItem = event.target.closest(".accordion-item");
+    const accordionContent = accordionItem.querySelector(".accordion-content");
+    const isExpanded = accordionContent.getAttribute("aria-expanded") === "true";
+
+    if (isExpanded) {
+      return;
+    }
+
+    const questionIdxCell = accordionContent.querySelector("td[data-question-idx]");
+
+    if (!questionIdxCell) {
+      return;
+    }
+
+    const questionIdx = questionIdxCell.dataset.questionIdx;
+    await fetchAndDisplayVotes(questionIdx);
+  });
 });

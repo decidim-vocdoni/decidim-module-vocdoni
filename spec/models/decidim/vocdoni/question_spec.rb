@@ -67,4 +67,12 @@ describe Decidim::Vocdoni::Question do
       expect(vocdoni2[2][2]["value"]).to eq(2)
     end
   end
+
+  describe "#slug" do
+    subject(:question) { create :vocdoni_question }
+
+    it "returns the correct slug format" do
+      expect(subject.slug).to eq("question-#{subject.id}")
+    end
+  end
 end

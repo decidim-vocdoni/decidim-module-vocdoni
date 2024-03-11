@@ -30,7 +30,8 @@ module Decidim
         attr_reader :organization, :user, :wallet
 
         def private_key
-          @private_key ||= Sdk.new(organization).deterministicWallet(organization.id)["privateKey"]
+          token = "#{organization.id}-#{Rails.application.secret_key_base}"
+          @private_key ||= Sdk.new(organization).deterministicWallet(token)["privateKey"]
         end
 
         def create_wallet!

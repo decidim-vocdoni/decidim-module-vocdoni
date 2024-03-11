@@ -1,0 +1,21 @@
+<div class="card--list__item">
+  <div class="card--list__text">
+    <div class="text-left">
+      <h5 class="card--list__heading">
+        <%= t("#{authorized_method.key}.name", scope: "decidim.authorization_handlers") %>
+      </h5>
+      <span class="text-small">
+        <%= t("#{authorized_method.key}.explanation", scope: "decidim.authorization_handlers") %>
+      </span>
+    </div>
+  </div>
+  <div class="card--list__data" aria-hidden="true">
+    <span>
+      <% if granted %>
+        <%= icon "check", class: "card--list__icon success", role: "img" %>
+      <% else %>
+        <%= icon "minus", class: "card--list__icon alert", role: "img" %>
+      <% end %>
+    </span>
+  </div>
+</div>

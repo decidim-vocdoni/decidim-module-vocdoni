@@ -75,8 +75,12 @@ en:
             invalid: There was a problem updating this answer
             success: Answer successfully updated
         census:
+          census_type:
+            external: External (upload a CSV file)
+            internal: Internal (registered participants)
           create:
             error: There was an error importing or generating the census.
+            submit_permissions: Save census
             success:
               import: Successfully imported %{count} items (%{errors} errors). Please
                 wait a moment while these records are being processed.
@@ -87,9 +91,14 @@ en:
           destroy_all:
             success: All census data have been deleted
           index:
-            info: For setting up the census for a Vocdoni Election, you need to upload
-              the census.
-            title: Census for a Vocdoni election
+            census_empty: The census is currently empty. When users pass the authorizations
+              you selected, they will be added to the census.
+            census_warning_for_csv_html: The census is not ready yet. You can <b>upload
+              the CSV file</b> to proceed.
+            census_warning_for_internal_census_html: The census is not ready yet.
+              You need <b>save it</b> to proceed.
+            info: Choose the type of census you want to use for this election
+            title: Type of census
           new:
             file: ".csv file with emails data"
             info: 'Must be a file in CSV format with only two columns, one with the
@@ -97,17 +106,26 @@ en:
               have to introduce in order to vote. It must be separated with a semicolon
               (;):'
             submit: Upload file
-            title: Upload a new census
+            title:
+              external: Upload a CSV file
+              internal: Additional required authorizations to vote (optional)
+          permissions_warning_html: You can restrict participation in the election
+            to participants who have an authorization.<br>Note that participants will
+            need to fulfill the selected authorizations in order to vote. Leaving
+            all checkboxes empty will allow to vote anyone registered.
           status:
             data: There are %{count} records loaded in total. Last upload date was
               on %{due_date}. If you want to change the census (for instance, adding
               more participants), its necessary to first delete all census data.
+            internal_census_ready_to_setup_html: 'Selected census: <strong>Internal</strong>'
+            no_additional_authorizations: no additional authorizations are required
             percentage_complete: Completed %{percentage}% of %{count} total records.
-            processing_html: The census is curently being processed for its use in
+            processing_html: The census is currently being processed for its use in
               the Blockchain. Once it's ready, you will be able to create the election.
             ready_to_setup_html: The census data is uploaded and prepared for its
               use in the Vocdoni Blockchain.
             title: Current census data
+            update_census_result_html: The census successfully updated.
         election_calendar:
           edit:
             after_voting_note: Show results only when the election is closed
@@ -201,6 +219,20 @@ en:
               results.
             success: The election has been successfully canceled.
             title: Canceled
+          census:
+            census_info_title: 'This election is using the census:'
+            description: It is possible to update it during the duration of the election
+              but it requires your manual action as it might cost some credits.
+            last_update: Last census update
+            none: none
+            records_added: Records added
+            title: Dynamic census
+            update_census: Update census now!
+            users_awaiting_census: There are <strong>%{count}</strong> users waiting
+              to be added to the census.
+          census_update:
+            invalid: There was a problem updating the census.
+            success: The census has been successfully updated.
           create_election:
             description: Your voting process is secured using the advanced digital
               voting technology of the Vocdoni Protocol. Please be patient, as the
@@ -227,6 +259,8 @@ en:
             invalid: There was a problem setting up this election
             requirements:
               census_ready: The census is <strong>ready</strong>.
+              internal_census_ready_html: 'The census is <strong>ready</strong>. Selected
+                census is: <strong>Internal (%{verification_types}</strong>).'
               manual_start: The election <strong>will start manually.</strong>
               minimum_answers: Each question has <strong>at least two answers</strong>.
               minimum_questions: The election has <strong>at least one question</strong>.
@@ -362,6 +396,12 @@ en:
           update: "%{user_name} updated the election %{resource_name} of %{space_name}"
         wallet:
           create: "%{user_name} created the Organization wallet for the Vocdoni API"
+      census_authorization_modal:
+        not_authorized:
+          authorize: Authorize with "%{authorization}"
+          explanation: In order to perform this action, you need to be authorized
+            with "%{authorization}".
+          title: Authorization required
       election_m:
         badge_name:
           canceled: Canceled
@@ -438,6 +478,20 @@ en:
             answers: Answers
             title: Title
       votes:
+        check_census:
+          access: Access
+          close_modal: Close
+          description: To vote, we'll need to check that you're on the census
+          election_not_open: Currently the election is not open for voting. Try again
+            later.
+          failed: Check that the provided data is correct and try again
+          form_title: Enter your data
+          login_title: Verify your identity
+          title: Identification
+          verifications_check: We are verifying that you are eligible to vote in this
+            election. Please wait a few seconds.
+          with_verifications: The administrator has not yet added your wallet to the
+            census. Please try again later.
         confirm:
           answer: Answer
           answer_number: answer %{number}
@@ -460,14 +514,6 @@ en:
           login: Identification
           submitting: Submitting the vote
           vote_cast: Your vote has been cast
-        login:
-          access: Access
-          description: To vote, we'll need to check that you're on the census
-          election_not_open: Currently the election is not open for voting. Try again
-            later.
-          failed: Check that the provided data is correct and try again
-          form_title: Enter your data
-          title: Verify your identity
         login_fields:
           email: Email
           email_placeholder: user@example.org

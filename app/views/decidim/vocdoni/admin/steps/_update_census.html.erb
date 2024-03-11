@@ -1,0 +1,45 @@
+<div class="card js-census-data"
+      data-update-census-url="<%= census_data_election_steps_path(election_id: election.id, format: :json) %>">
+  <div class="card-divider">
+    <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.steps.census") %></h2>
+  </div>
+
+  <div class="card-section">
+    <div class="census-info">
+      <p><%= t("census_info_title", scope: "decidim.vocdoni.admin.steps.census") %></p>
+      <% if election.verification_types.empty? %>
+        <p><%= t("status.no_additional_authorizations", scope: "decidim.vocdoni.admin.census") %></p>
+      <% else %>
+        <ul>
+          <% election.verification_types.each do |type| %>
+            <li><%= t("decidim.authorization_handlers.#{type}.name") %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <div class="callout warning">
+      <p><%= t("description", scope: "decidim.vocdoni.admin.steps.census") %></p>
+    </div>
+    <div data-census-update-message class="callout success" style="display: none;">
+      <p data-census-update-message-text></p>
+    </div>
+    <p>
+      <%= t("last_update", scope: "decidim.vocdoni.admin.steps.census") %>:
+      <strong data-census-last-updated><%= election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong> |
+      <span><%= t("records_added", scope: "decidim.vocdoni.admin.steps.census") %>:
+    <strong data-census-records-added><%= election.last_census_update_records_added || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong></span>
+    </p>
+    <p data-users-awaiting-census>
+      <%= t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe %>
+    </p>
+    <div data-update-census-container data-update-url="<%= update_census_election_steps_path(election_id: election.id) %>" style="display: none;">
+      <!-- The button will be added here via JavaScript if needed -->
+    </div>
+  </div>
+</div>
+
+<script>
+  window.translations = {
+    updateCensusNow: "<%= j t("update_census", scope: "decidim.vocdoni.admin.steps.census") %>"
+  };
+</script>

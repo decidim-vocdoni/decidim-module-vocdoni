@@ -40,6 +40,12 @@ bin/rails decidim_vocdoni:webpacker:install
 bin/rails db:migrate
 ```
 
+Depending on your Decidim version, you can choose the corresponding version to ensure compatibility:
+
+| Version | Compatible Decidim versions |
+|---|---|
+| 1.x   | 0.27.x |
+
 ## Cron based tasks
 
 For some of the Elections status changes, you'll need to add a task to the schedule tasks
@@ -53,6 +59,15 @@ status are checked every 15 minutes, you can do it with this configuration:
 # Change Elections status on decidim-vocdoni
 0/15 0 * * * cd /home/user/decidim_application && RAILS_ENV=production bin/rails decidim_vocdoni:change_election_status > /dev/null
 ```
+
+## Internal census
+
+Administrators have the possibility to use an internal or dynamic census, allowing the census to be change during the election vote period. On this case it is necessary to update it in to the Vocdoni blockchain. 
+A common scenario for this is when you want the internal Decidim userbase to be the census. Then, an authorization method is selected in order to be able to vote and people can dynamically authorize themselves in order to vote (because they might not have the proper authorization in the moment of voting).
+
+This process can have a cost of a few tokens, so it is not done automatically. The admin is responsible to update the census in the Vocdoni blockchain in the admin's monitoring page. The process of updating the census effectively removes the current census and creates a new one for the ongoing election, so it is advisable to do it with care and properly inform the voters at which time they will be able to vote.
+
+In summary, **the admin is responsible to update the census at all times, this is not an automatic process**. Also, remember that this **might have a monetary cost** in terms of tokens.
 
 ## Node.js required: Vocdoni API
 
