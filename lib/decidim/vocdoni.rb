@@ -64,12 +64,6 @@ module Decidim
       API_ENDPOINTS[api_endpoint_env]
     end
 
-    def self.api_endpoint_env
-      return "stg" if config.api_endpoint_env.downcase == "stg"
-
-      "dev"
-    end
-
     def self.explorer_vote_domain
       "#{api_endpoint_env}.explorer.vote"
     end
