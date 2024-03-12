@@ -293,9 +293,19 @@ en:
             view: View landing page
           credits:
             available: Available credits
+            copied: Copied!
+            copy_wallet: Copy wallet address
+            copy_wallet_clarification: Copy wallet address to clipboard
+            copy_wallet_message: The wallet address has been successfully copied to
+              clipboard.
             dev_mode: You are using Vocdoni in the %{env} environment. It is possible
               to collect credits for free (without any warranty)
             get_more: Get more credits
+            prod_mode_html: 'The usage of the Vocdoni platform has costs. Please get
+              in touch with <a href=''mailto:%{reseller_email}?subject=Decidim Vocdoni
+              Inquiry&body=Please provide a quote for the Vocdoni platform usage.
+              My organization Vocdoni address is: %{wallet_address}''>%{reseller_name}</a>
+              to ask for a quote. You need to also tell them your organization address:'
             warning: You have no credits left. You can get more credits by clicking
               on the button below.
           danger_zone:
