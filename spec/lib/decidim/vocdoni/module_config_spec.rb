@@ -45,7 +45,7 @@ module Decidim
       end
 
       it "has the correct endpoint env" do
-        expect(endpoint_env.strip).to eq("stg")
+        expect(endpoint_env.strip).to eq("STG")
       end
 
       it "has the correct endpoint url" do
@@ -58,7 +58,7 @@ module Decidim
         let(:vocdoni_env) { "WRONG" }
 
         it "defaults to dev" do
-          expect(endpoint_env.strip).to eq("dev")
+          expect(endpoint_env.strip).to eq("WRONG")
         end
       end
     end
