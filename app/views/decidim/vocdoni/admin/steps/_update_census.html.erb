@@ -36,15 +36,15 @@
     <%= link_to_if census_needs_update?,
                      t("update_census", scope: "decidim.vocdoni.admin.steps.census"),
                      update_census_election_steps_path(election_id: election.id),
-                     class: "button primary alert",
+                     class: "button button__sm button__primary",
                      method: :put,
                      id: "update-census-link" do %>
-        <%= content_tag(:span, t("update_census", scope: "decidim.vocdoni.admin.steps.census"), class: "button primary alert disabled update-census-span") %>
+        <%= content_tag(:span, t("update_census", scope: "decidim.vocdoni.admin.steps.census"), class: "button button__sm button__primary disabled update-census-span") %>
       <% end %>
     </div>
   </div>
 </div>
-
+<%= append_stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
 <script>
   window.translations = {
     updateCensusNow: "<%= j t("update_census", scope: "decidim.vocdoni.admin.steps.census") %>"

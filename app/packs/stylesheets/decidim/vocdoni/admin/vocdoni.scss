@@ -9,12 +9,6 @@ $white: #fff;
   }
 }
 
-// Fix for button primary colors with black links in the admin panel
-// We should fix this upstream
-.button.primary {
-  color: white;
-}
-
 .spinner-container {
   position: relative;
   cursor: wait;
@@ -50,11 +44,34 @@ $white: #fff;
 }
 
 .button__warning {
-  @apply bg-warning;
+  @apply bg-warning mx-0.5;
 
     &:hover {
       @apply opacity-80;
     }
+}
+
+.button__alert {
+  @apply bg-alert mx-0.5;
+
+  &:hover {
+    @apply opacity-80;
+  }
+}
+
+.button__success {
+  @apply bg-success mx-0.5;
+
+  &:hover {
+    @apply opacity-80;
+  }
+}
+
+a.button__warning,
+a.button__success,
+button.button__success,
+a.button__alert {
+  color: #ffffff;
 }
 
 .start-time-field-container input,

@@ -12,9 +12,10 @@
         <p><%= t("help.p2", scope: "decidim.vocdoni.admin.wallets.form") %></p>
       </div>
 
-      <div class="button button__sm button__warning">
-        <%= link_to t(".create"), wallets_path, method: :remote, class: "button primary" %>
+      <div class="flex justify-center">
+        <%= link_to t(".create"), wallets_path, method: :remote, class: "button button__sm button__warning" %>
       </div>
     </div>
   </div>
 </div>
+<%= append_stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

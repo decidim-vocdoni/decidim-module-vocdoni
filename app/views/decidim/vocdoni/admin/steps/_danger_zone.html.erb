@@ -16,7 +16,7 @@
   %>
     <div class="card-section callout warning js-election-actions <%= action %>">
       <p class="text-center"><%= t(action, scope: "decidim.vocdoni.admin.steps.danger_zone.messages") %></p>
-      <div class="flex-center">
+      <div class="flex justify-center">
         <%= f.hidden_field :status, value: action %>
         <%= danger_zone_submit(f, action) %>
       </div>
@@ -26,14 +26,16 @@
   <% if election.interruptible? %>
     <div class="card-section callout alert js-election-actions cancel_end">
       <p class="text-center"><%= t("cancel_end_html", scope: "decidim.vocdoni.admin.steps.danger_zone.messages") %></p>
-      <div class="flex-center">
+      <div class="flex justify-center">
 
-        <%= link_to election_step_path(election, :cancel, status: :canceled), method: :patch, class: "button alert js-button-submit",
+        <%= link_to election_step_path(election, :cancel, status: :canceled), method: :patch,
+                    class: "button button__sm button__alert js-button-submit",
             data: { status: "canceled", confirm: t("confirm",  scope: "decidim.vocdoni.admin.steps.danger_zone") } do %>
             <%= icon("close-circle-line", class: "icon--before") %>
             <%= t("cancel", scope: "decidim.vocdoni.admin.steps.danger_zone.action") %>
         <% end %>
-        <%= link_to election_step_path(election, :end, status: :end), method: :patch, class: "button alert js-button-submit",
+        <%= link_to election_step_path(election, :end, status: :end), method: :patch,
+                    class: "button button__sm button__alert js-button-submit",
             data: { status: "end", confirm: t("confirm",  scope: "decidim.vocdoni.admin.steps.danger_zone") } do %>
             <%= icon("stop-circle-line", class: "icon--before") %>
             <%= t("end", scope: "decidim.vocdoni.admin.steps.danger_zone.action") %>
@@ -42,3 +44,4 @@
     </div>
   <% end %>
 </div>
+<%= append_stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

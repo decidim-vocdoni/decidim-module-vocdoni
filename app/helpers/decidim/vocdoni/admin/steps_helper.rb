@@ -28,16 +28,16 @@ module Decidim
         def danger_zone_submit(form, action)
           ico, button_class = case action
                               when "created"
-                                ["play-circle-line", "primary"]
+                                %w(play-circle-line button__secondary)
                               when "vote"
-                                ["play-circle-line", "success"]
+                                %w(play-circle-line button__success)
                               when "paused"
-                                ["pause-circle-line", "warning"]
+                                %w(pause-circle-line button__warning)
                               end
           text = t(action, scope: "decidim.vocdoni.admin.steps.danger_zone.action")
           text = "#{icon(ico, class: "icon--before")} #{text}".html_safe
 
-          form.submit text, class: "button #{button_class}",
+          form.submit text, class: "button button__sm #{button_class}",
                             data: { confirm: t("confirm", scope: "decidim.vocdoni.admin.steps.danger_zone") }
         end
 
