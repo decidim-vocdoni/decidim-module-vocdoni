@@ -438,6 +438,26 @@ en:
           elections_count:
             one: "%{count} election"
             other: "%{count} elections"
+        election_m:
+          badge_name:
+            canceled: Canceled
+            finished: Finished
+            ongoing: Active
+            paused: Paused
+            upcoming: Upcoming
+        elections:
+          filters:
+            all: All
+            canceled: Canceled
+            date: Date
+            finished: Finished
+            active: Active
+            paused: Paused
+            upcoming: Upcoming
+        orders:
+          label: Orders
+          older: Older
+          recent: Recent
         preview:
           available_answers: 'Available answers:'
           description: 'These are the questions for this voting process:'

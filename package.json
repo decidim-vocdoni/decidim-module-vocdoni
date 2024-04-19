@@ -48,7 +48,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "@vocdoni/sdk": "0.7.3",
-    "tailwindcss": "^3.3.2"
+    "@vocdoni/sdk": "0.7.3"
   }
 }

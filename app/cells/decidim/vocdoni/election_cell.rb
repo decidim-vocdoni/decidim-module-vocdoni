@@ -3,7 +3,7 @@
 module Decidim
   module Vocdoni
     # This cell renders the election card for an instance of an election
-    # the default size is the Medium Card (:m)
+    # the default size is the Grid (:g) election card
     class ElectionCell < Decidim::ViewModel
       include ElectionCellsHelper
       include Cell::ViewModel::Partial
@@ -15,7 +15,7 @@ module Decidim
       private
 
       def card_size
-        "decidim/vocdoni/election_m"
+        "decidim/vocdoni/election_g"
       end
     end
   end
