@@ -342,7 +342,7 @@ describe Decidim::Vocdoni::Election do
     let(:json) { election.to_vocdoni }
 
     it "returns the election as json" do
-      # expect(json["id"]).to eq election.id
+      expect(json["id"]).to eq election.vocdoni_election_id
       expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "Spanish title", "default" => "English title" })
       expect(json["description"]).to eq({ "en" => "English description", "ca" => "Catalan description", "es" => "", "default" => "English description" })
       expect(json["header"]).to eq election.photo.attached_uploader(:file).url(host: organization.host)

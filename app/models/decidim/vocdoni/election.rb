@@ -129,7 +129,7 @@ module Decidim::Vocdoni
 
     # Public: Checks if the census status for the election is "ready".
     #
-    # Returns a boolean indicating if the census status equals "ready".
+    # Returns a boolean indicating if the census status equals "ready" or if it's an internal census selection and there are not verification types or voters.
     def census_ready?
       census_status&.name == "ready" || (internal_census? && verification_types.empty?) || (internal_census? && voters.empty?)
     end
@@ -239,6 +239,11 @@ module Decidim::Vocdoni
 
     def questions_to_vocdoni
       questions.map(&:to_vocdoni)
+    end
+
+    # Technical voter e-mail is used when the internal census is without voters
+    def technical_voter_email
+      "technical_voter_election_#{id}@techvoters.example.com"
     end
   end
 end

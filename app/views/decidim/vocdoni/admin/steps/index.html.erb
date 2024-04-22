@@ -24,7 +24,7 @@
     <ol class="progress-indicator">
       <% steps(current_step).each_with_index do |step, i| %>
         <li class="<%= step.last %>" data-step="">
-            <span><%= t("steps.#{step.first}.title", scope: "decidim.vocdoni.admin") %></span>
+          <span><%= t("steps.#{step.first}.title", scope: "decidim.vocdoni.admin") %></span>
         </li>
       <% end %>
     </ol>

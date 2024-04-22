@@ -30,6 +30,12 @@ module Decidim
       initializer "decidim_vocdoni.webpacker.assets_path" do
         Decidim.register_assets_path File.expand_path("app/packs", root)
       end
+
+      initializer "decidim_admin.register_icons" do
+        Decidim.icons.register(name: "fingerprint-2-line", icon: "fingerprint-2-line", category: "system", description: "", engine: :core)
+        Decidim.icons.register(name: "message-3-line", icon: "message-3-line", category: "system", description: "", engine: :core)
+        Decidim.icons.register(name: "caret-left", icon: "caret-left", category: "system", description: "", engine: :core)
+      end
     end
   end
 end

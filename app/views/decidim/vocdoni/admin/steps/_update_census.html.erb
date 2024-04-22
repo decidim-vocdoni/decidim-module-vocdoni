@@ -20,33 +20,26 @@
     <div class="callout warning">
       <p><%= t("description", scope: "decidim.vocdoni.admin.steps.census") %></p>
     </div>
-    <div id="census-update-message" class="callout success" style="display: none;">
-      <p id="census-update-message-text"></p>
+    <div data-census-update-message id="census-update-message" class="callout success" style="display: none;">
+      <p data-census-update-message-text id="census-update-message-text"></p>
     </div>
     <p>
       <%= t("last_update", scope: "decidim.vocdoni.admin.steps.census") %>:
-      <strong id="census-last-updated"><%= election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong> |
+      <strong data-census-last-updated><%= election.census_last_updated_at&.strftime("%Y-%m-%d %H:%M:%S") || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong> |
       <span><%= t("records_added", scope: "decidim.vocdoni.admin.steps.census") %>:
-    <strong id="census-records-added"><%= election.last_census_update_records_added || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong></span>
+    <strong data-census-records-added><%= election.last_census_update_records_added || t("none", scope: "decidim.vocdoni.admin.steps.census") %></strong></span>
     </p>
     <p data-users-awaiting-census>
       <%= t("users_awaiting_census", scope: "decidim.vocdoni.admin.steps.census", count: users_awaiting_census(election)).html_safe %>
     </p>
-    <div id="census-update-container" data-update-url="<%= update_census_election_steps_path(election_id: election.id) %>">
-    <%= link_to_if census_needs_update?,
-                     t("update_census", scope: "decidim.vocdoni.admin.steps.census"),
-                     update_census_election_steps_path(election_id: election.id),
-                     class: "button button__sm button__primary",
-                     method: :put,
-                     id: "update-census-link" do %>
-        <%= content_tag(:span, t("update_census", scope: "decidim.vocdoni.admin.steps.census"), class: "button button__sm button__primary disabled update-census-span") %>
-      <% end %>
+    <div data-update-census-container data-update-url="<%= update_census_election_steps_path(election_id: election.id) %>" style="display: none;">
+      <!-- The button will be added here via JavaScript if needed -->
     </div>
   </div>
 </div>
-<%= append_stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
 <script>
   window.translations = {
     updateCensusNow: "<%= j t("update_census", scope: "decidim.vocdoni.admin.steps.census") %>"
   };
 </script>
+<%= append_stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
