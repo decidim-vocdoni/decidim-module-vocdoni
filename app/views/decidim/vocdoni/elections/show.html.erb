@@ -12,50 +12,54 @@ edit_link(
 )
 %>
 
-<%= render partial: "decidim/shared/component_announcement" %>
+<% content_for :aside do %>
+  <section class="layout-aside__section layout-aside__buttons">
+    <%= cell("decidim/vocdoni/election_vote_cta", election) %>
+  </section>
+<% end %>
 
-<div class="row">
-  <div class="columns">
-
+<%= render layout: "layouts/decidim/shared/layout_item" do %>
+  <section class="layout-main__section layout-main__heading">
     <% unless single? %>
-      <%= link_to :elections, class: "small hollow" do %>
-        <%= icon "caret-left", class: "icon--small" %>
-        <%= t(".back") %>
-      <% end %>
+      <div class="flex items-center">
+        <%= icon "arrow-left-s-fill", class: "icon--small" %>
+        <%= link_to t("decidim.vocdoni.elections.show.back"), elections_path %>
+      </div>
     <% end %>
+    <%= render partial: "decidim/shared/component_announcement" %>
 
-    <h2 class="heading3">
-      <%== present(election).title %>
-    </h2>
-    <div class="card__callout">
-      <%= cell "decidim/vocdoni/remaining_time_callout", election %>
+    <%= cell "decidim/vocdoni/remaining_time_callout", election %>
+
+    <%= cell("decidim/announcement", t("voting_period_status.#{election.voting_period_status}",
+                                       scope: "decidim.vocdoni.elections.show",
+                                       start_time: "<strong>#{l election.start_time, format: :long}</strong>",
+                                       end_time: "<strong>#{l election.end_time, format: :long}</strong>").html_safe) %>
+
+    <h1 class="h2 decorator"><%== present(election).title %></h1>
+  </section>
+  <section class="layout-main__section">
+    <div class="editor-content">
+      <%= decidim_sanitize_editor_admin(translated_attribute(election.description)) %>
     </div>
-    <p>
-      <% unless election.manual_start? %>
-        <%= t(".voting_period_status.#{election.voting_period_status}",
-              start_time: "<strong>#{l(election.start_time, format: :long)}</strong>",
-              end_time: "<strong>#{l election.end_time, format: :long}</strong>").html_safe %>
-      <% end %>
-    </p>
-  </div>
-</div>
-<div class="row section">
-  <% if election.attachments.first.present? && election.attachments.first.image? %>
-    <div class="columns medium-4 mediumlarge-5">
-      <img src="<%= election.attachments.first.url %>" alt="">
-    </div>
+  </section>
+
+  <%= attachments_for election %>
+
+  <% unless election.finished? %>
+    <section class="layout-main__section">
+      <%= cell("decidim/vocdoni/election_preview", election) %>
+    </section>
   <% end %>
-  <div class="columns medium-8 mediumlarge-7">
-    <div class="section">
-      <p><%= decidim_sanitize_editor(simple_format(translated_attribute(election.description))) %></p>
 
-      <%= cell("decidim/vocdoni/election_vote_cta", election) %>
-    </div>
-  </div>
-</div>
+  <% if @election_data %>
+    <section class="layout-main__section">
+      <%= cell("decidim/vocdoni/election_results_realtime", election, election_data: @election_data) %>
+    </section>
+  <% end %>
 
-<%= cell("decidim/vocdoni/election_preview", election) %>
-
-<%= cell("decidim/vocdoni/election_results_realtime", election, election_data: @election_data) if @election_data %>
-
-<%= cell("decidim/vocdoni/election_results", election) %>
+  <% if election.results_published? %>
+    <section class="layout-main__section">
+      <%= cell("decidim/vocdoni/election_results", election) %>
+    </section>
+  <% end %>
+<% end %>

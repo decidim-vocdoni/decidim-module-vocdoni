@@ -36,8 +36,6 @@ module Decidim
       end
 
       initializer "decidim_admin.register_icons" do
-        Decidim.icons.register(name: "coin-line", icon: "coin-line", category: "system", description: "", engine: :core)
-        Decidim.icons.register(name: "hammer-line", icon: "hammer-line", category: "system", description: "", engine: :core)
         Decidim.icons.register(name: "bank-card-line", icon: "bank-card-line", category: "system", description: "", engine: :core)
         Decidim.icons.register(name: "pause-circle-line", icon: "pause-circle-line", category: "system", description: "", engine: :core)
         Decidim.icons.register(name: "play-circle-line", icon: "play-circle-line", category: "system", description: "", engine: :core)

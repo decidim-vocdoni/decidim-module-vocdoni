@@ -35,7 +35,7 @@
             <% Array(form.errors[key]).each do |error| %>
               <td class="px-2 pr-4 py-2 text-base text-red-500 font-medium">
                 <%= icon "close-line", class: "text-alert w-6 h-6", role: "img", "aria-hidden": true %> <%= error.to_s.html_safe %></td>
-              <td class="px-1 py-2"><%= fix_it_button_with_icon(value[:link], "hammer-line") %></td>
+              <td class="px-1 py-2"><%= fix_it_button_with_icon(value[:link], "tools-line") %></td>
             <% end %>
           <% else %>
             <td class="px-2 py-2 pr-4 text-base text-green-500 font-medium">

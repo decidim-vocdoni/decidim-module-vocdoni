@@ -2,7 +2,7 @@
   <%= cell("decidim/announcement", callout_text) %>
 <% end %>
 
-<div>
+<div class="election__aside-link">
   <% if model.canceled? %>
     <div class="callout alert">
       <%= t("canceled", scope: "decidim.vocdoni.elections.show") %>
@@ -11,20 +11,20 @@
     <div class="callout warning">
       <%= t("paused", scope: "decidim.vocdoni.elections.show") %>
     </div>
-    <span class="button button--sc disabled"><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></span>
+    <button class="button button__lg button__secondary w-full" ><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
   <% elsif model.ongoing? %>
     <%= link_to new_election_vote_path,
-                class: "button button--sc vote-button",
+                class: "button button__lg button__secondary w-full vote-button",
                 **link_attributes_for_voting(election, voter_verified?, modal_id) do %>
       <%= vote_action_button_text %>
     <% end %>
     <%= cell "decidim/vocdoni/census_authorization_modal", model %>
   <% elsif !model.finished? %>
-    <span class="button button--sc disabled"><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></span>
+    <button class="button button__lg button__secondary w-full" disabled><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
   <% end %>
 
   <% if preview_mode? && can_preview? %>
-    <%= link_to new_election_vote_path, class: "button button--sc" do %>
+    <%= link_to new_election_vote_path, class: "button button__lg button__secondary w-full mt-4" do %>
       <%= t("preview", scope: "decidim.vocdoni.elections.show") %>
     <% end %>
   <% end %>
