@@ -1,30 +1,31 @@
-<div class="row">
-  <div class="columns large-8">
-    <h3 class="section-heading"><%= t("decidim.vocdoni.elections.results.title") %></h3>
-
-    <p><%= t("decidim.vocdoni.elections.results.description") %></p>
-
-    <ul class="voc-accordion accordion mb-m evote__preview"
-      data-accordion
-      data-multi-expand="true"
-      data-allow-all-closed="true">
-      <% model.questions.each_with_index do |question, i| %>
-        <li class="accordion-item evote__preview-question <%= " is-active" if i.zero? %>" data-accordion-item>
-          <a href="#" class="accordion-title flex"><%= translated_attribute(question.title) %></a>
-
-          <div class="accordion-content" data-tab-content>
-            <% question.answers.each do |answer| %>
-              <div class="evote__preview-result">
-                <h3 class="evote__preview-option">
-                  <%= translated_attribute(answer.title) %>
-                </h3>
-
-                <%= render view: :progress_bar, locals: { votes_percentage: answer.votes_percentage, votes: answer.votes } %>
-              </div>
-            <% end %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+<div class="election__section-title">
+  <%= icon "bar-chart-box-line" %>
+  <h2 class="h4"><%= t("decidim.vocdoni.elections.results.title") %></h2>
 </div>
+
+<p class="election__section-desc"><%= t("decidim.vocdoni.elections.results.description") %></p>
+
+
+<ul id="accordion-results" class="space-y-8" data-component="accordion">
+  <% model.questions.each_with_index do |question, ix| %>
+    <li class="election__accordion">
+      <button id="accordion-trigger-<%= ix %>" data-controls="accordion-panel-<%= ix %>" class="election__accordion-trigger" <%= " data-open='true'" if ix.zero? %>>
+        <%= translated_attribute(question.title) %>
+        <%= icon "arrow-down-s-line" %>
+        <%= icon "arrow-up-s-line" %>
+      </button>
+
+      <div id="accordion-panel-<%= ix %>" class="election__accordion-panel" aria-hidden="true">
+        <% question.answers.each do |answer| %>
+          <div>
+            <p>
+              <%= translated_attribute(answer.title) %>
+            </p>
+
+            <%= render view: :progress_bar, locals: { id: answer.id, votes_percentage: answer.votes_percentage, votes: answer.votes } %>
+          </div>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>

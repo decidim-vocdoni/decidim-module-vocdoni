@@ -31,9 +31,10 @@ module Decidim
         Decidim.register_assets_path File.expand_path("app/packs", root)
       end
 
-      initializer "decidim_admin.register_icons" do
-        Decidim.icons.register(name: "fingerprint-2-line", icon: "fingerprint-2-line", category: "system", description: "", engine: :core)
-        Decidim.icons.register(name: "message-3-line", icon: "message-3-line", category: "system", description: "", engine: :core)
+      initializer "decidim.vocdoni.register_icons" do
+        Decidim.icons.register(name: "fingerprint-2-line", icon: "fingerprint-2-line", category: "system", description: "", engine: :vocdoni)
+        Decidim.icons.register(name: "message-3-line", icon: "message-3-line", category: "system", description: "", engine: :vocdoni)
+        Decidim.icons.register(name: "bar-chart-box-line", icon: "bar-chart-box-line", category: "system", description: "", engine: :vocdoni)
       end
     end
   end
