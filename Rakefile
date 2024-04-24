@@ -3,9 +3,16 @@
 require "decidim/dev/common_rake"
 
 def install_module(path)
+  FileUtils.cp("babel.config.json", "#{path}/babel.config.json")
   Dir.chdir(path) do
     system("bin/rails decidim_vocdoni:install:migrations")
     system("bin/rails db:migrate")
+  end
+end
+
+def override_webpacker_config_files(path)
+  Dir.chdir(path) do
+    system("bundle exec rake decidim_vocdoni:webpacker:install")
   end
 end
 
@@ -36,5 +43,6 @@ task :development_app do
   end
 
   install_module("development_app")
+  override_webpacker_config_files("development_app")
   seed_db("development_app")
 end

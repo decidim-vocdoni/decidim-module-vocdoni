@@ -43,7 +43,7 @@
 
     <% if @form.main_button? %>
       <div class="flex justify-center mt-8 form-general-submit<%= " hide" if election.misconfigured? %>">
-        <%= f.button type: :submit, class: "button button__sm button__secondary", disabled: @form.invalid? do %>
+        <%= f.button type: :submit, class: "button button__lg button__secondary", disabled: @form.invalid? do %>
           <%= t("steps.#{current_step}.submit", scope: "decidim.vocdoni.admin") %>
         <% end %>
       </div>
