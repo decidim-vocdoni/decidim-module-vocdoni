@@ -12,6 +12,9 @@ edit_link(
 )
 %>
 
+<%= append_javascript_pack_tag "decidim_vocdoni_elections" %>
+<%= append_stylesheet_pack_tag "decidim_vocdoni_elections" %>
+
 <% content_for :aside do %>
   <section class="layout-aside__section layout-aside__buttons">
     <%= cell("decidim/vocdoni/election_vote_cta", election) %>
@@ -37,6 +40,7 @@ edit_link(
 
     <h1 class="h2 decorator"><%== present(election).title %></h1>
   </section>
+
   <section class="layout-main__section">
     <div class="editor-content">
       <%= decidim_sanitize_editor_admin(translated_attribute(election.description)) %>

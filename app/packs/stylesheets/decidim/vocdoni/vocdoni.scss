@@ -1,9 +1,10 @@
 @import "stylesheets/decidim/vocdoni/focus/accordion";
 @import "stylesheets/decidim/vocdoni/focus/evote";
 @import "stylesheets/decidim/vocdoni/focus/focus";
+@import "stylesheets/decidim/vocdoni/elections/elections";
 
 .card__icondata ul li:not(:first-child) strong,
-.card__block ul li:not(:first-child) strong{
+.card__block ul li:not(:first-child) strong {
   font-size: 100%;
 }
 

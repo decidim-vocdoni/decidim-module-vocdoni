@@ -20,6 +20,7 @@ Decidim::Webpacker.register_path("#{base_path}/app/packs")
 # `stylesheet_pack_tag`.
 Decidim::Webpacker.register_entrypoints(
   decidim_vocdoni_admin: "#{base_path}/app/packs/entrypoints/admin/decidim_vocdoni_admin.js",
+  decidim_vocdoni_elections: "#{base_path}/app/packs/entrypoints/decidim_vocdoni_elections.js",
   decidim_vocdoni_update_results: "#{base_path}/app/packs/entrypoints/decidim_vocdoni_update-results.js",
   decidim_vocdoni_admin_stylesheet: "#{base_path}/app/packs/entrypoints/admin/decidim_vocdoni_admin_stylesheet.js",
   decidim_vocdoni_voter_new_vote: "#{base_path}/app/packs/entrypoints/decidim_vocdoni_voter_new-vote.js",
