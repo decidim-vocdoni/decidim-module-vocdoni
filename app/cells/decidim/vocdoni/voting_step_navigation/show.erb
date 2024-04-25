@@ -1,3 +1,5 @@
+<%= append_javascript_pack_tag "decidim_vocdoni_voter_new_vote" %>
+
 <div class="focus__footer">
   <div class="row">
     <% if first_step? %>
@@ -13,14 +15,14 @@
       ) %>
     <% end %>
 
-    <span class="button focus__next disabled-continue disabled">
+    <span class="button button__sm button__disabled focus__next disabled-continue disabled">
       <%= button_continue_text %>
     </span>
 
     <%= link_to(
       button_continue_text,
       "#",
-      class: "button focus__next enabled-continue",
+      class: "button button__sm button__secondary focus__next enabled-continue",
       data: {
         toggle: [next_step_dom_id, current_step_dom_id].join(" ")
       }

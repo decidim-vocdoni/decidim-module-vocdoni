@@ -1,25 +1,21 @@
-<h1 class="heading2">
+<h3 class="h3 my-4">
   <%= translated_attribute(question.title) %>
-</h1>
+</h3>
 
-<div class="evote__options" data-max-selection="1" data-min-selection="1">
+<div id="<%= dom_id(question) %>" class="election-question__container evote__options" data-max-selection="1" data-min-selection="1">
   <% ordered_answers(question).each do |answer| %>
-    <%= label_tag nil, data: { "disabled-by": "#check-nota" }, class: "evote__check evote__card" do %>
+    <%= label_tag nil, data: { "disabled-by": "check-nota" }, class: "election-question" do %>
       <%= radio_button_tag question.slug, answer.slug, false, class: "answer_input", value: answer.value, data: { answer: "answer-#{answer.id}" } %>
 
-      <span class="evote__check-label">
-        <%= translated_attribute(answer.title) %>
-        <% if more_information?(answer) %>
-          <span class="evote__check-extra">
-            <button type="button" class="link" data-toggle="show-focus-modal-<%= answer.slug %>">
-              <%= t("decidim.vocdoni.votes.new.more_information") %>
-            </button>
-          </span>
-        <% end %>
-      </span>
+      <%= translated_attribute(answer.title) %>
+
+      <% if more_information?(answer) %>
+        <button type="button" class="button button__sm button__text-secondary ml-auto" data-dialog-open="show-focus-modal-<%= answer.slug %>">
+          <%= t("decidim.vocdoni.votes.new.more_information") %>
+        </button>
+      <% end %>
     <% end %>
 
-    <%= render("new_question_modal", answer: answer) if more_information?(answer) %>
+    <%= render("new_question_modal", answer:) if more_information?(answer) %>
   <% end %>
-  <%= render partial: "vocdoni_logo" %>
 </div>
