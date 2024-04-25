@@ -20,7 +20,7 @@ module Decidim
       def modal_id
         return "loginModal" unless current_user
 
-        options[:modal_id] || "internalCensusModal"
+        options[:modal_id] || "census-authorization-modal"
       end
 
       def redirect_url

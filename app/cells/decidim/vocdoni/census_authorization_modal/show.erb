@@ -1,11 +1,13 @@
-<div class="reveal internal-census-modal" id="internalCensusModal" data-reveal role="dialog" aria-modal="true" aria-labelledby="<%= modal_id %>-label">
-  <div class="reveal__header">
-    <h3 id="internalCensusModal-label" class="reveal__title"><%= t("decidim.vocdoni.census_authorization_modal.not_authorized.title") %></h3>
-    <button class="close-button" data-close aria-label="Close" type="button">
-      <span aria-hidden="true">&times;</span>
-    </button>
+<%= decidim_modal id: "census-authorization-modal" do %>
+  <div data-dialog-container>
+    <%= icon "information-line" %>
+    <h3 class="h3" id="dialog-internal-census-modal-label" tabindex="-1" data-dialog-title>
+      <%= t("decidim.vocdoni.census_authorization_modal.not_authorized.title") %>
+    </h3>
+    <p id="dialog-desc-internal-census-modal-info">
+      <% census_authorize_methods.each do |authorized_method| %>
+        <%= render_internal_census(authorized_method, granted_authorizations) %>
+      <% end %>
+    </p>
   </div>
-  <% census_authorize_methods.each do |authorized_method| %>
-    <%= render_internal_census(authorized_method, granted_authorizations) %>
-  <% end %>
-</div>
+<% end %>

@@ -15,14 +15,14 @@ module Decidim
 
       delegate :count, to: :questions, prefix: true
 
+      def show
+        enforce_permission_to :view, :election, election: election
+      end
+
       def new
         return unless vote_allowed?
 
         @form = form(LoginForm).instance
-      end
-
-      def show
-        enforce_permission_to :view, :election, election: election
       end
 
       def votes_left
