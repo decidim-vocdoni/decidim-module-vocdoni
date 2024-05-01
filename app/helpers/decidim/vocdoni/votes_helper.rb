@@ -33,7 +33,7 @@ module Decidim
 
       def identification_title(election)
         title = election.internal_census? ? "title" : "login_title"
-        content_tag(:h1, t("decidim.vocdoni.votes.check_census.#{title}"), class: "heading2").html_safe
+        content_tag(:h2, t("decidim.vocdoni.votes.check_census.#{title}"), class: "h2").html_safe
       end
 
       def identification_description(election)

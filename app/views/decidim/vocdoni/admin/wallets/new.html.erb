@@ -1,4 +1,5 @@
 <% add_decidim_page_title(t(".title")) %>
+<%= append_javascript_pack_tag "decidim_vocdoni_admin" %>
 
 <div class="card">
   <div class="card-divider item_show__header">
@@ -13,9 +14,8 @@
       </div>
 
       <div class="flex justify-center">
-        <%= link_to t(".create"), wallets_path, method: :remote, class: "button button__lg button__warning" %>
+        <%= link_to t(".create"), wallets_path, method: :remote, class: "button button__lg button__tertiary" %>
       </div>
     </div>
   </div>
 </div>
-<%= append_stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>

@@ -1,23 +1,21 @@
-<div class="focus__footer">
-  <div class="row">
-    <%= link_to(
-      icon("arrow-left-line", class: "icon", role: "img", "aria-hidden": true) + " " + t("decidim.vocdoni.votes.voting_step.back"),
-      "#",
-      class: "focus__back",
-      data: {
-        toggle: ["step-#{questions_count - 1}", "step-#{questions_count}"].join(" ")
-      }
-    ) %>
+<div class="form__wrapper-block flex-col-reverse md:flex-row justify-between">
+  <%= link_to(
+    icon("arrow-left-line", class: "icon", role: "img", "aria-hidden": true) + " " + t("decidim.vocdoni.votes.voting_step.back"),
+    "#",
+    class: "button button__sm md:button__lg button__transparent-secondary",
+    data: {
+      toggle: ["step-#{questions_count - 1}", "step-#{questions_count}"].join(" ")
+    }
+  ) %>
 
-    <%= link_to(
-      "#",
-      class: "button focus__next confirm",
-      data: {
-        toggle: ["submitting", "step-#{questions_count}"].join(" ")
-      }
-    ) do %>
-      <%= t("decidim.vocdoni.votes.confirm.confirm") %>
-      <%= icon("arrow-right-line", class: "icon", role: "img", "aria-hidden": true) %>
-    <% end %>
-  </div>
+  <%= link_to(
+    "#",
+    class: "button button__sm md:button__lg button__secondary focus__next confirm",
+    data: {
+      toggle: ["submitting", "step-#{questions_count}"].join(" ")
+    }
+  ) do %>
+    <%= t("decidim.vocdoni.votes.confirm.confirm") %>
+    <%= icon("arrow-right-line", class: "icon", role: "img", "aria-hidden": true) %>
+  <% end %>
 </div>

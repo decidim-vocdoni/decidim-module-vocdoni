@@ -32,11 +32,12 @@ edit_link(
     <%= render partial: "decidim/shared/component_announcement" %>
 
     <%= cell "decidim/vocdoni/remaining_time_callout", election %>
-
-    <%= cell("decidim/announcement", t("voting_period_status.#{election.voting_period_status}",
-                                       scope: "decidim.vocdoni.elections.show",
-                                       start_time: "<strong>#{l election.start_time, format: :long}</strong>",
-                                       end_time: "<strong>#{l election.end_time, format: :long}</strong>").html_safe) %>
+    <% unless election.manual_start? %>
+      <%= cell("decidim/announcement", t("voting_period_status.#{election.voting_period_status}",
+                                         scope: "decidim.vocdoni.elections.show",
+                                         start_time: "<strong>#{l election.start_time, format: :long}</strong>",
+                                         end_time: "<strong>#{l election.end_time, format: :long}</strong>").html_safe) %>
+    <% end %>
 
     <h1 class="h2 decorator"><%== present(election).title %></h1>
   </section>

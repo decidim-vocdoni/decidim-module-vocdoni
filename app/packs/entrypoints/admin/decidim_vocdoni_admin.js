@@ -1,12 +1,8 @@
-import "src/decidim/vocdoni/admin/generate_credentials"
-import "src/decidim/vocdoni/admin/election_calendar"
-import "src/decidim/vocdoni/admin/census"
+// DO NOT include any javascript file here, but inside the following file instead
+import "src/decidim/vocdoni/vocdoni_admin";
 
-import "src/decidim/vocdoni/admin/steps/election_status"
-import "src/decidim/vocdoni/admin/steps/vote"
-import "src/decidim/vocdoni/admin/steps/results"
-import "src/decidim/vocdoni/admin/steps/update_census"
-import "src/decidim/clipboard"
+// CSS
+import "entrypoints/admin/decidim_vocdoni_admin.scss";
 
 // Images
 require.context("../../images", true)

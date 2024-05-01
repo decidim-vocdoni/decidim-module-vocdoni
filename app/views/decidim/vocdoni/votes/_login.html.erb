@@ -1,20 +1,18 @@
-<%= decidim_form_for(@form, url: "#", html: { class: "form", autocomplete: "off" }) do |f| %>
+<%= decidim_form_for(@form, url: "#", html: { class: "form form-defaults", autocomplete: "off" }) do |f| %>
   <% scope = "decidim.vocdoni.votes.check_census" %>
-  <div class="row mt-sm">
-    <div class="columns medium-centered evote__login">
-      <p class="text-center"><strong><%= t("form_title", scope: scope) %></strong></p>
-      <div class="card">
-        <div class="card__content">
-          <form>
-            <div>
-              <div class="callout alert hide js-login_error"><%= t("failed", scope: scope) %></div>
-              <div class="callout warning hide js-election_not_open"><%= t("election_not_open", scope: scope) %></div>
-            </div>
-            <div>
-              <%= render partial: "login_fields", locals: { f: f } %>
-            </div>
-            <%= f.submit t("access", scope: scope), class: "button expanded mt-s mb-none" %>
-          </form>
+  <div class="form__wrapper">
+    <div class="card pt-4 evote__login">
+      <div class="item_show__header">
+        <h2 class="item_show__header-title"><strong><%= t("form_title", scope: scope) %></strong></h2>
+      </div>
+      <div class="card-section">
+        <div class="row column">
+          <div class="callout alert hidden js-login_error"><%= t("failed", scope: scope) %></div>
+          <div class="callout warning hidden js-election_not_open"><%= t("election_not_open", scope: scope) %></div>
+        </div>
+        <%= render partial: "login_fields", locals: { f: f } %>
+        <div class="row column">
+          <%= f.submit t("access", scope: scope), class: "button button__lg button__secondary census__login-button mt-2 mb-0" %>
         </div>
       </div>
     </div>

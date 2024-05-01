@@ -1,5 +1,6 @@
 <%= append_stylesheet_pack_tag "decidim_vocdoni_elections" %>
-
+<%= append_javascript_pack_tag "decidim_vocdoni_elections" %>
+<%= render("focus_header", header_title: t("decidim.vocdoni.votes.header.login")) %>
 <%= render layout: "layouts/decidim/shared/layout_center" do %>
   <div class="vote-wrapper"
        id="vote-wrapper"
@@ -12,25 +13,12 @@
        data-election-id="<%= election.id %>"
        data-preview="<%= preview_mode? %>">
 
-    <div id="check_census" class="focus__step" data-toggler=".hide">
+    <div id="check_census" class="focus__step" data-toggler=".hidden">
       <%= render("check_census") %>
     </div>
 
     <% questions.each_with_index do |step_question, step_index| %>
-      <div id="step-<%= step_index %>" class="focus__step hide"
-      data-toggler=".hide">
-        <div class="focus__header">
-          <div class="row">
-            <div class="focus__steps">
-              <strong>
-                <%= t("decidim.vocdoni.votes.new.question_steps", current_step: step_index + 1, total_steps: questions_count) %>
-              </strong>
-            </div>
-            <div class="heading5 focus__header-title">
-              <%= translated_attribute(election.title) %>
-            </div>
-          </div>
-        </div>
+      <div id="step-<%= step_index %>" class="focus__step hidden" data-toggler=".hidden">
 
         <% if step_index == 0 %>
           <div id="votes-left-message">
@@ -60,22 +48,22 @@
       </div>
     <% end %>
 
-    <div id="step-<%= questions_count %>" class="hide focus__step" data-toggler=".hide">
+    <div id="step-<%= questions_count %>" class="hidden focus__step" data-toggler=".hidden">
       <%= render(
         "new_confirm_step",
         questions: questions
       ) %>
     </div>
 
-    <div id="submitting" class="hide focus__step" data-toggler=".hide">
+    <div id="submitting" class="hidden focus__step" data-toggler=".hidden">
       <%= render("new_submitting_step") %>
     </div>
 
-    <div id="vote_cast" class="hide focus__step" data-redirect_url=".hide">
+    <div id="vote_cast" class="hidden focus__step" data-redirect_url=".hidden">
       <%= render("show_vote_cast_step") %>
     </div>
 
-    <div id="vote_failed" class="hide focus__step" data-redirect_url=".hide">
+    <div id="vote_failed" class="hidden focus__step" data-redirect_url=".hidden">
       <%= render("show_failed") %>
     </div>
   </div>

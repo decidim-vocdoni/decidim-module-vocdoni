@@ -1,5 +1,7 @@
 <% add_decidim_page_title(translated_attribute(election.title)) %>
 <% add_decidim_page_title(t(".title")) %>
+<%= append_javascript_pack_tag "decidim_vocdoni_admin" %>
+<%= stylesheet_pack_tag "decidim_vocdoni_admin" %>
 
 <div class="card js-vocdoni-client"
      id="max-vote-overwrites"
@@ -54,7 +56,5 @@
     <%= render partial: current_step.to_s %>
   </div>
 <% end %>
-
-<%= append_javascript_pack_tag "decidim_vocdoni_admin" %>
 
 <%= render partial: "vocdoni_logo" %>

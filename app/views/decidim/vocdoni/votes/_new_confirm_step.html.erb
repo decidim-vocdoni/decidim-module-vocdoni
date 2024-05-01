@@ -1,49 +1,43 @@
-<%= render("focus_header", header_title: t("decidim.vocdoni.votes.header.confirm")) %>
+<div class="election-question__intro">
+  <h2 class="h3">
+    <%= t("decidim.vocdoni.votes.confirm.header") %>
+  </h2>
 
-<div class="focus__content evote">
-  <div class="row">
-    <h1 class="heading2">
-      <%= t("decidim.vocdoni.votes.confirm.header") %>
-    </h1>
-    <p>
-      <%= t("decidim.vocdoni.votes.confirm.intro").html_safe %>
+  <p class="election-question__description">
+    <%= t("decidim.vocdoni.votes.confirm.intro").html_safe %>
+  </p>
+</div>
+
+<% questions.each_with_index do |question, question_index| %>
+  <div class="election-question__answer">
+    <p class="election-question__counter">
+      <%= t("decidim.vocdoni.votes.confirm.question", count: question_index + 1) %>:
     </p>
 
-    <dl class="evote__confirm">
-      <dt>
-        <% questions.each_with_index do |question, question_index| %>
-          <strong class="evote__confirm-label">
-            <%= t("decidim.vocdoni.votes.confirm.question", count: question_index + 1) %>:
-           </strong>
-          <strong>
-            <%= translated_attribute(question.title) %>
-          </strong>
-          <dd id="edit-step-<%= question_index+1 %>">
-            <strong class="evote__confirm-label">
-              <%= t("decidim.vocdoni.votes.confirm.answer") %>
-              (<%= link_to(
-                  "#{t("decidim.vocdoni.votes.confirm.edit")}<span class='show-for-sr'>
-                    #{t("decidim.vocdoni.votes.confirm.answer_number", number: question_index + 1)}</span>".html_safe,
-                  "#",
-                  class: "evote__edit-answer",
-                  data: {
-                    toggle: ["step-#{question_index}", "step-#{questions_count}"].join(" ")
-                  }
-                ) %>):
-            </strong>
-            <ul>
-              <% question.answers.each do |answer| %>
-                <li class="confirmed_answer hide" id="<%= answer.slug %>">
-                  <%= translated_attribute(answer.title) %>
-                </li>
-              <% end %>
-            </ul>
-          </dd>
+    <p class="h4">
+      <%= translated_attribute(question.title) %>
+    </p>
+
+    <div id="edit-step-<%= question_index + 1 %>" class="election-question__answer-option">
+      <span>
+        <% question.answers.each do |answer| %>
+          <span id="<%= answer.slug %>">
+            <%= translated_attribute(answer.title) %>
+          </span>
         <% end %>
-      </dt>
-    </dl>
+      </span>
+
+      <button class="button button__lg button__text-secondary"
+              data-toggle="<%= ["step-#{question_index}", "step-#{questions_count}"].join(" ") %>">
+        <span class="underline"><%= t("decidim.vocdoni.votes.confirm.edit") %></span>
+        <span class="sr-only"><%= t("decidim.vocdoni.votes.confirm.answer_number", number: question_index + 1) %></span>
+      </button>
+    </div>
+  </div>
+<% end %>
+<div class="evote">
+  <div class="row">
     <%= render partial: "vocdoni_logo" %>
   </div>
 </div>
-
 <%= render("new_confirm_step_footer") %>

@@ -20,7 +20,7 @@ $white: #fff;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba($white, .8);
+    @apply bg-white bg-opacity-80;
     z-index: 1;
   }
 
@@ -43,35 +43,46 @@ $white: #fff;
   }
 }
 
-.button__warning {
-  @apply bg-warning mx-0.5;
-
-    &:hover {
-      @apply opacity-80;
-    }
-}
-
-.button__alert {
+.button__alert:not([disabled]) {
   @apply bg-alert mx-0.5;
 
   &:hover {
-    @apply opacity-80;
+    @apply text-white #{!important};
+
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), rgb(var(--alert-rgb) / var(--tw-bg-opacity)) !important;
   }
 }
 
-.button__success {
+.button__warning:not([disabled]) {
+  @apply bg-warning mx-0.5;
+
+  &:hover {
+    @apply text-white #{!important};
+
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), rgb(var(--warning-rgb) / var(--tw-bg-opacity)) !important;
+  }
+}
+
+.button__success:not([disabled]) {
   @apply bg-success mx-0.5;
 
   &:hover {
-    @apply opacity-80;
+    @apply text-white #{!important};
+
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), rgb(var(--success-rgb) / var(--tw-bg-opacity)) !important;
   }
 }
 
 a.button__warning,
 a.button__success,
 button.button__success,
+button.button__warning,
 a.button__alert {
-  color: #ffffff;
+  @apply text-white lg:text-md;
+
+  svg {
+    @apply lg:w-8 lg:h-8 md:w-6 md:h-6 sm:w-6 sm:h-6;
+  }
 }
 
 .start-time-field-container input,

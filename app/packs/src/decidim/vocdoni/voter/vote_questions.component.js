@@ -24,7 +24,7 @@ export default class VoteQuestionsComponent {
   init() {
     this.setCurrentStep();
     this.toggleContinueButton();
-    this.$confirmButton.addClass("show").removeClass("hide");
+    this.$confirmButton.addClass("show").removeClass("hidden");
     $(".evote__counter-min").text(this.$answerCounter);
     this.answerCounter();
     this.disableCheckbox();
@@ -39,12 +39,12 @@ export default class VoteQuestionsComponent {
   toggleContinueButton() {
     if (this.checkAnswers()) {
       // next step enabled
-      this.$continueButton.addClass("show").removeClass("hide")
-      this.$continueSpan.addClass("hide").removeClass("show")
+      this.$continueButton.addClass("show").removeClass("hidden")
+      this.$continueSpan.addClass("hidden").removeClass("show")
     } else {
       // next step disabled
-      this.$continueButton.addClass("hide").removeClass("show")
-      this.$continueSpan.addClass("show").removeClass("hide")
+      this.$continueButton.addClass("hidden").removeClass("show")
+      this.$continueSpan.addClass("show").removeClass("hidden")
     }
   }
 
@@ -104,22 +104,22 @@ export default class VoteQuestionsComponent {
   toggleConfirmAnswers() {
     $(".answer_input:checked").each((_index, element) => {
       const confirmedAnswer = $(".evote__confirm").find(`#${element.dataset.answer}`);
-      $(confirmedAnswer).removeClass("hide")
+      $(confirmedAnswer).removeClass("hidden")
     })
 
     $(".answer_input").not(":checked").each((_index, element) => {
       const confirmedAnswer = $(".evote__confirm").find(`#${element.dataset.answer}`);
-      $(confirmedAnswer).addClass("hide")
+      $(confirmedAnswer).addClass("hidden")
     })
 
     $(".nota_input:checked").each((_index, element) => {
       const confirmedAnswer = $(".evote__confirm").find(`.${element.dataset.answer}`);
-      $(confirmedAnswer).removeClass("hide")
+      $(confirmedAnswer).removeClass("hidden")
     })
 
     $(".nota_input").not(":checked").each((_index, element) => {
       const confirmedAnswer = $(".evote__confirm").find(`.${element.dataset.answer}`);
-      $(confirmedAnswer).addClass("hide")
+      $(confirmedAnswer).addClass("hidden")
     })
   }
 }

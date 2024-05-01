@@ -5,7 +5,7 @@
 <div id="<%= dom_id(question) %>" class="election-question__container evote__options" data-max-selection="1" data-min-selection="1">
   <% ordered_answers(question).each do |answer| %>
     <%= label_tag nil, data: { "disabled-by": "check-nota" }, class: "election-question" do %>
-      <%= radio_button_tag question.slug, answer.slug, false, class: "answer_input", value: answer.value, data: { answer: "answer-#{answer.id}" } %>
+      <%= radio_button_tag question.slug, answer.slug, false, class: "answer_input mr-2", value: answer.value, data: { answer: "answer-#{answer.id}" } %>
 
       <%= translated_attribute(answer.title) %>
 

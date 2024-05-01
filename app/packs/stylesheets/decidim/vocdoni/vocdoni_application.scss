@@ -1,7 +1,6 @@
 @import "stylesheets/decidim/vocdoni/focus/accordion";
 @import "stylesheets/decidim/vocdoni/focus/evote";
 @import "stylesheets/decidim/vocdoni/focus/focus";
-@import "stylesheets/decidim/vocdoni/elections/elections";
 
 .card__icondata ul li:not(:first-child) strong,
 .card__block ul li:not(:first-child) strong {
@@ -13,10 +12,3 @@
 // We can remove this rule
 //
 // @see https://github.com/decidim/decidim/pull/10526
-.button.primary, .button.primary:hover {
-  background-color: var(--primary);
-}
-
-.button__warning {
-  background-color: var(--warning);
-}
