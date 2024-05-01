@@ -1,19 +1,28 @@
 <% vote_stats_scope = "decidim.vocdoni.admin.steps" %>
+<div class="election__section-title">
+  <%= icon "bar-chart-box-line" %>
+  <h2 class="h4"><%= t("vote_stats.title", scope: vote_stats_scope) %></h2>
+</div>
+
+<p class="election__section-desc"><%= t("description", scope: "decidim.vocdoni.elections.show") %></p>
+
 <div class="row realtime-results">
   <div class="columns large-8">
-    <h3 class="section-heading"><%= t("vote_stats.title", scope: vote_stats_scope) %></h3>
-    <p><%= t("description", scope: "decidim.vocdoni.elections.show") %></p>
     <div class="card">
       <div class="card-section table-scroll">
-        <ul class="voc-accordion accordion mb-m evote__preview js-votes-count"
-            data-accordion
-            data-multi-expand="true"
-            data-allow-all-closed="true"
-            data-url="<%= election_url %>">
+        <ul class="space-y-8" data-url="<%= election_url %>" data-component="accordion">
           <% model.questions.each_with_index do |question, question_index| %>
-            <li class="accordion-item evote__preview-question <%= " is-active" if question_index == 0 %>" data-accordion-item>
-              <a href="#" class="accordion-title flex--sbc"><%= t("vote_stats.question", scope: vote_stats_scope) %>: <%= translated_attribute(question.title) %></a>
-              <div class="accordion-content" data-tab-content>
+            <li class="election__accordion accordion-item evote__preview-question data-accordion-item">
+              <button id="accordion-trigger-result-<%= question_index %>"
+                      data-controls="accordion-panel-result-<%= question_index %>"
+                      class="election__accordion-trigger" <%= " data-open='true'" if model.questions.one? %>>
+                <%= translated_attribute(question.title) %>
+                <%= icon "arrow-down-s-line" %>
+                <%= icon "arrow-up-s-line" %>
+              </button>
+              <div class="election__accordion-panel-result"
+                   aria-hidden="true"
+                   id="accordion-panel-result-<%= question_index %>">
                 <div>
                   <table>
                     <thead>
