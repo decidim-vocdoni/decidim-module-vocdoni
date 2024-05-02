@@ -45,7 +45,7 @@ Decidim.register_component(:vocdoni) do |component|
       name: Decidim::Components::Namer.new(participatory_space.organization.available_locales, :vocdoni).i18n_name,
       manifest_name: :vocdoni,
       published_at: Time.current,
-      participatory_space: participatory_space
+      participatory_space:
     }
 
     component = Decidim.traceability.perform_action!(
@@ -82,17 +82,17 @@ Decidim.register_component(:vocdoni) do |component|
       end
 
       params = {
-        component: component,
+        component:,
         title: Decidim::Faker::Localized.sentence(word_count: 2),
         stream_uri: Faker::Internet.url,
         description: Decidim::Faker::Localized.wrapped("<p>", "</p>") do
           Decidim::Faker::Localized.paragraph(sentence_count: 3)
         end,
         start_time: auto_start ? start_time : 30.seconds.from_now,
-        end_time: end_time,
+        end_time:,
         published_at: Faker::Boolean.boolean(true_ratio: 0.5) ? 1.week.ago : nil,
         election_type: {
-          auto_start: auto_start,
+          auto_start:,
           interruptible: true,
           dynamic_census: [true, false].sample,
           secret_until_the_end: [true, false].sample,
@@ -127,7 +127,7 @@ Decidim.register_component(:vocdoni) do |component|
           Decidim::Vocdoni::Question,
           admin_user,
           {
-            election: election,
+            election:,
             title: Decidim::Faker::Localized.sentence(word_count: 2),
             description: Decidim::Faker::Localized.wrapped("<p>", "</p>") do
               Decidim::Faker::Localized.paragraph(sentence_count: 3)
@@ -142,7 +142,7 @@ Decidim.register_component(:vocdoni) do |component|
             Decidim::Vocdoni::Answer,
             admin_user,
             {
-              question: question,
+              question:,
               title: Decidim::Faker::Localized.sentence(word_count: 2),
               description: Decidim::Faker::Localized.wrapped("<p>", "</p>") do
                 Decidim::Faker::Localized.paragraph(sentence_count: 3)

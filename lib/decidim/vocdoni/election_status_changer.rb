@@ -36,7 +36,7 @@ module Decidim
         puts "Changing #{elections.count} election to '#{status}' status"
         # rubocop:enable Rails/Output
         # rubocop:disable Rails/SkipsModelValidations
-        elections.update_all(status: status)
+        elections.update_all(status:)
         # rubocop:enable Rails/SkipsModelValidations
       end
     end

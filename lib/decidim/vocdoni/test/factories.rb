@@ -35,7 +35,7 @@ FactoryBot.define do
         "secret_until_the_end" => true
       }
     end
-    component { create(:vocdoni_component, organization: organization) }
+    component { create(:vocdoni_component, organization:) }
 
     trait :configured do
       status { "created" }
@@ -93,9 +93,9 @@ FactoryBot.define do
       status { "results_published" }
 
       after(:build) do |election, _evaluator|
-        election.questions << build(:vocdoni_question, :with_votes, election: election, weight: 1)
-        election.questions << build(:vocdoni_question, :with_votes, election: election, weight: 1)
-        election.questions << build(:vocdoni_question, :with_votes, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :with_votes, election:, weight: 1)
+        election.questions << build(:vocdoni_question, :with_votes, election:, weight: 1)
+        election.questions << build(:vocdoni_question, :with_votes, election:, weight: 1)
       end
     end
 
@@ -125,25 +125,25 @@ FactoryBot.define do
 
     trait :simple do
       after(:build) do |election, _evaluator|
-        election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :simple, election:, weight: 1)
       end
     end
 
     trait :complete do
       after(:build) do |election, _evaluator|
-        election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
-        election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
-        election.questions << build(:vocdoni_question, :simple, election: election, weight: 1)
+        election.questions << build(:vocdoni_question, :simple, election:, weight: 1)
+        election.questions << build(:vocdoni_question, :simple, election:, weight: 1)
+        election.questions << build(:vocdoni_question, :simple, election:, weight: 1)
       end
     end
 
     trait :with_census do
       after(:build) do |election, _evaluator|
-        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
-        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
-        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
-        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
-        election.voters << build(:vocdoni_voter, :with_wallet, election: election)
+        election.voters << build(:vocdoni_voter, :with_wallet, election:)
+        election.voters << build(:vocdoni_voter, :with_wallet, election:)
+        election.voters << build(:vocdoni_voter, :with_wallet, election:)
+        election.voters << build(:vocdoni_voter, :with_wallet, election:)
+        election.voters << build(:vocdoni_voter, :with_wallet, election:)
       end
     end
 
@@ -179,21 +179,21 @@ FactoryBot.define do
       answers { 3 }
     end
 
-    association :election, factory: :vocdoni_election
+    election factory: [:vocdoni_election]
     title { generate_localized_title }
     description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }
 
     trait :complete do
       after(:build) do |question, evaluator|
-        overrides = { question: question }
+        overrides = { question: }
         question.answers = build_list(:vocdoni_election_answer, evaluator.answers, overrides)
       end
     end
 
     trait :with_votes do
       after(:build) do |question, evaluator|
-        overrides = { question: question }
+        overrides = { question: }
         overrides[:description] = nil unless evaluator.more_information
         question.answers = build_list(:vocdoni_election_answer, evaluator.answers, :with_votes, overrides)
       end
@@ -205,7 +205,7 @@ FactoryBot.define do
   end
 
   factory :vocdoni_election_answer, class: "Decidim::Vocdoni::Answer" do
-    association :question, factory: :vocdoni_question
+    question factory: [:vocdoni_question]
     title { generate_localized_title }
     description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     weight { Faker::Number.number(digits: 1) }
@@ -234,7 +234,7 @@ FactoryBot.define do
   factory :vocdoni_voter, class: "Decidim::Vocdoni::Voter" do
     email { generate(:email) }
     token { Faker::String.random(length: 4) }
-    association :election, factory: :vocdoni_election
+    election factory: [:vocdoni_election]
 
     trait :with_wallet do
       wallet_address { Faker::Blockchain::Ethereum.address }

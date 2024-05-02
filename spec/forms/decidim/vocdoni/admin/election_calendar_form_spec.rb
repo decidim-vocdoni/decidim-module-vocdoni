@@ -9,20 +9,20 @@ describe Decidim::Vocdoni::Admin::ElectionCalendarForm do
   let(:context) do
     {
       current_organization: organization,
-      current_component: current_component
+      current_component:
     }
   end
-  let(:participatory_process) { create :participatory_process, organization: organization }
-  let(:current_component) { create :vocdoni_component, participatory_space: participatory_process }
+  let(:participatory_process) { create(:participatory_process, organization:) }
+  let(:current_component) { create(:vocdoni_component, participatory_space: participatory_process) }
   let(:start_time) { 1.day.from_now }
   let(:end_time) { 3.days.from_now }
   let(:manual_start) { false }
   let(:attributes) do
     {
-      start_time: start_time,
-      end_time: end_time,
-      result_type: result_type,
-      manual_start: manual_start
+      start_time:,
+      end_time:,
+      result_type:,
+      manual_start:
     }
   end
   let(:result_type) { "after_voting" }

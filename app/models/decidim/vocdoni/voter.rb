@@ -13,18 +13,18 @@ module Decidim
       after_save :update_in_vocdoni_census!, if: :saved_change_to_wallet_address?
 
       def self.inside(election)
-        where(election: election)
+        where(election:)
       end
 
       def self.search_user_email(election, email)
         inside(election)
-          .where(email: email)
+          .where(email:)
           .order(created_at: :desc, id: :desc)
           .first
       end
 
       def self.insert_all(election, values)
-        values.each { |value| create(email: value.first.downcase, election: election, token: value.second.downcase) }
+        values.each { |value| create(email: value.first.downcase, election:, token: value.second.downcase) }
       end
 
       def self.clear(election)

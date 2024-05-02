@@ -4,8 +4,8 @@ require "spec_helper"
 
 describe "Admin manages census", :slow, type: :system do
   let(:manifest_name) { :vocdoni }
-  let(:current_component) { create :vocdoni_component }
-  let(:election) { create :vocdoni_election, :upcoming, :published, :complete, component: current_component, title: { en: "English title" } }
+  let(:current_component) { create(:vocdoni_component) }
+  let(:election) { create(:vocdoni_election, :upcoming, :published, :complete, component: current_component, title: { en: "English title" }) }
 
   before do
     allow(Rails.application).to receive(:secret_key_base).and_return("a-secret-key-base")
@@ -24,7 +24,7 @@ describe "Admin manages census", :slow, type: :system do
 
       attach_file("census_data[file]", valid_census_file)
       perform_enqueued_jobs do
-        click_button "Upload file"
+        click_link_or_button "Upload file"
       end
 
       expect(page).to have_content("Successfully imported 2 items")
@@ -37,11 +37,11 @@ describe "Admin manages census", :slow, type: :system do
 
   context "when there's already a census" do
     context "without the credentials" do
-      let!(:voter1) { create(:vocdoni_voter, election: election, token: "123456", email: "user_1@example.org") }
-      let!(:voter2) { create(:vocdoni_voter, election: election, token: "123abc", email: "user_2@example.org") }
-      let!(:voter3) { create(:vocdoni_voter, election: election, token: "123abc", email: "user_3@example.org") }
-      let!(:voter4) { create(:vocdoni_voter, election: election, token: "abcxyz", email: "user_4@example.org") }
-      let!(:voter5) { create(:vocdoni_voter, election: election, token: "123abc", email: "user_5@example.org") }
+      let!(:voter1) { create(:vocdoni_voter, election:, token: "123456", email: "user_1@example.org") }
+      let!(:voter2) { create(:vocdoni_voter, election:, token: "123abc", email: "user_2@example.org") }
+      let!(:voter3) { create(:vocdoni_voter, election:, token: "123abc", email: "user_3@example.org") }
+      let!(:voter4) { create(:vocdoni_voter, election:, token: "abcxyz", email: "user_4@example.org") }
+      let!(:voter5) { create(:vocdoni_voter, election:, token: "123abc", email: "user_5@example.org") }
 
       it "has progress indicator of the generation of the credentials" do
         visit_census_page
@@ -71,13 +71,13 @@ describe "Admin manages census", :slow, type: :system do
     end
 
     context "with the credentials" do
-      let!(:voters) { create_list(:vocdoni_voter, 5, :with_wallet, election: election) }
+      let!(:voters) { create_list(:vocdoni_voter, 5, :with_wallet, election:) }
 
       it "doesn't have any form" do
         visit_census_page
 
-        expect(page).not_to have_content("Upload a new census")
-        expect(page).not_to have_content("Confirm the census data")
+        expect(page).to have_no_content("Upload a new census")
+        expect(page).to have_no_content("Confirm the census data")
       end
 
       describe "and we want to delete it" do
@@ -95,12 +95,12 @@ describe "Admin manages census", :slow, type: :system do
     let!(:id_document_handler_name) { "another_dummy_authorization_handler" }
     let(:translated_authorization_handler_name) { I18n.t("decidim.authorization_handlers.#{authorization_handler_name}.name") }
     let(:translated_id_document_handler_name) { I18n.t("decidim.authorization_handlers.#{id_document_handler_name}.name") }
-    let!(:organization) { create(:organization, available_authorizations: available_authorizations) }
+    let!(:organization) { create(:organization, available_authorizations:) }
     let!(:available_authorizations) { [authorization_handler_name, id_document_handler_name] }
     let(:authorizations_count) { organization.available_authorizations.count }
     let(:authorizations_checkboxes) { find_all("input[type='checkbox'][name='census_permissions[verification_types][]']") }
-    let!(:user_with_authorizations) { create(:user, :admin, :confirmed, organization: organization) }
-    let!(:user_without_authorizations) { create(:user, :admin, :confirmed, organization: organization) }
+    let!(:user_with_authorizations) { create(:user, :admin, :confirmed, organization:) }
+    let!(:user_without_authorizations) { create(:user, :admin, :confirmed, organization:) }
     let!(:dummy_authorization) { create(:authorization, user: user_with_authorizations, name: id_document_handler_name) }
 
     before do
@@ -121,7 +121,7 @@ describe "Admin manages census", :slow, type: :system do
       before do
         check(translated_id_document_handler_name)
         perform_enqueued_jobs do
-          click_button "Save census"
+          click_link_or_button "Save census"
         end
       end
 
@@ -143,7 +143,7 @@ describe "Admin manages census", :slow, type: :system do
         check(translated_authorization_handler_name)
         check(translated_id_document_handler_name)
         perform_enqueued_jobs do
-          click_button "Save census"
+          click_link_or_button "Save census"
         end
       end
 
@@ -164,14 +164,14 @@ describe "Admin manages census", :slow, type: :system do
       end
 
       it "doesn't have the message that the census isn't ready" do
-        expect(page).not_to have_content("The census is not ready yet")
+        expect(page).to have_no_content("The census is not ready yet")
       end
     end
 
     context "when admin doesn't select any permissions" do
       before do
         perform_enqueued_jobs do
-          click_button "Save census"
+          click_link_or_button "Save census"
         end
       end
 
@@ -184,7 +184,7 @@ describe "Admin manages census", :slow, type: :system do
       end
 
       it "doesn't have the message that the census isn't ready" do
-        expect(page).not_to have_content("The census is not ready yet")
+        expect(page).to have_no_content("The census is not ready yet")
       end
     end
   end
@@ -192,14 +192,14 @@ describe "Admin manages census", :slow, type: :system do
   private
 
   def deletes_the_census
-    click_link "Delete all census data"
+    click_link_or_button "Delete all census data"
 
     within ".confirm-content" do
       expect(page).to have_content("Are you sure you want to continue?")
     end
 
     within ".confirm-modal-footer" do
-      click_link "OK"
+      click_link_or_button "OK"
     end
 
     expect(page).to have_content("Upload a CSV file")
@@ -211,8 +211,8 @@ describe "Admin manages census", :slow, type: :system do
     relogin_as user, scope: :user
     visit_component_admin
 
-    within find("tr", text: translated(election.title)) do
-      click_link "Edit"
+    within "tr", text: translated(election.title) do
+      click_link_or_button "Edit"
     end
 
     find("li.tabs-title a", text: "Census").click

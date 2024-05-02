@@ -6,7 +6,7 @@ module Decidim
   describe Vocdoni::AdminLog::WalletPresenter, type: :helper do
     subject { described_class.new(action_log, helper) }
 
-    let(:action_log) { create(:action_log, action: action) }
+    let(:action_log) { create(:action_log, action:) }
 
     before do
       helper.extend(Decidim::ApplicationHelper)

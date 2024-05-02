@@ -8,7 +8,7 @@ describe "Explore elections", :slow, type: :system do
 
   let(:elections_count) { 5 }
   let!(:elections) do
-    create_list(:vocdoni_election, elections_count, :complete, :published, :auto_start, :ongoing, component: component)
+    create_list(:vocdoni_election, elections_count, :complete, :published, :auto_start, :ongoing, component:)
   end
 
   describe "index" do
@@ -17,13 +17,13 @@ describe "Explore elections", :slow, type: :system do
         Decidim::Vocdoni::Election.destroy_all
       end
 
-      let!(:single_elections) { create_list(:vocdoni_election, 1, :complete, :published, :auto_start, :ongoing, component: component) }
+      let!(:single_elections) { create_list(:vocdoni_election, 1, :complete, :published, :auto_start, :ongoing, component:) }
 
       it "redirects to the only election" do
         visit_component
 
         expect(page).to have_content("Active voting until")
-        expect(page).not_to have_content("All elections")
+        expect(page).to have_no_content("All elections")
         expect(page).to have_content("These are the questions for this voting process")
       end
     end
@@ -31,7 +31,7 @@ describe "Explore elections", :slow, type: :system do
     context "with many elections" do
       it "shows all elections for the given process" do
         visit_component
-        expect(page).to have_selector(".card--election", count: elections_count)
+        expect(page).to have_css(".card--election", count: elections_count)
 
         elections.each do |election|
           expect(page).to have_content(translated(election.title))
@@ -72,10 +72,10 @@ describe "Explore elections", :slow, type: :system do
 
     it "shows accordion with questions and answers" do
       expect(page).to have_css(".accordion-item", count: election.questions.count)
-      expect(page).not_to have_css(".accordion-content")
+      expect(page).to have_no_css(".accordion-content")
 
       within ".accordion-item:first-child" do
-        click_link translated(question.title)
+        click_link_or_button translated(question.title)
         expect(page).to have_css("li", count: question.answers.count)
       end
     end
@@ -88,8 +88,8 @@ describe "Explore elections", :slow, type: :system do
   end
 
   context "with results" do
-    let(:election) { create(:vocdoni_election, :published, :results_published, component: component) }
-    let(:question) { create :vocdoni_question, :with_votes, election: election }
+    let(:election) { create(:vocdoni_election, :published, :results_published, component:) }
+    let(:question) { create(:vocdoni_question, :with_votes, election:) }
 
     before do
       election.update!(questions: [question])

@@ -33,7 +33,7 @@ module Decidim
 
         def update_election!
           attributes = {
-            start_time: start_time,
+            start_time:,
             end_time: form.end_time
           }.merge(election_type_attributes)
 

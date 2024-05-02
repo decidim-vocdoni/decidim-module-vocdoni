@@ -6,7 +6,7 @@ module Decidim::Vocdoni::Admin
   describe CreateCensusData do
     subject { described_class.new(form, election) }
 
-    let(:form) { CensusDataForm.new(file: file) }
+    let(:form) { CensusDataForm.new(file:) }
     let(:election) { create(:vocdoni_election) }
 
     def valid_census_file
@@ -31,7 +31,7 @@ module Decidim::Vocdoni::Admin
 
     context "when the file is provided and contains valid data" do
       let(:file) { Rack::Test::UploadedFile.new(valid_census_file, "text/csv") }
-      let(:form) { CensusDataForm.new(file: file) }
+      let(:form) { CensusDataForm.new(file:) }
       let(:expected_number_of_voters) { 2 }
 
       it "successfully creates voters" do
@@ -41,7 +41,7 @@ module Decidim::Vocdoni::Admin
 
     context "when updates the census type of the election" do
       let(:file) { Rack::Test::UploadedFile.new(valid_census_file, "text/csv") }
-      let(:form) { CensusDataForm.new(file: file) }
+      let(:form) { CensusDataForm.new(file:) }
 
       it "sets the internal_census to false" do
         subject.call

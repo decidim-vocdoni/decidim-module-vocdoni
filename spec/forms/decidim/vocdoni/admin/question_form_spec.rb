@@ -9,19 +9,19 @@ describe Decidim::Vocdoni::Admin::QuestionForm do
     {
       current_organization: component.organization,
       current_component: component,
-      election: election
+      election:
     }
   end
-  let(:election) { create :vocdoni_election }
+  let(:election) { create(:vocdoni_election) }
   let(:component) { election.component }
   let(:title) { Decidim::Faker::Localized.sentence(word_count: 3) }
   let(:description) { Decidim::Faker::Localized.sentence(word_count: 3) }
   let(:weight) { 10 }
   let(:attributes) do
     {
-      title: title,
-      description: description,
-      weight: weight
+      title:,
+      description:,
+      weight:
     }
   end
 

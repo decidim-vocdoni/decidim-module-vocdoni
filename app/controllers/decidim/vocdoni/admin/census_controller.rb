@@ -7,7 +7,7 @@ module Decidim
         helper_method :elections, :election, :census_path, :status, :census_type
 
         def index
-          enforce_permission_to :index, :census, election: election
+          enforce_permission_to(:index, :census, election:)
 
           return render json: status.to_json if request.xhr?
 
@@ -16,7 +16,7 @@ module Decidim
         end
 
         def create
-          enforce_permission_to :create, :census, election: election
+          enforce_permission_to(:create, :census, election:)
 
           if params[:census_permissions]
             handle_census_permissions
@@ -26,7 +26,7 @@ module Decidim
         end
 
         def destroy_all
-          enforce_permission_to :destroy, :census, election: election
+          enforce_permission_to(:destroy, :census, election:)
           Voter.clear(election)
 
           redirect_to election_census_path(election), notice: t(".success")
@@ -88,7 +88,7 @@ module Decidim
                       0
                     end
             error_count = error_method && data.respond_to?(error_method) ? data.send(error_method).size : 0
-            t(".success.import", count: count, errors: error_count)
+            t(".success.import", count:, errors: error_count)
           else
             t(".success.generate")
           end

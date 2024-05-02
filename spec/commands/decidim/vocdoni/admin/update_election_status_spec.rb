@@ -5,15 +5,15 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::UpdateElectionStatus do
   subject { described_class.new(form) }
 
-  let(:election) { create :vocdoni_election, status: :vote }
+  let(:election) { create(:vocdoni_election, status: :vote) }
   let(:organization) { election.component.organization }
-  let(:user) { create :user, :admin, :confirmed, organization: organization }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
   let(:form) do
     double(
       invalid?: invalid,
       current_user: user,
       status: "paused",
-      election: election
+      election:
     )
   end
   let(:invalid) { false }
@@ -38,7 +38,7 @@ describe Decidim::Vocdoni::Admin::UpdateElectionStatus do
     expect(election.status).to eq "paused"
   end
 
-  it "traces the action", versioning: true do
+  it "traces the action", :versioning do
     expect(Decidim.traceability)
       .to receive(:perform_action!)
       .with(:change_election_status, election, user)

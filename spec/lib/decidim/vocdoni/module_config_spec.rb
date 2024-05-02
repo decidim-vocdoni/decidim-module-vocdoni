@@ -23,8 +23,8 @@ module Decidim
       let(:start_delay) { "33" }
       let(:reseller_name) { "Test reseller" }
       let(:reseller_email) { "test_reseller@example.org" }
-      let(:config) { JSON.parse cmd_capture("bin/rails runner 'puts Decidim::Vocdoni.config.to_json'", env: env) }
-      let(:endpoint_env) { cmd_capture("bin/rails runner 'puts Decidim::Vocdoni.api_endpoint_env'", env: env) }
+      let(:config) { JSON.parse cmd_capture("bin/rails runner 'puts Decidim::Vocdoni.config.to_json'", env:) }
+      let(:endpoint_env) { cmd_capture("bin/rails runner 'puts Decidim::Vocdoni.api_endpoint_env'", env:) }
 
       def cmd_capture(cmd, env: {})
         Dir.chdir(test_app) do

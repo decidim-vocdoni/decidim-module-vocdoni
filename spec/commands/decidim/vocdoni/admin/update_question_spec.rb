@@ -5,10 +5,10 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::UpdateQuestion do
   subject { described_class.new(form, question) }
 
-  let(:election) { create :vocdoni_election }
-  let(:question) { create :vocdoni_question, election: election }
+  let(:election) { create(:vocdoni_election) }
+  let(:question) { create(:vocdoni_question, election:) }
   let(:organization) { election.component.organization }
-  let(:user) { create :user, :admin, :confirmed, organization: organization }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
   let(:form) do
     double(
       invalid?: invalid,
@@ -16,7 +16,7 @@ describe Decidim::Vocdoni::Admin::UpdateQuestion do
       title: { en: "title" },
       description: { en: "description" },
       weight: 10,
-      election: election
+      election:
     )
   end
   let(:invalid) { false }
@@ -28,7 +28,7 @@ describe Decidim::Vocdoni::Admin::UpdateQuestion do
     expect(question.weight).to eq(10)
   end
 
-  it "traces the action", versioning: true do
+  it "traces the action", :versioning do
     expect(Decidim.traceability)
       .to receive(:update!)
       .with(question, user, hash_including(:title, :weight), visibility: "all")
@@ -49,7 +49,7 @@ describe Decidim::Vocdoni::Admin::UpdateQuestion do
   end
 
   context "when the election is ongoing" do
-    let(:election) { create :vocdoni_election, :ongoing }
+    let(:election) { create(:vocdoni_election, :ongoing) }
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:invalid)

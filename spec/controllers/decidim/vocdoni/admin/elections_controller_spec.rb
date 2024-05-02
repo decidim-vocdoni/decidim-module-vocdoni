@@ -7,7 +7,7 @@ describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
 
   let(:user) { create(:user, :confirmed, :admin, organization: component.organization) }
   let(:component) { create(:vocdoni_component) }
-  let(:election) { create(:vocdoni_election, component: component) }
+  let(:election) { create(:vocdoni_election, component:) }
 
   before do
     request.env["decidim.current_organization"] = component.organization
@@ -72,7 +72,7 @@ describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
     it "updates the election" do
       allow(controller).to receive(:elections_path).and_return("/elections")
 
-      patch :update, params: params
+      patch(:update, params:)
 
       expect(flash[:notice]).not_to be_empty
       expect(response).to have_http_status(:found)
@@ -81,10 +81,10 @@ describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
     context "when the existing election has photos and there are other errors on the form" do
       include_context "with controller rendering the view" do
         let(:election_title) { { en: "" } }
-        let(:election) { create(:vocdoni_election, :with_photos, component: component) }
+        let(:election) { create(:vocdoni_election, :with_photos, component:) }
 
         it "displays the editing form with errors" do
-          patch :update, params: params
+          patch(:update, params:)
 
           expect(flash[:alert]).not_to be_empty
           expect(response).to have_http_status(:ok)

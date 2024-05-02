@@ -10,7 +10,7 @@ describe Decidim::Vocdoni::Question do
   include_examples "resourceable"
 
   describe "#total_votes" do
-    subject(:question) { create :vocdoni_question, :complete }
+    subject(:question) { create(:vocdoni_question, :complete) }
 
     before do
       # rubocop:disable Rails/SkipsModelValidations
@@ -24,7 +24,7 @@ describe Decidim::Vocdoni::Question do
   end
 
   describe "#build_answer_values!" do
-    subject(:question) { create :vocdoni_question, :complete }
+    subject(:question) { create(:vocdoni_question, :complete) }
 
     it "assigns a value to each answer" do
       expect { subject.build_answer_values! }.to change { subject.answers.pluck(:value) }.from([nil, nil, nil]).to([0, 1, 2])
@@ -32,8 +32,8 @@ describe Decidim::Vocdoni::Question do
   end
 
   describe "#to_vocdoni" do
-    let(:question1) { create :vocdoni_question, :complete }
-    let(:question2) { create :vocdoni_question, :complete }
+    let(:question1) { create(:vocdoni_question, :complete) }
+    let(:question2) { create(:vocdoni_question, :complete) }
     let(:vocdoni1) { question1.to_vocdoni }
     let(:vocdoni2) { question2.to_vocdoni }
 
@@ -69,7 +69,7 @@ describe Decidim::Vocdoni::Question do
   end
 
   describe "#slug" do
-    subject(:question) { create :vocdoni_question }
+    subject(:question) { create(:vocdoni_question) }
 
     it "returns the correct slug format" do
       expect(subject.slug).to eq("question-#{subject.id}")

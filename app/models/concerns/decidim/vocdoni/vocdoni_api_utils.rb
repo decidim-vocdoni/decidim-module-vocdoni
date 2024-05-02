@@ -15,7 +15,7 @@ module Decidim
         values = {}
         organization.available_locales.each do |locale|
           locale = locale.to_s
-          values[locale] = translated(translations, locale: locale).to_s
+          values[locale] = translated(translations, locale:).to_s
           values["default"] = values[locale] if organization.default_locale.to_s == locale
         end
         values

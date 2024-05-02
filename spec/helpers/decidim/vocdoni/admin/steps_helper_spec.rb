@@ -83,7 +83,7 @@ describe Decidim::Vocdoni::Admin::StepsHelper do
 
     it "generates the fix it button with icon" do
       expect(subject).to have_link("Fix it", href: link, class: "button tiny")
-      expect(subject).to have_selector("svg.icon--wrench")
+      expect(subject).to have_css("svg.icon--wrench")
     end
   end
 end

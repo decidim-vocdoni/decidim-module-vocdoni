@@ -5,19 +5,19 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::UpdateElectionCalendar do
   subject { described_class.new(form, election) }
 
-  let(:election) { create :vocdoni_election }
+  let(:election) { create(:vocdoni_election) }
   let(:organization) { election.component.organization }
-  let(:user) { create :user, :admin, :confirmed, organization: organization }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
   let(:form) do
     double(
       invalid?: invalid,
       current_user: user,
-      start_time: start_time,
-      end_time: end_time,
-      manual_start: manual_start,
+      start_time:,
+      end_time:,
+      manual_start:,
       interruptible: true,
       dynamic_census: false,
-      result_type: result_type,
+      result_type:,
       anonymous: false
     )
   end
@@ -40,7 +40,7 @@ describe Decidim::Vocdoni::Admin::UpdateElectionCalendar do
     expect(election.election_type.fetch("anonymous")).to be_falsy
   end
 
-  it "traces the action", versioning: true do
+  it "traces the action", :versioning do
     expect(Decidim.traceability)
       .to receive(:update!).with(election, user, hash_including(:start_time, :end_time, { election_type: { auto_start: true, anonymous: false, dynamic_census: false, interruptible: true, secret_until_the_end: (result_type == "after_voting") } }), visibility: "all").and_call_original
 

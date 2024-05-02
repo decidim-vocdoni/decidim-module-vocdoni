@@ -7,8 +7,8 @@ module Decidim
     describe Sdk do
       subject { described_class.new(organization, election) }
       let(:organization) { election.organization }
-      let!(:wallet) { create :vocdoni_wallet, organization: organization, private_key: private_key }
-      let!(:election) { create :vocdoni_election, vocdoni_election_id: vocdoni_election_id }
+      let!(:wallet) { create(:vocdoni_wallet, organization:, private_key:) }
+      let!(:election) { create(:vocdoni_election, vocdoni_election_id:) }
       let(:vocdoni_election_id) { "0x0000000000000000000000000000000000000001" }
       let(:private_key) { "0x0000000000000000000000000000000000000000000000000000000000000001" }
       let(:salt) { Rails.application.secret_key_base }
@@ -69,7 +69,7 @@ module Decidim
 
       context "when election is not present" do
         let!(:election) { nil }
-        let(:organization) { create :organization }
+        let(:organization) { create(:organization) }
 
         it "has env variables" do
           expect(subject.env).to eq({

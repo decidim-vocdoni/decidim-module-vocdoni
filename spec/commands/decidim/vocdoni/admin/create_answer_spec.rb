@@ -8,9 +8,9 @@ describe Decidim::Vocdoni::Admin::CreateAnswer do
   let(:organization) { component.organization }
   let(:participatory_process) { component.participatory_space }
   let(:component) { election.component }
-  let(:question) { create :vocdoni_question, election: election }
-  let(:election) { create :vocdoni_election }
-  let(:user) { create :user, :admin, :confirmed, organization: organization }
+  let(:question) { create(:vocdoni_question, election:) }
+  let(:election) { create(:vocdoni_election) }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
   let(:form) do
     double(
       invalid?: invalid,
@@ -20,8 +20,8 @@ describe Decidim::Vocdoni::Admin::CreateAnswer do
       current_user: user,
       current_component: component,
       current_organization: organization,
-      election: election,
-      question: question
+      election:,
+      question:
     )
   end
   let(:invalid) { false }
@@ -39,7 +39,7 @@ describe Decidim::Vocdoni::Admin::CreateAnswer do
     expect(answer.weight).to eq(10)
   end
 
-  it "traces the action", versioning: true do
+  it "traces the action", :versioning do
     expect(Decidim.traceability)
       .to receive(:create!)
       .with(
@@ -65,7 +65,7 @@ describe Decidim::Vocdoni::Admin::CreateAnswer do
   end
 
   context "when the election is ongoing" do
-    let(:election) { create :vocdoni_election, :ongoing }
+    let(:election) { create(:vocdoni_election, :ongoing) }
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:invalid)

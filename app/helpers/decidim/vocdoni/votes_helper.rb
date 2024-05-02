@@ -28,7 +28,7 @@ module Decidim
                                    %w(no_more_votes_left alert)
                                  end
 
-        content_tag :div, t(message_key, scope: scope, votes_left: votes_left), class: "callout #{css_class} js-already_voted"
+        content_tag :div, t(message_key, scope:, votes_left:), class: "callout #{css_class} js-already_voted"
       end
 
       def identification_title(election)

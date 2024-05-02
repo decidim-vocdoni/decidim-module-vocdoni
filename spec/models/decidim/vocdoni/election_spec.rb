@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Decidim::Vocdoni::Election do
-  subject(:election) { build :vocdoni_election, status: status }
+  subject(:election) { build(:vocdoni_election, status:) }
 
   let(:status) { nil }
 
@@ -36,13 +36,13 @@ describe Decidim::Vocdoni::Election do
   it { is_expected.to be_secret_until_the_end }
 
   context "when is configured" do
-    subject(:election) { build :vocdoni_election, :configured }
+    subject(:election) { build(:vocdoni_election, :configured) }
 
     it { is_expected.not_to be_misconfigured }
   end
 
   context "when manual start" do
-    subject(:election) { build :vocdoni_election, :manual_start }
+    subject(:election) { build(:vocdoni_election, :manual_start) }
 
     it { is_expected.to be_manual_start }
     it { is_expected.not_to be_auto_start }
@@ -54,7 +54,7 @@ describe Decidim::Vocdoni::Election do
   end
 
   context "when automaic start" do
-    subject(:election) { build :vocdoni_election, :auto_start }
+    subject(:election) { build(:vocdoni_election, :auto_start) }
 
     it { is_expected.not_to be_manual_start }
     it { is_expected.to be_auto_start }
@@ -66,14 +66,14 @@ describe Decidim::Vocdoni::Election do
   end
 
   context "when it is ongoing" do
-    subject(:election) { build :vocdoni_election, :ongoing }
+    subject(:election) { build(:vocdoni_election, :ongoing) }
 
     it { is_expected.to be_started }
     it { is_expected.to be_ongoing }
     it { is_expected.not_to be_finished }
 
     context "and it doesn't have a status" do
-      subject(:election) { build :vocdoni_election, :finished, status: nil }
+      subject(:election) { build(:vocdoni_election, :finished, status: nil) }
 
       it { is_expected.not_to be_started }
       it { is_expected.not_to be_ongoing }
@@ -82,14 +82,14 @@ describe Decidim::Vocdoni::Election do
   end
 
   context "when it is finished" do
-    subject(:election) { build :vocdoni_election, :finished }
+    subject(:election) { build(:vocdoni_election, :finished) }
 
     it { is_expected.to be_started }
     it { is_expected.not_to be_ongoing }
     it { is_expected.to be_finished }
 
     context "and it has the old status" do
-      subject(:election) { build :vocdoni_election, :finished, status: "vote" }
+      subject(:election) { build(:vocdoni_election, :finished, status: "vote") }
 
       it { is_expected.to be_started }
       it { is_expected.not_to be_ongoing }
@@ -97,7 +97,7 @@ describe Decidim::Vocdoni::Election do
     end
 
     context "and it doesn't have a status" do
-      subject(:election) { build :vocdoni_election, :finished, status: nil }
+      subject(:election) { build(:vocdoni_election, :finished, status: nil) }
 
       it { is_expected.not_to be_started }
       it { is_expected.not_to be_ongoing }
@@ -107,7 +107,7 @@ describe Decidim::Vocdoni::Election do
 
   describe "with different status" do
     context "when it is paused" do
-      subject(:election) { build :vocdoni_election, :started, :paused }
+      subject(:election) { build(:vocdoni_election, :started, :paused) }
 
       it { is_expected.to be_started }
       it { is_expected.to be_paused }
@@ -116,7 +116,7 @@ describe Decidim::Vocdoni::Election do
     end
 
     context "when it is canceled" do
-      subject(:election) { build :vocdoni_election, :started, :canceled }
+      subject(:election) { build(:vocdoni_election, :started, :canceled) }
 
       it { is_expected.to be_started }
       it { is_expected.not_to be_ongoing }
@@ -124,7 +124,7 @@ describe Decidim::Vocdoni::Election do
     end
 
     context "when it is vote_ended" do
-      subject(:election) { build :vocdoni_election, :started, status: "vote_ended" }
+      subject(:election) { build(:vocdoni_election, :started, status: "vote_ended") }
 
       it { is_expected.to be_started }
       it { is_expected.not_to be_ongoing }
@@ -132,7 +132,7 @@ describe Decidim::Vocdoni::Election do
     end
 
     context "when it is results_published" do
-      subject(:election) { build :vocdoni_election, :started, status: "results_published" }
+      subject(:election) { build(:vocdoni_election, :started, status: "results_published") }
 
       it { is_expected.to be_started }
       it { is_expected.not_to be_ongoing }
@@ -141,7 +141,7 @@ describe Decidim::Vocdoni::Election do
   end
 
   describe "start time checks" do
-    subject(:election) { build(:vocdoni_election, start_time: start_time) }
+    subject(:election) { build(:vocdoni_election, start_time:) }
 
     let(:start_time) { 40.minutes.from_now }
 
@@ -163,21 +163,21 @@ describe Decidim::Vocdoni::Election do
   describe "#answers_have_values?" do
     subject { election.answers_have_values? }
 
-    let(:question) { create(:vocdoni_question, election: election) }
-    let!(:answer1) { create(:vocdoni_election_answer, question: question, value: 0) }
-    let!(:answer2) { create(:vocdoni_election_answer, question: question, value: 1) }
+    let(:question) { create(:vocdoni_question, election:) }
+    let!(:answer1) { create(:vocdoni_election_answer, question:, value: 0) }
+    let!(:answer2) { create(:vocdoni_election_answer, question:, value: 1) }
 
     it { is_expected.to be_truthy }
 
     context "when there answers have no values" do
-      let!(:answer1) { create(:vocdoni_election_answer, question: question, value: nil) }
+      let!(:answer1) { create(:vocdoni_election_answer, question:, value: nil) }
 
       it { is_expected.to be_falsey }
     end
   end
 
   describe "#explorer_vote_url" do
-    subject(:election) { build :vocdoni_election, vocdoni_election_id: "12345" }
+    subject(:election) { build(:vocdoni_election, vocdoni_election_id: "12345") }
 
     before do
       allow(Decidim::Vocdoni).to receive(:explorer_vote_domain).and_return("example.org")
@@ -241,10 +241,10 @@ describe Decidim::Vocdoni::Election do
   end
 
   describe "#ready_for_census_form?" do
-    let(:question) { create(:vocdoni_question, election: election) }
+    let(:question) { create(:vocdoni_question, election:) }
 
     context "when minimum_answers? returns true" do
-      let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+      let!(:answers) { create_list(:vocdoni_election_answer, 2, question:) }
 
       it "returns true" do
         expect(subject.ready_for_census_form?).to be true
@@ -252,7 +252,7 @@ describe Decidim::Vocdoni::Election do
     end
 
     context "when minimum_answers? returns false" do
-      let!(:answer) { create(:vocdoni_election_answer, question: question) }
+      let!(:answer) { create(:vocdoni_election_answer, question:) }
 
       it "returns false" do
         expect(subject.ready_for_census_form?).to be false
@@ -264,8 +264,8 @@ describe Decidim::Vocdoni::Election do
     context "when census is ready" do
       subject(:election) { build(:vocdoni_election, :with_census) }
 
-      let(:question) { create(:vocdoni_question, election: election) }
-      let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+      let(:question) { create(:vocdoni_question, election:) }
+      let!(:answers) { create_list(:vocdoni_election_answer, 2, question:) }
 
       it "returns true" do
         expect(subject.ready_for_calendar_form?).to be true
@@ -285,8 +285,8 @@ describe Decidim::Vocdoni::Election do
     context "when ready for calendar form and times are set" do
       subject(:election) { build(:vocdoni_election, :with_census, status: :created) }
 
-      let(:question) { create(:vocdoni_question, election: election) }
-      let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+      let(:question) { create(:vocdoni_question, election:) }
+      let!(:answers) { create_list(:vocdoni_election_answer, 2, question:) }
 
       it "returns true" do
         expect(subject.ready_for_publish_form?).to be true
@@ -303,8 +303,8 @@ describe Decidim::Vocdoni::Election do
   end
 
   describe "#build_answer_values!" do
-    let(:question) { create(:vocdoni_question, election: election) }
-    let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+    let(:question) { create(:vocdoni_question, election:) }
+    let!(:answers) { create_list(:vocdoni_election_answer, 2, question:) }
 
     it "assigns a value to each answer" do
       expect { subject.build_answer_values! }.to change { question.answers.pluck(:value) }.from([nil, nil]).to([0, 1])
@@ -312,10 +312,10 @@ describe Decidim::Vocdoni::Election do
   end
 
   describe "#to_vocdoni" do
-    let(:election) { create(:vocdoni_election, :with_photos, :simple, election_type: type, component: component, title: title, description: description) }
-    let!(:voter) { create(:vocdoni_voter, election: election, wallet_address: "0x0000000000000000000000000000000000000001") }
+    let(:election) { create(:vocdoni_election, :with_photos, :simple, election_type: type, component:, title:, description:) }
+    let!(:voter) { create(:vocdoni_voter, election:, wallet_address: "0x0000000000000000000000000000000000000001") }
     let(:component) { create(:vocdoni_component, participatory_space: participatory_process) }
-    let(:participatory_process) { create(:participatory_process, organization: organization) }
+    let(:participatory_process) { create(:participatory_process, organization:) }
     let(:organization) { create(:organization, enable_machine_translations: true) }
     let(:title) do
       {
@@ -362,7 +362,7 @@ describe Decidim::Vocdoni::Election do
     end
 
     context "when no attachments" do
-      let(:election) { create(:vocdoni_election, :simple, election_type: type, component: component, title: title, description: description) }
+      let(:election) { create(:vocdoni_election, :simple, election_type: type, component:, title:, description:) }
 
       it "returns the election as json" do
         expect(json["title"]).to eq({ "en" => "English title", "ca" => "Catalan title", "es" => "Spanish title", "default" => "English title" })

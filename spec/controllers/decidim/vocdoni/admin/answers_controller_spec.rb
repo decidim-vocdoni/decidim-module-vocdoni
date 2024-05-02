@@ -20,9 +20,9 @@ module Decidim
         describe "PATCH update" do
           let(:datetime_format) { I18n.t("time.formats.decidim_short") }
           let(:component) { create(:vocdoni_component) }
-          let(:election) { create(:vocdoni_election, component: component) }
-          let(:question) { create(:vocdoni_question, election: election) }
-          let(:answer) { create(:vocdoni_election_answer, question: question) }
+          let(:election) { create(:vocdoni_election, component:) }
+          let(:question) { create(:vocdoni_question, election:) }
+          let(:answer) { create(:vocdoni_election_answer, question:) }
           let(:answer_title) { answer.title }
           let(:answer_params) do
             {
@@ -44,7 +44,7 @@ module Decidim
           it "updates the election" do
             allow(controller).to receive(:election_question_answers_path).and_return("/answers")
 
-            patch :update, params: params
+            patch(:update, params:)
 
             expect(flash[:notice]).not_to be_empty
             expect(response).to have_http_status(:found)
@@ -53,10 +53,10 @@ module Decidim
           context "when the existing election has photos and there are other errors on the form" do
             include_context "with controller rendering the view" do
               let(:answer_title) { { en: "" } }
-              let(:answer) { create(:vocdoni_election_answer, :with_photos, question: question) }
+              let(:answer) { create(:vocdoni_election_answer, :with_photos, question:) }
 
               it "displays the editing form with errors" do
-                patch :update, params: params
+                patch(:update, params:)
 
                 expect(flash[:alert]).not_to be_empty
                 expect(response).to have_http_status(:ok)

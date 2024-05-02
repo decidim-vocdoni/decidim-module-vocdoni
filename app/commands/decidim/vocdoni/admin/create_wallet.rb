@@ -36,8 +36,8 @@ module Decidim
 
         def create_wallet!
           attributes = {
-            organization: organization,
-            private_key: private_key
+            organization:,
+            private_key:
           }
 
           @wallet = Decidim.traceability.create!(

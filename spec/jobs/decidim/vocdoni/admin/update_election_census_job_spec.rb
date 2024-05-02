@@ -12,7 +12,7 @@ RSpec.describe Decidim::Vocdoni::Admin::UpdateElectionCensusJob, type: :job do
 
   before do
     non_voters.each do |nv|
-      create(:vocdoni_voter, email: nv.email, election: election, wallet_address: nil, in_vocdoni_census: false)
+      create(:vocdoni_voter, email: nv.email, election:, wallet_address: nil, in_vocdoni_census: false)
     end
 
     allow(Decidim::Vocdoni::VoterService).to receive(:verify_and_insert).and_call_original

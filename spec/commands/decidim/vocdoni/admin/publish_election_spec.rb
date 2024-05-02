@@ -15,7 +15,7 @@ module Decidim::Vocdoni::Admin
       expect { subject.call }.to change(election, :published?).from(false).to(true)
     end
 
-    it "traces the action", versioning: true do
+    it "traces the action", :versioning do
       expect(Decidim.traceability)
         .to receive(:perform_action!)
         .with(:publish, election, user, visibility: "all")
@@ -27,7 +27,7 @@ module Decidim::Vocdoni::Admin
     end
 
     it "fires an event" do
-      create :follow, followable: participatory_process, user: user
+      create(:follow, followable: participatory_process, user:)
 
       expect(Decidim::EventsManager)
         .to receive(:publish)

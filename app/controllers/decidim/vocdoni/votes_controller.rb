@@ -16,7 +16,7 @@ module Decidim
       delegate :count, to: :questions, prefix: true
 
       def show
-        enforce_permission_to :view, :election, election: election
+        enforce_permission_to :view, :election, election:
       end
 
       def new
@@ -28,7 +28,7 @@ module Decidim
       def votes_left
         votes_left = params[:votesLeft]
         message = helpers.votes_left_message(votes_left.to_i)
-        render json: { message: message }
+        render json: { message: }
       end
 
       def check_verification
@@ -42,7 +42,7 @@ module Decidim
       end
 
       def exit_path
-        @exit_path ||= if allowed_to? :view, :election, election: election
+        @exit_path ||= if allowed_to?(:view, :election, election:)
                          election_path(election)
                        else
                          elections_path
@@ -74,7 +74,7 @@ module Decidim
           return false
         end
 
-        enforce_permission_to :vote, :election, election: election
+        enforce_permission_to(:vote, :election, election:)
 
         true
       end

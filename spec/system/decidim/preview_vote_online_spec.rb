@@ -2,12 +2,12 @@
 
 require "spec_helper"
 
-describe "Preview vote online in an election", type: :system do
+describe "Preview vote online in an election" do
   let(:manifest_name) { "vocdoni" }
-  let!(:election) { create :vocdoni_election, :upcoming, :published, :simple, component: component }
-  let(:admin) { create(:user, :admin, :confirmed, organization: organization) }
+  let!(:election) { create(:vocdoni_election, :upcoming, :published, :simple, component:) }
+  let(:admin) { create(:user, :admin, :confirmed, organization:) }
   let(:organization) { component.organization }
-  let!(:elections) { create_list(:vocdoni_election, 2, :vote, component: component) } # prevents redirect to single election page
+  let!(:elections) { create_list(:vocdoni_election, 2, :vote, component:) } # prevents redirect to single election page
   let(:router) { Decidim::EngineRouter.main_proxy(component).decidim_participatory_process_vocdoni }
 
   before do
@@ -21,8 +21,8 @@ describe "Preview vote online in an election", type: :system do
   describe "preview voting with the admin" do
     it "can vote", :slow do
       visit_component
-      click_link translated(election.title)
-      click_link "Preview"
+      click_link_or_button translated(election.title)
+      click_link_or_button "Preview"
 
       expect(page).to have_content("This is a preview of the voting booth.")
 
@@ -41,8 +41,8 @@ describe "Preview vote online in an election", type: :system do
 
       it "shows a link to view more information about the election" do
         visit_component
-        click_link translated(election.title)
-        click_link "Preview"
+        click_link_or_button translated(election.title)
+        click_link_or_button "Preview"
         login_step({ email: admin.email, token: "123456" })
         expect(page).to have_content("MORE INFORMATION")
       end
@@ -57,21 +57,21 @@ describe "Preview vote online in an election", type: :system do
 
       it "does not show the more information link" do
         visit_component
-        click_link translated(election.title)
-        click_link "Preview"
-        expect(page).not_to have_content("MORE INFORMATION")
+        click_link_or_button translated(election.title)
+        click_link_or_button "Preview"
+        expect(page).to have_no_content("MORE INFORMATION")
       end
     end
   end
 
   context "when the election is not published" do
-    let(:election) { create :vocdoni_election, :upcoming, :simple, component: component }
+    let(:election) { create(:vocdoni_election, :upcoming, :simple, component:) }
 
     it_behaves_like "allows admins to preview the voting booth"
   end
 
   context "when the election has not started yet" do
-    let(:election) { create :vocdoni_election, :upcoming, :published, :simple, component: component }
+    let(:election) { create(:vocdoni_election, :upcoming, :published, :simple, component:) }
 
     it_behaves_like "allows admins to preview the voting booth"
   end
@@ -87,8 +87,8 @@ describe "Preview vote online in an election", type: :system do
     it "is alerted when trying to leave the component before completing" do
       visit_component
 
-      click_link translated(election.title)
-      click_link "Preview"
+      click_link_or_button translated(election.title)
+      click_link_or_button "Preview"
 
       dismiss_prompt do
         page.find("a.focus__exit").click

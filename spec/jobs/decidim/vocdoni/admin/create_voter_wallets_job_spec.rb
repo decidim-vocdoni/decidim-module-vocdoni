@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Decidim::Vocdoni::Admin::CreateVoterWalletsJob, type: :job do
   let!(:election) { create(:vocdoni_election, :upcoming, :with_internal_census) }
-  let!(:voters) { create_list(:vocdoni_voter, 2, election: election, wallet_address: nil) }
+  let!(:voters) { create_list(:vocdoni_voter, 2, election:, wallet_address: nil) }
   let(:election_id) { election.id }
   let(:fake_wallet_address) { "0x1234567890abcdef1234567890abcdef12345678" }
 

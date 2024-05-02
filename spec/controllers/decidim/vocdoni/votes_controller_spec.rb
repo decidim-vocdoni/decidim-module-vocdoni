@@ -6,7 +6,7 @@ describe Decidim::Vocdoni::VotesController, type: :controller do
   routes { Decidim::Vocdoni::Engine.routes }
 
   let(:component) { create(:vocdoni_component) }
-  let(:election) { create(:vocdoni_election, :published, component: component) }
+  let(:election) { create(:vocdoni_election, :published, component:) }
   let(:user) { create(:user, :confirmed, organization: component.organization) }
 
   before do
@@ -30,7 +30,7 @@ describe Decidim::Vocdoni::VotesController, type: :controller do
   end
 
   describe "POST check_verification" do
-    let(:voter) { create(:vocdoni_voter, email: user.email, election: election) }
+    let(:voter) { create(:vocdoni_voter, email: user.email, election:) }
 
     it "returns verification status" do
       post :check_verification, params: { election_id: election.id }

@@ -9,9 +9,9 @@ module Decidim
 
       subject { cell("decidim/vocdoni/census_authorization_modal", model) }
 
-      let(:model) { create(:vocdoni_election, :published, :started, :with_internal_census, verification_types: verification_types) }
+      let(:model) { create(:vocdoni_election, :published, :started, :with_internal_census, verification_types:) }
       let(:verification_types) { [authorization_handler_name] }
-      let(:current_user) { create(:user, :confirmed, organization: organization) }
+      let(:current_user) { create(:user, :confirmed, organization:) }
       let(:organization) { create(:organization, available_authorizations: [authorization_handler_name]) }
       let(:voter) { create(:vocdoni_voter, election: model, email: current_user.email) }
       let(:authorization_handler_name) { "id_documents" }
