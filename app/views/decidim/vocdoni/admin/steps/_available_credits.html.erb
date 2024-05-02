@@ -27,8 +27,10 @@
               wallet_address: @current_vocdoni_wallet.private_key).html_safe %>
     </p>
     <div class="input-group">
-      <input id="wallet-address" class="input-group-field"
+      <input id="wallet-address"
+             class="input-group-field"
              type="text"
+             autocomplete="off"
              value="<%= @current_vocdoni_wallet.private_key %>"
              title="Wallet Address"
              readonly>

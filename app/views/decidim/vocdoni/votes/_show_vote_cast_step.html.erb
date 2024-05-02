@@ -11,20 +11,18 @@
     <p class="mb-4"><%= t("vote_receipt", scope: "decidim.vocdoni.votes.vote_cast") %></p>
 
     <div class="flex">
-      <input
-        id="vote-receipt"
+      <input id="vote-receipt"
         class="flex-1 border-2 border-r-0 text-gray-2 cursor-not-allowed rounded-l-md p-2"
         type="text"
+        autocomplete="off"
         title="<%= t("vote_receipt", scope: "decidim.vocdoni.votes.vote_cast") %>"
-        readonly
-      >
+        readonly>
       <button
         class="button button__secondary button__sm rounded-l-none"
         data-clipboard-copy="#vote-receipt"
         data-clipboard-copy-label="<%= t("copy_vote_receipt_copied", scope: "decidim.vocdoni.votes.vote_cast") %>"
         data-clipboard-copy-message="<%= t("copy_vote_receipt_message", scope: "decidim.vocdoni.votes.vote_cast") %>"
-        aria-label="<%= t("copy_vote_receipt_clarification", scope: "decidim.vocdoni.votes.vote_cast") %>"
-      >
+        aria-label="<%= t("copy_vote_receipt_clarification", scope: "decidim.vocdoni.votes.vote_cast") %>">
         <%= icon "clipboard-line", role: "img", "aria-hidden": true %>
         <%= t("copy_vote_receipt", scope: "decidim.vocdoni.votes.vote_cast") %>
       </button>

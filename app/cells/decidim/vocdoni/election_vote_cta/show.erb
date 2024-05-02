@@ -11,7 +11,7 @@
     <div class="callout warning">
       <%= t("paused", scope: "decidim.vocdoni.elections.show") %>
     </div>
-    <button class="button button__lg button__secondary w-full" ><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
+    <button class="button button__lg button__secondary w-full"><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
   <% elsif model.ongoing? %>
     <%= link_to new_election_vote_path,
                 class: "button button__lg button__secondary w-full vote-button",
