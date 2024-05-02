@@ -10,7 +10,7 @@
   <div class="columns large-8">
     <div class="card">
       <div class="card-section table-scroll">
-        <ul class="space-y-8" data-url="<%= election_url %>" data-component="accordion">
+        <ul class="space-y-8 js-votes-count" data-url="<%= election_url %>" data-component="accordion">
           <% model.questions.each_with_index do |question, question_index| %>
             <li class="election__accordion accordion-item evote__preview-question data-accordion-item">
               <button id="accordion-trigger-result-<%= question_index %>"
@@ -23,7 +23,7 @@
               <div class="election__accordion-panel-result"
                    aria-hidden="true"
                    id="accordion-panel-result-<%= question_index %>">
-                <div>
+                <div class="results__realtime-label">
                   <table>
                     <thead>
                     <tr>
