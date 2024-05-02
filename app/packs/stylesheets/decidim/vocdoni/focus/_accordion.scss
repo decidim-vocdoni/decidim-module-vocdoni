@@ -2,7 +2,7 @@
   @apply bg-transparent;
 
   .accordion-title{
-    @apply text-inherit border-0 rounded-none;
+    @apply text-inherit border-0 rounded-none pl-4 flex items-center justify-start;
 
     span{
       @apply cursor-move;
@@ -22,7 +22,7 @@
   }
 
   .accordion-content{
-    @apply border-0;
+    @apply border-0 mt-4;
 
     .tabs-title > a[aria-selected="true"],
     .tabs-content{

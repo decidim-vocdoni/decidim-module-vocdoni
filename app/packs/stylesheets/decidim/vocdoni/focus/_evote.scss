@@ -224,7 +224,7 @@
   }
 
   &__preview-question{
-    @apply border font-semibold;
+    @apply font-semibold border-2 border-background rounded p-4;
 
     &:not(:first-child){
       border-top: 0;
