@@ -14,7 +14,11 @@
 
   &__top_warning{
     background: rgb(var(--alert-rgb));
-    @apply text-white text-center block py-2;
+    @apply text-white flex items-center justify-center py-2;
+
+    svg{
+      @apply text-xl mr-2 fill-white;
+    }
   }
 
   &__brand{
