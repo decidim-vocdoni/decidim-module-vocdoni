@@ -21,6 +21,7 @@ module Decidim
 
       def new
         return unless vote_allowed?
+
         session[:current_step] = params[:step_index].to_i
 
         @form = form(LoginForm).instance

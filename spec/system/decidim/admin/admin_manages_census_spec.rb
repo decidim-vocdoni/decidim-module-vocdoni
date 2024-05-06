@@ -194,11 +194,8 @@ describe "Admin manages census", :slow, type: :system do
   def deletes_the_census
     click_link_or_button "Delete all census data"
 
-    within ".confirm-content" do
+    within "#confirm-modal-content" do
       expect(page).to have_content("Are you sure you want to continue?")
-    end
-
-    within ".confirm-modal-footer" do
       click_link_or_button "OK"
     end
 

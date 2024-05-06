@@ -51,7 +51,7 @@ describe "Election setup wizard", :slow, type: :system do
         end
 
         it "shows errors" do
-          expect(page).to have_content("can't be blank", count: 2)
+          expect(page).to have_content("cannot be blank", count: 2)
         end
       end
 
@@ -257,7 +257,7 @@ describe "Election setup wizard", :slow, type: :system do
 
       context "when click the publish button" do
         before do
-          find("a.hollow", text: "Publish").click
+          find("a.button__secondary", text: "Publish").click
           click_link_or_button "Done, go to the next step"
           click_link_or_button "Create"
         end
@@ -328,10 +328,9 @@ describe "Election setup wizard", :slow, type: :system do
   end
 
   def fill_calendar_and_results
-    fill_in "election_calendar_start_time", with: 12.minutes.from_now.strftime("%d/%m/%Y %H:%M")
+    fill_in "election_calendar_start_time", with: 12.minutes.from_now.strftime("%Y-%m-%dT%H:%M")
     send_keys(:enter)
-    fill_in "election_calendar_end_time", with: 12.days.from_now.strftime("%d/%m/%Y %H:%M")
-    send_keys(:enter)
+    fill_in "election_calendar_end_time", with: 12.days.from_now.strftime("%Y-%m-%dT%H:%M")
     click_link_or_button "Save and go to the next step"
   end
 end
