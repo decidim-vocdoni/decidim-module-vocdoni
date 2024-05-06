@@ -25,28 +25,30 @@ describe Decidim::Vocdoni::ElectionGCell, type: :cell do
     let(:show_space) { false }
 
     it "renders the card" do
-      expect(subject).to have_css(".card--election")
+      expect(subject).to have_css(".card__grid")
     end
 
     it "renders the start and end time" do
       election_start = I18n.l(start_time.to_date, format: :decidim_short)
       election_end = I18n.l(end_time.to_date, format: :decidim_short)
 
-      expect(subject).to have_css(".card-data__item--centerblock", text: election_start)
-      expect(subject).to have_css(".card-data__item--centerblock", text: election_end)
+      within ".card__grid-metadata" do
+        expect(subject).to have_css("span", text: election_start)
+        expect(subject).to have_css("span", text: election_end)
+      end
     end
 
     it "renders the title and description" do
       description = strip_tags(translated(election.description, locale: :en))
-      expect(subject).to have_css(".card__title", text: translated(election.title))
-      expect(subject).to have_css(".card__text", text: description)
+      expect(subject).to have_css(".card__grid-text", text: translated(election.title))
+      expect(subject).to have_css(".card__grid-text", text: description)
     end
 
     context "when election end less than 12 hours away" do
       let(:end_time) { 10.hours.from_now }
 
       it "renders remaining time callout" do
-        expect(subject).to have_css(".callout", text: "remaining to vote")
+        expect(subject).to have_css(".flash__message", text: "remaining to vote")
       end
     end
 
@@ -58,7 +60,7 @@ describe Decidim::Vocdoni::ElectionGCell, type: :cell do
       end
 
       it "shows the attached image" do
-        expect(subject).to have_css(".card__image")
+        expect(subject).to have_css(".card__grid-img")
       end
     end
   end

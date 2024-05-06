@@ -11,6 +11,10 @@ module Decidim
         "decidim/vocdoni/election_metadata"
       end
 
+      def show_description?
+        true
+      end
+
       private
 
       def has_state?
@@ -52,9 +56,10 @@ module Decidim
       end
 
       def description
-        text = super
-        text.sub!(/<p>/, "<p>#{render :badge}")
-        html_truncate(text, length: 100)
+        attribute = resource.try(:short_description) || resource.try(:body) || resource.description
+        text = translated_attribute(attribute)
+
+        strip_tags(html_truncate(text, length: 300))
       end
 
       def state_classes

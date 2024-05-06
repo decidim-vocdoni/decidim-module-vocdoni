@@ -44,7 +44,7 @@ describe "Preview vote online in an election" do
         click_link_or_button translated(election.title)
         click_link_or_button "Preview"
         login_step({ email: admin.email, token: "123456" })
-        expect(page).to have_content("MORE INFORMATION")
+        expect(page).to have_content("More information")
       end
     end
 

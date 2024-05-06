@@ -40,7 +40,7 @@ describe "Results online" do
       visit_component
       click_link_or_button translated(election.title)
 
-      expect(page).to have_content("VOTE STATISTICS")
+      expect(page).to have_content("Vote statistics")
       expect(page).to have_css(".accordion-content table tr td:nth-child(2)", text: "10", count: 1)
       expect(page).to have_css(".accordion-content table tr td:nth-child(2)", text: "12", count: 1)
     end

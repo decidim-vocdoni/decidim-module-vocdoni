@@ -31,7 +31,7 @@ describe "Explore elections", :slow, type: :system do
     context "with many elections" do
       it "shows all elections for the given process" do
         visit_component
-        expect(page).to have_css(".card--election", count: elections_count)
+        expect(page).to have_css(".card__grid", count: elections_count)
 
         elections.each do |election|
           expect(page).to have_content(translated(election.title))
@@ -71,10 +71,10 @@ describe "Explore elections", :slow, type: :system do
     end
 
     it "shows accordion with questions and answers" do
-      expect(page).to have_css(".accordion-item", count: election.questions.count)
-      expect(page).to have_no_css(".accordion-content")
+      expect(page).to have_css(".election__accordion", count: election.questions.count)
+      expect(page).to have_no_css(".election__accordion-panel")
 
-      within ".accordion-item:first-child" do
+      within ".election__accordion:first-child" do
         click_link_or_button translated(question.title)
         expect(page).to have_css("li", count: question.answers.count)
       end
@@ -82,7 +82,7 @@ describe "Explore elections", :slow, type: :system do
 
     context "with attached photos" do
       it "shows the image" do
-        expect(page).to have_xpath("//img[@src=\"#{image.url}\"]")
+        expect(page).to have_css("img[src*='city.jpeg']")
       end
     end
   end
@@ -98,7 +98,7 @@ describe "Explore elections", :slow, type: :system do
 
     it "shows result information" do
       expect(page).to have_i18n_content(question.title)
-      expect(page).to have_content("ELECTION RESULTS")
+      expect(page).to have_content("Election results")
     end
   end
 end

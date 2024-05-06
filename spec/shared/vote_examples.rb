@@ -19,10 +19,6 @@ shared_examples "allows admins to preview the voting booth" do
 
   before do
     visit router.election_path(id: election.id)
-    puts election.id
-    puts election.questions.count
-    puts election.questions.first.answers.first.title
-    puts election.questions.first.answers.last.title
     click_link_or_button "Preview"
   end
 
