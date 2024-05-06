@@ -1,6 +1,6 @@
 <%= append_stylesheet_pack_tag "decidim_vocdoni_elections" %>
 <%= append_javascript_pack_tag "decidim_vocdoni_elections" %>
-<%= render("focus_header", header_title: t("decidim.vocdoni.votes.header.login")) %>
+<%= render("focus_header", header_title: t("decidim.vocdoni.votes.new.question_steps", current_step: session[:current_step] + 1, total_steps: questions_count)) %>
 <%= render layout: "layouts/decidim/shared/layout_center" do %>
   <div class="vote-wrapper"
        id="vote-wrapper"
@@ -19,7 +19,7 @@
 
     <% questions.each_with_index do |step_question, step_index| %>
       <div id="step-<%= step_index %>" class="focus__step hidden" data-toggler=".hidden">
-
+      <% session[:current_step] = step_index + 1 %>
         <% if step_index == 0 %>
           <div id="votes-left-message">
             <!--

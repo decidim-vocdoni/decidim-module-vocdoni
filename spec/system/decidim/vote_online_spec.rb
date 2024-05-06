@@ -90,7 +90,7 @@ describe "Vote online in an election", type: :system do
 
         click_link_or_button "Start voting"
 
-        expect(page).to have_content("Please sign in")
+        expect(page).to have_content("Please log in")
       end
     end
 

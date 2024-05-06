@@ -19,7 +19,10 @@ shared_examples "allows admins to preview the voting booth" do
 
   before do
     visit router.election_path(id: election.id)
-
+    puts election.id
+    puts election.questions.count
+    puts election.questions.first.answers.first.title
+    puts election.questions.first.answers.last.title
     click_link_or_button "Preview"
   end
 
@@ -61,7 +64,7 @@ def uses_the_voting_booth(census_data)
 
   # confirm step
   non_question_step("#step-1") do
-    expect(page).to have_content("CONFIRM YOUR VOTE")
+    expect(page).to have_content("Confirm your vote")
 
     selected_answers.each { |answer| expect(page).to have_i18n_content(answer.title) }
     non_selected_answers.each { |answer| expect(page).not_to have_i18n_content(answer.title) }
@@ -102,10 +105,10 @@ end
 
 def question_step(number)
   expect_only_one_step
+  expect(page).to have_content("QUESTION #{number} OF 1")
   within "#step-#{number - 1}" do
     question = election.questions[number - 1]
 
-    expect(page).to have_content("QUESTION #{number} OF 1")
     expect(page).to have_i18n_content(question.title)
 
     yield question if block_given?

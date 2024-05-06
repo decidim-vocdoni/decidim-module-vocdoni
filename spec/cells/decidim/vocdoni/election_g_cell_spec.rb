@@ -2,12 +2,12 @@
 
 require "spec_helper"
 
-describe Decidim::Vocdoni::ElectionMCell, type: :cell do
+describe Decidim::Vocdoni::ElectionGCell, type: :cell do
   controller Decidim::Vocdoni::ElectionsController
 
   subject { cell_html }
 
-  let(:my_cell) { cell("decidim/vocdoni/election_m", election, context: { show_space: }) }
+  let(:my_cell) { cell("decidim/vocdoni/election_g", election, context: { show_space: }) }
   let(:cell_html) { my_cell.call }
   let(:start_time) { 2.days.ago }
   let(:end_time) { 1.day.from_now }

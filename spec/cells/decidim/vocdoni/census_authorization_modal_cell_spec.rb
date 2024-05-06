@@ -25,7 +25,7 @@ module Decidim
         context "when current_user is present" do
           it "returns 'internalCensusModal'" do
             allow(controller).to receive(:current_user).and_return(current_user)
-            expect(subject.modal_id).to eq "internalCensusModal"
+            expect(subject.modal_id).to eq "census-authorization-modal"
           end
         end
 
