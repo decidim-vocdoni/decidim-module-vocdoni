@@ -33,18 +33,26 @@ gem "decidim-vocdoni", github: "decidim-vocdoni/decidim-module-vocdoni"
 
 And then execute:
 
-```bash
+```
 bundle
-bin/rails decidim_vocdoni:install:migrations
-bin/rails decidim_vocdoni:webpacker:install
+bin/rails decidim:upgrade
 bin/rails db:migrate
 ```
+
+> **EXPERTS ONLY**
+>
+> Under the hood, when running `bin/rails decidim:upgrade` the `decidim-vocdoni` gem will run the following (that can also be run manually if you consider):
+> 
+> ```bash
+> bin/rails decidim_vocdoni:install:migrations
+> bin/rails decidim_vocdoni:webpacker:install
+> ```
 
 Depending on your Decidim version, you can choose the corresponding version to ensure compatibility:
 
 | Version | Compatible Decidim versions |
-|---|---|
-| 1.x   | 0.27.x |
+|---------|-----------------------------|
+| 1.x     | 0.27.x                      |
 
 ## Cron based tasks
 
@@ -84,10 +92,19 @@ So, ensure you have a working Node.js application accessible by the Decidim inst
 ```json
 {
   "dependencies": {
-    "@vocdoni/sdk": "^0.5.3"
+    "@vocdoni/sdk": "^0.8.0"
   }
 }
 ```
+
+## Pricing
+
+The usage of the Vocdoni platform has some economic costs, as its using a Blockchain.
+
+For using it in a production environment with guaranties, you may contact with the maintaners of this plugin [PokeCode](https://pokecode.net) asking for a pricing. Costs will vary depending on your census size and the number of elections you want to perform.
+
+As there could be other resellers and not only the PokeCode, this needs to be configured through the ENV
+variables: VOCDONI_RESELLER_NAME, VOCDONI_RESELLER_EMAIL
 
 ## Configuration
 
@@ -97,10 +114,12 @@ Currently, the following ENV variables are supported:
 
 | ENV variable | Description | Default value |
 | ------------ | ----------- |-------|
-| VOCDONI_API_ENDPOINT_ENV | The environment of the Vocdoni API. Only two values are accepted: `dev`, `stg`. Read more on [Vocdoni SDK Usage Environment](https://github.com/vocdoni/vocdoni-sdk#environment) | `stg` |
+| VOCDONI_API_ENDPOINT_ENV | The environment of the Vocdoni API. Only two values are accepted: `dev`, `stg`, `prod`. Read more on [Vocdoni SDK Usage Environment](https://github.com/vocdoni/vocdoni-sdk#environment) | `stg` |
 | VOCDONI_MINUTES_BEFORE_START | How many minutes should the setup be run before the election starts (when configured automatically) | `10` |
 | VOCDONI_MANUAL_START_DELAY | How many seconds after the action of starting an election manually people will be allowed to vote. Note that this time is needed in order to configure the election in the blockchain. You might want to increase it if communication with the Vocdoni API is slow. | `30` |
 | DECIDIM_VOCDONI_SDK_DEBUG | This is for development purposes. If set to `true`, any call to the Vocdoni API using the SDK ruby wrapper will be logged into the `node_debug.log` file (on the application main folder). | `false` |
+| VOCDONI_RESELLER_NAME          | The name of the Vocdoni reseller, the organization that manages the tokens to work with the Vocdoni platform. | `PokeCode SL`     |
+| VOCDONI_RESELLER_EMAIL         | The email of the Vocdoni reseller. | vocdoni@pokecode.net |
 
 It is also possible to configure the module using the `decidim-vocdoni` initializer:
 
