@@ -31,7 +31,7 @@ module Decidim
       private
 
       def elections
-        @elections ||= Decidim::Vocdoni::Election.where(component: current_component).published
+        @elections ||= search_collection
       end
 
       def election
