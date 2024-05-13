@@ -447,11 +447,11 @@ en:
             upcoming: Upcoming
         elections:
           filters:
+            active: Active
             all: All
             canceled: Canceled
             date: Date
             finished: Finished
-            active: Active
             paused: Paused
             upcoming: Upcoming
         orders:

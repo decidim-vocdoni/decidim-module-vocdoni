@@ -41,8 +41,8 @@ describe "Results online" do
       click_link_or_button translated(election.title)
 
       expect(page).to have_content("Vote statistics")
-      expect(page).to have_css(".accordion-content table tr td:nth-child(2)", text: "10", count: 1)
-      expect(page).to have_css(".accordion-content table tr td:nth-child(2)", text: "12", count: 1)
+      expect(page).to have_css(".election__accordion-panel-result table tr td:nth-child(2)", text: "10", count: 1)
+      expect(page).to have_css(".election__accordion-panel-result table tr td:nth-child(2)", text: "12", count: 1)
     end
 
     context "when the election is finished" do
@@ -50,6 +50,7 @@ describe "Results online" do
 
       it "shows the results" do
         visit_component
+        check("Finished")
         click_link_or_button translated(election.title)
 
         expect(page).to have_no_content("VOTE STATISTICS")
@@ -61,9 +62,10 @@ describe "Results online" do
 
       it "shows the results" do
         visit_component
+        check("Upcoming")
         click_link_or_button translated(election.title)
 
-        expect(page).to have_no_content("VOTE STATISTICS")
+        expect(page).to have_no_content("Vote statistics")
       end
     end
   end

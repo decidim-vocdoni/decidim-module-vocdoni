@@ -26,7 +26,7 @@ module Decidim
       end
 
       def component_name
-        (defined?(current_component) && translated_attribute(current_component&.name).presence) || t("decidim.components.elections.name")
+        (defined?(current_component) && translated_attribute(current_component&.name).presence) || t("decidim.components.vocdoni.name")
       end
     end
   end
