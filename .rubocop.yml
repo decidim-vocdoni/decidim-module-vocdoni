@@ -22,3 +22,11 @@ RSpec/NoExpectationExample:
 
 FactoryBot/FactoryAssociationWithStrategy:
   Enabled: false
+
+RSpec/RepeatedExampleGroupDescription:
+  Exclude:
+    - "spec/system/decidim/admin/admin_creates_wallet_spec.rb"
+
+RSpec/RepeatedExampleGroupBody:
+  Exclude:
+    - "spec/system/decidim/admin/admin_creates_wallet_spec.rb"

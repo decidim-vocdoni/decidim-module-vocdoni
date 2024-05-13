@@ -100,9 +100,9 @@ describe "Admin creates wallet", :slow, type: :system do
       it "doesn't show the information about receiving coins" do
         visit_steps_page
 
-        expect(page).not_to have_content("The usage of the Vocdoni platform has costs")
-        expect(page).not_to have_content("Test reseller")
-        expect(page).not_to have_css("input[value='#{wallet.private_key}']")
+        expect(page).to have_no_content("The usage of the Vocdoni platform has costs")
+        expect(page).to have_no_content("Test reseller")
+        expect(page).to have_no_css("input[value='#{wallet.private_key}']")
       end
     end
   end
