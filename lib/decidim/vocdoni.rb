@@ -51,12 +51,12 @@ module Decidim
 
     # Public: Setting to configure the reseller name
     config_accessor :vocdoni_reseller_name do
-      ENV.fetch("VOCDONI_RESELLER_NAME", "Decidim Association")
+      ENV.fetch("VOCDONI_RESELLER_NAME", "PokeCode SL")
     end
 
     # Public: Setting to configure the reseller email
     config_accessor :vocdoni_reseller_email do
-      ENV.fetch("VOCDONI_RESELLER_EMAIL", "vocdoni@decidim.org")
+      ENV.fetch("VOCDONI_RESELLER_EMAIL", "vocdoni@pokecode.net")
     end
 
     # Public: Returns the API endpoint URL based on the environment specified in the configuration.
