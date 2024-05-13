@@ -1,0 +1,42 @@
+name: "[CI] JavaScript Tests"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  CI: "true"
+  NODE_VERSION: 16.9.1
+
+jobs:
+  test-report:
+    name: Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Get npm cache directory path
+        id: npm-cache-dir-path
+        run: echo "::set-output name=dir::$(npm get cache)-vocdoni"
+
+      - uses: actions/cache@v2
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir-path.outputs.dir }}
+          key: npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-
+      - run: npm ci
+      - run: npm run test
+        name: Node test
+        env:
+          CODECOV: 1
