@@ -4,6 +4,7 @@ const WAIT_TIME_MS = 30000;
 // Fetch the votes from the API
 export const getElectionResults = async () => {
   const vocdoniClientElement = document.querySelector(".js-vocdoni-client");
+
   if (!vocdoniClientElement || !vocdoniClientElement.dataset.resultsPath) {
     return null;
   }

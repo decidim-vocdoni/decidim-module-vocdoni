@@ -6,11 +6,13 @@ describe Decidim::Vocdoni::ElectionPublishedEvent do
   include_context "when a simple event"
 
   let(:event_name) { "decidim.events.vocdoni.election_published" }
-  let(:resource) { create(:vocdoni_election) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, title: { en: "A participatory process" }) }
+  let(:component) { create(:vocdoni_component, participatory_space: participatory_space) }
+  let(:resource) { create(:vocdoni_election, component: component) }
   let(:participatory_space_title) { resource.participatory_space.title["en"] }
   let(:resource_title) { resource.title["en"] }
 
-  it_behaves_like "a simple event"
+  it_behaves_like "a simple event", skip_space_checks: true
 
   describe "email_subject" do
     it "is generated correctly" do

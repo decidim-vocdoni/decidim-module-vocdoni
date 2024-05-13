@@ -85,7 +85,7 @@ GEM
       erubi (~> 1.4)
       parser (>= 2.4)
       smart_properties
-    bigdecimal (3.1.7)
+    bigdecimal (3.1.8)
     bindex (0.8.1)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
@@ -396,7 +396,7 @@ GEM
       activesupport (>= 2)
       nokogiri (>= 1.4)
     htmlentities (4.3.4)
-    i18n (1.14.4)
+    i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     i18n-tasks (1.0.13)
       activesupport (>= 4.0.2)
@@ -476,19 +476,9 @@ GEM
       timeout
     net-smtp (0.3.4)
       net-protocol
-    nio4r (2.7.1)
+    nio4r (2.7.3)
     node-runner (1.2.0)
-    nokogiri (1.16.4-aarch64-linux)
-      racc (~> 1.4)
-    nokogiri (1.16.4-arm-linux)
-      racc (~> 1.4)
-    nokogiri (1.16.4-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.16.4-x86-linux)
-      racc (~> 1.4)
     nokogiri (1.16.4-x86_64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.16.4-x86_64-linux)
       racc (~> 1.4)
     oauth (1.1.0)
       oauth-tty (~> 1.0, >= 1.0.1)
@@ -532,7 +522,7 @@ GEM
       activerecord (>= 5.2)
       request_store (~> 1.1)
     parallel (1.24.0)
-    parallel_tests (4.7.0)
+    parallel_tests (4.7.1)
       parallel
     parser (3.3.0.5)
       ast (~> 2.4.1)
@@ -675,7 +665,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rspec (2.29.1)
+    rubocop-rspec (2.29.2)
       rubocop (~> 1.40)
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
@@ -694,7 +684,7 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    selenium-webdriver (4.19.0)
+    selenium-webdriver (4.20.1)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -784,19 +774,14 @@ GEM
     zeitwerk (2.6.13)
 
 PLATFORMS
-  aarch64-linux
-  arm-linux
-  arm64-darwin
-  x86-linux
   x86_64-darwin
-  x86_64-linux
 
 DEPENDENCIES
   bootsnap (~> 1.7)
   byebug (~> 11.0)
   codecov
-  decidim (>= 0.28, < 0.29)
-  decidim-dev (>= 0.28, < 0.29)
+  decidim (= 0.28.0)
+  decidim-dev (= 0.28.0)
   decidim-vocdoni!
   faker (~> 3.2)
   i18n-tasks (~> 1.0)
