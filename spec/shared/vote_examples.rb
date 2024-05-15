@@ -77,7 +77,7 @@ def uses_the_voting_booth(census_data)
 
   # confirm step
   non_question_step("#step-1") do
-    expect(page).to have_content("CONFIRM YOUR VOTE")
+    expect(page).to have_content("Confirm your vote")
 
     selected_answers.each { |answer| expect(page).to have_i18n_content(answer.title) }
     non_selected_answers.each { |answer| expect(page).not_to have_i18n_content(answer.title) }

@@ -21,6 +21,7 @@ describe "Preview vote online in an election" do
   describe "preview voting with the admin" do
     it "can vote", :slow do
       visit_component
+      check("Upcoming")
       click_link_or_button translated(election.title)
       click_link_or_button "Preview"
 
@@ -41,6 +42,7 @@ describe "Preview vote online in an election" do
 
       it "shows a link to view more information about the election" do
         visit_component
+        check("Upcoming")
         click_link_or_button translated(election.title)
         click_link_or_button "Preview"
         login_step({ email: admin.email, token: "123456" })
@@ -57,9 +59,10 @@ describe "Preview vote online in an election" do
 
       it "does not show the more information link" do
         visit_component
+        check("Upcoming")
         click_link_or_button translated(election.title)
         click_link_or_button "Preview"
-        expect(page).to have_no_content("MORE INFORMATION")
+        expect(page).to have_no_content("More information")
       end
     end
   end
@@ -86,7 +89,7 @@ describe "Preview vote online in an election" do
   context "when the ballot was not send" do
     it "is alerted when trying to leave the component before completing" do
       visit_component
-
+      check("Upcoming")
       click_link_or_button translated(election.title)
       click_link_or_button "Preview"
 
