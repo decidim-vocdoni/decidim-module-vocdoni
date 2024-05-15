@@ -7,34 +7,35 @@
     <%= t("decidim.vocdoni.votes.confirm.intro").html_safe %>
   </p>
 </div>
+<dl class="evote__confirm">
+  <% questions.each_with_index do |question, question_index| %>
+    <div class="election-question__answer">
+      <p class="election-question__counter">
+        <%= t("decidim.vocdoni.votes.confirm.question", count: question_index + 1) %>:
+      </p>
 
-<% questions.each_with_index do |question, question_index| %>
-  <div class="election-question__answer">
-    <p class="election-question__counter">
-      <%= t("decidim.vocdoni.votes.confirm.question", count: question_index + 1) %>:
-    </p>
+      <p class="h4">
+        <%= translated_attribute(question.title) %>
+      </p>
 
-    <p class="h4">
-      <%= translated_attribute(question.title) %>
-    </p>
-
-    <div id="edit-step-<%= question_index + 1 %>" class="election-question__answer-option">
+      <div id="edit-step-<%= question_index + 1 %>" class="election-question__answer-option">
       <span>
         <% question.answers.each do |answer| %>
-          <span id="<%= answer.slug %>">
+          <span class="confirmed_answer hidden" id="<%= answer.slug %>">
             <%= translated_attribute(answer.title) %>
           </span>
         <% end %>
       </span>
 
-      <button class="button button__lg button__text-secondary"
-              data-toggle="<%= ["step-#{question_index}", "step-#{questions_count}"].join(" ") %>">
-        <span class="underline"><%= t("decidim.vocdoni.votes.confirm.edit") %></span>
-        <span class="sr-only"><%= t("decidim.vocdoni.votes.confirm.answer_number", number: question_index + 1) %></span>
-      </button>
+        <button class="button button__lg button__text-secondary"
+                data-toggle="<%= ["step-#{question_index}", "step-#{questions_count}"].join(" ") %>">
+          <span class="underline"><%= t("decidim.vocdoni.votes.confirm.edit") %></span>
+          <span class="sr-only"><%= t("decidim.vocdoni.votes.confirm.answer_number", number: question_index + 1) %></span>
+        </button>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</dl>
 <div class="evote">
   <div class="row">
     <%= render partial: "vocdoni_logo" %>
