@@ -23,6 +23,8 @@ describe "Election setup wizard", :slow, type: :system do
 
   describe "create a new election" do
     before do
+      switch_to_host(organization.host)
+      login_as user, scope: :user
       visit_component_admin
       click_link_or_button "New election"
     end
