@@ -1,3 +1,5 @@
+<%= append_javascript_pack_tag "decidim_vocdoni_admin" %>
+<%= append_stylesheet_pack_tag "decidim_vocdoni_admin" %>
 <div class="bg-gray-5 p-4">
   <div class="flex items-center">
   <%= icon "bank-card-line", role: "img", "aria-hidden": true %>&nbsp;
@@ -18,7 +20,7 @@
       </p>
     </div>
   </div>
-  <% if Decidim::Vocdoni.api_endpoint_env == "dev" %>
+  <% if Decidim::Vocdoni.api_endpoint_env == "prod" %>
   <div class="callout warning">
     <p>
       <%= t("decidim.vocdoni.admin.steps.credits.prod_mode_html",
@@ -26,25 +28,7 @@
               reseller_email: Decidim::Vocdoni.vocdoni_reseller_email,
               wallet_address: @current_vocdoni_wallet.private_key).html_safe %>
     </p>
-    <div class="input-group">
-      <input id="wallet-address"
-             class="input-group-field"
-             type="text"
-             autocomplete="off"
-             value="<%= @current_vocdoni_wallet.private_key %>"
-             title="Wallet Address"
-             readonly>
-      <div class="input-group-button">
-        <button class="button button__secondary button__sm"
-                data-clipboard-copy="#wallet-address"
-                data-clipboard-copy-label="<%= t("copied", scope: "decidim.vocdoni.admin.steps.credits") %>"
-                data-clipboard-copy-message="<%= t("copy_wallet_message", scope: "decidim.vocdoni.admin.steps.credits") %>"
-                aria-label="<%= t("copy_wallet_clarification", scope: "decidim.vocdoni.admin.steps.credits") %>">
-          <%= icon("clipboard-line", role: "img", "aria-hidden": "true") %>
-          <%= t("copy_wallet", scope: "decidim.vocdoni.admin.steps.credits") %>
-        </button>
-      </div>
-    </div>
+    <%= render(partial: "wallet_address") %>
   </div>
   <% else %>
   <div class="callout warning">

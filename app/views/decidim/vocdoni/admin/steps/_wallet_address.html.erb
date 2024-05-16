@@ -1,0 +1,19 @@
+<div class="wallet-container">
+  <div class="flex">
+    <input id="wallet-address"
+           class="wallet-input"
+           type="text"
+           autocomplete="off"
+           value="<%= @current_vocdoni_wallet.private_key %>"
+           title="Wallet Address"
+           readonly>
+    <button class="button button__secondary button__sm copy-button"
+            data-clipboard-copy="#wallet-address"
+            data-clipboard-copy-label="<%= t("copied", scope: "decidim.vocdoni.admin.steps.credits") %>"
+            data-clipboard-copy-message="<%= t("copy_wallet_message", scope: "decidim.vocdoni.admin.steps.credits") %>"
+            aria-label="<%= t("copy_wallet_clarification", scope: "decidim.vocdoni.admin.steps.credits") %>">
+      <%= icon("clipboard-line", role: "img", "aria-hidden": "true") %>
+      <%= t("copy_wallet", scope: "decidim.vocdoni.admin.steps.credits") %>
+    </button>
+  </div>
+</div>

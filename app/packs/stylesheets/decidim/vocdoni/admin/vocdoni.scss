@@ -97,3 +97,14 @@ a.button__alert {
 .publish-text p {
   @apply mb-2
 }
+
+.wallet-container {
+  @apply w-full mx-auto py-2;
+}
+.wallet-input {
+  @apply rounded-none rounded-s-md block flex-1 min-w-0 w-full text-sm p-3 border;
+}
+
+button.copy-button {
+  @apply rounded-none rounded-r-md;
+}
