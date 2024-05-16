@@ -1,7 +1,7 @@
 ---
 
 base_locale: en
-locales: [en]
+locales: [ en ]
 
 ignore_unused:
   - "activemodel.attributes.election.{description,end_time,secret_until_the_end,start_time,stream_uri,title}"
@@ -30,6 +30,23 @@ ignore_unused:
   - "decidim.vocdoni.admin.elections.new.questions"
   - "decidim.vocdoni.admin.elections.new.results"
   - "decidim.vocdoni.admin.steps.danger_zone.action.{paused,start,created,vote}"
+  - "decidim.vocdoni.elections.election_m.badge_name.canceled"
+  - "decidim.vocdoni.elections.election_m.badge_name.finished"
+  - "decidim.vocdoni.elections.election_m.badge_name.ongoing"
+  - "decidim.vocdoni.elections.election_m.badge_name.paused"
+  - "decidim.vocdoni.elections.election_m.badge_name.upcoming"
+  - "decidim.vocdoni.elections.elections.filters.canceled"
+  - "decidim.vocdoni.elections.elections.filters.date"
+  - "decidim.vocdoni.elections.elections.filters.paused"
+  - "decidim.vocdoni.elections.orders.label"
+  - "decidim.vocdoni.elections.orders.older"
+  - "decidim.vocdoni.elections.orders.recent"
+  - "decidim.vocdoni.votes.confirm.answer"
+  - "decidim.vocdoni.votes.header.confirm"
+  - "decidim.vocdoni.votes.header.failed"
+  - "decidim.vocdoni.votes.header.login"
+  - "decidim.vocdoni.votes.header.submitting"
+  - "decidim.vocdoni.votes.header.vote_cast"
   # To be removed once the header image is no longer necessary by the Vocdoni SDK
   - "decidim.admin.shared.gallery.gallery_legend"
 

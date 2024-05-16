@@ -18,7 +18,7 @@
       </p>
     </div>
   </div>
-  <% if Decidim::Vocdoni.api_endpoint_env == "prod" %>
+  <% if Decidim::Vocdoni.api_endpoint_env == "dev" %>
   <div class="callout warning">
     <p>
       <%= t("decidim.vocdoni.admin.steps.credits.prod_mode_html",
@@ -35,7 +35,7 @@
              title="Wallet Address"
              readonly>
       <div class="input-group-button">
-        <button class="button primary"
+        <button class="button button__secondary button__sm"
                 data-clipboard-copy="#wallet-address"
                 data-clipboard-copy-label="<%= t("copied", scope: "decidim.vocdoni.admin.steps.credits") %>"
                 data-clipboard-copy-message="<%= t("copy_wallet_message", scope: "decidim.vocdoni.admin.steps.credits") %>"
