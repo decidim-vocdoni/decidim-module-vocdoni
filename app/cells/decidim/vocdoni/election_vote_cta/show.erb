@@ -12,13 +12,20 @@
       <%= t("paused", scope: "decidim.vocdoni.elections.show") %>
     </div>
     <button class="button button__lg button__secondary w-full"><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
-  <% elsif model.ongoing? %>
+  <% elsif model.ongoing? && current_user %>
     <%= link_to new_election_vote_path,
                 class: "button button__lg button__secondary w-full vote-button",
                 **link_attributes_for_voting(election, voter_verified?, modal_id) do %>
       <%= vote_action_button_text %>
     <% end %>
     <%= cell "decidim/vocdoni/census_authorization_modal", model %>
+  <% elsif model.ongoing? && !current_user %>
+    <%= button_tag(
+          vote_action_button_text,
+          type: "button",
+          class: "button button__lg button__secondary w-full vote-button",
+          **link_attributes_for_voting(election, voter_verified?, modal_id)
+        ) %>
   <% elsif !model.finished? %>
     <button class="button button__lg button__secondary w-full" disabled><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
   <% end %>

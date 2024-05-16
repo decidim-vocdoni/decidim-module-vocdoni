@@ -71,6 +71,24 @@ describe "Vote online in an election", type: :system do
     end
   end
 
+  describe "voting without the current user" do
+    context "when the election is ongoing" do
+      let!(:election) { create(:vocdoni_election, :ongoing, :published, :simple, component:) }
+
+      before do
+        logout :user
+        visit_component
+        check("Upcoming")
+        click_link_or_button translated(election.title)
+        click_link_or_button "Start voting"
+      end
+
+      it "shows login modal" do
+        expect(page).to have_content("Please log in")
+      end
+    end
+  end
+
   describe "internal census" do
     let!(:election) { create(:vocdoni_election, :ongoing, :published, :with_internal_census, component:, verification_types:) }
     let(:authorization) { create(:authorization, user:, name: "dummy_authorization_handler") }
