@@ -22,6 +22,9 @@ gem "puma", "~> 6.3.1"
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
+  # se if we can skip this version lock in the future, related to this
+  # https://github.com/decidim/decidim/pull/12629
+  gem "bullet", "~> 7.0", "< 7.1.0"
   gem "decidim-dev", DECIDIM_VERSION
 end
 
