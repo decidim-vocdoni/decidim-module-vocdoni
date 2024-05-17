@@ -102,7 +102,7 @@ a.button__alert {
   @apply w-full mx-auto py-2;
 }
 .wallet-input {
-  @apply rounded-none rounded-s-md block flex-1 min-w-0 w-full text-sm p-3 border;
+  @apply rounded-none rounded-s-md block flex-1 min-w-0 w-full text-sm p-2 border-2 text-gray-2 cursor-not-allowed;
 }
 
 button.copy-button {
