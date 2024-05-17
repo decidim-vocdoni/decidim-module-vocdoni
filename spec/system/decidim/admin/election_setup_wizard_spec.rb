@@ -333,6 +333,6 @@ describe "Election setup wizard", :slow, type: :system do
     fill_in "election_calendar_start_time", with: 12.minutes.from_now.strftime("%d/%m/%Y, %H:%M")
     send_keys(:enter)
     fill_in "election_calendar_end_time", with: 12.days.from_now.strftime("%d/%m/%Y, %H:%M")
-    click_link_or_button "Save and go to the next stepз"
+    click_link_or_button "Save and go to the next step"
   end
 end
