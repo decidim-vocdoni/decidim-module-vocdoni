@@ -224,11 +224,7 @@
   }
 
   &__preview-question{
-    @apply font-semibold border-2 border-background rounded p-4;
-
-    &:not(:first-child){
-      border-top: 0;
-    }
+    @apply font-semibold border-4 border-background rounded p-4;
 
     .label{
       @apply ml-2;
