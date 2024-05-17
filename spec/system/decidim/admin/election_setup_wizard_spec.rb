@@ -330,9 +330,12 @@ describe "Election setup wizard", :slow, type: :system do
   end
 
   def fill_calendar_and_results
-    fill_in "election_calendar_start_time", with: 12.minutes.from_now.strftime("%d/%m/%Y, %H:%M")
-    send_keys(:enter)
-    fill_in "election_calendar_end_time", with: 12.days.from_now.strftime("%d/%m/%Y, %H:%M")
+    start_time = 12.minutes.from_now.strftime("%Y-%m-%dT%H:%M")
+    end_time = 12.days.from_now.strftime("%Y-%m-%dT%H:%M")
+
+    page.execute_script("document.getElementById('election_calendar_start_time').value = '#{start_time}'")
+    page.execute_script("document.getElementById('election_calendar_end_time').value = '#{end_time}'")
+
     click_link_or_button "Save and go to the next step"
   end
 end
