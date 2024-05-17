@@ -108,3 +108,16 @@ a.button__alert {
 button.copy-button {
   @apply rounded-none rounded-r-md;
 }
+
+.vocdoni__accordion-trigger {
+  @apply flex w-full items-center justify-between font-semibold text-secondary ;
+
+  &:hover {
+    @apply underline;
+  }
+
+    svg {
+        @apply w-8 h-8;
+        fill: currentColor;
+    }
+}

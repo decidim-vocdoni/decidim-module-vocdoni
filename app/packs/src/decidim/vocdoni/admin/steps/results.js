@@ -26,6 +26,29 @@ const checkResultsElection = async (resultsSpan) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".vocdoni__accordion-trigger").forEach(trigger => {
+    const isOpen = trigger.getAttribute("data-open") === "true";
+    trigger.querySelector(".arrow-down").style.display = isOpen ? "none" : "inline";
+    trigger.querySelector(".arrow-up").style.display = isOpen ? "inline" : "none";
+  });
+
+  document.querySelectorAll(".vocdoni__accordion-trigger").forEach(trigger => {
+    trigger.addEventListener("click", function() {
+      const panelId = trigger.getAttribute("data-controls");
+      const panel = document.getElementById(panelId);
+      const isOpen = trigger.getAttribute("data-open") === "true";
+
+      trigger.setAttribute("data-open", !isOpen);
+      panel.setAttribute("aria-hidden", isOpen);
+
+      trigger.querySelector(".arrow-down").style.display = isOpen ? "inline" : "none";
+      trigger.querySelector(".arrow-up").style.display = isOpen ? "none" : "inline";
+
+      trigger.classList.toggle("is-open", !isOpen);
+      panel.classList.toggle("is-hidden", isOpen);
+    });
+  });
+
   const resultsSpan = document.querySelector(RESULTS_SPAN_SELECTOR);
 
   if (resultsSpan) {
