@@ -5,7 +5,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/126b8ece66b8292802f3/maintainability)](https://codeclimate.com/github/decidim-vocdoni/decidim-module-vocdoni/maintainability)
 [![codecov](https://codecov.io/gh/decidim-vocdoni/decidim-module-vocdoni/branch/main/graph/badge.svg?token=LRT4MJBNVY)](https://codecov.io/gh/decidim-vocdoni/decidim-module-vocdoni)
 
-:warning: This module is under development and is not ready to be used in production.
+:warning: This module is a Beta stage, we recommend you to contact the authors before use it.
+This is specially relevant as voting using the blockchain has an economic cost.
 
 An elections component for Decidim's participatory spaces based on the [Vocdoni](https://vocdoni.app).
 
@@ -21,9 +22,30 @@ using the [Vocdoni SDK](https://vocdoni.io/).
 
 Vocdoni will be available as a Component for a Participatory Space.
 
-## Installation
+For installation instructions, [skip the screenshots section](#installation).
 
-This module is only compatible with Decidim v0.27.
+## Screenshots
+
+A nice wizard to set up the election in the admin:
+
+![](docs/config_start.png)
+![](docs/config_calendar.png)
+
+Final checks and blockchain synchronization:
+
+![](docs/setup_election.jpg)
+
+Voting in a non-distracting booth:
+
+![](docs/choosing_vote.png)
+![](docs/sending_vote.png)
+![](docs/vote_finished.png)
+
+Publication of results:
+
+![](docs/results.png)
+
+## Installation
 
 Add this line to your application's Gemfile:
 
