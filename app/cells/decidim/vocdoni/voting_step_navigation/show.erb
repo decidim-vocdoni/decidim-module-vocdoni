@@ -1,8 +1,6 @@
 <%= append_javascript_pack_tag "decidim_vocdoni_voter_new_vote" %>
 <div class="form__wrapper-block flex-col-reverse md:flex-row justify-between">
-  <% if first_step? %>
-    <a></a>
-  <% else %>
+  <% unless first_step? %>
     <%= link_to(
       icon("arrow-left-line", class: "icon", role: "img", "aria-hidden": true) + " " + t("decidim.vocdoni.votes.voting_step.back"),
       "#",

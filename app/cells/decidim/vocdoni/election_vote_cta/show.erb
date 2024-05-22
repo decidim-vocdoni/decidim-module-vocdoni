@@ -30,13 +30,14 @@
     <% elsif !model.finished? %>
       <button class="button button__lg button__secondary w-full" disabled><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
     <% end %>
-
-    <% if preview_mode? && can_preview? %>
+  </div>
+  <% if preview_mode? && can_preview? %>
+    <div>
       <%= link_to new_election_vote_path, class: "button button__lg button__secondary w-full mt-4" do %>
         <%= t("preview", scope: "decidim.vocdoni.elections.show") %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
   <p class="election__aside-heading"><%= t("verify.already_voted", scope: "decidim.vocdoni.elections.show") %></p>
 
   <div class="election__aside-link">
