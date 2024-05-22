@@ -11,12 +11,12 @@ FactoryBot.define do
   factory :vocdoni_component, parent: :component do
     name { Decidim::Components::Namer.new(participatory_space.organization.available_locales, :vocdoni).i18n_name }
     manifest_name { :vocdoni }
-    participatory_space { create(:participatory_process, :with_steps) }
+    participatory_space { association :participatory_process, :with_steps }
   end
 
   factory :vocdoni_election, class: "Decidim::Vocdoni::Election" do
     transient do
-      organization { build(:organization) }
+      organization { association :organization }
     end
 
     upcoming
@@ -35,7 +35,7 @@ FactoryBot.define do
         "secret_until_the_end" => true
       }
     end
-    component { create(:vocdoni_component, organization:) }
+    component { association :vocdoni_component, organization: }
 
     trait :configured do
       status { "created" }

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin creates wallet", :slow, type: :system do
+describe "Admin creates wallet", :slow do # rubocop:disable RSpec/DescribeClass
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create(:vocdoni_component) }
   let!(:election) { create(:vocdoni_election, :ready_for_setup, component: current_component, title: { en: "English title" }) }
@@ -40,9 +40,11 @@ describe "Admin creates wallet", :slow, type: :system do
 
     shared_context "with environment settings" do |env|
       before do
-        allow(Decidim::Vocdoni).to receive(:api_endpoint_env).and_return(env)
-        allow(Decidim::Vocdoni).to receive(:vocdoni_reseller_name).and_return("Test reseller")
-        allow(Decidim::Vocdoni).to receive(:vocdoni_reseller_email).and_return("test_reseller@example.org")
+        allow(Decidim::Vocdoni).to receive_messages(
+          api_endpoint_env: env,
+          vocdoni_reseller_name: "Test reseller",
+          vocdoni_reseller_email: "test_reseller@example.org"
+        )
       end
     end
 

@@ -24,10 +24,16 @@ describe Decidim::Vocdoni::Answer do
     end
 
     context "when there are multiple answers" do
-      let!(:answer3) { create(:vocdoni_election_answer, question:, votes: 11) }
-      let!(:answer4) { create(:vocdoni_election_answer, question:, votes: 22) }
-      let!(:answer5) { create(:vocdoni_election_answer, question:, votes: 33) }
-      let!(:answer6) { create(:vocdoni_election_answer, question:, votes: 1) }
+      let!(:answers) do
+        [
+          { question:, votes: 11 },
+          { question:, votes: 22 },
+          { question:, votes: 33 },
+          { question:, votes: 1 }
+        ].map do |attrs|
+          create(:vocdoni_election_answer, attrs)
+        end
+      end
 
       it "sums to 100" do
         expect(subject.question.answers.map(&:votes_percentage).sum).to eq(100)

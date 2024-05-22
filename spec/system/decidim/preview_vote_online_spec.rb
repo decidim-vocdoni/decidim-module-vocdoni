@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Preview vote online in an election" do
+describe "Preview vote online in an election" do # rubocop:disable RSpec/DescribeClass
   let(:manifest_name) { "vocdoni" }
   let!(:election) { create(:vocdoni_election, :upcoming, :published, :simple, component:) }
   let(:admin) { create(:user, :admin, :confirmed, organization:) }

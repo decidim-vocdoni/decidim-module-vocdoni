@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Decidim::Vocdoni::ElectionsController, type: :controller do
+describe Decidim::Vocdoni::ElectionsController do
   routes { Decidim::Vocdoni::Engine.routes }
 
   let(:component) { create(:vocdoni_component) }

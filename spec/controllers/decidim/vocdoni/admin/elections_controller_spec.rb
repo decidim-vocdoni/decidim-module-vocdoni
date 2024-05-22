@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Decidim::Vocdoni::Admin::ElectionsController, type: :controller do
+describe Decidim::Vocdoni::Admin::ElectionsController do
   routes { Decidim::Vocdoni::AdminEngine.routes }
 
   let(:user) { create(:user, :confirmed, :admin, organization: component.organization) }

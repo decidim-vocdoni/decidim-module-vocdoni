@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Vote online in an election", type: :system do
+describe "Vote online in an election" do # rubocop:disable RSpec/DescribeClass
   let(:manifest_name) { "vocdoni" }
   let!(:election) { create(:vocdoni_election, :upcoming, :published, :simple, component:) }
   let(:user) { create(:user, :confirmed, organization:) }

@@ -22,7 +22,9 @@ shared_examples "allows admins to preview the voting booth" do
     click_link_or_button "Preview"
   end
 
+  # rubocop:disable RSpec/NoExpectationExample
   it { uses_the_voting_booth({ email: user.email, token: "123456" }) }
+  # rubocop:enable RSpec/NoExpectationExample
 
   it "shows the preview alert" do
     expect(page).to have_content("This is a preview of the voting booth.")

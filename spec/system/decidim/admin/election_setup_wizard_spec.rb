@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Election setup wizard", :slow, type: :system do
+describe "Election setup wizard", :slow do # rubocop:disable RSpec/DescribeClass
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create(:vocdoni_component) }
   let(:election_title) { "My election" }

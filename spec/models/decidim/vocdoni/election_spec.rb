@@ -164,13 +164,13 @@ describe Decidim::Vocdoni::Election do
     subject { election.answers_have_values? }
 
     let(:question) { create(:vocdoni_question, election:) }
-    let!(:answer1) { create(:vocdoni_election_answer, question:, value: 0) }
-    let!(:answer2) { create(:vocdoni_election_answer, question:, value: 1) }
+    let!(:first_answer) { create(:vocdoni_election_answer, question:, value: 0) }
+    let!(:second_answer) { create(:vocdoni_election_answer, question:, value: 1) }
 
     it { is_expected.to be_truthy }
 
     context "when there answers have no values" do
-      let!(:answer1) { create(:vocdoni_election_answer, question:, value: nil) }
+      let!(:first_answer) { create(:vocdoni_election_answer, question:, value: nil) }
 
       it { is_expected.to be_falsey }
     end

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Decidim::Vocdoni::Admin::UpdateElectionCensusJob, type: :job do
+RSpec.describe Decidim::Vocdoni::Admin::UpdateElectionCensusJob do
   subject { described_class.perform_later(election.id, non_voter_ids, user.id) }
 
   let!(:election) { create(:vocdoni_election, :upcoming, :with_internal_census) }

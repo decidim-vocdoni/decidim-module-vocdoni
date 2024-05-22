@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin manages census", :slow, type: :system do
+describe "Admin manages census", :slow do # rubocop:disable RSpec/DescribeClass
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create(:vocdoni_component) }
   let(:election) { create(:vocdoni_election, :upcoming, :published, :complete, component: current_component, title: { en: "English title" }) }
@@ -14,8 +14,12 @@ describe "Admin manages census", :slow, type: :system do
   include_context "when managing a component as an admin"
 
   context "when there isn't any census" do
-    let(:voter1) { Decidim::Vocdoni::Voter.find_by(email: "john@example.org") }
-    let(:voter2) { Decidim::Vocdoni::Voter.find_by(email: "alice@example.org") }
+    let(:voters) do
+      [
+        Decidim::Vocdoni::Voter.find_by(email: "john@example.org"),
+        Decidim::Vocdoni::Voter.find_by(email: "alice@example.org")
+      ]
+    end
 
     it "uploads the census" do
       visit_census_page
@@ -30,18 +34,24 @@ describe "Admin manages census", :slow, type: :system do
       expect(page).to have_content("Successfully imported 2 items")
       expect(page).to have_content("There are 2 records loaded in total")
 
-      expect(voter1.wallet_address).to eq("0x0b9eA6587591d888f0b3a2D67f3d416246BB9304")
-      expect(voter2.wallet_address).to eq("0x5D38b06B50412294532b9A2C0127AD1455Af7934")
+      expect(voters[0].wallet_address).to eq("0x0b9eA6587591d888f0b3a2D67f3d416246BB9304")
+      expect(voters[1].wallet_address).to eq("0x5D38b06B50412294532b9A2C0127AD1455Af7934")
     end
   end
 
   context "when there's already a census" do
     context "without the credentials" do
-      let!(:voter1) { create(:vocdoni_voter, election:, token: "123456", email: "user_1@example.org") }
-      let!(:voter2) { create(:vocdoni_voter, election:, token: "123abc", email: "user_2@example.org") }
-      let!(:voter3) { create(:vocdoni_voter, election:, token: "123abc", email: "user_3@example.org") }
-      let!(:voter4) { create(:vocdoni_voter, election:, token: "abcxyz", email: "user_4@example.org") }
-      let!(:voter5) { create(:vocdoni_voter, election:, token: "123abc", email: "user_5@example.org") }
+      let!(:voters) do
+        [
+          { token: "123456", email: "user_1@example.org" },
+          { token: "123abc", email: "user_2@example.org" },
+          { token: "123abc", email: "user_3@example.org" },
+          { token: "abcxyz", email: "user_4@example.org" },
+          { token: "123abc", email: "user_5@example.org" }
+        ].map do |voter_data|
+          create(:vocdoni_voter, election:, token: voter_data[:token], email: voter_data[:email])
+        end
+      end
 
       it "has progress indicator of the generation of the credentials" do
         visit_census_page
@@ -51,14 +61,14 @@ describe "Admin manages census", :slow, type: :system do
         expect(page).to have_content("Completed 0% of 5 total records")
 
         # Simulates the percentage of completion
-        wallet = Decidim::Vocdoni::Sdk.new(organization, election).deterministicWallet([voter1.email, voter1.token])["address"]
-        voter1.update(wallet_address: wallet)
-        voter1.reload
+        wallet = Decidim::Vocdoni::Sdk.new(organization, election).deterministicWallet([voters[0].email, voters[0].token])["address"]
+        voters[0].update(wallet_address: wallet)
+        voters[0].reload
         sleep 1
 
         expect(page).to have_content("Completed 20% of 5 total records")
-        expect(voter1.reload.wallet_address).to eq("0xFEA59AF4dD69C285f39CC6836DA2664f36A47A71")
-        expect(voter2.reload.wallet_address).to be_nil
+        expect(voters[0].reload.wallet_address).to eq("0xFEA59AF4dD69C285f39CC6836DA2664f36A47A71")
+        expect(voters[1].reload.wallet_address).to be_nil
       end
 
       describe "and we want to delete it" do
@@ -66,6 +76,7 @@ describe "Admin manages census", :slow, type: :system do
           visit_census_page
 
           deletes_the_census
+          expect(page).to have_content("Upload a CSV file")
         end
       end
     end
@@ -85,6 +96,7 @@ describe "Admin manages census", :slow, type: :system do
           visit_census_page
 
           deletes_the_census
+          expect(page).to have_content("Upload a CSV file")
         end
       end
     end
@@ -198,8 +210,6 @@ describe "Admin manages census", :slow, type: :system do
       expect(page).to have_content("Are you sure you want to continue?")
       click_link_or_button "OK"
     end
-
-    expect(page).to have_content("Upload a CSV file")
   end
 
   def visit_census_page

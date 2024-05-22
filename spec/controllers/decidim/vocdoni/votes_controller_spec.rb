@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Decidim::Vocdoni::VotesController, type: :controller do
+describe Decidim::Vocdoni::VotesController do
   routes { Decidim::Vocdoni::Engine.routes }
 
   let(:component) { create(:vocdoni_component) }
@@ -40,8 +40,7 @@ describe Decidim::Vocdoni::VotesController, type: :controller do
 
     context "when user is verified and is in the Vocdoni census" do
       before do
-        allow(controller).to receive(:voter_verified?).and_return(true)
-        allow(controller).to receive(:voter).and_return(voter)
+        allow(controller).to receive_messages(voter_verified?: true, voter:)
       end
 
       it "returns verification status" do
@@ -53,8 +52,7 @@ describe Decidim::Vocdoni::VotesController, type: :controller do
 
     context "when user is verified and is not in the Vocdoni census" do
       before do
-        allow(controller).to receive(:voter_verified?).and_return(false)
-        allow(controller).to receive(:voter).and_return(voter)
+        allow(controller).to receive_messages(voter_verified?: false, voter:)
       end
 
       it "returns verification status" do

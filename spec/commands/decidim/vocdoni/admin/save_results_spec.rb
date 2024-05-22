@@ -5,6 +5,7 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::SaveResults do
   subject { described_class.new(form) }
 
+  # rubocop:disable RSpec/IndexedLet
   let(:election) { create(:vocdoni_election) }
   let(:question1) { create(:vocdoni_question, election:, weight: 1) }
   let!(:answer11) { create(:vocdoni_election_answer, question: question1, value: 1) }
@@ -12,6 +13,7 @@ describe Decidim::Vocdoni::Admin::SaveResults do
   let(:question2) { create(:vocdoni_question, election:, weight: 0) }
   let!(:answer21) { create(:vocdoni_election_answer, question: question2, value: 0) }
   let!(:answer22) { create(:vocdoni_election_answer, question: question2, value: 1) }
+  # rubocop:enable RSpec/IndexedLet
 
   let(:organization) { election.component.organization }
   let(:user) { create(:user, :admin, :confirmed, organization:) }

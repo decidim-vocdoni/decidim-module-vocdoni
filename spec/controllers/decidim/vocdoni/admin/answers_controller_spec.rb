@@ -5,7 +5,7 @@ require "spec_helper"
 module Decidim
   module Vocdoni
     module Admin
-      describe AnswersController, type: :controller do
+      describe AnswersController do
         routes { Decidim::Vocdoni::AdminEngine.routes }
 
         let(:user) { create(:user, :confirmed, :admin, organization: component.organization) }
