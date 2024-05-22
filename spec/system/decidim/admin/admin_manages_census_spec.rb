@@ -80,7 +80,7 @@ describe "Admin manages census", :slow, type: :system do
         expect(page).to have_no_content("Confirm the census data")
       end
 
-      describe "and we want to delete it" do
+      context "and we want to delete it" do
         it "deletes it" do
           visit_census_page
 

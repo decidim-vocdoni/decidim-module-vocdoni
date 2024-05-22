@@ -145,3 +145,24 @@
     @apply px-6 py-4 whitespace-nowrap text-sm font-medium;
   }
 }
+
+.election__aside-link {
+  @apply flex items-center gap-2 text-sm;
+}
+
+.election__aside-heading {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  --tw-text-opacity: 1;
+  color: rgb(62 76 92 / 1);
+}
+
+.election__aside-link svg {
+  height: 1rem;
+  width: 1rem;
+  flex: none;
+  fill: currentColor;
+  color: #6B7280CC;
+}

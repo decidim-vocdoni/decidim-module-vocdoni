@@ -17,6 +17,8 @@ en:
               needs_to_be_reattached: Needs to be reattached
   decidim:
     admin:
+      actions:
+        manage: Manage
       shared:
         gallery:
           gallery_legend: Add an image gallery
@@ -587,6 +589,7 @@ en:
           continue: Next
       warnings:
         no_elections_warning: There isn't any election scheduled.
+        no_scheduled_elections_warning: Currently, there are no scheduled elections, but here you can find all the past elections listed.
   layouts:
     decidim:
       vocdoni_votes_header:

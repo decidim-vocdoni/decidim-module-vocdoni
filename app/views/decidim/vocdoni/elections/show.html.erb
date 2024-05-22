@@ -16,9 +16,7 @@ edit_link(
 <%= append_stylesheet_pack_tag "decidim_vocdoni_elections" %>
 
 <% content_for :aside do %>
-  <section class="layout-aside__section layout-aside__buttons">
-    <%= cell("decidim/vocdoni/election_vote_cta", election) %>
-  </section>
+  <%= cell("decidim/vocdoni/election_vote_cta", election) %>
 <% end %>
 
 <%= render layout: "layouts/decidim/shared/layout_item" do %>

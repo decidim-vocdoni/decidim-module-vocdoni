@@ -2,49 +2,52 @@
   <%= cell("decidim/announcement", callout_text) %>
 <% end %>
 
-<div class="election__aside-link">
-  <% if model.canceled? %>
-    <div class="callout alert">
-      <%= t("canceled", scope: "decidim.vocdoni.elections.show") %>
-    </div>
-  <% elsif model.paused? %>
-    <div class="callout warning">
-      <%= t("paused", scope: "decidim.vocdoni.elections.show") %>
-    </div>
-    <button class="button button__lg button__secondary w-full"><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
-  <% elsif model.ongoing? && current_user %>
-    <%= link_to new_election_vote_path,
-                class: "button button__lg button__secondary w-full vote-button",
-                **link_attributes_for_voting(election, voter_verified?, modal_id) do %>
-      <%= vote_action_button_text %>
+<section class="layout-aside__section layout-aside__buttons">
+  <div class="election__aside-link">
+    <% if model.canceled? %>
+      <div class="callout alert">
+        <%= t("canceled", scope: "decidim.vocdoni.elections.show") %>
+      </div>
+    <% elsif model.paused? %>
+      <div class="callout warning">
+        <%= t("paused", scope: "decidim.vocdoni.elections.show") %>
+      </div>
+      <button class="button button__lg button__secondary w-full"><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
+    <% elsif model.ongoing? && current_user %>
+      <%= link_to new_election_vote_path,
+                  class: "button button__lg button__secondary w-full vote-button",
+                  **link_attributes_for_voting(election, voter_verified?, modal_id) do %>
+        <%= vote_action_button_text %>
+      <% end %>
+      <%= cell "decidim/vocdoni/census_authorization_modal", model %>
+    <% elsif model.ongoing? && !current_user %>
+      <%= button_tag(
+            vote_action_button_text,
+            type: "button",
+            class: "button button__lg button__secondary w-full vote-button",
+            **link_attributes_for_voting(election, voter_verified?, modal_id)
+          ) %>
+    <% elsif !model.finished? %>
+      <button class="button button__lg button__secondary w-full" disabled><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
     <% end %>
-    <%= cell "decidim/vocdoni/census_authorization_modal", model %>
-  <% elsif model.ongoing? && !current_user %>
-    <%= button_tag(
-          vote_action_button_text,
-          type: "button",
-          class: "button button__lg button__secondary w-full vote-button",
-          **link_attributes_for_voting(election, voter_verified?, modal_id)
-        ) %>
-  <% elsif !model.finished? %>
-    <button class="button button__lg button__secondary w-full" disabled><%= t("action_button.vote", scope: "decidim.vocdoni.elections.show") %></button>
-  <% end %>
 
-  <% if preview_mode? && can_preview? %>
-    <%= link_to new_election_vote_path, class: "button button__lg button__secondary w-full mt-4" do %>
-      <%= t("preview", scope: "decidim.vocdoni.elections.show") %>
+    <% if preview_mode? && can_preview? %>
+      <%= link_to new_election_vote_path, class: "button button__lg button__secondary w-full mt-4" do %>
+        <%= t("preview", scope: "decidim.vocdoni.elections.show") %>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+  <p class="election__aside-heading"><%= t("verify.already_voted", scope: "decidim.vocdoni.elections.show") %></p>
 
-<div class="text-sm">
-<% if model.started? %>
-  <%= t("verify.already_voted", scope: "decidim.vocdoni.elections.show") %>
+  <div class="election__aside-link">
+    <%= icon "checkbox-multiple-line" %>
 
-  <%= link_to t("verify.verify_here", scope: "decidim.vocdoni.elections.show"), election_vote_verify_path, target: "_blank", rel: "noopener noreferrer" %>
-<% else %>
-  <span class="disabled"><%= t("verify.will_verify", scope: "decidim.vocdoni.elections.show") %></span>
-<% end %>
-</div>
+    <% if election.started? %>
+      <%= link_to t("verify.verify_here", scope: "decidim.vocdoni.elections.show"), election_vote_verify_path, target: "_blank", rel: "noopener noreferrer" %>
+    <% else %>
+      <span><%= t("verify.will_verify", scope: "decidim.vocdoni.elections.show") %></span>
+    <% end %>
+  </div>
+</section>
 
 <%= append_javascript_pack_tag "decidim_vocdoni_voter_new_vote" %>
