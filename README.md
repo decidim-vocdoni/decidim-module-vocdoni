@@ -105,7 +105,7 @@ The usage of the Vocdoni platform has some economic costs, as its using a Blockc
 
 For using it in a production environment with guaranties, you may contact with the maintaners of this plugin [PokeCode](https://pokecode.net) asking for a pricing. Costs will vary depending on your census size and the number of elections you want to perform.
 
-As there could be other resellers and not only the PokeCode, this needs to be configured through the ENV variables: VOCDONI_RESELLER_NAME, VOCDONI_RESELLER_EMAIL
+As there could be other resellers and not only PokeCode, contact information can be configured by using the ENV variables VOCDONI_RESELLER_NAME and VOCDONI_RESELLER_EMAIL (see the [configuration](#configuration) for more information)
 
 ## Configuration
 
