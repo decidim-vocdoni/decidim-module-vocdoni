@@ -3,6 +3,7 @@
 require "decidim/dev/common_rake"
 
 def install_module(path)
+  # The Vocdoni SDK needs custom babel plugins not included in the default Decidim version of this file
   FileUtils.cp("babel.config.json", "#{path}/babel.config.json")
   Dir.chdir(path) do
     system("bin/rails decidim_vocdoni:install:migrations")
