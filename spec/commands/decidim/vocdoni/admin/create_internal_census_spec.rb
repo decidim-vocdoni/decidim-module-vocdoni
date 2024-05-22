@@ -8,20 +8,20 @@ module Decidim
       describe CreateInternalCensus do
         subject { described_class.new(form, election) }
 
-        let(:organization) { create(:organization, available_authorizations: available_authorizations) }
+        let(:organization) { create(:organization, available_authorizations:) }
         let!(:available_authorizations) { verification_types + another_verification_types }
         let!(:election) { create(:vocdoni_election) }
         let(:form) { CensusPermissionsForm.from_params(params).with_context(current_organization: organization) }
         let(:verification_types) { ["id_document_handler"] }
         let(:invalid_verification_types) { ["invalid_handler"] }
         let(:another_verification_types) { ["another_handler"] }
-        let(:verified_user) { create(:user, :confirmed, organization: organization) }
-        let(:verified_user_second) { create(:user, :confirmed, organization: organization) }
+        let(:verified_user) { create(:user, :confirmed, organization:) }
+        let(:verified_user_second) { create(:user, :confirmed, organization:) }
         let!(:authorization) { create(:authorization, user: verified_user, name: "id_document_handler") }
         let!(:authorization_second) { create(:authorization, user: verified_user_second, name: "id_document_handler") }
 
         describe "when the form is valid" do
-          let(:params) { { verification_types: verification_types } }
+          let(:params) { { verification_types: } }
 
           it "creates voters and updates the election" do
             expect { subject.call }.to change(Decidim::Vocdoni::Voter, :count).by(2)

@@ -17,11 +17,11 @@ module Decidim
       end
 
       def can_preview?
-        @can_preview ||= allowed_to?(:preview, :election, election: election)
+        @can_preview ||= allowed_to?(:preview, :election, election:)
       end
 
       def can_vote?
-        @can_vote ||= allowed_to?(:vote, :election, election: election)
+        @can_vote ||= allowed_to?(:vote, :election, election:)
       end
 
       def ballot_questions

@@ -29,11 +29,11 @@ module Decidim
 
         def to_json(*_args)
           {
-            name: name,
+            name:,
             electionId: @election.id,
-            count: count,
+            count:,
             percentageComplete: percentage_complete,
-            percentageText: I18n.t("status.percentage_complete", scope: "decidim.vocdoni.admin.census", count: count, percentage: percentage_complete),
+            percentageText: I18n.t("status.percentage_complete", scope: "decidim.vocdoni.admin.census", count:, percentage: percentage_complete),
             lastImportAt: last_import_at,
             pendingUpload: pending_upload?,
             pendingGeneration: pending_generation?,

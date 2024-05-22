@@ -23,10 +23,12 @@ describe Decidim::Vocdoni::Admin::StepsWizardHelper do
 
   describe "#tab_link_class" do
     before do
-      allow(election).to receive(:ready_for_questions_form?).and_return(true)
-      allow(election).to receive(:ready_for_census_form?).and_return(true)
-      allow(election).to receive(:ready_for_calendar_form?).and_return(true)
-      allow(election).to receive(:ready_for_publish_form?).and_return(true)
+      allow(election).to receive_messages(
+        ready_for_questions_form?: true,
+        ready_for_census_form?: true,
+        ready_for_calendar_form?: true,
+        ready_for_publish_form?: true
+      )
     end
 
     it 'returns an empty string for the "questions" tab with a present election' do

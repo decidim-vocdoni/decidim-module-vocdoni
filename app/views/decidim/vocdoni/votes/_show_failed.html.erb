@@ -1,10 +1,11 @@
-<%= render("focus_header", header_title: t("decidim.vocdoni.votes.header.failed")) %>
+<div class="flex justify-center">
+  <h1 class="title-decorator my-12">
+    <%= t("decidim.vocdoni.votes.failed.header") %>
+  </h1>
+</div>
 
-<div class="focus__content evote">
+<div class="space-y-4 text-center">
   <div class="row">
-    <h1 class="heading2">
-      <%= t("decidim.vocdoni.votes.failed.header") %>
-    </h1>
     <h2 class="h4"><%= t("decidim.vocdoni.votes.failed.lead") %></h2>
 
     <div class="evote__content">
@@ -18,7 +19,7 @@
       </div>
     </div>
 
-    <%= link_to new_election_vote_path(election), class: "button" do %>
+    <%= link_to new_election_vote_path(election), class: "button button__lg button__secondary" do %>
       <%= t("decidim.vocdoni.votes.failed.try_again") %>
     <% end %>
   </div>

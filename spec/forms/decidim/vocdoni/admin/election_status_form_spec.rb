@@ -9,12 +9,12 @@ describe Decidim::Vocdoni::Admin::ElectionStatusForm do
   let(:status) { "paused" }
   let(:context) do
     {
-      election: election
+      election:
     }
   end
   let(:attributes) do
     {
-      status: status
+      status:
     }
   end
 

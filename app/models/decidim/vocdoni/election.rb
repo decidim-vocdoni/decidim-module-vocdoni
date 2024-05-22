@@ -2,6 +2,7 @@
 
 module Decidim::Vocdoni
   class Election < ApplicationRecord
+    include Decidim::FilterableResource
     include Decidim::HasAttachments
     include Decidim::HasAttachmentCollections
     include Decidim::Resourceable
@@ -17,6 +18,23 @@ module Decidim::Vocdoni
 
     has_many :questions, foreign_key: "decidim_vocdoni_election_id", class_name: "Decidim::Vocdoni::Question", inverse_of: :election, dependent: :destroy
     has_many :voters, foreign_key: "decidim_vocdoni_election_id", class_name: "Decidim::Vocdoni::Voter", inverse_of: :election, dependent: :destroy
+
+    scope :active, lambda {
+      where("start_time <= ?", Time.current)
+        .where("end_time >= ?", Time.current)
+    }
+
+    scope :upcoming, lambda {
+      where("start_time > ?", Time.current)
+        .where("end_time > ?", Time.current)
+    }
+
+    scope :finished, lambda {
+      where("start_time < ?", Time.current)
+        .where("end_time < ?", Time.current)
+    }
+
+    scope_search_multi :with_any_date, [:active, :upcoming, :finished]
 
     translatable_fields :title, :description
 
@@ -226,6 +244,14 @@ module Decidim::Vocdoni
     # Technical voter e-mail is used when the internal census is without voters
     def technical_voter_email
       "technical_voter_election_#{id}@techvoters.example.com"
+    end
+
+    # Create i18n ransackers for :title and :description.
+    # Create the :search_text ransacker alias for searching from both of these.
+    ransacker_i18n_multi :search_text, [:title, :description]
+
+    def self.ransackable_scopes(_auth_object = nil)
+      [:with_any_date]
     end
   end
 end

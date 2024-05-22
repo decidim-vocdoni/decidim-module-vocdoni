@@ -44,8 +44,8 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
     onFinish(voteId, env) {
       console.log("Vote finished");
       console.log("VOTE ID => ", voteId);
-      $voteWrapper.find("#submitting").addClass("hide");
-      $voteWrapper.find("#vote_cast").removeClass("hide");
+      $voteWrapper.find("#submitting").addClass("hidden");
+      $voteWrapper.find("#vote_cast").removeClass("hidden");
       $voteWrapper.find("#vote-receipt").val(voteId);
       $voteWrapper.find(".verify_ballot").attr("href", `https://${env}.explorer.vote/verify/#/${voteId}`);
     },
@@ -60,15 +60,15 @@ const mountVoteComponent = async (voteComponent, $voteWrapper, questionsComponen
     },
     onInvalid(message = "Invalid vote") {
       console.log("Invalid vote");
-      $voteWrapper.find("#submitting").addClass("hide");
-      $voteWrapper.find("#vote_failed").removeClass("hide");
+      $voteWrapper.find("#submitting").addClass("hidden");
+      $voteWrapper.find("#vote_failed").removeClass("hidden");
 
       switch (message) {
       case "No votes left":
-        $voteWrapper.find("#vote_failed").find("#error-no_votes_left").removeClass("hide");
+        $voteWrapper.find("#vote_failed").find("#error-no_votes_left").removeClass("hidden");
         break;
       default:
-        $voteWrapper.find("#vote_failed").find("#error-unknown").removeClass("hide");
+        $voteWrapper.find("#vote_failed").find("#error-unknown").removeClass("hidden");
       }
     }
   });
@@ -100,12 +100,12 @@ const checkIfElectionIsOpen = async (env, wallet, electionUniqueId) => {
 // Display error messages
 const showLoginErrorMessage = () => {
   console.log("KO -> Wallet is not in census");
-  $(".js-login_error").removeClass("hide");
+  $(".js-login_error").removeClass("hidden");
 };
 
 const showElectionClosedErrorMessage = () => {
   console.log("Election is not open");
-  $(".vote-wrapper").find(".js-election_not_open").removeClass("hide");
+  $(".vote-wrapper").find(".js-election_not_open").removeClass("hidden");
 };
 
 // Document ready function
@@ -174,7 +174,7 @@ $(() => {
       const hasAlreadyVoted = await client.hasAlreadyVoted();
       if (hasAlreadyVoted) {
         console.log("ALREADY VOTED");
-        $("#step-0").find(".js-already_voted").removeClass("hide");
+        $("#step-0").find(".js-already_voted").removeClass("hidden");
       }
 
       console.log("OK!! Wallet is in census");

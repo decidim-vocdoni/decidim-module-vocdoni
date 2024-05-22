@@ -2,9 +2,9 @@
 
 require "spec_helper"
 
-describe "Election setup wizard", :slow, type: :system do
+describe "Election setup wizard", :slow do # rubocop:disable RSpec/DescribeClass
   let(:manifest_name) { :vocdoni }
-  let(:current_component) { create :vocdoni_component }
+  let(:current_component) { create(:vocdoni_component) }
   let(:election_title) { "My election" }
   let(:election_description) { "My election description" }
   let(:edit_title) { "Edit election \"#{election_title}\"" }
@@ -23,8 +23,10 @@ describe "Election setup wizard", :slow, type: :system do
 
   describe "create a new election" do
     before do
+      switch_to_host(organization.host)
+      login_as user, scope: :user
       visit_component_admin
-      click_link "New election"
+      click_link_or_button "New election"
     end
 
     it_behaves_like "has setup wizard tabs"
@@ -47,11 +49,11 @@ describe "Election setup wizard", :slow, type: :system do
 
       context "when the form is not valid" do
         before do
-          click_button "Save and go to the next step"
+          click_link_or_button "Save and go to the next step"
         end
 
         it "shows errors" do
-          expect(page).to have_content("can't be blank", count: 2)
+          expect(page).to have_content("cannot be blank", count: 2)
         end
       end
 
@@ -80,34 +82,34 @@ describe "Election setup wizard", :slow, type: :system do
       end
 
       it "can edit previous step" do
-        expect(page).not_to have_css("li.tabs-title a.disabled", text: "Basic info")
+        expect(page).to have_no_css("li.tabs-title a.disabled", text: "Basic info")
       end
 
       context "when creates a new question with 2 answers" do
         before do
           fill_question
-          click_link "Manage answers"
+          click_link_or_button "Manage answers"
           fill_answer_first
           fill_answer_second
-          click_link "Done, go to the next step"
+          click_link_or_button "Done, go to the next step"
         end
 
         it "goes to the next step" do
           expect(page).to have_content("Upload a CSV file")
-          expect(page).not_to have_content("Questions must have at least two answers in order to go to the next step.")
+          expect(page).to have_no_content("Questions must have at least two answers in order to go to the next step.")
         end
       end
 
       context "when creates a new question with 1 answer" do
         before do
           fill_question
-          click_link "Manage answers"
+          click_link_or_button "Manage answers"
           fill_answer_first
-          click_link "Back to questions"
+          click_link_or_button "Back to questions"
         end
 
         it "doesn't go to the next step" do
-          expect(page).not_to have_css("a.button", text: "Done, go to the next step")
+          expect(page).to have_no_css("a.button", text: "Done, go to the next step")
           expect(page).to have_css("li.tabs-title a.disabled", text: "Census")
           expect(page).to have_content("Questions must have at least two answers in order to go to the next step.")
         end
@@ -118,10 +120,10 @@ describe "Election setup wizard", :slow, type: :system do
       before do
         fill_basic_info
         fill_question
-        click_link "Manage answers"
+        click_link_or_button "Manage answers"
         fill_answer_first
         fill_answer_second
-        click_link "Done, go to the next step"
+        click_link_or_button "Done, go to the next step"
       end
 
       it "has title" do
@@ -137,13 +139,13 @@ describe "Election setup wizard", :slow, type: :system do
       end
 
       it "can edit previous steps" do
-        expect(page).not_to have_css("li.tabs-title a.disabled", text: "Basic info")
-        expect(page).not_to have_css("li.tabs-title a.disabled", text: "Questions")
+        expect(page).to have_no_css("li.tabs-title a.disabled", text: "Basic info")
+        expect(page).to have_no_css("li.tabs-title a.disabled", text: "Questions")
       end
 
       context "when the form is not valid" do
         before do
-          click_button "Upload file"
+          click_link_or_button "Upload file"
         end
 
         it "shows errors" do
@@ -151,7 +153,7 @@ describe "Election setup wizard", :slow, type: :system do
         end
 
         it "doesn't go to the next step" do
-          expect(page).not_to have_css("a.button", text: "Done, go to the next step")
+          expect(page).to have_no_css("a.button", text: "Done, go to the next step")
           expect(page).to have_css("li.tabs-title a.disabled", text: "Calendar and results")
         end
       end
@@ -171,10 +173,10 @@ describe "Election setup wizard", :slow, type: :system do
       before do
         fill_basic_info
         fill_question
-        click_link "Manage answers"
+        click_link_or_button "Manage answers"
         fill_answer_first
         fill_answer_second
-        click_link "Done, go to the next step"
+        click_link_or_button "Done, go to the next step"
         upload_census
       end
 
@@ -192,14 +194,14 @@ describe "Election setup wizard", :slow, type: :system do
       end
 
       it "can edit previous steps" do
-        expect(page).not_to have_css("li.tabs-title a.disabled", text: "Basic info")
-        expect(page).not_to have_css("li.tabs-title a.disabled", text: "Questions")
-        expect(page).not_to have_css("li.tabs-title a.disabled", text: "Census")
+        expect(page).to have_no_css("li.tabs-title a.disabled", text: "Basic info")
+        expect(page).to have_no_css("li.tabs-title a.disabled", text: "Questions")
+        expect(page).to have_no_css("li.tabs-title a.disabled", text: "Census")
       end
 
       context "when the form is not valid" do
         before do
-          click_button "Save and go to the next step"
+          click_link_or_button "Save and go to the next step"
         end
 
         it "shows errors" do
@@ -232,10 +234,10 @@ describe "Election setup wizard", :slow, type: :system do
       before do
         fill_basic_info
         fill_question
-        click_link "Manage answers"
+        click_link_or_button "Manage answers"
         fill_answer_first
         fill_answer_second
-        click_link "Done, go to the next step"
+        click_link_or_button "Done, go to the next step"
         upload_census
         fill_calendar_and_results
       end
@@ -249,17 +251,17 @@ describe "Election setup wizard", :slow, type: :system do
       end
 
       it "can edit previous steps" do
-        expect(page).not_to have_css("li.tabs-title a.disabled", text: "Basic info")
-        expect(page).not_to have_css("li.tabs-title a.disabled", text: "Questions")
-        expect(page).not_to have_css("li.tabs-title a.disabled", text: "Census")
-        expect(page).not_to have_css("li.tabs-title a.disabled", text: "Calendar and results")
+        expect(page).to have_no_css("li.tabs-title a.disabled", text: "Basic info")
+        expect(page).to have_no_css("li.tabs-title a.disabled", text: "Questions")
+        expect(page).to have_no_css("li.tabs-title a.disabled", text: "Census")
+        expect(page).to have_no_css("li.tabs-title a.disabled", text: "Calendar and results")
       end
 
       context "when click the publish button" do
         before do
-          find("a.hollow", text: "Publish").click
-          click_link "Done, go to the next step"
-          click_link "Create"
+          find("a.button__secondary", text: "Publish").click
+          click_link_or_button "Done, go to the next step"
+          click_link_or_button "Create"
         end
 
         it "redirects to the steps dashboard" do
@@ -270,11 +272,11 @@ describe "Election setup wizard", :slow, type: :system do
   end
 
   describe "edit elections" do
-    let!(:election) { create :vocdoni_election, component: current_component }
+    let!(:election) { create(:vocdoni_election, component: current_component) }
 
     before do
       visit_component_admin
-      click_link "Edit"
+      click_link_or_button "Edit"
     end
 
     it "has edit title" do
@@ -289,38 +291,38 @@ describe "Election setup wizard", :slow, type: :system do
   def fill_basic_info
     fill_in "election_title_#{I18n.locale}", with: election_title
     fill_in_i18n_editor :election_description, "#election-description-tabs", en: election_description
-    click_button "Save and go to the next step"
+    click_link_or_button "Save and go to the next step"
   end
 
   def fill_question
-    click_link "New question"
+    click_link_or_button "New question"
     fill_in "question_title_#{I18n.locale}", with: "My question"
     fill_in "question_description_#{I18n.locale}", with: "My question description"
-    click_button "Create question"
+    click_link_or_button "Create question"
   end
 
   def fill_answer_first
-    click_link "New answer"
+    click_link_or_button "New answer"
     fill_in "answer_title_#{I18n.locale}", with: "My answer"
     fill_in_i18n_editor :answer_description, "#answer-description-tabs", en: "My answer description"
-    click_button "Create answer"
+    click_link_or_button "Create answer"
   end
 
   def fill_answer_second
-    click_link "New answer"
+    click_link_or_button "New answer"
     fill_in "answer_title_#{I18n.locale}", with: "My second answer"
     fill_in_i18n_editor :answer_description, "#answer-description-tabs", en: "My answer description"
-    click_button "Create answer"
-    click_link "Back to questions"
+    click_link_or_button "Create answer"
+    click_link_or_button "Back to questions"
   end
 
   def upload_census
     attach_file("census_data[file]", valid_census_file)
     # wallets are generated asynchronously
     perform_enqueued_jobs do
-      click_button "Upload file"
+      click_link_or_button "Upload file"
     end
-    click_link "Done, go to the next step"
+    click_link_or_button "Done, go to the next step"
   end
 
   def valid_census_file
@@ -328,10 +330,12 @@ describe "Election setup wizard", :slow, type: :system do
   end
 
   def fill_calendar_and_results
-    fill_in "election_calendar_start_time", with: 12.minutes.from_now.strftime("%d/%m/%Y %H:%M")
-    send_keys(:enter)
-    fill_in "election_calendar_end_time", with: 12.days.from_now.strftime("%d/%m/%Y %H:%M")
-    send_keys(:enter)
-    click_button "Save and go to the next step"
+    start_time = 12.minutes.from_now.strftime("%Y-%m-%dT%H:%M")
+    end_time = 12.days.from_now.strftime("%Y-%m-%dT%H:%M")
+
+    page.execute_script("document.getElementById('election_calendar_start_time').value = '#{start_time}'")
+    page.execute_script("document.getElementById('election_calendar_end_time').value = '#{end_time}'")
+
+    click_link_or_button "Save and go to the next step"
   end
 end

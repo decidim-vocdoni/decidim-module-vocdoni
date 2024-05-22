@@ -5,18 +5,18 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::DestroyAnswer do
   subject(:command) { described_class.new(answer, user) }
 
-  let(:election) { create :vocdoni_election }
-  let(:question) { create :vocdoni_question, election: election }
-  let!(:answer) { create :vocdoni_election_answer, question: question }
+  let(:election) { create(:vocdoni_election) }
+  let(:question) { create(:vocdoni_question, election:) }
+  let!(:answer) { create(:vocdoni_election_answer, question:) }
   let(:component) { election.component }
   let(:organization) { component.organization }
-  let(:user) { create :user, :admin, :confirmed, organization: organization }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
 
   it "destroys the answer" do
     expect { subject.call }.to change(Decidim::Vocdoni::Answer, :count).by(-1)
   end
 
-  it "traces the action", versioning: true do
+  it "traces the action", :versioning do
     expect(Decidim.traceability)
       .to receive(:perform_action!)
       .with(:delete, answer, user, visibility: "all")
@@ -29,7 +29,7 @@ describe Decidim::Vocdoni::Admin::DestroyAnswer do
   end
 
   context "when the election is ongoing" do
-    let(:election) { create :vocdoni_election, :ongoing }
+    let(:election) { create(:vocdoni_election, :ongoing) }
 
     it "is not valid" do
       expect { subject.call }.to broadcast(:invalid)

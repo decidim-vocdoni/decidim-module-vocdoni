@@ -38,7 +38,7 @@ module Decidim
       def initialize(organization, election = nil)
         @organization = organization
         @secrets_env = {
-          "VOCDONI_WALLET_PRIVATE_KEY" => Wallet.find_by(organization: organization)&.private_key.to_s,
+          "VOCDONI_WALLET_PRIVATE_KEY" => Wallet.find_by(organization:)&.private_key.to_s,
           "VOCDONI_SALT" => Rails.application.secret_key_base,
           "VOCDONI_API_ENV" => Vocdoni.api_endpoint_env,
           "VOCDONI_ELECTION_ID" => election&.vocdoni_election_id.to_s,

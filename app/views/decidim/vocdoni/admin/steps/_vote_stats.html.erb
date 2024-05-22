@@ -1,39 +1,50 @@
 <div class="card">
   <div class="card-divider">
-    <h2 class="card-title">
+    <h2 class="item_show__header-title">
       <%= t(".title") %>
     </h2>
   </div>
   <div class="card-section table-scroll">
-    <ul class="voc-accordion accordion mb-m evote__preview js-votes-count"
-        data-accordion
-        data-multi-expand="true"
-        data-allow-all-closed="true">
-        <% election.questions.each_with_index do |question, idx| %>
-          <li class="accordion-item evote__preview-question <%= " is-active" if idx == 0 %>" data-accordion-item>
-            <a href="#" class="accordion-title flex--sbc"><%= t(".question") %>: <%= translated_attribute(question.title) %></a>
-            <div class="accordion-content" data-tab-content>
-              <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th><%= t(".answer") %></th>
-                      <th><%= t(".result") %></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% question.answers.each do |answer| %>
-                      <tr>
-                        <td><%= translated_attribute(answer.title) %></td>
-                        <td data-question-idx="<%= idx %>" data-answer-value="<%= answer.value %>"><span class="loading-spinner"></span></td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
+    <ul class="space-y-8 js-votes-count"
+        data-component="accordion">
+      <% election.questions.each_with_index do |question, idx| %>
+        <li class="election__accordion accordion-item evote__preview-question">
+          <button id="accordion-trigger-result-<%= idx %>"
+                  data-controls="accordion-panel-result-<%= idx %>"
+                  class="vocdoni__accordion-trigger"
+                  data-open="<%= true if idx == 0 %>"
+                  <%= "data-open='true'" if election.questions.one? %>>
+            <%= t(".question") %>: <%= translated_attribute(question.title) %>
+            <%= icon "arrow-down-s-line", class: "arrow-down" %>
+            <%= icon "arrow-up-s-line", class: "arrow-up" %>
+          </button>
+          <div class="election__accordion-panel-result accordion-content"
+               data-tab-content
+               id="accordion-panel-result-<%= idx %>"
+               aria-hidden="<%= idx == 0 ? "false" : "true" %>">
+            <div>
+              <table class="table-list mt-2">
+                <thead>
+                <tr>
+                  <th><%= t(".answer") %></th>
+                  <th><%= t(".result") %></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% question.answers.each do |answer| %>
+                  <tr>
+                    <td><%= translated_attribute(answer.title) %></td>
+                    <td data-question-idx="<%= idx %>" data-answer-value="<%= answer.value %>">
+                      <span class="loading-spinner"></span>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
             </div>
-          </li>
-        <% end %>
+          </div>
+        </li>
+      <% end %>
     </ul>
   </div>
 </div>

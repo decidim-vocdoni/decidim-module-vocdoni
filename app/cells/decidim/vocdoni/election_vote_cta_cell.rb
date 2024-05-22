@@ -25,7 +25,7 @@ module Decidim
       def modal_id
         return "loginModal" unless current_user
 
-        options[:modal_id] || "internalCensusModal"
+        options[:modal_id] || "census-authorization-modal"
       end
 
       def new_election_vote_path
@@ -57,10 +57,10 @@ module Decidim
       end
 
       def link_attributes_for_voting(election, voter_verified, modal_id)
-        if election.verification_types.empty?
+        if election.verification_types.empty? && current_user
           {}
         elsif (election.internal_census? && !voter_verified) || !current_user
-          { data: { open: modal_id }, "aria-controls" => modal_id, "aria-haspopup" => "dialog", tabindex: "0" }
+          { data: { "dialog-open": modal_id }, "aria-controls" => modal_id, "aria-haspopup" => "dialog", tabindex: "0" }
         else
           { is_verified: voter_verified }
         end

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Decidim::Vocdoni::Admin::UpdateElectionCensusJob, type: :job do
+RSpec.describe Decidim::Vocdoni::Admin::UpdateElectionCensusJob do
   subject { described_class.perform_later(election.id, non_voter_ids, user.id) }
 
   let!(:election) { create(:vocdoni_election, :upcoming, :with_internal_census) }
@@ -12,7 +12,7 @@ RSpec.describe Decidim::Vocdoni::Admin::UpdateElectionCensusJob, type: :job do
 
   before do
     non_voters.each do |nv|
-      create(:vocdoni_voter, email: nv.email, election: election, wallet_address: nil, in_vocdoni_census: false)
+      create(:vocdoni_voter, email: nv.email, election:, wallet_address: nil, in_vocdoni_census: false)
     end
 
     allow(Decidim::Vocdoni::VoterService).to receive(:verify_and_insert).and_call_original

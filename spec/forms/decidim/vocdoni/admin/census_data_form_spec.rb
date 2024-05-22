@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Decidim::Vocdoni::Admin
   describe CensusDataForm do
-    subject { described_class.from_params(file: file) }
+    subject { described_class.from_params(file:) }
 
     describe "#data" do
       context "when the file is in invalid format" do

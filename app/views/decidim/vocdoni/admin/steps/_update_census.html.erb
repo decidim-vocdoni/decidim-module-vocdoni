@@ -1,7 +1,7 @@
 <div class="card js-census-data"
       data-update-census-url="<%= census_data_election_steps_path(election_id: election.id, format: :json) %>">
   <div class="card-divider">
-    <h2 class="card-title"><%= t("title", scope: "decidim.vocdoni.admin.steps.census") %></h2>
+    <h2 class="item_show__header-title"><%= t("title", scope: "decidim.vocdoni.admin.steps.census") %></h2>
   </div>
 
   <div class="card-section">
@@ -20,8 +20,8 @@
     <div class="callout warning">
       <p><%= t("description", scope: "decidim.vocdoni.admin.steps.census") %></p>
     </div>
-    <div data-census-update-message class="callout success" style="display: none;">
-      <p data-census-update-message-text></p>
+    <div data-census-update-message id="census-update-message" class="callout success" style="display: none;">
+      <p data-census-update-message-text id="census-update-message-text"></p>
     </div>
     <p>
       <%= t("last_update", scope: "decidim.vocdoni.admin.steps.census") %>:
@@ -37,9 +37,9 @@
     </div>
   </div>
 </div>
-
 <script>
   window.translations = {
     updateCensusNow: "<%= j t("update_census", scope: "decidim.vocdoni.admin.steps.census") %>"
   };
 </script>
+<%= append_javascript_pack_tag "decidim_vocdoni_admin" %>

@@ -28,12 +28,12 @@ module Decidim
                                    %w(no_more_votes_left alert)
                                  end
 
-        content_tag :div, t(message_key, scope: scope, votes_left: votes_left), class: "callout #{css_class} js-already_voted"
+        content_tag :div, t(message_key, scope:, votes_left:), class: "callout #{css_class} js-already_voted"
       end
 
       def identification_title(election)
         title = election.internal_census? ? "title" : "login_title"
-        content_tag(:h1, t("decidim.vocdoni.votes.check_census.#{title}"), class: "heading2").html_safe
+        content_tag(:h2, t("decidim.vocdoni.votes.check_census.#{title}"), class: "h2").html_safe
       end
 
       def identification_description(election)

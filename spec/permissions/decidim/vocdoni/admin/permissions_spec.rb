@@ -5,15 +5,15 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::Permissions do
   subject { described_class.new(user, permission_action, context).permissions.allowed? }
 
-  let(:user) { create :user, :admin, organization: elections_component.organization }
+  let(:user) { create(:user, :admin, organization: elections_component.organization) }
   let(:context) do
     {
       current_component: elections_component,
-      election: election
+      election:
     }
   end
-  let(:elections_component) { create :vocdoni_component }
-  let(:election) { create :vocdoni_election, component: elections_component }
+  let(:elections_component) { create(:vocdoni_component) }
+  let(:election) { create(:vocdoni_election, component: elections_component) }
   let(:permission_action) { Decidim::PermissionAction.new(**action) }
 
   context "when scope is not admin" do
@@ -55,15 +55,15 @@ describe Decidim::Vocdoni::Admin::Permissions do
     end
 
     context "when everything is ok" do
-      let(:election) { create :vocdoni_election, :with_census, component: elections_component }
-      let(:question) { create :vocdoni_question, election: election }
-      let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+      let(:election) { create(:vocdoni_election, :with_census, component: elections_component) }
+      let(:question) { create(:vocdoni_question, election:) }
+      let!(:answers) { create_list(:vocdoni_election_answer, 2, question:) }
 
       it { is_expected.to be true }
     end
 
     context "when election has no census" do
-      let(:election) { create :vocdoni_election, component: elections_component }
+      let(:election) { create(:vocdoni_election, component: elections_component) }
 
       it { is_expected.to be false }
     end
@@ -83,21 +83,21 @@ describe Decidim::Vocdoni::Admin::Permissions do
     end
 
     context "when everything is ok" do
-      let(:election) { create :vocdoni_election, :with_census, status: :created, component: elections_component }
-      let(:question) { create :vocdoni_question, election: election }
-      let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+      let(:election) { create(:vocdoni_election, :with_census, status: :created, component: elections_component) }
+      let(:question) { create(:vocdoni_question, election:) }
+      let!(:answers) { create_list(:vocdoni_election_answer, 2, question:) }
 
       it { is_expected.to be true }
     end
 
     context "when election has no census" do
-      let!(:election) { create :vocdoni_election, component: elections_component }
+      let!(:election) { create(:vocdoni_election, component: elections_component) }
 
       it { is_expected.to be false }
     end
 
     context "when election has no calendar" do
-      let(:election) { create :vocdoni_election, :with_census, end_time: nil, component: elections_component }
+      let(:election) { create(:vocdoni_election, :with_census, end_time: nil, component: elections_component) }
 
       it { is_expected.to be false }
     end
@@ -112,9 +112,9 @@ describe Decidim::Vocdoni::Admin::Permissions do
   end
 
   describe "election unpublish" do
-    let(:election) { create :vocdoni_election, :with_census, :published, status: :created, component: elections_component }
-    let(:question) { create :vocdoni_question, election: election }
-    let!(:answers) { create_list(:vocdoni_election_answer, 2, question: question) }
+    let(:election) { create(:vocdoni_election, :with_census, :published, status: :created, component: elections_component) }
+    let(:question) { create(:vocdoni_question, election:) }
+    let!(:answers) { create_list(:vocdoni_election_answer, 2, question:) }
     let(:action) do
       { scope: :admin, action: :unpublish, subject: :election }
     end
@@ -130,7 +130,7 @@ describe Decidim::Vocdoni::Admin::Permissions do
     it { is_expected.to be true }
 
     context "when there's already a wallet for this organization" do
-      let(:wallet) { create :vocdoni_wallet, organization: elections_component.organization }
+      let(:wallet) { create(:vocdoni_wallet, organization: elections_component.organization) }
 
       it { is_expected.to be true }
     end

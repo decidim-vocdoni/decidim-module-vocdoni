@@ -24,7 +24,7 @@ module Decidim
         end
 
         def question_with_link(question, election)
-          link = link_to("\"#{translated_attribute(question&.title)}\"", edit_election_question_path(election, question))
+          link = link_to("\"#{translated_attribute(question&.title)}\"", edit_election_question_path(election, question), class: "contents")
           t("for_question_html", question: link, scope: "decidim.vocdoni.admin.answers.index")
         end
 

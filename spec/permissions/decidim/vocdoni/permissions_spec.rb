@@ -6,15 +6,15 @@ describe Decidim::Vocdoni::Permissions do
   subject { described_class.new(user, permission_action, context).permissions.allowed? }
 
   let(:organization) { elections_component.organization }
-  let(:user) { create :user, organization: organization }
+  let(:user) { create(:user, organization:) }
   let(:context) do
     {
       current_component: elections_component,
-      election: election
+      election:
     }
   end
-  let(:elections_component) { create :vocdoni_component }
-  let(:election) { create :vocdoni_election, :published, component: elections_component }
+  let(:elections_component) { create(:vocdoni_component) }
+  let(:election) { create(:vocdoni_election, :published, component: elections_component) }
   let(:permission_action) { Decidim::PermissionAction.new(**action) }
 
   context "when scope is admin" do
@@ -57,7 +57,7 @@ describe Decidim::Vocdoni::Permissions do
     it { is_expected.to be_truthy }
 
     context "when election is not published" do
-      let(:election) { create :vocdoni_election, :upcoming, component: elections_component }
+      let(:election) { create(:vocdoni_election, :upcoming, component: elections_component) }
 
       it { is_expected.to be_falsey }
 
@@ -68,7 +68,7 @@ describe Decidim::Vocdoni::Permissions do
       end
 
       context "when user is an administrator" do
-        let(:user) { create :user, :admin, organization: elections_component.organization }
+        let(:user) { create(:user, :admin, organization: elections_component.organization) }
 
         it { is_expected.to be_truthy }
       end
@@ -89,7 +89,7 @@ describe Decidim::Vocdoni::Permissions do
     it { is_expected.to be_falsey }
 
     context "when user is an administrator" do
-      let(:user) { create :user, :admin, organization: elections_component.organization }
+      let(:user) { create(:user, :admin, organization: elections_component.organization) }
 
       it { is_expected.to be_truthy }
     end
@@ -101,19 +101,19 @@ describe Decidim::Vocdoni::Permissions do
     end
 
     context "when election is not published" do
-      let(:election) { create :vocdoni_election, :upcoming, component: elections_component }
+      let(:election) { create(:vocdoni_election, :upcoming, component: elections_component) }
 
       it { is_expected.to be_falsey }
     end
 
     context "when election is upcoming" do
-      let(:election) { create :vocdoni_election, :published, :upcoming, component: elections_component }
+      let(:election) { create(:vocdoni_election, :published, :upcoming, component: elections_component) }
 
       it { is_expected.to be_falsey }
     end
 
     context "when election is ongoing" do
-      let(:election) { create :vocdoni_election, :published, :ongoing, component: elections_component }
+      let(:election) { create(:vocdoni_election, :published, :ongoing, component: elections_component) }
 
       it { is_expected.to be_truthy }
 
@@ -125,19 +125,19 @@ describe Decidim::Vocdoni::Permissions do
     end
 
     context "when election is paused" do
-      let(:election) { create :vocdoni_election, :paused, component: elections_component }
+      let(:election) { create(:vocdoni_election, :paused, component: elections_component) }
 
       it { is_expected.to be_falsey }
     end
 
     context "when election is canceled" do
-      let(:election) { create :vocdoni_election, :canceled, component: elections_component }
+      let(:election) { create(:vocdoni_election, :canceled, component: elections_component) }
 
       it { is_expected.to be_falsey }
     end
 
     context "when election has finished" do
-      let(:election) { create :vocdoni_election, :published, :finished, component: elections_component }
+      let(:election) { create(:vocdoni_election, :published, :finished, component: elections_component) }
 
       it { is_expected.to be_falsey }
     end

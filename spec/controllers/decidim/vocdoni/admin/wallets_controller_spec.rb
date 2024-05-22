@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Decidim::Vocdoni::Admin::WalletsController, type: :controller do
+describe Decidim::Vocdoni::Admin::WalletsController do
   routes { Decidim::Vocdoni::AdminEngine.routes }
 
   let(:user) { create(:user, :confirmed, :admin) }
@@ -19,7 +19,7 @@ describe Decidim::Vocdoni::Admin::WalletsController, type: :controller do
     let(:params) { { component_id: component.id } }
 
     it "renders the empty form" do
-      get :new, params: params
+      get(:new, params:)
       expect(response).to have_http_status(:ok)
       expect(subject).to render_template(:new)
     end
@@ -31,19 +31,19 @@ describe Decidim::Vocdoni::Admin::WalletsController, type: :controller do
       {
         current_organization: component.organization,
         current_user: user,
-        private_key: private_key
+        private_key:
       }
     end
 
     it "creates a wallet" do
-      post :create, params: params
+      post(:create, params:)
 
       expect(flash[:notice]).not_to be_empty
       expect(response).to have_http_status(:found)
     end
 
     it "redirects to that components' path" do
-      post :create, params: params
+      post(:create, params:)
 
       expect(response.location).to match %r{/manage/$}
     end
@@ -51,7 +51,7 @@ describe Decidim::Vocdoni::Admin::WalletsController, type: :controller do
     context "when there's redirect_back in the session" do
       it "redirects to that elections' steps path" do
         session[:redirect_back] = 1
-        post :create, params: params
+        post(:create, params:)
 
         expect(response.location).to match %r{/manage/elections/1/steps$}
       end

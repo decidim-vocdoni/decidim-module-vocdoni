@@ -2,10 +2,10 @@
 
 require "spec_helper"
 
-describe "Admin manages census", :slow, type: :system do
+describe "Admin manages census", :slow do # rubocop:disable RSpec/DescribeClass
   let(:manifest_name) { :vocdoni }
-  let(:current_component) { create :vocdoni_component }
-  let(:election) { create :vocdoni_election, :upcoming, :published, :complete, component: current_component, title: { en: "English title" } }
+  let(:current_component) { create(:vocdoni_component) }
+  let(:election) { create(:vocdoni_election, :upcoming, :published, :complete, component: current_component, title: { en: "English title" }) }
 
   before do
     allow(Rails.application).to receive(:secret_key_base).and_return("a-secret-key-base")
@@ -14,8 +14,12 @@ describe "Admin manages census", :slow, type: :system do
   include_context "when managing a component as an admin"
 
   context "when there isn't any census" do
-    let(:voter1) { Decidim::Vocdoni::Voter.find_by(email: "john@example.org") }
-    let(:voter2) { Decidim::Vocdoni::Voter.find_by(email: "alice@example.org") }
+    let(:voters) do
+      [
+        Decidim::Vocdoni::Voter.find_by(email: "john@example.org"),
+        Decidim::Vocdoni::Voter.find_by(email: "alice@example.org")
+      ]
+    end
 
     it "uploads the census" do
       visit_census_page
@@ -24,24 +28,30 @@ describe "Admin manages census", :slow, type: :system do
 
       attach_file("census_data[file]", valid_census_file)
       perform_enqueued_jobs do
-        click_button "Upload file"
+        click_link_or_button "Upload file"
       end
 
       expect(page).to have_content("Successfully imported 2 items")
       expect(page).to have_content("There are 2 records loaded in total")
 
-      expect(voter1.wallet_address).to eq("0x0b9eA6587591d888f0b3a2D67f3d416246BB9304")
-      expect(voter2.wallet_address).to eq("0x5D38b06B50412294532b9A2C0127AD1455Af7934")
+      expect(voters[0].wallet_address).to eq("0x0b9eA6587591d888f0b3a2D67f3d416246BB9304")
+      expect(voters[1].wallet_address).to eq("0x5D38b06B50412294532b9A2C0127AD1455Af7934")
     end
   end
 
   context "when there's already a census" do
     context "without the credentials" do
-      let!(:voter1) { create(:vocdoni_voter, election: election, token: "123456", email: "user_1@example.org") }
-      let!(:voter2) { create(:vocdoni_voter, election: election, token: "123abc", email: "user_2@example.org") }
-      let!(:voter3) { create(:vocdoni_voter, election: election, token: "123abc", email: "user_3@example.org") }
-      let!(:voter4) { create(:vocdoni_voter, election: election, token: "abcxyz", email: "user_4@example.org") }
-      let!(:voter5) { create(:vocdoni_voter, election: election, token: "123abc", email: "user_5@example.org") }
+      let!(:voters) do
+        [
+          { token: "123456", email: "user_1@example.org" },
+          { token: "123abc", email: "user_2@example.org" },
+          { token: "123abc", email: "user_3@example.org" },
+          { token: "abcxyz", email: "user_4@example.org" },
+          { token: "123abc", email: "user_5@example.org" }
+        ].map do |voter_data|
+          create(:vocdoni_voter, election:, token: voter_data[:token], email: voter_data[:email])
+        end
+      end
 
       it "has progress indicator of the generation of the credentials" do
         visit_census_page
@@ -51,14 +61,14 @@ describe "Admin manages census", :slow, type: :system do
         expect(page).to have_content("Completed 0% of 5 total records")
 
         # Simulates the percentage of completion
-        wallet = Decidim::Vocdoni::Sdk.new(organization, election).deterministicWallet([voter1.email, voter1.token])["address"]
-        voter1.update(wallet_address: wallet)
-        voter1.reload
+        wallet = Decidim::Vocdoni::Sdk.new(organization, election).deterministicWallet([voters[0].email, voters[0].token])["address"]
+        voters[0].update(wallet_address: wallet)
+        voters[0].reload
         sleep 1
 
         expect(page).to have_content("Completed 20% of 5 total records")
-        expect(voter1.reload.wallet_address).to eq("0xFEA59AF4dD69C285f39CC6836DA2664f36A47A71")
-        expect(voter2.reload.wallet_address).to be_nil
+        expect(voters[0].reload.wallet_address).to eq("0xFEA59AF4dD69C285f39CC6836DA2664f36A47A71")
+        expect(voters[1].reload.wallet_address).to be_nil
       end
 
       describe "and we want to delete it" do
@@ -66,25 +76,27 @@ describe "Admin manages census", :slow, type: :system do
           visit_census_page
 
           deletes_the_census
+          expect(page).to have_content("Upload a CSV file")
         end
       end
     end
 
     context "with the credentials" do
-      let!(:voters) { create_list(:vocdoni_voter, 5, :with_wallet, election: election) }
+      let!(:voters) { create_list(:vocdoni_voter, 5, :with_wallet, election:) }
 
       it "doesn't have any form" do
         visit_census_page
 
-        expect(page).not_to have_content("Upload a new census")
-        expect(page).not_to have_content("Confirm the census data")
+        expect(page).to have_no_content("Upload a new census")
+        expect(page).to have_no_content("Confirm the census data")
       end
 
-      describe "and we want to delete it" do
+      context "and we want to delete it" do
         it "deletes it" do
           visit_census_page
 
           deletes_the_census
+          expect(page).to have_content("Upload a CSV file")
         end
       end
     end
@@ -95,12 +107,12 @@ describe "Admin manages census", :slow, type: :system do
     let!(:id_document_handler_name) { "another_dummy_authorization_handler" }
     let(:translated_authorization_handler_name) { I18n.t("decidim.authorization_handlers.#{authorization_handler_name}.name") }
     let(:translated_id_document_handler_name) { I18n.t("decidim.authorization_handlers.#{id_document_handler_name}.name") }
-    let!(:organization) { create(:organization, available_authorizations: available_authorizations) }
+    let!(:organization) { create(:organization, available_authorizations:) }
     let!(:available_authorizations) { [authorization_handler_name, id_document_handler_name] }
     let(:authorizations_count) { organization.available_authorizations.count }
     let(:authorizations_checkboxes) { find_all("input[type='checkbox'][name='census_permissions[verification_types][]']") }
-    let!(:user_with_authorizations) { create(:user, :admin, :confirmed, organization: organization) }
-    let!(:user_without_authorizations) { create(:user, :admin, :confirmed, organization: organization) }
+    let!(:user_with_authorizations) { create(:user, :admin, :confirmed, organization:) }
+    let!(:user_without_authorizations) { create(:user, :admin, :confirmed, organization:) }
     let!(:dummy_authorization) { create(:authorization, user: user_with_authorizations, name: id_document_handler_name) }
 
     before do
@@ -121,7 +133,7 @@ describe "Admin manages census", :slow, type: :system do
       before do
         check(translated_id_document_handler_name)
         perform_enqueued_jobs do
-          click_button "Save census"
+          click_link_or_button "Save census"
         end
       end
 
@@ -143,7 +155,7 @@ describe "Admin manages census", :slow, type: :system do
         check(translated_authorization_handler_name)
         check(translated_id_document_handler_name)
         perform_enqueued_jobs do
-          click_button "Save census"
+          click_link_or_button "Save census"
         end
       end
 
@@ -164,14 +176,14 @@ describe "Admin manages census", :slow, type: :system do
       end
 
       it "doesn't have the message that the census isn't ready" do
-        expect(page).not_to have_content("The census is not ready yet")
+        expect(page).to have_no_content("The census is not ready yet")
       end
     end
 
     context "when admin doesn't select any permissions" do
       before do
         perform_enqueued_jobs do
-          click_button "Save census"
+          click_link_or_button "Save census"
         end
       end
 
@@ -184,7 +196,7 @@ describe "Admin manages census", :slow, type: :system do
       end
 
       it "doesn't have the message that the census isn't ready" do
-        expect(page).not_to have_content("The census is not ready yet")
+        expect(page).to have_no_content("The census is not ready yet")
       end
     end
   end
@@ -192,17 +204,12 @@ describe "Admin manages census", :slow, type: :system do
   private
 
   def deletes_the_census
-    click_link "Delete all census data"
+    click_link_or_button "Delete all census data"
 
-    within ".confirm-content" do
+    within "#confirm-modal-content" do
       expect(page).to have_content("Are you sure you want to continue?")
+      click_link_or_button "OK"
     end
-
-    within ".confirm-modal-footer" do
-      click_link "OK"
-    end
-
-    expect(page).to have_content("Upload a CSV file")
   end
 
   def visit_census_page
@@ -211,8 +218,8 @@ describe "Admin manages census", :slow, type: :system do
     relogin_as user, scope: :user
     visit_component_admin
 
-    within find("tr", text: translated(election.title)) do
-      click_link "Edit"
+    within "tr", text: translated(election.title) do
+      click_link_or_button "Edit"
     end
 
     find("li.tabs-title a", text: "Census").click

@@ -11,14 +11,29 @@ module Decidim
           # flash.now[:alert] ||= I18n.t("elections.index.no_bulletin_board", scope: "decidim.vocdoni.admin").html_safe unless Decidim::Elections.bulletin_board.configured?
         end
 
+        # returns useful information about the election in JSON format
+        # this makes a call to the Vocdoni API so best to use it asynchronically
+        def show
+          enforce_permission_to(:read, :election, election:)
+
+          info = Sdk.new(current_organization).info
+          info.merge!(vocdoniElectionId: election.vocdoni_election_id)
+          render json: info
+        end
+
         def new
           enforce_permission_to :create, :election
           @form = form(ElectionForm).instance
         end
 
+        def edit
+          enforce_permission_to(:update, :election, election:)
+          @form = form(ElectionForm).from_model(election)
+        end
+
         def create
           enforce_permission_to :create, :election
-          @form = form(ElectionForm).from_params(params, current_component: current_component)
+          @form = form(ElectionForm).from_params(params, current_component:)
 
           CreateElection.call(@form) do
             on(:ok) do
@@ -33,24 +48,9 @@ module Decidim
           end
         end
 
-        # returns useful information about the election in JSON format
-        # this makes a call to the Vocdoni API so best to use it asynchronically
-        def show
-          enforce_permission_to :read, :election, election: election
-
-          info = Sdk.new(current_organization).info
-          info.merge!(vocdoniElectionId: election.vocdoni_election_id)
-          render json: info
-        end
-
-        def edit
-          enforce_permission_to :update, :election, election: election
-          @form = form(ElectionForm).from_model(election)
-        end
-
         def update
-          enforce_permission_to :update, :election, election: election
-          @form = form(ElectionForm).from_params(params, current_component: current_component)
+          enforce_permission_to(:update, :election, election:)
+          @form = form(ElectionForm).from_params(params, current_component:)
 
           UpdateElection.call(@form, election) do
             on(:ok) do
@@ -66,7 +66,7 @@ module Decidim
         end
 
         def destroy
-          enforce_permission_to :delete, :election, election: election
+          enforce_permission_to(:delete, :election, election:)
 
           DestroyElection.call(election, current_user) do
             on(:ok) do
@@ -82,11 +82,11 @@ module Decidim
         end
 
         def publish_page
-          enforce_permission_to :publish, :election, election: election
+          enforce_permission_to :publish, :election, election:
         end
 
         def publish
-          enforce_permission_to :publish, :election, election: election
+          enforce_permission_to(:publish, :election, election:)
 
           PublishElection.call(election, current_user) do
             on(:ok) do
@@ -97,7 +97,7 @@ module Decidim
         end
 
         def unpublish
-          enforce_permission_to :unpublish, :election, election: election
+          enforce_permission_to(:unpublish, :election, election:)
 
           UnpublishElection.call(election, current_user) do
             on(:ok) do
@@ -108,7 +108,7 @@ module Decidim
         end
 
         def credits
-          enforce_permission_to :read, :election, election: election
+          enforce_permission_to(:read, :election, election:)
 
           SdkRunnerJob.perform_later(organization_id: current_organization.id, command: :collectFaucetTokens)
           flash[:notice] = I18n.t("admin.elections.credits.success", scope: "decidim.vocdoni")

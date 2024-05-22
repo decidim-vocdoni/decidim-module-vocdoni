@@ -1,11 +1,15 @@
-<div class="card-divider">
-  <p class="label secondary">
-    <%= icon "credit-card", role: "img", "aria-hidden": true %>&nbsp;
-    <%= t("available", scope: "decidim.vocdoni.admin.steps.credits") %>:&nbsp;
-    <span class="js-vocdoni-credits-balance">
-    <span class="loading-spinner"></span>
-  </span>
-  </p>
+<%= append_javascript_pack_tag "decidim_vocdoni_admin" %>
+<%= append_stylesheet_pack_tag "decidim_vocdoni_admin" %>
+<div class="bg-gray-5 p-4">
+  <div class="flex items-center">
+  <%= icon "bank-card-line", role: "img", "aria-hidden": true %>&nbsp;
+    <p class="ml-2 flex-1">
+      <%= t("available", scope: "decidim.vocdoni.admin.steps.credits") %>:&nbsp;
+      <span class="js-vocdoni-credits-balance">
+        <span class="loading-spinner"></span>
+      </span>
+    </p>
+  </div>
 </div>
 
 <div class="card-section">
@@ -17,42 +21,24 @@
     </div>
   </div>
   <% if Decidim::Vocdoni.api_endpoint_env == "prod" %>
-    <div class="callout warning">
-      <p>
-        <%= t("decidim.vocdoni.admin.steps.credits.prod_mode_html",
+  <div class="callout warning">
+    <p>
+      <%= t("decidim.vocdoni.admin.steps.credits.prod_mode_html",
               reseller_name: Decidim::Vocdoni.vocdoni_reseller_name,
               reseller_email: Decidim::Vocdoni.vocdoni_reseller_email,
               wallet_address: @current_vocdoni_wallet.private_key).html_safe %>
-      </p>
-      <div class="input-group">
-        <input id="wallet-address" class="input-group-field"
-               type="text"
-               value="<%= @current_vocdoni_wallet.private_key %>"
-               title="Wallet Address"
-               readonly>
-        <div class="input-group-button">
-          <button class="button primary"
-                  data-clipboard-copy="#wallet-address"
-                  data-clipboard-copy-label="<%= t("copied", scope: "decidim.vocdoni.admin.steps.credits") %>"
-                  data-clipboard-copy-message="<%= t("copy_wallet_message", scope: "decidim.vocdoni.admin.steps.credits") %>"
-                  aria-label="<%= t("copy_wallet_clarification", scope: "decidim.vocdoni.admin.steps.credits") %>">
-            <%= icon("clipboard", role: "img", "aria-hidden": "true") %>
-            <%= t("copy_wallet", scope: "decidim.vocdoni.admin.steps.credits") %>
-          </button>
-        </div>
-      </div>
-    </div>
+    </p>
+    <%= render(partial: "wallet_address") %>
+  </div>
   <% else %>
-    <div class="callout warning">
-      <p>
-        <%= t("dev_mode", scope: "decidim.vocdoni.admin.steps.credits", env: "<strong>#{Decidim::Vocdoni.api_endpoint_env}</strong>").html_safe %>
-      </p>
-    </div>
+  <div class="callout warning">
+    <p>
+      <%= t("dev_mode", scope: "decidim.vocdoni.admin.steps.credits", env: "<strong>#{Decidim::Vocdoni.api_endpoint_env}</strong>").html_safe %>
+    </p>
+  </div>
   <% end %>
-  <% unless Decidim::Vocdoni.api_endpoint_env == "prod" %>
-    <%= link_to credits_election_path(election), method: :remote, class: "button primary js-vocdoni-credits-collect-faucet-tokens" do %>
-      <%= icon "euro", role: "img", "aria-hidden": true %>&nbsp;
-      <%= t("get_more", scope: "decidim.vocdoni.admin.steps.credits") %>
-    <% end %>
+  <%= link_to credits_election_path(election), method: :remote, class: "button button__lg button__secondary js-vocdoni-credits-collect-faucet-tokens" do %>
+    <%= icon "coin-line", role: "img", "aria-hidden": true %>&nbsp;
+    <%= t("get_more", scope: "decidim.vocdoni.admin.steps.credits") %>
   <% end %>
 </div>

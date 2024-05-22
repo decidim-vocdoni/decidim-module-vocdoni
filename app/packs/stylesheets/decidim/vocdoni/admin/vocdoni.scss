@@ -9,12 +9,6 @@ $white: #fff;
   }
 }
 
-// Fix for button primary colors with black links in the admin panel
-// We should fix this upstream
-.button.primary {
-  color: white;
-}
-
 .spinner-container {
   position: relative;
   cursor: wait;
@@ -26,7 +20,7 @@ $white: #fff;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba($white, .8);
+    @apply bg-white bg-opacity-80;
     z-index: 1;
   }
 
@@ -47,4 +41,83 @@ $white: #fff;
     top: 47%;
     left: 47%;
   }
+}
+
+.button__alert:not([disabled]) {
+  @apply bg-alert mx-0.5;
+
+  &:hover {
+    @apply text-white #{!important};
+
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), rgb(var(--alert-rgb) / var(--tw-bg-opacity)) !important;
+  }
+}
+
+.button__warning:not([disabled]) {
+  @apply bg-warning mx-0.5;
+
+  &:hover {
+    @apply text-white #{!important};
+
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), rgb(var(--warning-rgb) / var(--tw-bg-opacity)) !important;
+  }
+}
+
+.button__success:not([disabled]) {
+  @apply bg-success mx-0.5;
+
+  &:hover {
+    @apply text-white #{!important};
+
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), rgb(var(--success-rgb) / var(--tw-bg-opacity)) !important;
+  }
+}
+
+a.button__warning,
+a.button__success,
+button.button__success,
+button.button__warning,
+a.button__alert {
+  @apply text-white lg:text-md;
+
+  svg {
+    @apply lg:w-8 lg:h-8 md:w-6 md:h-6 sm:w-6 sm:h-6;
+  }
+}
+
+.start-time-field-container input,
+.end-time-field-container input {
+  display: block !important;
+}
+
+.item__edit-form.vocdoni-elections label {
+  @apply text-md;
+}
+
+.publish-text p {
+  @apply mb-2
+}
+
+.wallet-container {
+  @apply w-full mx-auto py-2;
+}
+.wallet-input {
+  @apply rounded-none rounded-s-md block flex-1 min-w-0 w-full text-sm p-2 border-2 text-gray-2 cursor-not-allowed;
+}
+
+button.copy-button {
+  @apply rounded-none rounded-r-md;
+}
+
+.vocdoni__accordion-trigger {
+  @apply flex w-full items-center justify-between font-semibold text-secondary ;
+
+  &:hover {
+    @apply underline;
+  }
+
+    svg {
+        @apply w-8 h-8;
+        fill: currentColor;
+    }
 }

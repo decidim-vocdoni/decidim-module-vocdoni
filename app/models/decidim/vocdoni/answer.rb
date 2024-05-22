@@ -12,7 +12,7 @@ module Decidim
 
       delegate :organization, :participatory_space, to: :component
 
-      belongs_to :question, foreign_key: "decidim_vocdoni_question_id", class_name: "Decidim::Vocdoni::Question", inverse_of: :answers
+      belongs_to :question, foreign_key: "decidim_vocdoni_question_id", class_name: "Decidim::Vocdoni::Question", inverse_of: :answers, counter_cache: true
       has_one :election, through: :question, foreign_key: "decidim_vocdoni_election_id", class_name: "Decidim::Vocdoni::Election"
       has_one :component, through: :election, foreign_key: "decidim_component_id", class_name: "Decidim::Component"
 

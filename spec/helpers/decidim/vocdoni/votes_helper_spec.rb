@@ -5,7 +5,7 @@ require "spec_helper"
 module Decidim
   module Vocdoni
     describe VotesHelper do
-      let(:question) { create :vocdoni_question, :complete, answers: 3 }
+      let(:question) { create(:vocdoni_question, :complete, answers: 3) }
 
       let(:helper) do
         Class.new(ActionView::Base) do
@@ -54,7 +54,7 @@ module Decidim
           let(:votes_left) { 3 }
 
           it "returns the 'can_vote_again' message" do
-            expect(votes_left_message).to include(I18n.t("can_vote_again", scope: "decidim.vocdoni.votes.new", votes_left: votes_left))
+            expect(votes_left_message).to include(I18n.t("can_vote_again", scope: "decidim.vocdoni.votes.new", votes_left:))
           end
         end
 

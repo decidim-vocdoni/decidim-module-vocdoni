@@ -4,7 +4,7 @@ shared_examples "doesn't allow to vote" do
   it "doesn't allow clicking in the vote button" do
     visit router.election_path(id: election.id)
 
-    expect(page).not_to have_link("Vote")
+    expect(page).to have_no_link("Vote")
   end
 
   it "doesn't allow to access directly to the vote page" do
@@ -19,11 +19,12 @@ shared_examples "allows admins to preview the voting booth" do
 
   before do
     visit router.election_path(id: election.id)
-
-    click_link "Preview"
+    click_link_or_button "Preview"
   end
 
+  # rubocop:disable RSpec/NoExpectationExample
   it { uses_the_voting_booth({ email: user.email, token: "123456" }) }
+  # rubocop:enable RSpec/NoExpectationExample
 
   it "shows the preview alert" do
     expect(page).to have_content("This is a preview of the voting booth.")
@@ -36,7 +37,7 @@ shared_examples "doesn't allow admins to preview the voting booth" do
   it "doesn't allow clicking the preview button" do
     visit router.election_path(id: election.id)
 
-    expect(page).not_to have_link("Preview")
+    expect(page).to have_no_link("Preview")
   end
 
   it "doesn't allow to access directly to the vote page" do
@@ -61,13 +62,13 @@ def uses_the_voting_booth(census_data)
 
   # confirm step
   non_question_step("#step-1") do
-    expect(page).to have_content("CONFIRM YOUR VOTE")
+    expect(page).to have_content("Confirm your vote")
 
     selected_answers.each { |answer| expect(page).to have_i18n_content(answer.title) }
     non_selected_answers.each { |answer| expect(page).not_to have_i18n_content(answer.title) }
 
     within "#edit-step-1" do
-      click_link("edit")
+      click_link_or_button("edit")
     end
   end
 
@@ -78,12 +79,12 @@ def uses_the_voting_booth(census_data)
 
   # confirm step
   non_question_step("#step-1") do
-    expect(page).to have_content("CONFIRM YOUR VOTE")
+    expect(page).to have_content("Confirm your vote")
 
     selected_answers.each { |answer| expect(page).to have_i18n_content(answer.title) }
     non_selected_answers.each { |answer| expect(page).not_to have_i18n_content(answer.title) }
 
-    click_link("Confirm")
+    click_link_or_button("Confirm")
   end
 
   # confirmed vote page
@@ -96,21 +97,21 @@ def login_step(census_data)
     fill_in :login_email, with: census_data.fetch(:email)
     fill_in :login_token, with: census_data.fetch(:token)
 
-    click_button "Access"
+    click_link_or_button "Access"
   end
 end
 
 def question_step(number)
   expect_only_one_step
+  expect(page).to have_content("QUESTION #{number} OF 1")
   within "#step-#{number - 1}" do
     question = election.questions[number - 1]
 
-    expect(page).to have_content("QUESTION #{number} OF 1")
     expect(page).to have_i18n_content(question.title)
 
     yield question if block_given?
 
-    click_link("Next")
+    click_link_or_button("Next")
   end
 end
 
@@ -147,11 +148,11 @@ def change_answer(question, selected, non_selected)
 end
 
 def expect_only_one_step
-  expect(page).to have_selector(".focus__step", count: 1)
+  expect(page).to have_css(".focus__step", count: 1)
 end
 
 def expect_not_valid
-  expect(page).not_to have_link("Next")
+  expect(page).to have_no_link("Next")
 end
 
 def expect_valid

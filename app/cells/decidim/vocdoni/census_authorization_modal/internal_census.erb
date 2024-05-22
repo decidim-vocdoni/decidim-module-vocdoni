@@ -1,5 +1,6 @@
 <div>
   <p><%= not_authorized_explanation(authorized_method) %></p>
   <%= link_to authorize_link_text(authorized_method),
-              authorized_method.root_path(redirect_url: redirect_url), class: "button" %>
+              authorized_method.root_path(redirect_url: redirect_url),
+              class: "button button__lg button__secondary mt-4" %>
 </div>

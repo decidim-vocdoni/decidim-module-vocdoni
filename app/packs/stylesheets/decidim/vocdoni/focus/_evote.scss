@@ -1,6 +1,5 @@
-.vote-wrapper{
-  display: flex;
-  flex-grow: 1;
+.vote-wrapper {
+  @apply flex grow;
 }
 
 .evote{
@@ -9,248 +8,168 @@
 
   padding: 1rem;
   margin-top: 1rem;
+  @apply md:p-8 md:mt-8;
 
-  @include breakpoint(medium){
-    padding: 2rem;
-    margin-top: 2rem;
-  }
-
-  .row{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  .row {
+    @apply flex flex-col items-center text-center;
   }
 
   &__grid .row{
-    display: block;
-    text-align: left;
+    @apply block text-left;
   }
 
   &__content{
     margin: 1rem auto;
-
-    @include breakpoint(medium){
-      margin: 2rem auto;
-    }
+    @apply md:my-8 md:mx-auto w-full;
   }
 
   &__options{
-    text-align: left;
-    margin: 1rem auto;
-    flex-grow: 1;
-
-    @include breakpoint(medium){
-      margin: 2rem auto;
-    }
+    @apply text-left my-4 mx-auto grow md:my-8 md:mx-auto;
 
     &--boolean{
-      @include breakpoint(medium){
-        display: flex;
-        width: 100%;
-        justify-content: center;
-      }
+      @apply md:flex md:w-full md:justify-center;
 
       > *{
         flex-basis: 200px;
-        margin-left: 1rem;
-        margin-right: 1rem;
+        @apply mx-4;
       }
     }
   }
 
   &__card{
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-    padding: 1rem 2rem;
-    border-radius: .5rem;
-    background-color: $white;
-    margin-bottom: 1rem;
+    @apply shadow-lg p-4 py-8 rounded-lg bg-white mb-4;
 
     &.is-disabled{
-      background-color: $medium-gray;
-      cursor: not-allowed;
+      @apply bg-gray-4 cursor-not-allowed;
 
       > *{
-        opacity: .5;
+        @apply opacity-50;
       }
     }
   }
 
   &__login{
-    width: 20rem;
+    @apply p-8 bg-white;
 
-    @include breakpoint(large){
-      width: 30rem;
+    input[type="text"],{
+      @apply mt-0 mb-2;
     }
   }
 
   &__check{
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-
-    @include breakpoint(medium){
-      font-size: 1.2rem;
-    }
+    @apply cursor-pointer flex items-center md:text-lg;
 
     input[type="checkbox"],
     input[type="radio"]{
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
+      @apply absolute w-px h-px p-0 m-px overflow-hidden border-0;
       margin: -1px;
-      overflow: hidden;
       clip: rect(0, 0, 0, 0);
-      border: 0;
     }
 
     [aria-disabled="true"]{
-      pointer-events: none;
+      @apply pointer-events-none;
     }
   }
 
   &__check-label{
-    position: relative;
-    padding-left: 1em;
-    line-height: 1.4;
+    @apply relative pl-4 leading-7;
 
     input[type="radio"] + &::before{
       content: "";
-      width: 1em;
-      height: 1em;
-      border-radius: 50%;
-      border: 1px solid;
-      position: absolute;
+      @apply absolute w-4 h-4 border border-solid rounded-full;
       left: -.7em;
       top: .2em;
-      color: $secondary;
+      border-color: rgb(var(--secondary-rgb));
     }
 
     input[type="radio"]:focus + &::before{
-      outline: $checkfocus;
-      outline-offset: $checkfocus-offset;
+      outline: 1px dotted rgba(var(--secondary-rgb), 0.5);
+      outline-offset: .1em;
     }
 
     input[type="radio"]:checked + &::after{
       content: "";
-      width: .7em;
-      height: .7em;
-      border-radius: 50%;
-      background-color: $secondary;
-      position: absolute;
+      @apply absolute w-3 h-3 bg-secondary rounded-full;
       left: -.55em;
       top: .35em;
     }
 
     input[type="checkbox"] + &::before{
       content: "";
-      width: 1em;
-      height: 1em;
-      border: 1px solid;
-      position: absolute;
+      @apply absolute w-4 h-4 border border-solid;
+      border-radius: 4px;
       left: -.7em;
       top: .2em;
-      color: $secondary;
-      border-radius: 3px;
+      border-color: rgba(var(--secondary-rgb), 1);
     }
 
     input[type="checkbox"]:focus + &::before{
-      outline: $checkfocus;
-      outline-offset: $checkfocus-offset;
+      outline: 1px dotted rgba(var(--secondary-rgb), 0.5);
+      outline-offset: .1em;
     }
 
     input[type="checkbox"]:checked + &::before{
-      background-color: $secondary;
+      @apply bg-secondary;
     }
 
     input[type="checkbox"]:checked + &::after{
       content: "";
-      width: .3em;
-      height: .6em;
-      position: absolute;
+      @apply absolute w-2 h-3;
+      border-color: theme('colors.white');
+      border-style: solid;
+      border-width: 0 2px 2px 0;
       left: -.5em;
       top: .15em;
-      border-width: 0 2px 2px 0;
-      border-style: solid;
-      border-color: $white;
-      transform-origin: bottom left;
-      transform: rotate(45deg);
+      @apply transform rotate-45 origin-bottom-left;
     }
   }
 
   &__check-extra{
-    display: block;
-    font-size: 60%;
-    text-transform: uppercase;
-    letter-spacing: .01em;
-    font-weight: 600;
+    @apply block text-sm uppercase tracking-tighter font-semibold;
 
     button{
       font-size: inherit;
       text-transform: inherit;
-      font-family: inherit;
+      @apply uppercase;
     }
   }
 
   &__counter{
-    position: sticky;
-    bottom: 2rem;
-    right: 0;
-    margin-left: auto;
-    text-align: right;
-    line-height: 1.2;
-    background-color: $medium-gray;
-    padding: .3rem 1rem;
-    border-radius: $global-radius;
+    @apply sticky bottom-8 right-0 ml-auto text-right leading-5 bg-[#adadad] p-1 px-4 rounded-[4px];
   }
 
   &__counter-num{
-    font-size: 1.2em;
+    @apply text-lg;
   }
 
   &__confirm{
-    margin-top: 2rem;
-    max-width: 40em;
-    text-align: left;
-    line-height: 1.2;
+    @apply mt-8 max-w-5xl text-left leading-5;
 
     dt{
-      font-weight: 600;
+      @apply font-semibold;
     }
 
     dd:not(:last-child){
-      margin-bottom: 2rem;
+      @apply mb-8;
     }
   }
 
   &__confirm-label{
-    font-size: 80%;
-    text-transform: uppercase;
-    letter-spacing: .01em;
-    color: var(--primary);
+    @apply text-xs uppercase tracking-tighter text-[var(--primary)];
   }
 
   &__edit-answer{
-    text-transform: none;
-    letter-spacing: normal;
+    @apply normal-case tracking-normal;
   }
 
   &__submitting,
   &__casting,
   &__confirming{
-    width: 200px;
-    height: 40px;
-    display: flex;
-    margin: 2rem auto;
+    @apply w-48 h-10 flex mx-auto my-8;
   }
 
   &__dot{
-    width: 10px;
-    height: 10px;
-    margin: 10px auto;
-    border-radius: 50px;
-    background: var(--primary);
+    @apply w-2.5 h-2.5 mx-auto my-2.5 rounded-full bg-[var(--primary)];
 
     &:nth-child(odd){
       animation: dotTop 1s infinite ease-in-out;
@@ -294,65 +213,55 @@
   }
 
   &__poll-id{
-    overflow-wrap: anywhere;
+    @apply break-words;
   }
 
   &__preview{
     .accordion-title::before{
-      font-size: 1.5rem;
-      margin-top: -.75rem;
-      color: $anchor-color;
-      font-weight: normal;
+      content: "";
+      @apply text-xl mt-[-.75rem] text-[var(--anchor-color)] font-normal;
     }
   }
 
   &__preview-question{
-    border: $border;
-    font-weight: 600;
-
-    &:not(:first-child){
-      border-top: 0;
-    }
+    @apply font-semibold border-4 border-background rounded p-4;
 
     .label{
-      margin-left: .5rem;
+      @apply ml-2;
     }
   }
 
   &__preview-result{
-    line-height: 1.2;
-    margin-bottom: 1rem;
+    @apply leading-5 mb-4;
   }
 
   &__preview-option{
-    margin-bottom: -.2rem;
-    font-size: 1rem;
+    @apply mb-[-1];
   }
 
   &__preview-bar{
-    display: flex;
-    align-items: center;
+    @apply flex items-center;
 
     .progress{
-      flex-grow: 1;
-      margin-right: 1rem;
+      @apply flex-grow mr-4;
     }
   }
 
   &__preview-label{
-    font-size: .8rem;
-    margin-top: -.2rem;
+    @apply text-sm mt-[-1];
   }
 
   &__preview-perc{
-    width: 3rem;
-    text-align: right;
-    font-weight: bold;
+    @apply w-12 text-right font-bold;
   }
 
   &__vocdoni-logo {
     &__wrapper {
-      margin-top: 4rem;
+      @apply mt-16;
     }
+  }
+
+  .census__login-button {
+    @apply w-full;
   }
 }

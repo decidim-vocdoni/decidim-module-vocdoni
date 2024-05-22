@@ -2,21 +2,21 @@
 
 require "spec_helper"
 
-describe "Admin manages election steps", :slow, type: :system do
+describe "Admin manages election steps", :slow do # rubocop:disable RSpec/DescribeClass
   let(:manifest_name) { :vocdoni }
-  let(:current_component) { create :vocdoni_component }
+  let(:current_component) { create(:vocdoni_component) }
   let(:info) do
     {
       clientInfo: {
         address: "0x0000000000000000000000000000000000000001",
-        balance: balance
+        balance:
       }
     }
   end
   let(:balance) { 500 }
   let(:vocdoni_status) { "UPCOMING" }
   let(:vocdoni_election_id) { "123456789" }
-  let!(:wallet) { create :vocdoni_wallet, organization: current_component.organization }
+  let!(:wallet) { create(:vocdoni_wallet, organization: current_component.organization) }
   let(:results) do
     [
       [3, 14]
@@ -47,7 +47,7 @@ describe "Admin manages election steps", :slow, type: :system do
   include_context "when managing a component as an admin"
 
   describe "setup an election" do
-    let!(:election) { create :vocdoni_election, :ready_for_setup, :auto_start, component: current_component }
+    let!(:election) { create(:vocdoni_election, :ready_for_setup, :auto_start, component: current_component) }
 
     it "performs the action successfully" do
       visit_steps_page
@@ -57,52 +57,52 @@ describe "Admin manages election steps", :slow, type: :system do
         expect(page).to have_content("Each question has at least two answers.")
         expect(page).to have_content("The election is published.")
         expect(page).to have_content("The census is ready")
-        expect(page).not_to have_link("Fix it")
+        expect(page).to have_no_link("Fix it")
 
         perform_enqueued_jobs do
-          click_button "Setup election"
+          click_link_or_button "Setup election"
         end
       end
 
       expect(page).to have_content("The election data has been successfully sent to the Vocdoni API")
 
       expect(page).to have_admin_callout("successfully")
-      expect(page).not_to have_content("Vocdoni communication error")
+      expect(page).to have_no_content("Vocdoni communication error")
       expect(page).to have_content("The election has been created. We are waiting for the election to start")
-      expect(page).not_to have_content("This election has been configured to start manually")
+      expect(page).to have_no_content("This election has been configured to start manually")
     end
 
     context "when manual start" do
-      let!(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, component: current_component }
+      let!(:election) { create(:vocdoni_election, :ready_for_setup, :manual_start, component: current_component) }
 
       it "performs the action successfully" do
         visit_steps_page
 
         within "form.create_election" do
-          expect(page).not_to have_link("Fix it")
+          expect(page).to have_no_link("Fix it")
 
           perform_enqueued_jobs do
-            click_button "Setup election"
+            click_link_or_button "Setup election"
           end
         end
 
         expect(page).to have_content("The election data has been successfully sent to the Vocdoni API")
 
         expect(page).to have_admin_callout("successfully")
-        expect(page).not_to have_content("Vocdoni communication error")
+        expect(page).to have_no_content("Vocdoni communication error")
         expect(page).to have_content('The election has been created. The election will start manually. Press the button "Start election" to begin the voting period.')
         expect(page).to have_content("This election has been configured to start manually")
 
-        click_button "Start election"
+        click_link_or_button "Start election"
         accept_confirm
 
         expect(page).to have_admin_callout("successfully")
-        expect(page).to have_selector("li.text-warning", text: "Vote period")
+        expect(page).to have_css("li.text-warning", text: "Vote period")
       end
     end
 
     context "when some misconfiguration" do
-      let!(:election) { create :vocdoni_election, :ready_for_setup, :auto_start, start_time: 10.minutes.ago, component: current_component }
+      let!(:election) { create(:vocdoni_election, :ready_for_setup, :auto_start, start_time: 10.minutes.ago, component: current_component) }
 
       it "shows the fixit button" do
         visit_steps_page
@@ -127,31 +127,31 @@ describe "Admin manages election steps", :slow, type: :system do
 
         within "form.create_election" do
           perform_enqueued_jobs do
-            click_button "Setup election"
+            click_link_or_button "Setup election"
           end
         end
 
         expect(page).to have_content("The election data has been successfully sent to the Vocdoni API")
         expect(page).to have_content("Vocdoni communication error")
 
-        click_button "Try to resend the election data to the Vocdoni API"
+        click_link_or_button "Try to resend the election data to the Vocdoni API"
 
         # Simulates the job
         election.update(vocdoni_election_id: "1234567890")
 
-        expect(page).not_to have_content("Vocdoni communication error")
+        expect(page).to have_no_content("Vocdoni communication error")
       end
     end
 
     context "when the internal census without authorizations" do
-      let!(:election) { create :vocdoni_election, :with_internal_census, :ready_for_setup, component: current_component }
+      let!(:election) { create(:vocdoni_election, :with_internal_census, :ready_for_setup, component: current_component) }
 
       it "has another message for internal census" do
         visit_steps_page
 
         within "form.create_election" do
           expect(page).to have_content("The census is ready. Selected census is: Internal (no additional authorizations are required).")
-          expect(page).not_to have_link("Fix it")
+          expect(page).to have_no_link("Fix it")
           expect(page).to have_content("no additional authorizations are required")
         end
       end
@@ -160,16 +160,16 @@ describe "Admin manages election steps", :slow, type: :system do
 
   describe "when continuing the election" do
     let(:vocdoni_status) { "PAUSED" }
-    let!(:election) { create :vocdoni_election, :ready_for_setup, :configured, :ongoing, :paused, component: current_component }
+    let!(:election) { create(:vocdoni_election, :ready_for_setup, :configured, :ongoing, :paused, component: current_component) }
 
     it "performs the action successfully" do
       visit_steps_page
 
-      click_button "Continue the election"
+      click_link_or_button "Continue the election"
       accept_confirm
 
       expect(page).to have_admin_callout("The election has been successfully resumed")
-      expect(page).to have_selector("li.text-warning", text: "Vote period")
+      expect(page).to have_css("li.text-warning", text: "Vote period")
     end
 
     context "and out of sync" do
@@ -178,69 +178,69 @@ describe "Admin manages election steps", :slow, type: :system do
       it "performs the action successfully" do
         visit_steps_page
 
-        click_button "Continue the election"
+        click_link_or_button "Continue the election"
         accept_confirm
 
         expect(page).to have_admin_callout("The election was out of sync with the Vocdoni API. The status has been updated to \"vote\". Please refresh the page")
         expect(page).to have_content("The election is currently running")
-        expect(page).to have_selector("li.text-warning", text: "Vote period")
+        expect(page).to have_css("li.text-warning", text: "Vote period")
       end
     end
   end
 
   describe "when pausing the election" do
     let(:vocdoni_status) { "ONGOING" }
-    let!(:election) { create :vocdoni_election, :ready_for_setup, :configured, :ongoing, component: current_component }
+    let!(:election) { create(:vocdoni_election, :ready_for_setup, :configured, :ongoing, component: current_component) }
 
     it "performs the action successfully" do
       visit_steps_page
 
-      click_button "Pause the election"
+      click_link_or_button "Pause the election"
       accept_confirm
 
       expect(page).to have_admin_callout("The election has been successfully paused")
       expect(page).to have_content("The election is currently running")
-      expect(page).to have_selector("li.text-warning", text: "Paused")
+      expect(page).to have_css("li.text-warning", text: "Paused")
     end
   end
 
   describe "canceling the election" do
     let(:vocdoni_status) { "ONGOING" }
-    let!(:election) { create :vocdoni_election, :ready_for_setup, :configured, :ongoing, component: current_component }
+    let!(:election) { create(:vocdoni_election, :ready_for_setup, :configured, :ongoing, component: current_component) }
 
     it "performs the action successfully" do
       visit_steps_page
 
-      click_link "Cancel the election (abort)"
+      click_link_or_button "Cancel the election (abort)"
       accept_confirm
 
       expect(page).to have_admin_callout("The election has been successfully canceled")
       expect(page).to have_content("This election has been canceled prematurely")
-      expect(page).to have_selector("li.text-warning", text: "Canceled")
+      expect(page).to have_css("li.text-warning", text: "Canceled")
     end
   end
 
   describe "ending the election" do
     let(:vocdoni_status) { "ONGOING" }
-    let!(:election) { create :vocdoni_election, :ready_for_setup, :configured, :ongoing, component: current_component }
+    let!(:election) { create(:vocdoni_election, :ready_for_setup, :configured, :ongoing, component: current_component) }
 
     it "performs the action successfully" do
       visit_steps_page
 
-      click_link "End the election"
+      click_link_or_button "End the election"
       accept_confirm
 
       expect(page).to have_admin_callout("The election has been ended, the results will be published in a few seconds.")
       expect(page).to have_content("The vote period has ended. You can publish the results")
-      expect(page).to have_selector("li.text-warning", text: "Vote period ended")
+      expect(page).to have_css("li.text-warning", text: "Vote period ended")
     end
   end
 
   describe "publishing the results" do
     let(:vocdoni_status) { "ENDED" }
-    let!(:election) { create :vocdoni_election, :ready_for_setup, :configured, :finished, component: current_component }
-    let(:answer1) { election.questions.first.answers.first }
-    let(:answer2) { election.questions.first.answers.second }
+    let!(:election) { create(:vocdoni_election, :ready_for_setup, :configured, :finished, component: current_component) }
+    let(:answer_first) { election.questions.first.answers.first }
+    let(:answer_second) { election.questions.first.answers.second }
 
     it "performs the action successfully" do
       visit_steps_page
@@ -248,27 +248,27 @@ describe "Admin manages election steps", :slow, type: :system do
       election.build_answer_values!
 
       perform_enqueued_jobs do
-        click_button "Publish results"
+        click_link_or_button "Publish results"
       end
 
       expect(page).to have_admin_callout("The election has been ended, the results will be published in a few seconds.")
-      expect(page).to have_selector("li.text-warning", text: "Results published")
+      expect(page).to have_css("li.text-warning", text: "Results published")
       expect(page).to have_content("Results published")
 
-      within find(:xpath, "//td[contains(text(),'#{translated(answer1.title)}')]/following-sibling::td") do
+      within :xpath, "//td[contains(text(),'#{translated(answer_first.title)}')]/following-sibling::td" do
         expect(page).to have_content("3")
       end
 
-      within find(:xpath, "//td[contains(text(),'#{translated(answer2.title)}')]/following-sibling::td") do
+      within :xpath, "//td[contains(text(),'#{translated(answer_second.title)}')]/following-sibling::td" do
         expect(page).to have_content("14")
       end
     end
   end
 
   describe "updating the census" do
-    let!(:election) { create :vocdoni_election, :with_internal_census, :ready_for_setup, :configured, :ongoing, component: current_component, verification_types: verification_types }
+    let!(:election) { create(:vocdoni_election, :with_internal_census, :ready_for_setup, :configured, :ongoing, component: current_component, verification_types:) }
     let(:non_voter_ids) { create_list(:user, 3, organization: current_component.organization).map(&:id) }
-    let(:authorization) { create(:authorization, user: user, name: "dummy_authorization_handler") }
+    let(:authorization) { create(:authorization, user:, name: "dummy_authorization_handler") }
     let(:verification_types) { [authorization.name] }
 
     it "performs the action successfully" do
@@ -276,11 +276,11 @@ describe "Admin manages election steps", :slow, type: :system do
       expect(page).to have_content("There are 1 users waiting to be added to the census.")
       expect(page).to have_content("It is possible to update it during the duration of the election but it requires your manual action as it might cost some credits.")
       expect(page).to have_content("Example authorization")
-      click_link "Update census now!"
+      click_link_or_button "Update census now!"
       sleep 1
       perform_enqueued_jobs
       sleep 1
-      expect(page).not_to have_css("a", text: "Update census now!")
+      expect(page).to have_no_css("a", text: "Update census now!")
       expect(page).to have_content("There are 0 users waiting to be added to the census.")
     end
   end
@@ -291,7 +291,7 @@ describe "Admin manages election steps", :slow, type: :system do
     relogin_as user, scope: :user
     visit_component_admin
 
-    within find("tr", text: translated(election.title)) do
+    within "tr", text: translated(election.title) do
       page.find(".action-icon--manage-steps").click
     end
   end

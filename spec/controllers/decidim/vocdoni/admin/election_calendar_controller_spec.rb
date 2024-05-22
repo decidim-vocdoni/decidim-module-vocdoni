@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Decidim::Vocdoni::Admin::ElectionCalendarController, type: :controller do
+describe Decidim::Vocdoni::Admin::ElectionCalendarController do
   routes { Decidim::Vocdoni::AdminEngine.routes }
 
   let(:user) { create(:user, :confirmed, :admin, organization: component.organization) }
@@ -17,7 +17,7 @@ describe Decidim::Vocdoni::Admin::ElectionCalendarController, type: :controller 
   describe "PATCH update" do
     let(:datetime_format) { I18n.t("time.formats.decidim_short") }
     let(:component) { create(:vocdoni_component) }
-    let(:election) { create(:vocdoni_election, component: component) }
+    let(:election) { create(:vocdoni_election, component:) }
     let(:election_params) do
       {
         start_time: election.start_time.strftime(datetime_format),
@@ -38,7 +38,7 @@ describe Decidim::Vocdoni::Admin::ElectionCalendarController, type: :controller 
     it "updates the election" do
       allow(controller).to receive(:publish_page_election_path).with(election).and_return("/elections/#{election.id}/publish_page")
 
-      patch :update, params: params
+      patch(:update, params:)
 
       expect(response).to have_http_status(:found)
     end

@@ -9,21 +9,21 @@ describe Decidim::Vocdoni::Admin::AnswerForm do
     {
       current_organization: component.organization,
       current_component: component,
-      election: election,
-      question: question
+      election:,
+      question:
     }
   end
   let(:election) { question.election }
-  let(:question) { create :vocdoni_question }
+  let(:question) { create(:vocdoni_question) }
   let(:component) { election.component }
   let(:title) { Decidim::Faker::Localized.sentence(word_count: 3) }
   let(:description) { Decidim::Faker::Localized.sentence(word_count: 3) }
   let(:weight) { 10 }
   let(:attributes) do
     {
-      title: title,
-      description: description,
-      weight: weight
+      title:,
+      description:,
+      weight:
     }
   end
 

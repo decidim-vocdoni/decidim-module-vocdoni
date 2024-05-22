@@ -6,10 +6,10 @@ require "decidim/vocdoni/election_status_changer"
 describe Decidim::Vocdoni::ElectionStatusChanger do
   subject { described_class.new }
 
-  let!(:new_election) { create(:vocdoni_election, status: status) }
-  let!(:upcoming_election) { create(:vocdoni_election, :upcoming, start_mode, status: status) }
-  let!(:ongoing_election) { create(:vocdoni_election, :ongoing, start_mode, start_time: 1.minute.ago, status: status) }
-  let!(:finished_election) { create(:vocdoni_election, :finished, start_mode, end_time: 1.minute.ago, status: status) }
+  let!(:new_election) { create(:vocdoni_election, status:) }
+  let!(:upcoming_election) { create(:vocdoni_election, :upcoming, start_mode, status:) }
+  let!(:ongoing_election) { create(:vocdoni_election, :ongoing, start_mode, start_time: 1.minute.ago, status:) }
+  let!(:finished_election) { create(:vocdoni_election, :finished, start_mode, end_time: 1.minute.ago, status:) }
   let(:status) { nil }
   let(:start_mode) { :auto_start }
 

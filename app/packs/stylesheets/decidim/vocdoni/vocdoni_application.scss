@@ -3,7 +3,7 @@
 @import "stylesheets/decidim/vocdoni/focus/focus";
 
 .card__icondata ul li:not(:first-child) strong,
-.card__block ul li:not(:first-child) strong{
+.card__block ul li:not(:first-child) strong {
   font-size: 100%;
 }
 
@@ -12,6 +12,3 @@
 // We can remove this rule
 //
 // @see https://github.com/decidim/decidim/pull/10526
-.button.primary, .button.primary:hover {
-  background-color: var(--primary);
-}

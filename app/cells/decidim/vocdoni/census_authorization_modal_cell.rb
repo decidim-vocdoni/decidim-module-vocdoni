@@ -20,7 +20,7 @@ module Decidim
       def modal_id
         return "loginModal" unless current_user
 
-        options[:modal_id] || "internalCensusModal"
+        options[:modal_id] || "census-authorization-modal"
       end
 
       def redirect_url
@@ -30,7 +30,7 @@ module Decidim
       def render_internal_census(authorized_method, granted_authorizations)
         unless granted_authorizations.include?(authorized_method)
           render view: "internal_census", locals: {
-            authorized_method: authorized_method,
+            authorized_method:,
             granted: granted_authorizations.include?(authorized_method)
           }
         end

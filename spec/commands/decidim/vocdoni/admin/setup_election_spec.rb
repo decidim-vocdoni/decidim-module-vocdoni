@@ -5,20 +5,20 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::SetupElection do
   subject { described_class.new(form) }
 
-  let(:organization) { create :organization, available_locales: [:en, :ca, :es], default_locale: :en }
+  let(:organization) { create(:organization, available_locales: [:en, :ca, :es], default_locale: :en) }
   let(:invalid) { false }
-  let(:participatory_process) { create :participatory_process, organization: organization }
-  let(:current_component) { create :component, participatory_space: participatory_process, manifest_name: "elections" }
-  let(:user) { create :user, :admin, :confirmed, organization: organization }
-  let!(:election) { create :vocdoni_election, :complete }
+  let(:participatory_process) { create(:participatory_process, organization:) }
+  let(:current_component) { create(:component, participatory_space: participatory_process, manifest_name: "elections") }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
+  let!(:election) { create(:vocdoni_election, :complete) }
   let(:vocdoni_election_id) { "12345" }
   let(:form) do
     double(
       invalid?: invalid,
-      election: election,
-      vocdoni_election_id: vocdoni_election_id,
+      election:,
+      vocdoni_election_id:,
       current_user: user,
-      current_component: current_component,
+      current_component:,
       current_organization: organization
     )
   end
@@ -29,7 +29,7 @@ describe Decidim::Vocdoni::Admin::SetupElection do
       expect { subject.call }.to change { Decidim::Vocdoni::Election.last.status }.from(nil).to("created")
     end
 
-    it "logs the performed action", versioning: true do
+    it "logs the performed action", :versioning do
       expect(Decidim.traceability)
         .to receive(:perform_action!)
         .with(:setup, election, user, visibility: "all")

@@ -34,7 +34,7 @@ RSpec.describe Decidim::Vocdoni::CensusUpdaterService do
 
         expect(Rails.logger).not_to receive(:info).with(/Technical voter .* deleted successfully./)
         expect { service.update_census }.not_to raise_error
-        expect(Decidim::Vocdoni::Voter.where(email: election.technical_voter_email, election: election)).not_to exist
+        expect(Decidim::Vocdoni::Voter.where(email: election.technical_voter_email, election:)).not_to exist
       end
 
       it "logs an error if the SDK response is unsuccessful" do

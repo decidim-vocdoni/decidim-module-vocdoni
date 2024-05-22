@@ -3,11 +3,11 @@
 module Decidim
   # This holds the decidim-meetings version.
   module Vocdoni
-    DECIDIM_VERSION = "0.27.6"
-    DECIDIM_COMPAT_VERSION = ">= 0.27"
+    DECIDIM_VERSION = "0.28.1"
+    DECIDIM_COMPAT_VERSION = [">= 0.28.0", "< 0.29"].freeze
 
     def self.version
-      "1.0"
+      "2.0"
     end
   end
 end

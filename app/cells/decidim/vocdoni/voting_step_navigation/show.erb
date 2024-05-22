@@ -1,29 +1,26 @@
-<div class="focus__footer">
-  <div class="row">
-    <% if first_step? %>
-      <a></a>
-    <% else %>
-      <%= link_to(
-        icon("chevron-left", class: "icon", role: "img", "aria-hidden": true) + " " + t("decidim.vocdoni.votes.voting_step.back"),
-        "#",
-        class: "focus__back",
-        data: {
-          toggle: [previous_step_dom_id, current_step_dom_id].join(" ")
-        }
-      ) %>
-    <% end %>
-
-    <span class="button focus__next disabled-continue disabled">
-      <%= button_continue_text %>
-    </span>
-
+<%= append_javascript_pack_tag "decidim_vocdoni_voter_new_vote" %>
+<div class="form__wrapper-block flex-col-reverse md:flex-row justify-between">
+  <% unless first_step? %>
     <%= link_to(
-      button_continue_text,
+      icon("arrow-left-line", class: "icon", role: "img", "aria-hidden": true) + " " + t("decidim.vocdoni.votes.voting_step.back"),
       "#",
-      class: "button focus__next enabled-continue",
+      class: "button button__sm md:button__lg button__transparent-secondary focus__back",
       data: {
-        toggle: [next_step_dom_id, current_step_dom_id].join(" ")
+        toggle: [previous_step_dom_id, current_step_dom_id].join(" ")
       }
     ) %>
-  </div>
+  <% end %>
+
+  <span class="button button__sm button__disabled focus__next disabled-continue disabled">
+    <%= button_continue_text %>
+  </span>
+
+  <%= link_to(
+    button_continue_text,
+    "#",
+    class: "button button__sm md:button__lg button__secondary focus__next enabled-continue",
+    data: {
+      toggle: [next_step_dom_id, current_step_dom_id].join(" ")
+    }
+  ) %>
 </div>

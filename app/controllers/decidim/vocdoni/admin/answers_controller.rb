@@ -5,20 +5,24 @@ module Decidim
     module Admin
       # This controller allows the create or update answers for a question.
       class AnswersController < Admin::ApplicationController
-        include Decidim::Proposals::Admin::Picker
         helper Decidim::ApplicationHelper
         helper_method :election, :question, :answers, :answer
 
         def index; end
 
         def new
-          enforce_permission_to :update, :answer, election: election, question: question
+          enforce_permission_to(:update, :answer, election:, question:)
           @form = form(AnswerForm).instance
         end
 
+        def edit
+          enforce_permission_to(:update, :answer, election:, question:)
+          @form = form(AnswerForm).from_model(answer)
+        end
+
         def create
-          enforce_permission_to :update, :answer, election: election, question: question
-          @form = form(AnswerForm).from_params(params, election: election, question: question)
+          enforce_permission_to(:update, :answer, election:, question:)
+          @form = form(AnswerForm).from_params(params, election:, question:)
 
           CreateAnswer.call(@form) do
             on(:ok) do
@@ -33,14 +37,9 @@ module Decidim
           end
         end
 
-        def edit
-          enforce_permission_to :update, :answer, election: election, question: question
-          @form = form(AnswerForm).from_model(answer)
-        end
-
         def update
-          enforce_permission_to :update, :answer, election: election, question: question
-          @form = form(AnswerForm).from_params(params, election: election, question: question)
+          enforce_permission_to(:update, :answer, election:, question:)
+          @form = form(AnswerForm).from_params(params, election:, question:)
 
           UpdateAnswer.call(@form, answer) do
             on(:ok) do
@@ -56,7 +55,7 @@ module Decidim
         end
 
         def destroy
-          enforce_permission_to :update, :answer, election: election, question: question
+          enforce_permission_to(:update, :answer, election:, question:)
 
           DestroyAnswer.call(answer, current_user) do
             on(:ok) do

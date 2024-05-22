@@ -3,9 +3,9 @@
 require "spec_helper"
 
 describe Decidim::Vocdoni::Voter do
-  subject(:voter) { build :vocdoni_voter }
+  subject(:voter) { build(:vocdoni_voter) }
 
-  let(:election) { create :vocdoni_election }
+  let(:election) { create(:vocdoni_election) }
 
   describe "#validations" do
     it "is invalid without a valid email" do
@@ -19,8 +19,8 @@ describe Decidim::Vocdoni::Voter do
     end
 
     it "does not allow duplicate emails within the same election" do
-      create(:vocdoni_voter, election: election, email: "user@example.com")
-      new_voter = build(:vocdoni_voter, election: election, email: "user@example.com")
+      create(:vocdoni_voter, election:, email: "user@example.com")
+      new_voter = build(:vocdoni_voter, election:, email: "user@example.com")
       expect(new_voter).not_to be_valid
     end
   end
@@ -77,7 +77,7 @@ describe Decidim::Vocdoni::Voter do
   end
 
   describe ".inside" do
-    let!(:voter) { create(:vocdoni_voter, election: election) }
+    let!(:voter) { create(:vocdoni_voter, election:) }
 
     it "returns voters for a specific election" do
       expect(Decidim::Vocdoni::Voter.inside(election)).to include(voter)
@@ -85,7 +85,7 @@ describe Decidim::Vocdoni::Voter do
   end
 
   describe ".search_user_email" do
-    let!(:voter) { create(:vocdoni_voter, election: election, email: "user@example.com") }
+    let!(:voter) { create(:vocdoni_voter, election:, email: "user@example.com") }
 
     it "returns the voter for a specific election and email" do
       expect(Decidim::Vocdoni::Voter.search_user_email(election, "user@example.com")).to eq(voter)
@@ -93,7 +93,7 @@ describe Decidim::Vocdoni::Voter do
   end
 
   describe ".clear" do
-    before { create_list(:vocdoni_voter, 3, election: election, token: "some_token") }
+    before { create_list(:vocdoni_voter, 3, election:, token: "some_token") }
 
     it "removes all voters for a specific election" do
       expect { Decidim::Vocdoni::Voter.clear(election) }.to change(Decidim::Vocdoni::Voter, :count).by(-3)

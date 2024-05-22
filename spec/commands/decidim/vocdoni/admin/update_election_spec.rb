@@ -5,9 +5,9 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::UpdateElection do
   subject { described_class.new(form, election) }
 
-  let(:election) { create :vocdoni_election }
+  let(:election) { create(:vocdoni_election) }
   let(:organization) { election.component.organization }
-  let(:user) { create :user, :admin, :confirmed, organization: organization }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
   let(:form) do
     double(
       invalid?: invalid,
@@ -31,7 +31,7 @@ describe Decidim::Vocdoni::Admin::UpdateElection do
     expect(translated(election.description)).to eq "description"
   end
 
-  it "traces the action", versioning: true do
+  it "traces the action", :versioning do
     expect(Decidim.traceability)
       .to receive(:update!)
       .with(election, user, hash_including(:title, :description), visibility: "all")

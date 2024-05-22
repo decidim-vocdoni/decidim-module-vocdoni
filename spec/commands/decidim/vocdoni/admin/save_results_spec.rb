@@ -5,19 +5,21 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::SaveResults do
   subject { described_class.new(form) }
 
-  let(:election) { create :vocdoni_election }
-  let(:question1) { create :vocdoni_question, election: election, weight: 1 }
-  let!(:answer11) { create :vocdoni_election_answer, question: question1, value: 1 }
-  let!(:answer12) { create :vocdoni_election_answer, question: question1, value: 0 }
-  let(:question2) { create :vocdoni_question, election: election, weight: 0 }
-  let!(:answer21) { create :vocdoni_election_answer, question: question2, value: 0 }
-  let!(:answer22) { create :vocdoni_election_answer, question: question2, value: 1 }
+  # rubocop:disable RSpec/IndexedLet
+  let(:election) { create(:vocdoni_election) }
+  let(:question1) { create(:vocdoni_question, election:, weight: 1) }
+  let!(:answer11) { create(:vocdoni_election_answer, question: question1, value: 1) }
+  let!(:answer12) { create(:vocdoni_election_answer, question: question1, value: 0) }
+  let(:question2) { create(:vocdoni_question, election:, weight: 0) }
+  let!(:answer21) { create(:vocdoni_election_answer, question: question2, value: 0) }
+  let!(:answer22) { create(:vocdoni_election_answer, question: question2, value: 1) }
+  # rubocop:enable RSpec/IndexedLet
 
   let(:organization) { election.component.organization }
-  let(:user) { create :user, :admin, :confirmed, organization: organization }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
   let(:form) do
     double(
-      election: election,
+      election:,
       current_user: user
     )
   end
@@ -67,7 +69,7 @@ describe Decidim::Vocdoni::Admin::SaveResults do
     expect(election.reload.status).to eq "results_published"
   end
 
-  it "traces the action", versioning: true do
+  it "traces the action", :versioning do
     expect(Decidim.traceability)
       .to receive(:perform_action!)
       .with(:save_results, election, user, extra: { status: "results_published" })

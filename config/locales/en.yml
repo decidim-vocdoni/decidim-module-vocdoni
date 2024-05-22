@@ -438,6 +438,26 @@ en:
           elections_count:
             one: "%{count} election"
             other: "%{count} elections"
+        election_m:
+          badge_name:
+            canceled: Canceled
+            finished: Finished
+            ongoing: Active
+            paused: Paused
+            upcoming: Upcoming
+        elections:
+          filters:
+            active: Active
+            all: All
+            canceled: Canceled
+            date: Date
+            finished: Finished
+            paused: Paused
+            upcoming: Upcoming
+        orders:
+          label: Orders
+          older: Older
+          recent: Recent
         preview:
           available_answers: 'Available answers:'
           description: 'These are the questions for this voting process:'
@@ -567,6 +587,8 @@ en:
           continue: Next
       warnings:
         no_elections_warning: There isn't any election scheduled.
+        no_scheduled_elections_warning: Currently, there are no scheduled elections,
+          but here you can find all the past elections listed.
   layouts:
     decidim:
       vocdoni_votes_header:

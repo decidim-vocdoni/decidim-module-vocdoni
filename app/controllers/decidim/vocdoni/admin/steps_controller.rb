@@ -12,15 +12,15 @@ module Decidim
         before_action :ensure_wallet_created
 
         def index
-          enforce_permission_to :read, :steps, election: election
+          enforce_permission_to(:read, :steps, election:)
           if current_step_form_class
-            @form = form(current_step_form_class).from_params({ status: election.status }, election: election)
+            @form = form(current_step_form_class).from_params({ status: election.status }, election:)
             @form.valid?
           end
         end
 
         def show
-          enforce_permission_to :read, :steps, election: election
+          enforce_permission_to(:read, :steps, election:)
 
           respond_to do |format|
             format.html { render partial: "decidim/vocdoni/admin/steps/results_stats" }
@@ -32,8 +32,8 @@ module Decidim
         end
 
         def update
-          enforce_permission_to :update, :steps, election: election
-          @form = form(current_step_form_class).from_params(params, election: election)
+          enforce_permission_to(:update, :steps, election:)
+          @form = form(current_step_form_class).from_params(params, election:)
 
           current_step_command_class.call(@form) do
             on(:ok) do
@@ -44,7 +44,7 @@ module Decidim
               flash.now[:alert] = message || I18n.t("steps.#{current_step}.invalid", scope: "decidim.vocdoni.admin")
             end
             on(:status) do |status|
-              flash[:alert] = I18n.t("steps.invalid_status", scope: "decidim.vocdoni.admin", status: status)
+              flash[:alert] = I18n.t("steps.invalid_status", scope: "decidim.vocdoni.admin", status:)
               return redirect_to election_steps_path(election)
             end
           end
@@ -52,7 +52,7 @@ module Decidim
         end
 
         def update_census
-          enforce_permission_to :update, :steps, election: election
+          enforce_permission_to(:update, :steps, election:)
 
           return unless election.internal_census?
 
@@ -73,7 +73,7 @@ module Decidim
             update_message: success_message
           }
 
-          render json: { info: info }, status: info ? :ok : :unprocessable_entity
+          render json: { info: }, status: info ? :ok : :unprocessable_entity
         end
 
         private

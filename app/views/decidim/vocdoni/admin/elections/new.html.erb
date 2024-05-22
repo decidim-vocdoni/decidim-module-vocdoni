@@ -1,22 +1,28 @@
 <% add_decidim_page_title(t(".title")) %>
 
-<div class="card-divider mb-s">
-  <h2 class="card-title"><%= t(".title") %></h2>
+<div class="item_show__header">
+  <h2 class="item_show__header-title"><%= t(".title") %></h2>
 </div>
 <% scope = "decidim.vocdoni.admin.elections.new" %>
-<ul class="tabs">
-  <li class="tabs-title is-active"><%= link_to t("basic_info", scope: scope), new_election_path %></li>
-  <li class="tabs-title"><a href="" class="disabled"><%= t("questions", scope: scope) %></a></li>
-  <li class="tabs-title"><a href="" class="disabled"><%= t("census", scope: scope) %></a></li>
-  <li class="tabs-title"><a href="" class="disabled"><%= t("results", scope: scope) %></a></li>
-  <li class="tabs-title"><a href="" class="disabled"><%= t("publish", scope: scope) %></a>
-  </li>
-</ul>
-
-<%= decidim_form_for(@form, html: { class: "form new_election" }) do |f| %>
-  <%= render partial: "form", object: f, locals: { title: t(".title") } %>
-  <div class="button--double form-general-submit">
-    <%= f.submit t(".save_button") %>
+<div class="card bg-white rounded-md overflow-hidden my-4">
+  <ul class="tabs flex divide-x-4 divide-white">
+    <li class="tabs-title is-active bg-gray-5 text-black p-4 first:rounded-l-md last:rounded-r-md"><%= link_to t("basic_info", scope: scope), new_election_path %></li>
+    <li class="tabs-title bg-gray-3 text-black p-4"><a href="" class="disabled"><%= t("questions", scope: scope) %></a></li>
+    <li class="tabs-title bg-gray-3 text-black p-4"><a href="" class="disabled"><%= t("census", scope: scope) %></a></li>
+    <li class="tabs-title bg-gray-3 text-black p-4"><a href="" class="disabled"><%= t("results", scope: scope) %></a></li>
+    <li class="tabs-title bg-gray-3 text-black p-4 last:rounded-r-md"><a href="" class="disabled"><%= t("publish", scope: scope) %></a></li>
+  </ul>
+</div>
+<div class="item__edit item__edit-1col">
+  <div class="item__edit-form">
+    <%= decidim_form_for(@form, html: { class: "form new_election form-defaults" }) do |f| %>
+      <%= render partial: "form", object: f, locals: { title: t(".title") } %>
+      <div class="item__edit-sticky">
+        <div class="item__edit-sticky-container">
+          <%= f.submit t(".save_button"), class: "button button__sm button__secondary" %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
-<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
+</div>
+<%= append_javascript_pack_tag "decidim_vocdoni_admin" %>

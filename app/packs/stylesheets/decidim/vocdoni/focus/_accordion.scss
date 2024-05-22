@@ -1,18 +1,15 @@
 .voc-accordion{
-  background: transparent;
+  @apply bg-transparent;
 
   .accordion-title{
-    font-size: $global-font-size;
-    color: inherit;
-    border: 0;
-    border-radius: 0;
+    @apply text-inherit border-0 rounded-none pl-4 flex items-center justify-start;
 
     span{
-      cursor: move;
+      @apply cursor-move;
     }
 
     &:focus{
-      background: transparent;
+      @apply bg-transparent;
     }
   }
 
@@ -20,17 +17,16 @@
     // Override Foundation
     &:first-child > :first-child,
     &:last-child:not(.is-active) > .accordion-title{
-      border: 0;
-      border-radius: 0;
+      @apply border-0 rounded-none;
     }
   }
 
   .accordion-content{
-    border: 0;
+    @apply border-0 mt-4;
 
     .tabs-title > a[aria-selected="true"],
     .tabs-content{
-      background: transparent;
+      @apply bg-transparent;
     }
   }
 }

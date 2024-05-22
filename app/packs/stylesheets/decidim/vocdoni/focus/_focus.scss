@@ -1,31 +1,28 @@
 .focus{
   $top-padding: .5rem;
 
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: $light-gray;
+  @apply flex flex-col min-h-screen text-gray-2 bg-gray-5;
 
   &__top{
     padding: $top-padding 1rem;
-    background-color: $white;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    display: flex;
+    @apply bg-white sticky top-0 z-10 flex;
+
+    a{
+      @apply flex items-center text-md text-secondary;
+    }
   }
 
   &__top_warning{
-    background: $alert;
-    color: white;
-    text-align: center;
-    display: block;
-    padding: 2px 0;
+    background: rgb(var(--alert-rgb));
+    @apply text-white flex items-center justify-center py-2;
+
+    svg{
+      @apply text-xl mr-2 fill-white;
+    }
   }
 
   &__brand{
-    display: flex;
-    align-items: center;
+    @apply flex items-center;
 
     img{
       max-height: 20px;
@@ -33,102 +30,80 @@
   }
 
   &__user{
-    margin: 0 15px 0 auto;
-    padding-right: 0;
-    display: flex;
-    align-items: center;
+    @apply ml-auto mr-4 pr-0 flex items-center;
   }
 
   &__exit{
-    display: flex;
-    align-items: center;
-    line-height: 1;
-    margin: -$top-padding 0;
-    padding: .5rem .25rem .5rem 1rem;
-    border-left: 1px solid rgba(black, .2);
+    @apply flex items-center leading-none my-[-var(--top-padding)] py-2 pl-4 pr-1 border-l border-gray-2;
   }
 
   &__x-icon{
-    font-size: 2rem;
-    margin-right: .5rem;
-    color: $muted;
+    @apply text-2xl mr-2;
 
     a:hover &{
-      color: inherit;
+      @apply text-inherit;
     }
   }
 
   &__header{
-    background-color: $dark-gray;
-    color: $white;
-    padding: 1rem;
+    @apply bg-gray-4 text-white p-4;
+
 
     &-title{
-      margin-bottom: 0;
+      @apply mb-0;
     }
   }
 
   &__step{
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    @apply flex flex-col flex-grow;
+  }
+
+  .focus__step.hidden {
+    display: none !important;
   }
 
   &__steps{
-    text-transform: uppercase;
-    font-size: 80%;
-    letter-spacing: .05em;
-    color: $light-gray;
+    @apply uppercase text-xs tracking-wider text-gray;
   }
 
   &__content{
-    flex-grow: 1;
-    display: flex;
+    @apply flex-grow flex;
 
     .row{
-      flex-grow: 1;
+      @apply flex-grow;
     }
   }
 
   &__footer{
-    margin-top: auto;
-    padding: 1rem;
-    background-color: $white;
+    @apply mt-auto p-4 bg-white;
 
     .row{
-      display: flex;
-      align-items: baseline;
-      width: 100%;
+      @apply flex items-baseline w-full;
     }
 
     .button{
-      margin-bottom: 0;
+      @apply mb-0;
     }
   }
 
   &__back{
-    font-weight: 600;
+    @apply font-semibold;
 
     svg{
-      font-size: .7em;
-      margin-right: .3em;
-      vertical-align: 0;
+      @apply text-xs mr-1 align-middle;
     }
   }
 
-  &__next{
-    margin-left: auto;
+  &__next {
+    @apply ml-auto;
 
-    svg{
-      font-size: .7em;
-      margin-left: .3em;
-      vertical-align: 0;
+    svg {
+      @apply text-xs ml-1 align-middle;
     }
   }
 }
 
 // Fix for external link indicator
 a img + .external-link-indicator {
-  top: -10px;
-  right: -15px;
+  @apply top-[-10px] right-[-15px];
 }

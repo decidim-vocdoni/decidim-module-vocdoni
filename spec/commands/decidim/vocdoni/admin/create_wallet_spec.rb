@@ -5,9 +5,9 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::CreateWallet do
   subject { described_class.new(user) }
 
-  let(:organization) { create :organization, available_locales: [:en, :ca, :es], default_locale: :en }
-  let(:user) { create :user, :admin, :confirmed, organization: organization }
-  let(:wallet) { Decidim::Vocdoni::Wallet.find_by(organization: organization) }
+  let(:organization) { create(:organization, available_locales: [:en, :ca, :es], default_locale: :en) }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
+  let(:wallet) { Decidim::Vocdoni::Wallet.find_by(organization:) }
 
   it "creates the wallet" do
     expect { subject.call }.to change(Decidim::Vocdoni::Wallet, :count).by(1)
@@ -24,7 +24,7 @@ describe Decidim::Vocdoni::Admin::CreateWallet do
     first = wallet.private_key
     wallet.destroy
     described_class.new(user).call
-    expect(Decidim::Vocdoni::Wallet.find_by(organization: organization).private_key).to eq first
+    expect(Decidim::Vocdoni::Wallet.find_by(organization:).private_key).to eq first
   end
 
   it "two equal private keys cannot be stored" do
@@ -32,7 +32,7 @@ describe Decidim::Vocdoni::Admin::CreateWallet do
     expect { subject.call }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
-  it "traces the action", versioning: true do
+  it "traces the action", :versioning do
     expect(Decidim.traceability)
       .to receive(:create!)
       .with(

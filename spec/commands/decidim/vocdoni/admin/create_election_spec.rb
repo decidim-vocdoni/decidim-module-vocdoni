@@ -5,10 +5,10 @@ require "spec_helper"
 describe Decidim::Vocdoni::Admin::CreateElection do
   subject { described_class.new(form) }
 
-  let(:organization) { create :organization, available_locales: [:en, :ca, :es], default_locale: :en }
-  let(:participatory_process) { create :participatory_process, organization: organization }
-  let(:current_component) { create :component, participatory_space: participatory_process, manifest_name: "vocdoni" }
-  let(:user) { create :user, :admin, :confirmed, organization: organization }
+  let(:organization) { create(:organization, available_locales: [:en, :ca, :es], default_locale: :en) }
+  let(:participatory_process) { create(:participatory_process, organization:) }
+  let(:current_component) { create(:component, participatory_space: participatory_process, manifest_name: "vocdoni") }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
   let(:form) do
     double(
       invalid?: invalid,
@@ -16,10 +16,10 @@ describe Decidim::Vocdoni::Admin::CreateElection do
       description: { en: "description" },
       stream_uri: "https://example.org/stream",
       attachment: attachment_params,
-      photos: photos,
+      photos:,
       add_photos: uploaded_photos,
       current_user: user,
-      current_component: current_component,
+      current_component:,
       current_organization: organization
     )
   end
@@ -46,7 +46,7 @@ describe Decidim::Vocdoni::Admin::CreateElection do
     expect(election.component).to eq current_component
   end
 
-  it "traces the action", versioning: true do
+  it "traces the action", :versioning do
     expect(Decidim.traceability)
       .to receive(:create!)
       .with(

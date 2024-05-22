@@ -3,11 +3,11 @@
 <%= render partial: "decidim/vocdoni/admin/shared/election_title" %>
 <%= render partial: "decidim/vocdoni/admin/shared/tab_links", locals: { active_class: "questions", election: election } %>
 <div class="card">
-  <div class="card-divider">
-    <h2 class="card-title">
+  <div class="item_show__header">
+    <h2 class="item_show__header-title">
       <%= t(".title") %>
       <%= question_with_link(question, election) %>
-      <%= link_to t("actions.new", scope: "decidim.vocdoni", name: t("models.answer.name", scope: "decidim.vocdoni.admin")), new_election_question_answer_path(election, question), class: "button tiny button--title" if allowed_to? :create, :answer, election: election, question: question %>
+      <%= link_to t("actions.new", scope: "decidim.vocdoni", name: t("models.answer.name", scope: "decidim.vocdoni.admin")), new_election_question_answer_path(election, question), class: "button button__sm button__secondary" if allowed_to? :create, :answer, election: election, question: question %>
     </h2>
   </div>
 
@@ -16,8 +16,8 @@
       <table class="table-list">
         <thead>
         <tr>
-          <th><%= t("models.answer.fields.title", scope: "decidim.vocdoni") %></th>
-          <th class="actions"><%= t("actions.title", scope: "decidim.vocdoni") %></th>
+          <th class="text-left"><%= t("models.answer.fields.title", scope: "decidim.vocdoni") %></th>
+          <th class="actions text-right"><%= t("actions.title", scope: "decidim.vocdoni") %></th>
         </tr>
         </thead>
         <tbody>
@@ -26,17 +26,17 @@
             <td>
               <%= translated_attribute(answer.title) %>
             </td>
-            <td class="table-list__actions">
+            <td class="table-list__actions text-right">
               <% if allowed_to? :update, :answer, election: election, question: question, answer: answer %>
-                <%= icon_link_to "pencil", edit_election_question_answer_path(election, question, answer), t("actions.edit", scope: "decidim.vocdoni"), class: "action-icon--edit" %>
+                <%= icon_link_to "pencil-line", edit_election_question_answer_path(election, question, answer), t("actions.edit", scope: "decidim.vocdoni"), class: "action-icon--edit" %>
               <% else %>
-                <%= icon "pencil", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.edit", scope: "decidim.vocdoni") %>
+                <%= icon "pencil-line", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.edit", scope: "decidim.vocdoni") %>
               <% end %>
 
               <% if allowed_to? :delete, :answer, election: election, question: question, answer: answer %>
-                <%= icon_link_to "circle-x", election_question_answer_path(election, question, answer), t("actions.destroy", scope: "decidim.vocdoni"), method: :delete, class: "action-icon--remove", data: { confirm: t("actions.confirm_destroy", scope: "decidim.vocdoni") } %>
+                <%= icon_link_to "close-circle-line", election_question_answer_path(election, question, answer), t("actions.destroy", scope: "decidim.vocdoni"), method: :delete, class: "action-icon--remove", data: { confirm: t("actions.confirm_destroy", scope: "decidim.vocdoni") } %>
               <% else %>
-                <%= icon "circle-x", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.destroy", scope: "decidim.vocdoni") %>
+                <%= icon "close-circle-line", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.destroy", scope: "decidim.vocdoni") %>
               <% end %>
             </td>
           </tr>
@@ -47,8 +47,8 @@
   </div>
 </div>
 
-<div class="flex--cc">
-  <%= link_to t(".back"), election_questions_path(election), class: "button" %>
+<div class="flex">
+  <%= link_to t(".back"), election_questions_path(election), class: "button button__sm button__secondary" %>
 </div>
 
-<%= stylesheet_pack_tag "decidim_vocdoni_admin_stylesheet" %>
+<%= append_javascript_pack_tag "decidim_vocdoni_admin" %>

@@ -19,12 +19,11 @@ describe Decidim::Vocdoni::ElectionCell, type: :cell do
     let(:model) { election }
 
     it "renders the card" do
-      expect(subject).to have_css(".card--election")
+      expect(subject).to have_css(".card__grid")
     end
 
     it "renders the title and text" do
-      expect(subject).to have_css(".card__title")
-      expect(subject).to have_css(".card__text")
+      expect(subject).to have_css(".card__grid-text")
     end
   end
 end

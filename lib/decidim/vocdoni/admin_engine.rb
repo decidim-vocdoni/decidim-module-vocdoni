@@ -35,6 +35,13 @@ module Decidim
         root to: "elections#index"
       end
 
+      initializer "decidim_admin.register_icons" do
+        Decidim.icons.register(name: "bank-card-line", icon: "bank-card-line", category: "system", description: "", engine: :vocdoni)
+        Decidim.icons.register(name: "pause-circle-line", icon: "pause-circle-line", category: "system", description: "", engine: :vocdoni)
+        Decidim.icons.register(name: "play-circle-line", icon: "play-circle-line", category: "system", description: "", engine: :vocdoni)
+        Decidim.icons.register(name: "stop-circle-line", icon: "stop-circle-line", category: "system", description: "", engine: :vocdoni)
+      end
+
       def load_seed
         nil
       end

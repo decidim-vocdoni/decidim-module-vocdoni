@@ -2,15 +2,16 @@
   "presets": [
     [
       "@babel/preset-env", {
-        "forceAllTransforms": true,
-        "useBuiltIns": "entry",
-        "corejs": 3,
-        "modules": false
-      }
+      "forceAllTransforms": true,
+      "useBuiltIns": "entry",
+      "corejs": 3,
+      "modules": false
+    }
     ],
     ["@babel/preset-react"]
   ],
   "plugins": [
+    "@babel/plugin-transform-class-properties",
     "@babel/plugin-transform-classes",
     [
       "@babel/plugin-transform-runtime",
@@ -20,9 +21,6 @@
         "corejs": false
       }
     ],
-    [ "@babel/plugin-transform-regenerator", { "async": false }],
-    [ "@babel/plugin-proposal-private-property-in-object", { "loose": true }],
-    ["@babel/plugin-proposal-private-methods", { "loose": true }],
-    ["@babel/plugin-proposal-class-properties", { "loose": true }]
+    ["@babel/plugin-transform-regenerator", { "async": false }]
   ]
 }

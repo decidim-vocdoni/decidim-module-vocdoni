@@ -3,6 +3,8 @@
 require "decidim/dev/common_rake"
 
 def install_module(path)
+  # The Vocdoni SDK needs custom babel plugins not included in the default Decidim version of this file
+  FileUtils.cp("babel.config.json", "#{path}/babel.config.json")
   Dir.chdir(path) do
     system("bin/rails decidim_vocdoni:install:migrations")
     system("bin/rails db:migrate")
@@ -25,7 +27,6 @@ desc "Generates a dummy app for testing"
 task test_app: "decidim:generate_external_test_app" do
   ENV["RAILS_ENV"] = "test"
   install_module("spec/decidim_dummy_app")
-  override_webpacker_config_files("spec/decidim_dummy_app")
 end
 
 desc "Generates a development app"

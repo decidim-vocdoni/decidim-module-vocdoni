@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-describe Decidim::Vocdoni::ElectionsController, type: :controller do
+describe Decidim::Vocdoni::ElectionsController do
   routes { Decidim::Vocdoni::Engine.routes }
 
   let(:component) { create(:vocdoni_component) }
-  let(:election) { create(:vocdoni_election, :published, component: component) }
+  let(:election) { create(:vocdoni_election, :published, component:) }
   let(:user) { create(:user, :confirmed, organization: component.organization) }
   let!(:wallet) { create(:vocdoni_wallet, organization: component.organization, private_key: Faker::Blockchain::Ethereum.address) }
   let(:vocdoni_client) { double("Api") }
@@ -22,7 +22,7 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
 
     context "when election is not secret until the end and has data and is ongoing" do
       let(:election) do
-        create(:vocdoni_election, :published, :ongoing, component: component, election_type: { "secret_until_the_end" => false })
+        create(:vocdoni_election, :published, :ongoing, component:, election_type: { "secret_until_the_end" => false })
       end
 
       before do
@@ -41,7 +41,7 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
 
       it "renders correct json" do
         get :show, params: { id: election.id }, format: :json
-        expect(JSON.parse(response.body)).to eq({ "election_data" => nil })
+        expect(response.parsed_body).to eq({ "election_data" => nil })
       end
     end
   end
@@ -62,7 +62,7 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
   describe "#election_metadata" do
     context "when election is ongoing and not secret until the end" do
       let(:election) do
-        create(:vocdoni_election, :published, :ongoing, component: component,
+        create(:vocdoni_election, :published, :ongoing, component:,
                                                         election_type: { "secret_until_the_end" => false },
                                                         vocdoni_election_id: "123")
       end
@@ -83,7 +83,7 @@ describe Decidim::Vocdoni::ElectionsController, type: :controller do
 
     context "when election is not ongoing or is secret until the end" do
       let(:election) do
-        create(:vocdoni_election, :published, component: component,
+        create(:vocdoni_election, :published, component:,
                                               election_type: { "secret_until_the_end" => true })
       end
 

@@ -2,6 +2,7 @@
 
 require "rails"
 require "decidim/core"
+require "active_support/all"
 
 module Decidim
   module Vocdoni
@@ -28,6 +29,12 @@ module Decidim
 
       initializer "decidim_vocdoni.webpacker.assets_path" do
         Decidim.register_assets_path File.expand_path("app/packs", root)
+      end
+
+      initializer "decidim.vocdoni.register_icons" do
+        Decidim.icons.register(name: "book-2-line", icon: "book-2-line", category: "system", description: "", engine: :vocdoni)
+        Decidim.icons.register(name: "checkbox-multiple-line", icon: "checkbox-multiple-line", category: "system", description: "", engine: :vocdoni)
+        Decidim.icons.register(name: "bar-chart-box-line", icon: "bar-chart-box-line", category: "system", description: "", engine: :vocdoni)
       end
     end
   end

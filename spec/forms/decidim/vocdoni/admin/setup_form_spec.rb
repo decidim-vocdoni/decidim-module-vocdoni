@@ -9,12 +9,12 @@ describe Decidim::Vocdoni::Admin::SetupForm do
     {
       current_organization: component.organization,
       current_component: component,
-      election: election,
+      election:,
       current_step: "create_election"
     }
   end
-  let(:election) { create :vocdoni_election, :ready_for_setup, :auto_start, start_time: 1.day.from_now, component: component }
-  let(:component) { create :vocdoni_component }
+  let(:election) { create(:vocdoni_election, :ready_for_setup, :auto_start, start_time: 1.day.from_now, component:) }
+  let(:component) { create(:vocdoni_component) }
   let(:attributes) { {} }
   let(:router) { Decidim::EngineRouter.admin_proxy(election.component) }
 
@@ -43,9 +43,9 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   end
 
   context "when the election is not ready for the setup" do
-    let(:election) { create :vocdoni_election, :auto_start, start_time: 10.days.ago }
+    let(:election) { create(:vocdoni_election, :auto_start, start_time: 10.days.ago) }
 
-    it { is_expected.to be_invalid }
+    it { is_expected.not_to be_valid }
 
     it "shows errors" do
       subject.valid?
@@ -78,10 +78,10 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   end
 
   context "when there are no answers created" do
-    let(:election) { create :vocdoni_election, :published }
-    let!(:question) { create :vocdoni_question, election: election, weight: 1 }
+    let(:election) { create(:vocdoni_election, :published) }
+    let!(:question) { create(:vocdoni_question, election:, weight: 1) }
 
-    it { is_expected.to be_invalid }
+    it { is_expected.not_to be_valid }
 
     it "shows errors" do
       subject.valid?
@@ -94,7 +94,7 @@ describe Decidim::Vocdoni::Admin::SetupForm do
   end
 
   context "when manual start" do
-    let(:election) { create :vocdoni_election, :ready_for_setup, :manual_start, component: component }
+    let(:election) { create(:vocdoni_election, :ready_for_setup, :manual_start, component:) }
 
     it { is_expected.to be_valid }
 

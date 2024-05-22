@@ -26,10 +26,7 @@ describe Decidim::Vocdoni::CsvCensus::Data do
     subject { described_class.new(valid_csv_path) }
 
     it "reads values correctly" do
-      expect(subject.values).to match_array([
-                                              %w(john@example.org 123456),
-                                              %w(alice@example.org 987654)
-                                            ])
+      expect(subject.values).to contain_exactly(%w(john@example.org 123456), %w(alice@example.org 987654))
     end
 
     it "has no errors" do

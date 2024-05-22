@@ -7,8 +7,8 @@ describe Decidim::Vocdoni::ElectionPublishedEvent do
 
   let(:event_name) { "decidim.events.vocdoni.election_published" }
   let(:participatory_space) { create(:participatory_process, :with_steps, title: { en: "A participatory process" }) }
-  let(:component) { create(:vocdoni_component, participatory_space: participatory_space) }
-  let(:resource) { create(:vocdoni_election, component: component) }
+  let(:component) { create(:vocdoni_component, participatory_space:) }
+  let(:resource) { create(:vocdoni_election, component:) }
   let(:participatory_space_title) { resource.participatory_space.title["en"] }
   let(:resource_title) { resource.title["en"] }
 
