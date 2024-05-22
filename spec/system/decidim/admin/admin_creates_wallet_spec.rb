@@ -38,12 +38,16 @@ describe "Admin creates wallet", :slow, type: :system do
       expect(Decidim::Vocdoni::Wallet.count).to eq 1
     end
 
-    context "when prod environment" do
+    shared_context "with environment settings" do |env|
       before do
-        allow(Decidim::Vocdoni).to receive(:api_endpoint_env).and_return("prod")
+        allow(Decidim::Vocdoni).to receive(:api_endpoint_env).and_return(env)
         allow(Decidim::Vocdoni).to receive(:vocdoni_reseller_name).and_return("Test reseller")
         allow(Decidim::Vocdoni).to receive(:vocdoni_reseller_email).and_return("test_reseller@example.org")
       end
+    end
+
+    context "when prod environment" do
+      include_context "with environment settings", "prod"
 
       it "shows the information about receiving coins" do
         visit_steps_page
@@ -57,45 +61,7 @@ describe "Admin creates wallet", :slow, type: :system do
     end
 
     context "when stg environment" do
-      before do
-        allow(Decidim::Vocdoni).to receive(:api_endpoint_env).and_return("stg")
-        allow(Decidim::Vocdoni).to receive(:vocdoni_reseller_name).and_return("Test reseller")
-        allow(Decidim::Vocdoni).to receive(:vocdoni_reseller_email).and_return("test_reseller@example.org")
-      end
-
-      it "doesn't show the information about receiving coins" do
-        visit_steps_page
-
-        expect(page).to have_no_content("The usage of the Vocdoni platform has costs")
-        expect(page).to have_no_content("Test reseller")
-        expect(page).to have_no_css("input[value='#{wallet.private_key}']")
-      end
-    end
-
-    context "when prod environment" do
-      before do
-        allow(Decidim::Vocdoni).to receive(:api_endpoint_env).and_return("prod")
-        allow(Decidim::Vocdoni).to receive(:vocdoni_reseller_name).and_return("Test reseller")
-        allow(Decidim::Vocdoni).to receive(:vocdoni_reseller_email).and_return("test_reseller@example.org")
-      end
-
-      it "shows the information about receiving coins" do
-        visit_steps_page
-
-        expect(page).to have_content("The usage of the Vocdoni platform has costs")
-        expect(page).to have_content("Test reseller")
-        expect(page).to have_css("input[value='#{wallet.private_key}']")
-        expected_href = "mailto:test_reseller@example.org?subject=Decidim Vocdoni Inquiry&body=Please provide a quote for the Vocdoni platform usage. My organization Vocdoni address is: 0x0000000000000000000000000000000000000000000000000000000000000001"
-        expect(page).to have_css("a[href='#{expected_href}']")
-      end
-    end
-
-    context "when stg environment" do
-      before do
-        allow(Decidim::Vocdoni).to receive(:api_endpoint_env).and_return("stg")
-        allow(Decidim::Vocdoni).to receive(:vocdoni_reseller_name).and_return("Test reseller")
-        allow(Decidim::Vocdoni).to receive(:vocdoni_reseller_email).and_return("test_reseller@example.org")
-      end
+      include_context "with environment settings", "stg"
 
       it "doesn't show the information about receiving coins" do
         visit_steps_page

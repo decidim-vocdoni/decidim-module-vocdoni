@@ -46,7 +46,7 @@ describe "Explore elections", :slow, type: :system do
 
       it "shows the correct warning" do
         visit_component
-        within ".callout" do
+        within "[data-announcement]" do
           expect(page).to have_content("any election scheduled")
         end
       end
