@@ -147,6 +147,14 @@ $(() => {
       const client = new VocdoniSDKClient({ env, wallet });
       client.setElectionId(electionUniqueId);
 
+      const isInCensus = await client.isInCensus();
+      console.log("IS IN CENSUS => ", isInCensus);
+
+      if (!isInCensus) {
+        showLoginErrorMessage();
+        return;
+      }
+
       const votesLeft = await client.votesLeftCount();
       const electionUrl = document.getElementById("vote-wrapper").dataset.url;
       console.log("VOTES LEFT => ", votesLeft);
