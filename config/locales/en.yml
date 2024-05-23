@@ -514,7 +514,8 @@ en:
           description: To vote, we'll need to check that you're on the census
           election_not_open: Currently the election is not open for voting. Try again
             later.
-          failed: The email or token is not valid. Please check these details and try again.
+          failed: The email or token is not valid. Please check these details and
+            try again.
           form_title: Enter your data
           login_title: Verify your identity
           title: Identification
