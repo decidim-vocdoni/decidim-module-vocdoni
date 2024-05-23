@@ -1,7 +1,7 @@
 import { VocdoniSDKClient } from "@vocdoni/sdk";
 
 /*
- * Instantiate the Wallet object given a login form with the email and the date of birth
+ * Instantiate the Wallet object given a login form with the email and the token
  * of the potenital voter
  *
  * @param {object} $loginForm The jQuery Element with the form for logging in

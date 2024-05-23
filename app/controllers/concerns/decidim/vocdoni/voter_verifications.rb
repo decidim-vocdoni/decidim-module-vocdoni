@@ -32,6 +32,8 @@ module Decidim
         end
 
         def voter_verified?
+          return true if preview_mode? && current_user.admin?
+
           required_authorizations = census_authorize_methods.map(&:name)
           return true if election.internal_census? && required_authorizations.empty?
 
