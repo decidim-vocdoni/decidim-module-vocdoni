@@ -34,7 +34,7 @@ module Decidim
       end
 
       def check_verification
-        if preview_mode? && current_user.admin?
+        if preview_mode? && current_user.admin? && election.internal_census?
           render json: { isVerified: true, email: current_user.email, election_id: election.id, token: "123456" }
 
           return
