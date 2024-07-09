@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin manages election steps", :slow do # rubocop:disable RSpec/DescribeClass
+describe "Admin manages election steps", :slow do
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create(:vocdoni_component) }
   let(:info) do

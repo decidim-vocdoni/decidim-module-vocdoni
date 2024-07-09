@@ -131,67 +131,81 @@ $(() => {
     setTimeout(() => questionsComponent.init(), 100);
   });
 
+  const togglePanels = () => {
+    $("#check_census").foundation("toggle");
+    $("#step-0").foundation("toggle");
+  };
   // Initiates the voting process
   const initVotingProcess = async (wallet) => {
     if (isPreview) {
       const voteComponent = new PreviewVoteComponent({ electionUniqueId });
       await mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
 
-      $("#check_census").foundation("toggle");
-      $("#step-0").foundation("toggle");
-    } else {
-      if (!(await checkIfElectionIsOpen(env, wallet, electionUniqueId))) {
-        showElectionClosedErrorMessage();
-        return;
-      }
-      const client = new VocdoniSDKClient({ env, wallet });
-      client.setElectionId(electionUniqueId);
-
-      const votesLeft = await client.votesLeftCount();
-      const electionUrl = document.getElementById("vote-wrapper").dataset.url;
-      console.log("VOTES LEFT => ", votesLeft);
-
-      /**
-       * Function to update the votes left for a given election.
-       * @param {number} votesLeftParam - The remaining votes overwrite for the election.
-       *  @returns {void} No return value.
-       */
-      const updateVotesLeft = function(votesLeftParam) {
-        fetch(electionUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
-          },
-          body: JSON.stringify({ votesLeft: votesLeftParam })
-        }).then((response) => response.json()).then((data) => {
-          document.getElementById("votes-left-message").innerHTML = data.message;
-        }).catch((error) => console.error("Error:", error));
-      }
-
-      updateVotesLeft(votesLeft);
-
-      const hasAlreadyVoted = await client.hasAlreadyVoted();
-      if (hasAlreadyVoted) {
-        console.log("ALREADY VOTED");
-        $("#step-0").find(".js-already_voted").removeClass("hidden");
-      }
-
-      console.log("OK!! Wallet is in census");
-
-      const voteComponent = new VoteComponent({ env, electionUniqueId, wallet });
-      $("#check_census").foundation("toggle");
-      $("#step-0").foundation("toggle");
-      await mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
+      togglePanels();
+      return;
     }
+
+    if (!(await checkIfElectionIsOpen(env, wallet, electionUniqueId))) {
+      showElectionClosedErrorMessage();
+      return;
+    }
+    const client = new VocdoniSDKClient({ env, wallet });
+    client.setElectionId(electionUniqueId);
+
+    const isInCensus = await client.isInCensus();
+    console.log("IS IN CENSUS => ", isInCensus);
+
+    if (!isInCensus) {
+      showLoginErrorMessage();
+      return;
+    }
+
+    const votesLeft = await client.votesLeftCount();
+    const electionUrl = document.getElementById("vote-wrapper").dataset.url;
+    console.log("VOTES LEFT => ", votesLeft);
+
+    /**
+     * Function to update the votes left for a given election.
+     * @param {number} votesLeftParam - The remaining votes overwrite for the election.
+     *  @returns {void} No return value.
+     */
+    const updateVotesLeft = function(votesLeftParam) {
+      fetch(electionUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ votesLeft: votesLeftParam })
+      }).then((response) => response.json()).then((data) => {
+        document.getElementById("votes-left-message").innerHTML = data.message;
+      }).catch((error) => console.error("Error:", error));
+    }
+
+    updateVotesLeft(votesLeft);
+
+    const hasAlreadyVoted = await client.hasAlreadyVoted();
+    if (hasAlreadyVoted) {
+      console.log("ALREADY VOTED");
+      $("#step-0").find(".js-already_voted").removeClass("hidden");
+    }
+
+    console.log("OK!! Wallet is in census");
+
+    const voteComponent = new VoteComponent({ env, electionUniqueId, wallet });
+    togglePanels();
+    await mountVoteComponent(voteComponent, $voteWrapper, questionsComponent);
   };
+
   // Handle user verifications
   if (checkVerificationUrl) {
     fetch(checkVerificationUrl).
       then((response) => response.json()).
       then((data) => {
         console.log("Verification data:", data);
-        if (data.isVerified) {
+        if (data.preview) {
+          console.log("User is in preview mode");
+        } else if (data.isVerified) {
           const wallet = VocdoniSDKClient.generateWalletFromData([data.email.toLowerCase(), data.token.toLowerCase()]);
           console.group("Wallet data");
           console.log("EMAIL => ", data.email);
@@ -220,6 +234,7 @@ $(() => {
       showLoginErrorMessage();
       return;
     }
+    console.log("Voting process initialized")
     await initVotingProcess(wallet);
   });
 });

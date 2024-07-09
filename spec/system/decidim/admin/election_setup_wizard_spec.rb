@@ -2,12 +2,13 @@
 
 require "spec_helper"
 
-describe "Election setup wizard", :slow do # rubocop:disable RSpec/DescribeClass
+describe "Election setup wizard", :slow do
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create(:vocdoni_component) }
   let(:election_title) { "My election" }
   let(:election_description) { "My election description" }
   let(:edit_title) { "Edit election \"#{election_title}\"" }
+  let(:valid_census_file) { file_fixture("valid-census.csv") }
 
   include_context "when managing a component as an admin"
 
@@ -323,10 +324,6 @@ describe "Election setup wizard", :slow do # rubocop:disable RSpec/DescribeClass
       click_link_or_button "Upload file"
     end
     click_link_or_button "Done, go to the next step"
-  end
-
-  def valid_census_file
-    File.expand_path(File.join("..", "..", "..", "assets", "valid-census.csv"), __dir__)
   end
 
   def fill_calendar_and_results
