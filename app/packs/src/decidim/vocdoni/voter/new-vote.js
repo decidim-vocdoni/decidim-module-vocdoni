@@ -203,7 +203,7 @@ $(() => {
       then((response) => response.json()).
       then((data) => {
         console.log("Verification data:", data);
-        if(data.preview) {
+        if (data.preview) {
           console.log("User is in preview mode");
         } else if (data.isVerified) {
           const wallet = VocdoniSDKClient.generateWalletFromData([data.email.toLowerCase(), data.token.toLowerCase()]);
