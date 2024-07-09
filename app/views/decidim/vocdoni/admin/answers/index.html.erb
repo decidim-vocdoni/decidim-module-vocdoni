@@ -7,48 +7,51 @@
     <h2 class="item_show__header-title">
       <%= t(".title") %>
       <%= question_with_link(question, election) %>
-      <%= link_to t("actions.new", scope: "decidim.vocdoni", name: t("models.answer.name", scope: "decidim.vocdoni.admin")), new_election_question_answer_path(election, question), class: "button button__sm button__secondary" if allowed_to? :create, :answer, election: election, question: question %>
+      <div>
+        <%= link_to t("actions.new", scope: "decidim.vocdoni", name: t("models.answer.name", scope: "decidim.vocdoni.admin")), new_election_question_answer_path(election, question), class: "button button__sm button__secondary" if allowed_to? :create, :answer, election: election, question: question %>
+        <%= link_to t(".back"), election_questions_path(election), class: "button button__sm button__transparent-secondary" %>
+      </div>
     </h2>
   </div>
 
-  <div class="card-section">
-    <div class="table-scroll">
-      <table class="table-list">
-        <thead>
-        <tr>
-          <th class="text-left"><%= t("models.answer.fields.title", scope: "decidim.vocdoni") %></th>
-          <th class="actions text-right"><%= t("actions.title", scope: "decidim.vocdoni") %></th>
+  <div class="table-scroll">
+    <table class="table-list">
+      <thead>
+      <tr>
+        <th class="text-left"><%= t("models.answer.fields.title", scope: "decidim.vocdoni") %></th>
+        <th class="actions text-right"><%= t("actions.title", scope: "decidim.vocdoni") %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% answers.each do |answer| %>
+        <tr data-id="<%= question.id %>">
+          <td>
+            <%= translated_attribute(answer.title) %>
+          </td>
+          <td class="table-list__actions text-right">
+            <% if allowed_to? :update, :answer, election: election, question: question, answer: answer %>
+              <%= icon_link_to "pencil-line", edit_election_question_answer_path(election, question, answer), t("actions.edit", scope: "decidim.vocdoni"), class: "action-icon--edit" %>
+            <% else %>
+              <%= icon "pencil-line", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.edit", scope: "decidim.vocdoni") %>
+            <% end %>
+
+            <% if allowed_to? :delete, :answer, election: election, question: question, answer: answer %>
+              <%= icon_link_to "close-circle-line", election_question_answer_path(election, question, answer), t("actions.destroy", scope: "decidim.vocdoni"), method: :delete, class: "action-icon--remove", data: { confirm: t("actions.confirm_destroy", scope: "decidim.vocdoni") } %>
+            <% else %>
+              <%= icon "close-circle-line", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.destroy", scope: "decidim.vocdoni") %>
+            <% end %>
+          </td>
         </tr>
-        </thead>
-        <tbody>
-        <% answers.each do |answer| %>
-          <tr data-id="<%= question.id %>">
-            <td>
-              <%= translated_attribute(answer.title) %>
-            </td>
-            <td class="table-list__actions text-right">
-              <% if allowed_to? :update, :answer, election: election, question: question, answer: answer %>
-                <%= icon_link_to "pencil-line", edit_election_question_answer_path(election, question, answer), t("actions.edit", scope: "decidim.vocdoni"), class: "action-icon--edit" %>
-              <% else %>
-                <%= icon "pencil-line", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.edit", scope: "decidim.vocdoni") %>
-              <% end %>
-
-              <% if allowed_to? :delete, :answer, election: election, question: question, answer: answer %>
-                <%= icon_link_to "close-circle-line", election_question_answer_path(election, question, answer), t("actions.destroy", scope: "decidim.vocdoni"), method: :delete, class: "action-icon--remove", data: { confirm: t("actions.confirm_destroy", scope: "decidim.vocdoni") } %>
-              <% else %>
-                <%= icon "close-circle-line", class: "action-icon action-icon--disabled", role: "img", aria_label: t("actions.destroy", scope: "decidim.vocdoni") %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
+      <% end %>
+      </tbody>
+    </table>
   </div>
+
+  <%= render "decidim/vocdoni/admin/shared/minimum_answers_callout" %>
 </div>
 
-<div class="flex">
-  <%= link_to t(".back"), election_questions_path(election), class: "button button__sm button__secondary" %>
-</div>
+<% if allowed_to?(:index, :census, election: election) && election.ready_for_census_form? %>
+  <%= render "decidim/vocdoni/admin/shared/next_wizard_step", path: election_census_path(election) %>
+<% end %>
 
 <%= append_javascript_pack_tag "decidim_vocdoni_admin" %>

@@ -1,0 +1,5 @@
+  <% unless election.minimum_answers? %>
+    <div class="callout alert mt-4">
+      <%= t("minimum_answers_warning", scope: "decidim.vocdoni.admin.questions.index").html_safe %>
+    </div>
+  <% end %>

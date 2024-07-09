@@ -5,7 +5,12 @@
     <h2 class="item_show__header-title">
       <%= t(".title") %>
 
-      <%= link_to t("actions.new", scope: "decidim.vocdoni", name: t("models.election.name", scope: "decidim.vocdoni.admin")), new_election_path, class: "button button__sm button__secondary" if allowed_to? :create, :election %>
+      <% if allowed_to? :create, :election %>
+        <%= link_to new_election_path, class: "button button__sm button__secondary" do %>
+          <%= icon "add-line", role: "img", "aria-hidden": true %>
+          <%= t("actions.new", scope: "decidim.vocdoni", name: t("models.election.name", scope: "decidim.vocdoni.admin")) %>
+        <% end %>
+      <% end %>
     </h2>
   </div>
 

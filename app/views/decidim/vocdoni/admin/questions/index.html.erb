@@ -50,17 +50,12 @@
       </tbody>
     </table>
   </div>
-  <% unless election.minimum_answers? %>
-    <div class="callout alert">
-      <%= t("minimum_answers_warning", scope: "decidim.vocdoni.admin.questions.index").html_safe %>
-    </div>
-  <% end %>
+
+  <%= render "decidim/vocdoni/admin/shared/minimum_answers_callout" %>
 </div>
-<div class="item__edit-sticky">
-  <div class="item__edit-sticky-container">
-    <% if allowed_to?(:index, :census, election: election) && election.ready_for_census_form? %>
-      <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), election_census_path(election), class: "button button__sm button__secondary" %>
-    <% end %>
-  </div>
-</div>
+
+<% if allowed_to?(:index, :census, election: election) && election.ready_for_census_form? %>
+  <%= render "decidim/vocdoni/admin/shared/next_wizard_step", path: election_census_path(election) %>
+<% end %>
+
 <%= append_javascript_pack_tag "decidim_vocdoni_admin" %>

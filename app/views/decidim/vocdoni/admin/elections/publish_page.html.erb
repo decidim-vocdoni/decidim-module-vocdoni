@@ -31,13 +31,13 @@
     <div class="item__edit-sticky-container">
       <% if election.published? %>
         <% if allowed_to?(:unpublish, :election, election: election) %>
-          <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), url_for(action: :unpublish, id: election, controller: "elections"), class: "button button__sm button__secondary muted", method: :put %>
+          <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), url_for(action: :unpublish, id: election, controller: "elections"), class: "button button__sm button__secondary", method: :put %>
         <% else %>
-          <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), "#", class: "button button__sm button__secondary muted disabled" %>
+          <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), "#", class: "button button__sm button__secondary disabled" %>
         <% end %>
       <% else %>
         <% if allowed_to?(:publish, :election, election: election) %>
-          <%= link_to t("actions.publish", scope: "decidim.vocdoni"), url_for(action: :publish, id: election, controller: "elections"), class: "button button__sm button__secondary hollow", method: :put %>
+          <%= link_to t("actions.publish", scope: "decidim.vocdoni"), url_for(action: :publish, id: election, controller: "elections"), class: "button button__sm button__secondary", method: :put %>
         <% else %>
           <%= link_to t("actions.publish", scope: "decidim.vocdoni"), "#", class: "button button__sm button__secondary disabled" %>
         <% end %>
