@@ -10,9 +10,9 @@ describe Decidim::Vocdoni::CsvCensus::Data do
   let(:invalid_email) { "invalid_email" }
   let(:valid_token) { "123456" }
   let(:invalid_token) { "" }
-  let(:valid_csv_path) { File.expand_path(File.join("..", "..", "..", "..", "assets", "valid-census.csv"), __dir__) }
+  let(:valid_csv_path) { file_fixture("valid-census.csv") }
   let(:invalid_csv_path) { Decidim::Dev.test_file("import_participatory_space_private_users_iso8859-1.csv", "text/csv") }
-  let(:file_with_invalid_data) { File.expand_path(File.join("..", "..", "..", "..", "assets", "invalid-census.csv"), __dir__) }
+  let(:file_with_invalid_data) { file_fixture("invalid-census.csv") }
 
   it { is_expected.to be_valid }
 

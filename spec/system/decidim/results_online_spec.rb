@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Results online" do # rubocop:disable RSpec/DescribeClass
+describe "Results online" do
   let(:manifest_name) { "vocdoni" }
   let(:user) { create(:user, :confirmed, organization:) }
   let(:organization) { component.organization }

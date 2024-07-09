@@ -22,3 +22,4 @@ development_app
 *.gem
 node_modules/
 npm_debug.log
+.rubocop-http*

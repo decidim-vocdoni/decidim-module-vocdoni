@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Explore elections", :slow do # rubocop:disable RSpec/DescribeClass
+describe "Explore elections", :slow do
   include_context "with a component"
   let(:manifest_name) { "vocdoni" }
 

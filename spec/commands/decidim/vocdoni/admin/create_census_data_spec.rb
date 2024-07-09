@@ -8,10 +8,7 @@ module Decidim::Vocdoni::Admin
 
     let(:form) { CensusDataForm.new(file:) }
     let(:election) { create(:vocdoni_election) }
-
-    def valid_census_file
-      File.expand_path(File.join("..", "..", "..", "..", "assets", "valid-census.csv"), __dir__)
-    end
+    let(:valid_census_file) { file_fixture("valid-census.csv") }
 
     context "when the file is in invalid format" do
       let(:file) { Decidim::Dev.test_file("import_participatory_space_private_users_iso8859-1.csv", "text/csv") }

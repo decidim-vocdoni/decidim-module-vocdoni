@@ -2,10 +2,11 @@
 
 require "spec_helper"
 
-describe "Admin manages census", :slow do # rubocop:disable RSpec/DescribeClass
+describe "Admin manages census", :slow do
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create(:vocdoni_component) }
   let(:election) { create(:vocdoni_election, :upcoming, :published, :complete, component: current_component, title: { en: "English title" }) }
+  let(:valid_census_file) { file_fixture("valid-census.csv") }
 
   before do
     allow(Rails.application).to receive(:secret_key_base).and_return("a-secret-key-base")
@@ -223,9 +224,5 @@ describe "Admin manages census", :slow do # rubocop:disable RSpec/DescribeClass
     end
 
     find("li.tabs-title a", text: "Census").click
-  end
-
-  def valid_census_file
-    File.expand_path(File.join("..", "..", "..", "assets", "valid-census.csv"), __dir__)
   end
 end

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin creates wallet", :slow do # rubocop:disable RSpec/DescribeClass
+describe "Admin creates wallet", :slow do
   let(:manifest_name) { :vocdoni }
   let(:current_component) { create(:vocdoni_component) }
   let!(:election) { create(:vocdoni_election, :ready_for_setup, component: current_component, title: { en: "English title" }) }
