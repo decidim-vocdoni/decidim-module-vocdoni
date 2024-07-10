@@ -99,6 +99,22 @@ describe "Explore elections", :slow do
     it "shows result information" do
       expect(page).to have_i18n_content(question.title)
       expect(page).to have_content("Election results")
+      question.answers.each do |answer|
+        within "#total-answers-#{answer.id}" do
+          expect(page).to have_content("#{answer.votes} votes")
+        end
+      end
+    end
+
+    context "when some answers have errors" do
+      before do
+        question.answers.first.update!(votes: nil)
+        visit resource_locator(election).path
+      end
+
+      it "shows the error message" do
+        expect(page).to have_content("There's been and error fetching the results. Please try again later.")
+      end
     end
   end
 end

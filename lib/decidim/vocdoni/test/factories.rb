@@ -147,7 +147,7 @@ FactoryBot.define do
       end
     end
 
-    # everything in place exect the vocdoni_election_id
+    # everything in place except the vocdoni_election_id
     trait :ready_for_setup do
       upcoming
       published
