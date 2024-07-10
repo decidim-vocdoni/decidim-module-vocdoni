@@ -210,7 +210,7 @@ module Decidim::Vocdoni
     end
 
     # Public: the Vocdoni's format to create a new election
-    # @see https://developer.vocdoni.io/sdk#creating-a-voting-process
+    # @see https://developer.vocdoni.io/sdk/tutorial
     # The process to create an election still needs to add the keys "census" and "questions"
     # This is done using the Vocdoni SDK
     def to_vocdoni
@@ -227,7 +227,8 @@ module Decidim::Vocdoni
           "dynamicCensus" => true,
           "interruptible" => interruptible?,
           "secretUntilTheEnd" => secret_until_the_end?,
-          "anonymous" => anonymous?
+          "anonymous" => anonymous?,
+          "metadata" => { "encrypted" => false, "password" => nil }
         },
         "voteType" => {
           # uniqueChoices: false, # if the choices are unique when voting
