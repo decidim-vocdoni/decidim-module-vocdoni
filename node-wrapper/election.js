@@ -30,7 +30,8 @@ const updateElectionCensus = async (client, censusAttributes, censusData) => {
       auth: {
         identifier: censusIdentifier,
         wallet: censusWallet
-      }
+      },
+      async: { async: true, wait: 30000 }
     });
     const newCensus = await service.create(CensusType.WEIGHTED);
     await service.add(
@@ -38,10 +39,14 @@ const updateElectionCensus = async (client, censusAttributes, censusData) => {
       censusData.map((wallet) => ({ key: wallet, weight: BigInt(1) }))
     );
     const info = await service.publish(newCensus.id);
-    await client.changeElectionCensus(censusAttributes.electionId, info.censusID, info.uri);
-    return JSON.stringify({ success: true, count: censusData.length, timestamp: new Date(), newCensusId: info.censusID});
+    const oldCensusInfo = await service.get(censusAttributes.id);
+    let censusLength = censusData.length > oldCensusInfo.size
+      ? censusData.length
+      : oldCensusInfo.size;
+    await client.changeElectionCensus(censusAttributes.electionId, info.censusID, info.uri, censusLength);
+    return { success: true, count: censusData.length, timestamp: new Date(), newCensusId: info.censusID, newCensusSize: censusLength };
   } catch (error) {
-    return JSON.stringify({ success: false, error: error.message, count: 0, timestamp: new Date() });
+    return { success: false, error: error.message, count: 0, timestamp: new Date() };
   }
 };
 

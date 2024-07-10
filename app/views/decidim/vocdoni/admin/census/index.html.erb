@@ -63,11 +63,13 @@
             </div>
           <% end %>
           <p class="mb-4"><%= t("decidim.vocdoni.admin.census.status.data", count: status.count, due_date: l(status.last_import_at, format: :long)) %></p>
-          <%= link_to t("decidim.vocdoni.admin.census.destroy.title"),
-                      destroy_all_election_census_path(election),
+          <%= link_to destroy_all_election_census_path(election),
                       method: :delete,
                       class: "button button__sm button__primary",
-                      data: { confirm: t("decidim.vocdoni.admin.census.destroy.confirm") } %>
+                      data: { confirm: t("decidim.vocdoni.admin.census.destroy.confirm") } do %>
+              <%= icon "delete-bin-line", role: "img", "aria-hidden": true %>
+              <%= t("decidim.vocdoni.admin.census.destroy.title") %>
+          <% end %>
         </div>
       </div>
     <% end %>
@@ -102,15 +104,9 @@
         <!--closing tag moved to the form-->
       </div>
     <% else %>
-      <div class="flex">
-        <% if allowed_to?(:edit, :election_calendar, election: election) && election.ready_for_calendar_form? %>
-          <div class="item__edit-sticky">
-            <div class="item__edit-sticky-container">
-              <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), edit_election_calendar_path(election), class: "button button__sm button__secondary" %>
-            </div>
-          </div>
-        <% end %>
-      </div>
+      <% if allowed_to?(:edit, :election_calendar, election: election) && election.ready_for_calendar_form? %>
+        <%= render "decidim/vocdoni/admin/shared/next_wizard_step", path: edit_election_calendar_path(election) %>
+      <% end %>
     <% end %>
     <% unless status.name == "ready" ||
       (election.internal_census? && election.verification_types.empty?) ||

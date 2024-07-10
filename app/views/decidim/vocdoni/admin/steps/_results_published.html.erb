@@ -4,6 +4,11 @@
       <%= t(".title") %>
     </h1>
   </div>
+  <% unless election.answers_have_results? %>
+    <div class="callout alert">
+      <p><%= t(".results_error") %></p>
+    </div>
+  <% end %>
   <div class="card-section table-scroll js-votes-results">
     <%= render partial: "results_stats" %>
   </div>

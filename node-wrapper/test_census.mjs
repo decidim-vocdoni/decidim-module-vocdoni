@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-relative-import-paths/no-relative-import-paths */
 
 /**
  * Manual testing of the Vocdoni SDK Census features
@@ -57,8 +58,16 @@ let service = null;
 let electionData = null;
 let censusId = process.env.CENSUS_ID;
 let censusIdentifier = process.env.CENSUS_IDENTIFIER;
-const censusWallet = await VocdoniSDKClient.generateWalletFromData("a-test").address;
-const newCensusWallet = await VocdoniSDKClient.generateWalletFromData("a-test-2").address;
+let censusDetails = null;
+let censusInfo = null;
+let info = null;
+const censusWallets = [
+  await VocdoniSDKClient.generateWalletFromData("a-test-1").address, 
+  await VocdoniSDKClient.generateWalletFromData("a-test-2").address,
+  await VocdoniSDKClient.generateWalletFromData("a-test-3").address
+];
+const newCensusWallet = await VocdoniSDKClient.generateWalletFromData("b-test-1").address;
+const addCensusWallet = await VocdoniSDKClient.generateWalletFromData("b-test-2").address;
 if (process.env.ELECTION_ID && process.env.CENSUS_WALLET && process.env.CENSUS_ID && process.env.CENSUS_IDENTIFIER) {
   console.log("Using census data from ENV vars CENSUS_WALLET, CENSUS_IDENTIFIER and CENSUS_ID");
   service = new CensusService({ 
@@ -68,7 +77,8 @@ if (process.env.ELECTION_ID && process.env.CENSUS_WALLET && process.env.CENSUS_I
     auth: {
       identifier: process.env.CENSUS_IDENTIFIER,
       wallet: new Wallet(process.env.CENSUS_WALLET)
-    } 
+    },
+    async: { async: true, wait: 30000 }
   });
 
   console.log("CensusService:", service)
@@ -78,47 +88,45 @@ if (process.env.ELECTION_ID && process.env.CENSUS_WALLET && process.env.CENSUS_I
   console.log("Using election data from ENV var ELECTION_ID");
   console.log("ElectionID:", electionData.id, "Census:", electionData.census);
 } else {
-  console.log("Using deterministic wallets in the census:", censusWallet);
-  electionData = await newElection(client, [censusWallet]);
+  console.log("Using deterministic wallets in the census:", censusWallets);
+  electionData = await newElection(client, censusWallets);
   console.log("New election created with");
   console.log(electionData);
   censusId = electionData.censusId;
   censusIdentifier = electionData.censusIdentifier;
-  service = client.censusService;
   console.log("\n\n");
   console.log("You can run this script with the following ENV var in order to skip the creation of a new election:");
   console.log(`ENV=${env} WALLET=${process.env.WALLET} ELECTION_ID=${electionData.id} CENSUS_ID=${censusId} CENSUS_IDENTIFIER=${censusIdentifier} CENSUS_WALLET=${electionData.censusPrivateKey} node node-wrapper/test_census.mjs`);
+  service = client.censusService;
+  censusInfo = await service.get(censusId);
+  console.log("censusInfo", censusInfo);
+  console.log("Census size:", censusInfo.size);
 }
 
-console.log("Is the old address in census?")
-console.log(await checkAddress(service, censusId, censusWallet))
-console.log("Is the new addres in census?")
+console.log("\n==========\n");
+
+console.log("Are the old addresses in the old census?")
+console.log(await checkAddress(service, censusId, censusWallets[0]))
+console.log(await checkAddress(service, censusId, censusWallets[1]))
+console.log(await checkAddress(service, censusId, censusWallets[2]))
+console.log("Are the new addresses in the old census?")
 console.log(await checkAddress(service, censusId, newCensusWallet))
+console.log(await checkAddress(service, censusId, addCensusWallet))
 
-let censusDetails = null;
-try {
-  console.log("Adding the new census...");
-  newCensus = await service.create(CensusType.WEIGHTED);
-  console.log(newCensus)
-  const add = await service.add(newCensus.id, [{ key: newCensusWallet, weight: BigInt(1) }]);
-  console.log("ADD", add);
-  censusDetails = await service.publish(newCensus.id);
-  console.log("censusDetails", censusDetails);
-} catch (error) {
-  console.error("Error adding new census", error.message);
-  throw error;
+console.log("Adding the new census...");
+info = await updateElectionCensus(client, { privateKey: process.env.WALLET, id: censusId, identifier: censusIdentifier, electionId: electionData.id }, [newCensusWallet, addCensusWallet]);
+console.log("updateElectionCensus INFO", info);
+if (!info.success) {
+  throw new Error(`Error updating election census: ${info.error}`);
 }
 
-console.log("Is the old address in census?")
-console.log(await checkAddress(service, newCensus.id, censusWallet))
-console.log("Is the new addres in census?")
-console.log(await checkAddress(service, newCensus.id, newCensusWallet))
-
-try {
-  await client.changeElectionCensus(electionData.id, censusDetails.censusID, censusDetails.uri);
-} catch (error) {
-  console.error("Error updating election census", error.message);
-}
+console.log("Are the old addresses in the new census?")
+console.log(await checkAddress(service, info.newCensusId, censusWallets[0]))
+console.log(await checkAddress(service, info.newCensusId, censusWallets[1]))
+console.log(await checkAddress(service, info.newCensusId, censusWallets[2]))
+console.log("Are the new addresses in the old census?")
+console.log(await checkAddress(service, info.newCensusId, newCensusWallet))
+console.log(await checkAddress(service, info.newCensusId, addCensusWallet))
 
 try {
   console.log("Is the election using the new census?");

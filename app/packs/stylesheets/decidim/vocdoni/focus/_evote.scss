@@ -2,256 +2,271 @@
   @apply flex grow;
 }
 
-.evote{
-  $checkfocus: 1px dotted rgba(black, .5);
-  $checkfocus-offset: .1em;
+.evote {
+  $checkfocus: 1px dotted rgba(black, 0.5);
+  $checkfocus-offset: 0.1em;
 
   padding: 1rem;
   margin-top: 1rem;
+
   @apply md:p-8 md:mt-8;
 
   .row {
     @apply flex flex-col items-center text-center;
   }
 
-  &__grid .row{
+  &__grid .row {
     @apply block text-left;
   }
 
-  &__content{
+  &__content {
     margin: 1rem auto;
+
     @apply md:my-8 md:mx-auto w-full;
   }
 
-  &__options{
+  &__options {
     @apply text-left my-4 mx-auto grow md:my-8 md:mx-auto;
 
-    &--boolean{
+    &--boolean {
       @apply md:flex md:w-full md:justify-center;
 
-      > *{
+      > * {
         flex-basis: 200px;
+
         @apply mx-4;
       }
     }
   }
 
-  &__card{
+  &__card {
     @apply shadow-lg p-4 py-8 rounded-lg bg-white mb-4;
 
-    &.is-disabled{
+    &.is-disabled {
       @apply bg-gray-4 cursor-not-allowed;
 
-      > *{
+      > * {
         @apply opacity-50;
       }
     }
   }
 
-  &__login{
+  &__login {
     @apply p-8 bg-white;
 
-    input[type="text"],{
+    input[type="text"] {
       @apply mt-0 mb-2;
     }
   }
 
-  &__check{
+  &__check {
     @apply cursor-pointer flex items-center md:text-lg;
 
     input[type="checkbox"],
-    input[type="radio"]{
+    input[type="radio"] {
       @apply absolute w-px h-px p-0 m-px overflow-hidden border-0;
+
       margin: -1px;
       clip: rect(0, 0, 0, 0);
     }
 
-    [aria-disabled="true"]{
+    [aria-disabled="true"] {
       @apply pointer-events-none;
     }
   }
 
-  &__check-label{
+  &__check-label {
     @apply relative pl-4 leading-7;
 
-    input[type="radio"] + &::before{
+    input[type="radio"] + &::before {
       content: "";
+
       @apply absolute w-4 h-4 border border-solid rounded-full;
-      left: -.7em;
-      top: .2em;
+
+      left: -0.7em;
+      top: 0.2em;
       border-color: rgb(var(--secondary-rgb));
     }
 
-    input[type="radio"]:focus + &::before{
+    input[type="radio"]:focus + &::before {
       outline: 1px dotted rgba(var(--secondary-rgb), 0.5);
-      outline-offset: .1em;
+      outline-offset: 0.1em;
     }
 
-    input[type="radio"]:checked + &::after{
+    input[type="radio"]:checked + &::after {
       content: "";
+
       @apply absolute w-3 h-3 bg-secondary rounded-full;
-      left: -.55em;
-      top: .35em;
+
+      left: -0.55em;
+      top: 0.35em;
     }
 
-    input[type="checkbox"] + &::before{
+    input[type="checkbox"] + &::before {
       content: "";
+
       @apply absolute w-4 h-4 border border-solid;
+
       border-radius: 4px;
-      left: -.7em;
-      top: .2em;
+      left: -0.7em;
+      top: 0.2em;
       border-color: rgba(var(--secondary-rgb), 1);
     }
 
-    input[type="checkbox"]:focus + &::before{
+    input[type="checkbox"]:focus + &::before {
       outline: 1px dotted rgba(var(--secondary-rgb), 0.5);
-      outline-offset: .1em;
+      outline-offset: 0.1em;
     }
 
-    input[type="checkbox"]:checked + &::before{
+    input[type="checkbox"]:checked + &::before {
       @apply bg-secondary;
     }
 
-    input[type="checkbox"]:checked + &::after{
+    input[type="checkbox"]:checked + &::after {
       content: "";
+
       @apply absolute w-2 h-3;
-      border-color: theme('colors.white');
+
+      border-color: theme("colors.white");
       border-style: solid;
       border-width: 0 2px 2px 0;
-      left: -.5em;
-      top: .15em;
+      left: -0.5em;
+      top: 0.15em;
+
       @apply transform rotate-45 origin-bottom-left;
     }
   }
 
-  &__check-extra{
+  &__check-extra {
     @apply block text-sm uppercase tracking-tighter font-semibold;
 
-    button{
+    button {
       font-size: inherit;
       text-transform: inherit;
+
       @apply uppercase;
     }
   }
 
-  &__counter{
+  &__counter {
     @apply sticky bottom-8 right-0 ml-auto text-right leading-5 bg-[#adadad] p-1 px-4 rounded-[4px];
   }
 
-  &__counter-num{
+  &__counter-num {
     @apply text-lg;
   }
 
-  &__confirm{
+  &__confirm {
     @apply mt-8 max-w-5xl text-left leading-5;
 
-    dt{
+    dt {
       @apply font-semibold;
     }
 
-    dd:not(:last-child){
+    dd:not(:last-child) {
       @apply mb-8;
     }
   }
 
-  &__confirm-label{
+  &__confirm-label {
     @apply text-xs uppercase tracking-tighter text-[var(--primary)];
   }
 
-  &__edit-answer{
+  &__edit-answer {
     @apply normal-case tracking-normal;
   }
 
   &__submitting,
   &__casting,
-  &__confirming{
+  &__confirming {
     @apply w-48 h-10 flex mx-auto my-8;
   }
 
-  &__dot{
+  &__dot {
     @apply w-2.5 h-2.5 mx-auto my-2.5 rounded-full bg-[var(--primary)];
 
-    &:nth-child(odd){
+    &:nth-child(odd) {
       animation: dotTop 1s infinite ease-in-out;
     }
 
-    &:nth-child(even){
+    &:nth-child(even) {
       animation: dotBottom 1s infinite ease-in-out;
     }
 
-    @media (prefers-reduced-motion){
+    @media (prefers-reduced-motion) {
       animation: none !important;
     }
 
-    @keyframes dotTop{
-      0%{
+    @keyframes dotTop {
+      0% {
         transform: translateY(-15px);
       }
 
-      50%{
+      50% {
         transform: translateY(15px);
       }
 
-      100%{
+      100% {
         transform: translateY(-15px);
       }
     }
 
-    @keyframes dotBottom{
-      0%{
+    @keyframes dotBottom {
+      0% {
         transform: translateY(15px);
       }
 
-      50%{
+      50% {
         transform: translateY(-15px);
       }
 
-      100%{
+      100% {
         transform: translateY(15px);
       }
     }
   }
 
-  &__poll-id{
+  &__poll-id {
     @apply break-words;
   }
 
-  &__preview{
-    .accordion-title::before{
+  &__preview {
+    .accordion-title::before {
       content: "";
+
       @apply text-xl mt-[-.75rem] text-[var(--anchor-color)] font-normal;
     }
   }
 
-  &__preview-question{
+  &__preview-question {
     @apply font-semibold border-4 border-background rounded p-4;
 
-    .label{
+    .label {
       @apply ml-2;
     }
   }
 
-  &__preview-result{
+  &__preview-result {
     @apply leading-5 mb-4;
   }
 
-  &__preview-option{
+  &__preview-option {
     @apply mb-[-1];
   }
 
-  &__preview-bar{
+  &__preview-bar {
     @apply flex items-center;
 
-    .progress{
+    .progress {
       @apply flex-grow mr-4;
     }
   }
 
-  &__preview-label{
+  &__preview-label {
     @apply text-sm mt-[-1];
   }
 
-  &__preview-perc{
+  &__preview-perc {
     @apply w-12 text-right font-bold;
   }
 

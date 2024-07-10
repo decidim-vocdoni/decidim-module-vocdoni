@@ -8,7 +8,7 @@
 }
 
 .tabs-title.is-active {
-  background: #ffffff;
+  background: #fff;
 }
 
 .progress-indicator {
@@ -44,8 +44,8 @@
   content: attr(data-step);
   display: block;
   background: #ccc;
-  width: .5em;
-  height: .5em;
+  width: 0.5em;
+  height: 0.5em;
   text-align: center;
   margin: 0 auto 0.25em;
   line-height: 1.5em;
@@ -55,11 +55,11 @@
 }
 
 .progress-indicator > li.text-warning::before {
-  background: #ffae00;;
+  background: #ffae00;
 }
 
 .progress-indicator > li::after {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   background: #ccc;
@@ -70,11 +70,11 @@
   -ms-transform: translateY(-100%);
   transform: translateY(-100%);
   left: 50%;
-  margin-left: 1.5em\9;
+  margin-left: 1.5em;
   z-index: 0;
 }
 
-.progress-indicator > li:last-child:after {
+.progress-indicator > li:last-child::after {
   display: none;
 }
 

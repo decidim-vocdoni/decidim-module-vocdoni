@@ -9,7 +9,10 @@
 
       <div class="item__edit-sticky">
         <div class="item__edit-sticky-container">
-          <%= f.submit t(".create"), class: "button button__sm button__secondary" %>
+          <%= f.button type: :submit, class: "button button__sm button__secondary" do %>
+            <%= icon "check-double-line", role: "img", "aria-hidden": true %>
+            <%= t(".create") %>
+          <% end %>
         </div>
       </div>
     <% end %>

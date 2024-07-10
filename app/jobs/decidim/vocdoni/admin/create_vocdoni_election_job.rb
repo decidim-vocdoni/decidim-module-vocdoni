@@ -14,6 +14,7 @@ module Decidim
             election.build_answer_values!
             result = sdk.createElection(election.to_vocdoni, election.questions_to_vocdoni, election.census_status.all_wallets)
             @vocdoni_id = result["electionId"]
+            @census_id = result["censusId"]
             @census_identifier = result["censusIdentifier"]
             @census_address = result["censusAddress"]
             @census_private_key = result["censusPrivateKey"]
@@ -33,6 +34,7 @@ module Decidim
         def update_election
           election.vocdoni_election_id = vocdoni_id
           election.census_attributes = {
+            id: @census_id,
             identifier: @census_identifier,
             address: @census_address,
             private_key: @census_private_key,

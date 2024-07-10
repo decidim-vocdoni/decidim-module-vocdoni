@@ -330,7 +330,7 @@ en:
           ended:
             title: Ended
           index:
-            title: Steps dashboard
+            title: Voting control dashboard
           invalid_status: The election was out of sync with the Vocdoni API. The status
             has been updated to "%{status}". Please refresh the page.
           paused:
@@ -345,12 +345,18 @@ en:
           ready:
             title: Ready
           results_published:
+            results_error: Some error occurred while publishing the results. Please
+              try to publish them again.
+            submit: Re-Publish results
             success: The election results have been successfully published.
             title: Results published
           results_stats:
             answer: Answer
+            percentage: Percentage
+            percentage_count: "%{count}%"
             question: Question
             result: Result
+            results_error: Error!
           vote:
             invalid: There was a problem starting this election
             message: We're on the vote period until %{end_time}.
@@ -465,6 +471,8 @@ en:
         results:
           description: 'These are the results of the voting, for each question:'
           percentage: "%{count}%"
+          results_error: There's been and error fetching the results. Please try again
+            later.
           title: Election results
           votes:
             one: "%{count} vote"
@@ -478,6 +486,13 @@ en:
           back: Available elections
           canceled: This election was canceled
           description: Real-time voting results
+          manual_start_status:
+            canceled: The election was canceled. It was meant to end on %{end_time}
+            finished: Voting began on %{start_time} and ended on %{end_time}
+            ongoing: 'Voting began on %{start_time}. Active voting until: %{end_time}'
+            paused: Voting began on %{start_time}. Voting is currently paused. It
+              ends on %{end_time}
+            upcoming: Voting will start soon and will end on %{end_time}
           paused: This election is curently paused. Try again later.
           preview: Preview
           verify:
@@ -489,9 +504,10 @@ en:
             canceled: Voting was canceled. It was ment to begin on %{start_time} and
               end on %{end_time}
             finished: Voting began on %{start_time} and ended on %{end_time}
-            ongoing: 'Active voting until: %{end_time}'
-            paused: Voting is paused. It ends on %{end_time}
-            upcoming: Voting begins on %{start_time}
+            ongoing: 'Voting began on %{start_time}. Active voting until: %{end_time}'
+            paused: Voting began on %{start_time}. Voting is currently paused. It
+              ends on %{end_time}
+            upcoming: Voting begins on %{start_time} and ends on %{end_time}
       models:
         answer:
           fields:

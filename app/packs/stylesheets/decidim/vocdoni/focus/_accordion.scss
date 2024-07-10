@@ -1,31 +1,31 @@
-.voc-accordion{
+.voc-accordion {
   @apply bg-transparent;
 
-  .accordion-title{
+  .accordion-title {
     @apply text-inherit border-0 rounded-none pl-4 flex items-center justify-start;
 
-    span{
+    span {
       @apply cursor-move;
     }
 
-    &:focus{
+    &:focus {
       @apply bg-transparent;
     }
   }
 
-  .accordion-item{
+  .accordion-item {
     // Override Foundation
     &:first-child > :first-child,
-    &:last-child:not(.is-active) > .accordion-title{
+    &:last-child:not(.is-active) > .accordion-title {
       @apply border-0 rounded-none;
     }
   }
 
-  .accordion-content{
+  .accordion-content {
     @apply border-0 mt-4;
 
     .tabs-title > a[aria-selected="true"],
-    .tabs-content{
+    .tabs-content {
       @apply bg-transparent;
     }
   }

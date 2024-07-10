@@ -92,7 +92,8 @@ module Decidim
             "created" => ElectionStatusForm, # This allows for resending data to vocdoni if there's been a problem
             "paused" => ElectionStatusForm,
             "vote" => ElectionStatusForm,
-            "vote_ended" => ResultsForm
+            "vote_ended" => ResultsForm,
+            "results_published" => election.answers_have_results? ? nil : ResultsForm
           }[current_step]
         end
 
@@ -102,7 +103,8 @@ module Decidim
             "created" => UpdateElectionStatus,
             "paused" => UpdateElectionStatus,
             "vote" => UpdateElectionStatus,
-            "vote_ended" => SaveResults
+            "vote_ended" => SaveResults,
+            "results_published" => SaveResults
           }[current_step]
         end
 

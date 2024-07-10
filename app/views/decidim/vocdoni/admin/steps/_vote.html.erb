@@ -4,7 +4,7 @@
   </div>
 
   <div class="card-section">
-    <p><%= t("message", scope: "decidim.vocdoni.admin.steps.vote", end_time: election.end_time) %></p>
+    <p><%= t("message", scope: "decidim.vocdoni.admin.steps.vote", end_time: l(election.end_time, format: :long)) %></p>
 
     <% if election.election_type.fetch("secret_until_the_end") %>
       <p><%= t("secret_until_the_end", scope: "decidim.vocdoni.admin.steps.vote") %></p>

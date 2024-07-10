@@ -19,7 +19,7 @@ describe "Admin manages election steps", :slow do
   let!(:wallet) { create(:vocdoni_wallet, organization: current_component.organization) }
   let(:results) do
     [
-      [3, 14]
+      [1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15], [16, 17, 18]
     ]
   end
   let!(:create_election_result) do
@@ -255,13 +255,44 @@ describe "Admin manages election steps", :slow do
       expect(page).to have_css("li.text-warning", text: "Results published")
       expect(page).to have_content("Results published")
 
-      within :xpath, "//td[contains(text(),'#{translated(answer_first.title)}')]/following-sibling::td" do
-        expect(page).to have_content("3")
+      election.questions.each_with_index do |question, idx|
+        question.answers.each do |answer|
+          within :xpath, "//td[contains(text(),'#{translated(answer.title)}')]/following-sibling::td[1]" do
+            expect(page).to have_content((results[idx][answer.value]).to_s)
+          end
+        end
+      end
+      expect(page).to have_no_content("Publish results")
+    end
+  end
+
+  context "when already published" do
+    let(:vocdoni_status) { "RESULTS" }
+    let!(:election) { create(:vocdoni_election, :ready_for_setup, :configured, :results_published, :published, component: current_component) }
+    let(:answer_first) { election.questions.first.answers.first }
+    let(:answer_second) { election.questions.first.answers.second }
+
+    it "shows the results" do
+      visit_steps_page
+
+      election.build_answer_values!
+
+      expect(page).to have_content("Some error occurred while publishing the results. Please try to publish them again.")
+
+      perform_enqueued_jobs do
+        click_link_or_button "Publish results"
       end
 
-      within :xpath, "//td[contains(text(),'#{translated(answer_second.title)}')]/following-sibling::td" do
-        expect(page).to have_content("14")
+      expect(page).to have_content("Results published")
+
+      election.questions.each_with_index do |question, idx|
+        question.answers.each do |answer|
+          within :xpath, "//td[contains(text(),'#{translated(answer.title)}')]/following-sibling::td[1]" do
+            expect(page).to have_content((results[idx][answer.value]).to_s)
+          end
+        end
       end
+      expect(page).to have_no_content("Publish results")
     end
   end
 

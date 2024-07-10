@@ -21,7 +21,11 @@
               <%= translated_attribute(answer.title) %>
             </p>
 
-            <%= render view: :progress_bar, locals: { id: answer.id, votes_percentage: answer.votes_percentage, votes: answer.votes } %>
+            <% if answer.votes_percentage.nil? %>
+              <p class="text-alert text-center"><%= t("decidim.vocdoni.elections.results.results_error") %></p>
+            <% else %>
+              <%= render view: :progress_bar, locals: { id: answer.id, votes_percentage: answer.votes_percentage, votes: answer.votes } %>
+            <% end %>
           </div>
         <% end %>
       </div>

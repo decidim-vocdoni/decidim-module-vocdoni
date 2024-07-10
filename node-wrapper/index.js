@@ -135,7 +135,8 @@ const createElection = async (electionData, questionsData, censusData) => {
 
 const updateCensus = async (censusAttributes, censusData) => {
   const client = vocdoniClient();
-  return await updateElectionCensus(client, censusAttributes, censusData);
+  const _info = await updateElectionCensus(client, censusAttributes, censusData);
+  return JSON.stringify(_info);
 };
 
 /**

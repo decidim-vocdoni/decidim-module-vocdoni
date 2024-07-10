@@ -25,6 +25,7 @@ module Decidim
 
       def build_census_attributes
         {
+          id: @election.census_attributes["id"],
           identifier: @election.census_attributes["identifier"],
           address: @election.census_attributes["address"],
           privateKey: @election.census_attributes["private_key"],

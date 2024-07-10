@@ -354,7 +354,8 @@ describe Decidim::Vocdoni::Election do
                                            "interruptible" => true,
                                            "dynamicCensus" => true,
                                            "secretUntilTheEnd" => false,
-                                           "anonymous" => false
+                                           "anonymous" => false,
+                                           "metadata" => { "encrypted" => false, "password" => nil }
                                          })
       expect(json["voteType"]).to eq({
                                        "maxVoteOverwrites" => 10
@@ -382,7 +383,8 @@ describe Decidim::Vocdoni::Election do
                                              "dynamicCensus" => true,
                                              "interruptible" => false,
                                              "secretUntilTheEnd" => true,
-                                             "anonymous" => true
+                                             "anonymous" => true,
+                                             "metadata" => { "encrypted" => false, "password" => nil }
                                            })
       end
     end
