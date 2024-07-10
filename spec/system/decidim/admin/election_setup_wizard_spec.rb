@@ -222,7 +222,7 @@ describe "Election setup wizard", :slow do
         end
 
         it "redirects to the steps dashboard" do
-          expect(page).to have_content("Steps dashboard")
+          expect(page).to have_content("Voting control dashboard")
         end
       end
     end
