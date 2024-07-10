@@ -9,6 +9,9 @@ user2@example.org;ABCXYZ</pre>
    <%= form.file_field :file, required: true %>
  </div>
   <div class="mt-8">
-    <%= submit_tag t("new.submit", scope: "decidim.vocdoni.admin.census"), class: "button button__sm button__secondary" %>
+    <%= button_tag type: :submit, class: "button button__sm button__secondary" do %>
+      <%= icon "upload-line", role: "img", "aria-hidden": true %>
+      <%= t("new.submit", scope: "decidim.vocdoni.admin.census") %>
+    <% end %>
   </div>
 <% end %>

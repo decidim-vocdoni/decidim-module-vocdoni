@@ -33,15 +33,9 @@ describe "Election setup wizard", :slow do
     it_behaves_like "has setup wizard tabs"
 
     describe "basic info" do
-      it "has title" do
+      it "has title and steps" do
         expect(page).to have_content("New election")
-      end
-
-      it "has an active tab" do
         expect(page).to have_css("li.tabs-title.is-active a", text: "Basic info")
-      end
-
-      it "has form fields" do
         expect(page).to have_content("Title")
         expect(page).to have_content("Description")
         expect(page).to have_content("Add an image gallery")
@@ -74,22 +68,15 @@ describe "Election setup wizard", :slow do
         fill_basic_info
       end
 
-      it "has title" do
+      it "has title and steps" do
         expect(page).to have_content(edit_title)
-      end
-
-      it "has an active tab" do
         expect(page).to have_css("li.tabs-title.is-active a", text: "Questions")
-      end
-
-      it "can edit previous step" do
         expect(page).to have_no_css("li.tabs-title a.disabled", text: "Basic info")
       end
 
       context "when creates a new question with 2 answers" do
         before do
           fill_question
-          click_link_or_button "Manage answers"
           fill_answer_first
           fill_answer_second
           click_link_or_button "Done, go to the next step"
@@ -104,7 +91,6 @@ describe "Election setup wizard", :slow do
       context "when creates a new question with 1 answer" do
         before do
           fill_question
-          click_link_or_button "Manage answers"
           fill_answer_first
           click_link_or_button "Back to questions"
         end
@@ -121,25 +107,15 @@ describe "Election setup wizard", :slow do
       before do
         fill_basic_info
         fill_question
-        click_link_or_button "Manage answers"
         fill_answer_first
         fill_answer_second
         click_link_or_button "Done, go to the next step"
       end
 
-      it "has title" do
+      it "has title and steps" do
         expect(page).to have_content(edit_title)
-      end
-
-      it "has an active tab" do
         expect(page).to have_css("li.tabs-title.is-active a", text: "Census")
-      end
-
-      it "has form fields" do
         expect(page).to have_content("Upload a CSV file")
-      end
-
-      it "can edit previous steps" do
         expect(page).to have_no_css("li.tabs-title a.disabled", text: "Basic info")
         expect(page).to have_no_css("li.tabs-title a.disabled", text: "Questions")
       end
@@ -149,11 +125,8 @@ describe "Election setup wizard", :slow do
           click_link_or_button "Upload file"
         end
 
-        it "shows errors" do
+        it "shows errors and no steps" do
           expect(page).to have_content("error in this field")
-        end
-
-        it "doesn't go to the next step" do
           expect(page).to have_no_css("a.button", text: "Done, go to the next step")
           expect(page).to have_css("li.tabs-title a.disabled", text: "Calendar and results")
         end
@@ -174,27 +147,17 @@ describe "Election setup wizard", :slow do
       before do
         fill_basic_info
         fill_question
-        click_link_or_button "Manage answers"
         fill_answer_first
         fill_answer_second
         click_link_or_button "Done, go to the next step"
         upload_census
       end
 
-      it "has title" do
+      it "has title and steps" do
         expect(page).to have_content(edit_title)
-      end
-
-      it "has an active tab" do
         expect(page).to have_css("li.tabs-title.is-active a", text: "Calendar and results")
-      end
-
-      it "has form fields" do
         expect(page).to have_content("Start time")
         expect(page).to have_content("End time")
-      end
-
-      it "can edit previous steps" do
         expect(page).to have_no_css("li.tabs-title a.disabled", text: "Basic info")
         expect(page).to have_no_css("li.tabs-title a.disabled", text: "Questions")
         expect(page).to have_no_css("li.tabs-title a.disabled", text: "Census")
@@ -235,7 +198,6 @@ describe "Election setup wizard", :slow do
       before do
         fill_basic_info
         fill_question
-        click_link_or_button "Manage answers"
         fill_answer_first
         fill_answer_second
         click_link_or_button "Done, go to the next step"
@@ -243,15 +205,9 @@ describe "Election setup wizard", :slow do
         fill_calendar_and_results
       end
 
-      it "has title" do
+      it "has title and steps" do
         expect(page).to have_content("Publish election \"#{election_title}\"")
-      end
-
-      it "has an active tab" do
         expect(page).to have_css("li.tabs-title.is-active a", text: "Publish")
-      end
-
-      it "can edit previous steps" do
         expect(page).to have_no_css("li.tabs-title a.disabled", text: "Basic info")
         expect(page).to have_no_css("li.tabs-title a.disabled", text: "Questions")
         expect(page).to have_no_css("li.tabs-title a.disabled", text: "Census")
