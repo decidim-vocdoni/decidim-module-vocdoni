@@ -9,37 +9,10 @@ $white: #fff;
   }
 }
 
-.spinner-container {
-  position: relative;
-  cursor: wait;
-
-  &::before{
-    content: " ";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    @apply bg-white bg-opacity-80;
-    z-index: 1;
-  }
-
-  &::after{
-    -webkit-animation: animation-spin 800ms infinite linear;
-    animation: animation-spin 800ms infinite linear;
-    width: 25px;
-    height: 25px;
-    box-sizing: border-box;
-    border-radius: 50%;
-    border: 3px solid #e8e8e8;
-    border-right-color: var(--primary);
-    display: inline-block;
-    position: absolute;
-    content: "";
-    vertical-align: middle;
-    z-index: 1;
-    top: 47%;
-    left: 47%;
+.evote__preview.spinner-container {
+  &::before {
+    margin-left: calc(50% - 1rem);
+    top: 10vh;
   }
 }
 
@@ -49,7 +22,8 @@ $white: #fff;
   &:hover {
     @apply text-white #{!important};
 
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), rgb(var(--alert-rgb) / var(--tw-bg-opacity)) !important;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+      rgb(var(--alert-rgb) / var(--tw-bg-opacity)) !important;
   }
 }
 
@@ -59,7 +33,8 @@ $white: #fff;
   &:hover {
     @apply text-white #{!important};
 
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), rgb(var(--warning-rgb) / var(--tw-bg-opacity)) !important;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+      rgb(var(--warning-rgb) / var(--tw-bg-opacity)) !important;
   }
 }
 
@@ -69,7 +44,8 @@ $white: #fff;
   &:hover {
     @apply text-white #{!important};
 
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), rgb(var(--success-rgb) / var(--tw-bg-opacity)) !important;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+      rgb(var(--success-rgb) / var(--tw-bg-opacity)) !important;
   }
 }
 
@@ -95,12 +71,13 @@ a.button__alert {
 }
 
 .publish-text p {
-  @apply mb-2
+  @apply mb-2;
 }
 
 .wallet-container {
   @apply w-full mx-auto py-2;
 }
+
 .wallet-input {
   @apply rounded-none rounded-s-md block flex-1 min-w-0 w-full text-sm p-2 border-2 text-gray-2 cursor-not-allowed;
 }
@@ -110,14 +87,19 @@ button.copy-button {
 }
 
 .vocdoni__accordion-trigger {
-  @apply flex w-full items-center justify-between font-semibold text-secondary ;
+  @apply flex w-full items-center justify-between font-semibold text-secondary;
 
   &:hover {
     @apply underline;
   }
 
-    svg {
-        @apply w-8 h-8;
-        fill: currentColor;
-    }
+  svg {
+    @apply w-8 h-8;
+
+    fill: currentColor;
+  }
+}
+
+.evote__preview-question {
+  @apply border-0;
 }

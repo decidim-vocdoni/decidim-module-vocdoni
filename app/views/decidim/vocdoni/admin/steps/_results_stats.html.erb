@@ -12,13 +12,19 @@
                 <tr>
                   <th><%= t(".answer") %></th>
                   <th><%= t(".result") %></th>
+                  <th><%= t(".percentage") %></th>
                 </tr>
               </thead>
               <tbody>
                 <% question.answers.each do |answer| %>
                   <tr>
                     <td><%= translated_attribute(answer.title) %></td>
-                    <td><%= answer.votes.to_i %></td>
+                    <% if answer.votes_percentage.nil? %>
+                      <td colspan="2" class="text-alert font-normal !text-left"><%= t(".results_error") %></td>
+                    <% else %>
+                      <td><%= answer.votes %></td>
+                      <td><%= t(".percentage_count", count: answer.votes_percentage) %></td>
+                    <% end %>
                   </tr>
                 <% end %>
                 <tr>

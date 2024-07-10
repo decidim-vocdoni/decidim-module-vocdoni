@@ -176,6 +176,11 @@ module Decidim::Vocdoni
       questions.map(&:answers).flatten.pluck(:votes).any? Integer
     end
 
+    # Public: Checks if the election has all results correctly defined
+    def answers_have_results?
+      questions.map(&:answers).flatten.pluck(:votes).none? nil
+    end
+
     # Public: Gets the voting period status of the election
     #
     # Returns one of these symbols: upcoming, ongoing or finished
