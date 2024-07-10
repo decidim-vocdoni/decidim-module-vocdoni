@@ -44,6 +44,6 @@
     "web-worker": "1.2.0"
   },
   "dependencies": {
-    "@vocdoni/sdk": "0.8.0"
+    "@vocdoni/sdk": "0.8.2"
   }
 }
