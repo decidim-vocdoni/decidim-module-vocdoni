@@ -83,11 +83,11 @@ module Decidim::Vocdoni
     end
 
     def auto_start?
-      election_type&.fetch("auto_start", true)
+      start_time.present?
     end
 
     def manual_start?
-      auto_start? == false
+      !auto_start?
     end
 
     def interruptible?
@@ -222,7 +222,6 @@ module Decidim::Vocdoni
         "startDate" => start_time&.iso8601,
         "endDate" => end_time.iso8601,
         "electionType" => {
-          "autoStart" => auto_start?,
           # For the moment, we consider all censuses dynamic so admins can update them
           "dynamicCensus" => true,
           "interruptible" => interruptible?,

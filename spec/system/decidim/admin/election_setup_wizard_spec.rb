@@ -168,8 +168,8 @@ describe "Election setup wizard", :slow do
           click_link_or_button "Save and go to the next step"
         end
 
-        it "shows errors" do
-          expect(page).to have_content("error in this field", count: 2)
+        it "shows error" do
+          expect(page).to have_content("error in this field", count: 1)
         end
       end
 

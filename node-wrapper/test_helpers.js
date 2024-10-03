@@ -10,7 +10,6 @@ const newElection = async (client, participants) => {
     endDate: new Date(Date.now() + 1000 * 60 * 60 * 24),
     census,
     electionType: {
-      autoStart: false,
       interruptible: true,
       dynamicCensus: true,
       secretUntilTheEnd: false,
