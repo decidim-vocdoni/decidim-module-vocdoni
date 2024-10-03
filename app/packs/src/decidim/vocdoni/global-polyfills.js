@@ -1,5 +1,5 @@
 window.process = window.process || {
-    env: {
-        NODE_ENV: "development"
-    }
+  env: {
+    NODE_ENV: "development"
+  }
 };
