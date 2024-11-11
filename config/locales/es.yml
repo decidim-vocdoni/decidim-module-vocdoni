@@ -72,11 +72,11 @@ es:
             success: Respuesta actualizada correctamente
         census:
           census_type:
-            external: External (upload a CSV file)
-            internal: Internal (registered participants)
+            external: Externo (subir un archivo CSV)
+            internal: Interno (participantes registrados)
           create:
             error: Se ha producido un error al importar o generar el censo.
-            submit_permissions: Save census
+            submit_permissions: Guardar censo
             success:
               import: Se han importado correctamente %{count} elementos (%{errors} errores)
           destroy:
@@ -85,9 +85,9 @@ es:
           destroy_all:
             success: Se han eliminado todos los datos del censo
           index:
-            census_empty: The census is currently empty. When users pass the authorizations you selected, they will be added to the census.
-            census_warning_for_csv_html: The census is not ready yet. You can <b>upload the CSV file</b> to proceed.
-            census_warning_for_internal_census_html: The census is not ready yet. You need <b>save it</b> to proceed.
+            census_empty: El censo está vacío. Cuando las usuarias pasen las autorizaciones seleccionadas, se añadirán al censo.
+            census_warning_for_csv_html: El censo aún no está listo. Puedes <b>cargar el archivo CSV</b> para continuar.
+            census_warning_for_internal_census_html: El código no está listo aún. Necesitas <b>guardarlo</b> para continuar.
             info: Para crear el censo para una elección de Vocdoni, debes subir el censo y confirmarlo.
             title: Censo para una votación de Vocdoni
           new:
@@ -95,13 +95,13 @@ es:
             info: 'Debe ser un archivo en formato CSV con sólo dos columnas, una con la dirección de correo electrónico y otra con la fecha de nacimiento (formato AAAA-MM-DD). Debe estar separado con punto y coma (;):'
             submit: Subir archivo
             title:
-              external: Upload a CSV file
-              internal: Additional required authorizations to vote (optional)
-          permissions_warning_html: You can restrict participation in the election to participants who have an authorization.<br>Note that participants will need to fulfill the selected authorizations in order to vote. Leaving all checkboxes empty will allow to vote anyone registered.
+              external: Cargar un archivo CSV
+              internal: Autorizaciones adicionales requeridas para votar (opcional)
+          permissions_warning_html: Puedes restringir la participación en la elección a las participantes que tengan una autorización. <br>Ten en cuenta que las participantes deberán cumplir con las autorizaciones seleccionadas para poder votar. Si dejas todas las casillas de verificación vacías, podrá votar cualquier persona registrada.
           status:
             data: Hay %{count} registros cargados en total. La última fecha de subida fue el %{due_date}. Si quieres modificar el censo (por ejemplo, agregar más participantes), es necesario eliminar primero todos los datos cargados.
-            internal_census_ready_to_setup_html: 'Selected census: <strong>Internal</strong>'
-            no_additional_authorizations: no additional authorizations are required
+            internal_census_ready_to_setup_html: 'Censo seleccionado: <strong>Interno</strong>'
+            no_additional_authorizations: no se requieren autorizaciones adicionales
             percentage_complete: Completado un %{percentage}% de %{count} registros en total.
             processing_html: The census is currently being processed for its use in the Blockchain. Once it's ready, you will be able to create the election.
             ready_to_setup_html: Los datos del censo se han subido y confirmado. Está <a href="%{steps_path}">todo listo para configurar la elección</a>.
@@ -194,10 +194,10 @@ es:
             census_info_title: 'This election is using the census:'
             description: It is possible to update it during the duration of the election but it requires your manual action as it might cost some credits.
             last_update: Last census update
-            none: none
-            records_added: Records added
-            title: Dynamic census
-            update_census: Update census now!
+            none: ninguno
+            records_added: Registros añadidos
+            title: Censo dinámico
+            update_census: '¡Actualiza el censo ahora!'
             users_awaiting_census: There are <strong>%{count}</strong> users waiting to be added to the census.
           census_update:
             invalid: There was a problem updating the census.
@@ -251,9 +251,9 @@ es:
             view: Ver página de inicio
           credits:
             available: Créditos disponibles
-            copied: Copied!
-            copy_wallet: Copy wallet address
-            copy_wallet_clarification: Copy wallet address to clipboard
+            copied: '¡Copiado!'
+            copy_wallet: Copiar la dirección del monedero
+            copy_wallet_clarification: Copiar dirección del monedero al portapapeles
             copy_wallet_message: The wallet address has been successfully copied to clipboard.
             dev_mode: Estás usando Vocdoni en el entorno %{env}. Es posible recoger créditos de forma gratuita (sin ninguna garantía)
             get_more: Obtener más créditos
@@ -344,7 +344,7 @@ es:
         not_authorized:
           authorize: Authorize with "%{authorization}"
           explanation: In order to perform this action, you need to be authorized with "%{authorization}".
-          title: Authorization required
+          title: Autorización requerida
       election_m:
         badge_name:
           canceled: Cancelada
