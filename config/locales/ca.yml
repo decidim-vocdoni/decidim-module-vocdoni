@@ -103,10 +103,10 @@ ca:
             internal_census_ready_to_setup_html: 'Cens seleccionat: <strong>Intern</strong>'
             no_additional_authorizations: no calen autoritzacions addicionals
             percentage_complete: Completat un %{percentage}% de %{count} registres en total.
-            processing_html: The census is currently being processed for its use in the Blockchain. Once it's ready, you will be able to create the election.
+            processing_html: S'està processant el cens per utilitzar-lo a la cadena de blocs (Blockchain). Un cop llest, podràs crear l'elecció.
             ready_to_setup_html: Les dades del cens s'han pujat i confirmat. Està <a href="%{steps_path}">tot llest per configurar l'elecció</a>.
             title: Dades de cens actuals
-            update_census_result_html: The census successfully updated.
+            update_census_result_html: El cens s'ha actualitzat correctament.
         election_calendar:
           edit:
             after_voting_note: Mostrar els resultats només quan l'elecció estigui tancada
@@ -138,10 +138,9 @@ ca:
               <p>L'elecció ja està publicada. Encara la podeu editar o anul·lar si encara no l'heu configurat.</p>
               <p>Per configurar l'elecció o per estar al corrent del cicle electoral, aneu a la pàgina de passos:</p>
             publish_text_html: |-
-              <p>If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.</p>
-              <p>To setup the election you must publish it first.</p>
-              <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
-              after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
+              <p>Si estàs d'acord amb la configuració (encara pots editar tots els passos): és moment de publicar i enviar l'elecció.</p>
+              <p>Per enviar l'elecció, primer heu de publicar-la.</p>
+              <p>En enviar de l'elecció, inclòs el cens, la plataforma Vocdoni la processarà. Això vol dir que no es podrà modificar una vegada publicada, a causa de l'ús de la cadena de blocs (Blockchain). Després de la configuració, l'elecció pot començar (ja sigui manualment o automàticament, segons la configuració).</p>
             publish_title: Felicitats! Tot fet.
             questions: Preguntes
             results: Calendari i resultats
@@ -191,17 +190,17 @@ ca:
             success: L'elecció s'ha cancel·lat correctament.
             title: Cancel·lada
           census:
-            census_info_title: 'This election is using the census:'
-            description: It is possible to update it during the duration of the election but it requires your manual action as it might cost some credits.
-            last_update: Last census update
+            census_info_title: 'Aquesta elecció està fent servir el cens:'
+            description: És possible actualitzar el cens durant el període de votació, però requereix la teva acció manual, ja que podria costar alguns crèdits.
+            last_update: Darrera actualització del cens
             none: cap
             records_added: Registres afegits
             title: Dens dinàmic
             update_census: Actualitza el cens ara!
-            users_awaiting_census: There are <strong>%{count}</strong> users waiting to be added to the census.
+            users_awaiting_census: Hi ha <strong>%{count}</strong> usuàries esperant per ser afegides al cens.
           census_update:
-            invalid: There was a problem updating the census.
-            success: The census has been successfully updated.
+            invalid: S'ha produït un error en actualitzar el cens.
+            success: El cens s'ha actualitzat correctament.
           create_election:
             description: El procés de votació és segur utilitzant la tecnologia digital de votació avançada del Protocol de Vocdoni. Si us plau, tingues paciència, ja que el procés de configuració pot trigar algun temps.
             errors:
@@ -224,7 +223,7 @@ ca:
             invalid: S'ha produït un error en configurar aquesta elecció
             requirements:
               census_ready: El cens està <strong>llest</strong>.
-              internal_census_ready_html: 'The census is <strong>ready</strong>. Selected census is: <strong>Internal (%{verification_types}</strong>).'
+              internal_census_ready_html: 'El cens està <strong>llest</strong>. El cens seleccionat és: <strong>Intern (%{verification_types}</strong>).'
               manual_start: L'elecció <strong>s'ha d'iniciar manualment</strong>.
               minimum_answers: Cada pregunta té <strong>almenys 2 respostes</strong>.
               minimum_questions: L'elecció té <strong>almenys 1 pregunta</strong>.
@@ -254,10 +253,10 @@ ca:
             copied: Copiat!
             copy_wallet: Copia l'adreça del moneder
             copy_wallet_clarification: Copiar l'adreça del moneder al porta-retalls
-            copy_wallet_message: The wallet address has been successfully copied to clipboard.
+            copy_wallet_message: L'adreça del moneder s'ha copiat correctament al porta-retalls.
             dev_mode: Esteu fent servir Vocdoni a l'entorn %{env}. És possible recollir crèdits de forma gratuïta (sense cap garantia)
             get_more: Obtenir més crèdits
-            prod_mode_html: 'The usage of the Vocdoni platform has costs. Please get in touch with <a href=''mailto:%{reseller_email}?subject=Decidim Vocdoni Inquiry&body=Please provide a quote for the Vocdoni platform usage. My organization Vocdoni address is: %{wallet_address}''>%{reseller_name}</a> to ask for a quote. You need to also tell them your organization address:'
+            prod_mode_html: 'Lús de la plataforma Vocdoni té costos. Si us plau, posa''t en contacte amb <a href=''mailto:%{reseller_email}?subject=Decidim Vocdoni Inquiry&body=Si us plau, faciliteu-me un pressupost per utilitzar la plataforma de vot Vocfoni, La Direcció de la meva organització és: %{wallet_address} ''>%{reseller_name}</a> per sol·licitar un pressupost. També els has d''indicar la direcció de la teva organització:'
             warning: No et queden crèdits. Pots obtenir més crèdits fent clic al botó de sota.
           danger_zone:
             action:
@@ -342,8 +341,8 @@ ca:
           create: "%{user_name} ha creat la cartera de l'organització per a l'API de Vocdoni"
       census_authorization_modal:
         not_authorized:
-          authorize: Authorize with "%{authorization}"
-          explanation: In order to perform this action, you need to be authorized with "%{authorization}".
+          authorize: Autoritzar amb "%{authorization}"
+          explanation: Per dur a terme aquesta acció, has de disposar de l'autorització amb "%{authorization}".
           title: Autorització requerida
       election_m:
         badge_name:
@@ -371,24 +370,24 @@ ca:
             other: "%{count} eleccions"
         election_m:
           badge_name:
-            canceled: Canceled
-            finished: Finished
-            ongoing: Active
-            paused: Paused
-            upcoming: Upcoming
+            canceled: Cancel·lada
+            finished: Finalitzada
+            ongoing: Activa
+            paused: Pausada
+            upcoming: Propera
         elections:
           filters:
-            active: Active
-            all: All
-            canceled: Canceled
-            date: Date
-            finished: Finished
-            paused: Paused
-            upcoming: Upcoming
+            active: Activa
+            all: Totes
+            canceled: Cancel·lada
+            date: Data
+            finished: Finalitzada
+            paused: Pausada
+            upcoming: Properament
         orders:
           label: Orders
-          older: Older
-          recent: Recent
+          older: Més antiga
+          recent: Recents
         preview:
           available_answers: 'Respostes disponibles:'
           description: 'Aquestes són les preguntes per aquest procés de votació:'
@@ -437,16 +436,16 @@ ca:
             title: Títol
       votes:
         check_census:
-          access: Access
-          close_modal: Close
-          description: To vote, we'll need to check that you're on the census
-          election_not_open: Currently the election is not open for voting. Try again later.
-          failed: The email or token is not valid. Please check these details and try again.
-          form_title: Enter your data
-          login_title: Verify your identity
-          title: Identification
-          verifications_check: We are verifying that you are eligible to vote in this election. Please wait a few seconds.
-          with_verifications: The administrator has not yet added your wallet to the census. Please try again later.
+          access: Accedir
+          close_modal: Tancar
+          description: Per votar, haurem de comprovar que estàs al cens
+          election_not_open: Actualment l'elecció no està oberta. Torna-ho a provar més tard.
+          failed: El correu electrònic o token no és vàlid. Comproveu aquests detalls i torneu-ho a provar.
+          form_title: Introdueix les teves dades
+          login_title: Verifica la teva identitat
+          title: Identificació
+          verifications_check: Estem verificant que ets elegible per votar en aquesta elecció.
+          with_verifications: Des de l'administració encara no ha afegit el teu moneder al cens. Torna-ho a provar més tard.
         confirm:
           answer: Resposta
           answer_number: resposta %{number}
@@ -506,7 +505,7 @@ ca:
           continue: Següent
       warnings:
         no_elections_warning: No hi ha cap elecció programada.
-        no_scheduled_elections_warning: Currently, there are no scheduled elections, but here you can find all the past elections listed.
+        no_scheduled_elections_warning: Actualment no hi ha eleccions programades, però pots veure les anteriors.
   layouts:
     decidim:
       vocdoni_votes_header:
