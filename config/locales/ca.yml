@@ -43,8 +43,6 @@ ca:
         destroy: Eliminar
         edit: Editar
         manage_answers: Gestionar les respostes
-        manage_census: Gestionar el cens
-        manage_questions: Gestionar les preguntes
         manage_steps: Gestionar els pasos de la votació
         new: Nova %{name}
         preview: Vista prèvia
@@ -63,6 +61,8 @@ ca:
             title: Editar resposta
             update: Actualitzar resposta
           index:
+            back: Tornar a les preguntes
+            for_question_html: per la pregunta %{question}
             title: Respostes
           new:
             create: Crear resposta
@@ -71,12 +71,13 @@ ca:
             invalid: Hi ha hagut un problema en actualitzar la resposta
             success: Resposta actualitzada correctament
         census:
-          confirm:
-            submit: Confirmar les dades del cens
+          census_type:
+            external: External (upload a CSV file)
+            internal: Internal (registered participants)
           create:
             error: Hi ha hagut un problema en importar o generar el cens.
+            submit_permissions: Save census
             success:
-              generate: Cens generat correctament
               import: S'han importat correctament %{count} elements (%{errors} errors)
           destroy:
             confirm: L'eliminació del cens no es pot desfer. Segur que vols continuar?
@@ -84,37 +85,73 @@ ca:
           destroy_all:
             success: S'han eliminat totes les dades del cens
           index:
+            census_empty: The census is currently empty. When users pass the authorizations you selected, they will be added to the census.
+            census_warning_for_csv_html: The census is not ready yet. You can <b>upload the CSV file</b> to proceed.
+            census_warning_for_internal_census_html: The census is not ready yet. You need <b>save it</b> to proceed.
             info: Per configurar el cens per a una elecció de Vocdoni, has de pujar el cens i confirmar-lo.
             title: Cens per a una elecció de Vocdoni
           new:
             file: "fitxer .csv amb dades de correus electrònics"
             info: 'Ha de ser un fitxer en format CSV amb només dues columnes, una amb l''adreça de correu electrònic i una altra amb la data de naixement (format AAAA-MM-DD). Ha d''estar separat amb punt i coma (;):'
             submit: Pujar fitxer
-            title: Pujar un nou cens
+            title:
+              external: Upload a CSV file
+              internal: Additional required authorizations to vote (optional)
+          permissions_warning_html: You can restrict participation in the election to participants who have an authorization.<br>Note that participants will need to fulfill the selected authorizations in order to vote. Leaving all checkboxes empty will allow to vote anyone registered.
           status:
             data: Hi ha %{count} registres carregats en total. L'última data de pujada va ser el %{due_date}. Si vols modificar el cens (per exemple, afegir més participants), cal eliminar primer totes les dades carregades.
+            internal_census_ready_to_setup_html: 'Selected census: <strong>Internal</strong>'
+            no_additional_authorizations: no additional authorizations are required
+            percentage_complete: Completat un %{percentage}% de %{count} registres en total.
+            processing_html: The census is currently being processed for its use in the Blockchain. Once it's ready, you will be able to create the election.
             ready_to_setup_html: Les dades del cens s'han pujat i confirmat. Està <a href="%{steps_path}">tot llest per configurar l'elecció</a>.
             title: Dades de cens actuals
+            update_census_result_html: The census successfully updated.
+        election_calendar:
+          edit:
+            after_voting_note: Mostrar els resultats només quan l'elecció estigui tancada
+            calendar_title: Calendari
+            organization_time_zone: Comprova que la zona horària estigui configurada correctament a la configuració de l'organització. La configuració actual és %{time_zone} (%{time}).
+            real_time_note: Mostrar els resultats tan aviat com s'enviï la primera votació
+            results_title: Disponibilitat dels resultats
+            title: Editar el calendari de les eleccions (votacions)
         elections:
           create:
             invalid: S'ha produït un error en crear l'elecció
             success: L'elecció s'ha creat correctament
+          credits:
+            success: S'han demanat més crèdits. Estaran disponibles aviat. En cas que no apareguin passada una estona, actualitza/refresca la pàgina.
           destroy:
             invalid: S'ha produït un error en eliminar l'elecció
             success: L'elecció s'ha eliminat correctament
           edit:
             title: Editar l'elecció
-            update: Actualitzar
-          form:
-            organization_time_zone: Comprova que la zona horària de l'organització és correcta a la configuració de l'organització. La configuració actual és %{time_zone} (%{time}).
           index:
             description_html: Amb aquest mòdul de votació, pots organitzar fàcilment una àmplia gamma de processos de votació amb altes garanties. El mòdul utilitza el Protocol de Vocdoni, una tecnologia de votació de codi obert per organitzar eleccions amb els estàndards més alts de seguretat, verificació universal, resistència a la censura i anonimat. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Més informació sobre Vocdoni</a>.
             title: Eleccions (Vocdoni)
           new:
-            create: Crear
+            basic_info: Informació bàsica
+            census: Cens
+            next_button: Fet! Anar al següent pas
+            publish: Publicar
+            publish_text_all_done_html: |-
+              <p>L'elecció ja està publicada. Encara la podeu editar o anul·lar si encara no l'heu configurat.</p>
+              <p>Per configurar l'elecció o per estar al corrent del cicle electoral, aneu a la pàgina de passos:</p>
+            publish_text_html: |-
+              <p>If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.</p>
+              <p>To setup the election you must publish it first.</p>
+              <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
+              after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
+            publish_title: Felicitats! Tot fet.
+            questions: Preguntes
+            results: Calendari i resultats
+            save_button: Guardar i anar al següent pas
             title: Nova elecció
           publish:
             success: L'elecció s'ha publicat correctament.
+            title: Publicar l'elecció
+          publish_page:
+            title: Publicar l'elecció
           unpublish:
             success: L'elecció s'ha despublicat correctament.
           update:
@@ -139,6 +176,7 @@ ca:
             title: Editar pregunta
             update: Actualitzar la pregunta
           index:
+            minimum_answers_warning: Les preguntes han de tenir <strong>almenys dues respostes</strong> per anar al pas següent.
             title: Preguntes
           new:
             create: Crear una pregunta
@@ -148,74 +186,125 @@ ca:
             success: La pregunta s'ha actualitzat correctament
         steps:
           canceled:
+            invalid: S'ha produït un error en cancel·lar l'elecció
             message: Aquesta elecció ha estat cancel·lada prematurament. No hi ha resultats.
+            success: L'elecció s'ha cancel·lat correctament.
             title: Cancel·lada
+          census:
+            census_info_title: 'This election is using the census:'
+            description: It is possible to update it during the duration of the election but it requires your manual action as it might cost some credits.
+            last_update: Last census update
+            none: none
+            records_added: Records added
+            title: Dynamic census
+            update_census: Update census now!
+            users_awaiting_census: There are <strong>%{count}</strong> users waiting to be added to the census.
+          census_update:
+            invalid: There was a problem updating the census.
+            success: The census has been successfully updated.
           create_election:
             description: El procés de votació és segur utilitzant la tecnologia digital de votació avançada del Protocol de Vocdoni. Si us plau, tingues paciència, ja que el procés de configuració pot trigar algun temps.
             errors:
               census_ready: El cens <strong>no està llest</strong>. <a href=%{link}>Solucionar-ho</a>.
+              fix_it_text: Arregla-ho
               minimum_answers: Les preguntes han de tenir <strong>almenys dues respostes</strong>. <a href=%{link}>Solucionar-ho</a>.
               minimum_questions: L'elecció <strong>ha de tenir com a mínim una pregunta</strong>. <a href=%{link}>Solucionar-ho</a>.
               published: L'elecció <strong>no està publicada</strong>. <a href=%{link}>Solucionar-ho</a>.
-              time_before: La configuració no s'està fent <strong>almenys %{minutes} minuts</strong> abans que comenci l'elecció. <a href=%{link}>Solucionar-ho</a>.
+              time_before: No s'està configurant l'elecció, <strong>amb com a mínim %{minutes} minuts</strong> abans de l'inici d'aquesta.
+              valid_end_time: L'<strong>hora de finalització</strong> de l'elecció no és vàlida.
             failed:
               details: Mostra els detalls
               message: Comprova el missatge d'error de registre de la consola de desenvolupament web, corregeix el problema i torna-ho a provar.
               title: L'elecció té un error i no s'ha pogut crear
+            information_html: |-
+              <p><strong>Les eleccions es van configurar correctament!</strong></p>
+              <p>En aquest punt, encara pots fer canvis si veus alguna cosa mal configurada. <a href="%{link}">Assegureu-vos d'obtenir una vista prèvia de les eleccions.</a></p>
+              <p>Si estàs conforme amb la configuració actual, fes clic al botó "Configurar eleccions" per enviar-la a la Blockchain de Vocdoni. Tot seguit, les eleccions podran començar.</p>
+              <p><strong>Tingues en compte que aquesta acció és irreversible i no es permetran més modificacions.</strong></p>
             invalid: S'ha produït un error en configurar aquesta elecció
             requirements:
               census_ready: El cens està <strong>llest</strong>.
+              internal_census_ready_html: 'The census is <strong>ready</strong>. Selected census is: <strong>Internal (%{verification_types}</strong>).'
+              manual_start: L'elecció <strong>s'ha d'iniciar manualment</strong>.
               minimum_answers: Cada pregunta té <strong>almenys 2 respostes</strong>.
               minimum_questions: L'elecció té <strong>almenys 1 pregunta</strong>.
               published: L'elecció està <strong>publicada</strong>.
               time_before: La configuració s'està fent <strong>almenys %{minutes} minuts</strong> abans que comenci l'elecció.
+              valid_end_time: L'<strong>hora de finalització</strong> de l'elecció és vàlida.
             submit: Configurar elecció
             success: L'elecció s'ha enviat correctament a l'API de Vocdoni
             title: Configurar elecció
           created:
+            creating: L'elecció s'està enviant a l'API de Vocdoni. Això pot trigar uns moments. Aquesta pàgina s'actualitzarà automàticament.
+            error_vocdoni:
+              message: S'ha produït un problema en crear l'elecció. No s'ha pogut obtenir una ID per l'elecció a Vocdoni. Si us plau, revisa els registres de l'aplicació per a més detalls.
+              title: Error de comunicació amb Vocdoni
             explorer_vote: Veure a l'explorador de vot
+            help:
+              auto_start: Estem esperant que l'elecció comenci el %{date}.
+              manual_start: L'elecció ha d'iniciar-se manualment. Clica el botó "Iniciar elecció" per iniciar el període de votació.
+            invalid: S'ha produït un error en iniciar aquesta votació
             message: L'elecció ha estat creada. Estem esperant que arribi la data d'inici.
+            submit: Intenta reenviar les dades de l'elecció a l'API de Vocdoni
+            success: Les dades de les eleccions han estat enviades amb èxit a l'API de Vocdoni. Si us plau, espera uns segons perquè l'elecció estigui a punt.
             title: Elecció creada
             view: Veure pàgina d'inici
           credits:
             available: Crèdits disponibles
+            copied: Copied!
+            copy_wallet: Copy wallet address
+            copy_wallet_clarification: Copy wallet address to clipboard
+            copy_wallet_message: The wallet address has been successfully copied to clipboard.
+            dev_mode: Esteu fent servir Vocdoni a l'entorn %{env}. És possible recollir crèdits de forma gratuïta (sense cap garantia)
             get_more: Obtenir més crèdits
+            prod_mode_html: 'The usage of the Vocdoni platform has costs. Please get in touch with <a href=''mailto:%{reseller_email}?subject=Decidim Vocdoni Inquiry&body=Please provide a quote for the Vocdoni platform usage. My organization Vocdoni address is: %{wallet_address}''>%{reseller_name}</a> to ask for a quote. You need to also tell them your organization address:'
             warning: No et queden crèdits. Pots obtenir més crèdits fent clic al botó de sota.
           danger_zone:
             action:
               cancel: Cancel·lar
-              continue: Continuar
+              created: Iniciar l'elecció
               end: Finalitzar
-              pause: Pausar
+              paused: Posar en pausa l'elecció
+              vote: Continuar l'elecció
             confirm: Segur que vols realitzar aquesta acció?
-            message: L'elecció es pot interrompre
+            messages:
+              cancel_end_html: L'elecció està en marxa en aquests moments. Clica el botó de cancel·lar per a <strong>invalidar-la (avortar-la)</strong>.<br>Si només vols posar en pausa el període de votació i obtenir els resultats, clica al botó de finalitzar.
+              created: Aquesta elecció ha estat configurada per iniciar la manualment. Clica el botó per començar el període de votació.
+              paused: L'elecció s'està executant. Clica el botó per posar en pausa la votació i impedir temporalment que algú voti.
+              vote: L'elecció està actualment en pausa. No es pot votar ara. Clica el botó per reprendre la votació.
             title: Zona de perill
           ended:
             title: Finalitzada
           index:
             title: Panell de control
+          invalid_status: L'elecció no es va sincronitzar amb l'API de Vocdoni. L'estat ha estat actualitzat a "%{status}". Si us plau, actualitza la pàgina.
           paused:
+            invalid: S'ha produït un error en posar en pausa aquesta votació
             message: La protecció es troba pausada
+            submit: Intenta reenviar les dades de l'elecció a l'API de Vocdoni
             success: L'elecció s'ha reprès correctament.
             title: Pausada
           powered_by_html: Aquest mòdul utilitza el Protocol de Vocdoni, una tecnologia de votació de codi obert per organitzar eleccions<br>amb els més alts estàndards de seguretat, verificabilitat universal, resistència a la censura i anonimat.
-          processing: Processant...
           ready:
             title: Preparada
           results_published:
+            success: Els resultats de l'elecció s'han publicat correctament.
+            title: Resultats publicats
+          results_stats:
             answer: Resposta
             question: Pregunta
             result: Resultat
-            title: Resultats publicats
           vote:
+            invalid: S'ha produït un error en iniciar aquesta votació
             message: Estem en el període de votació fins a %{end_time}.
             secret_until_the_end: Els resultats de l'elecció seran secrets fins al final del període de votació.
+            submit: Intenta reenviar les dades de l'elecció a l'API de Vocdoni
             success: L'elecció s'ha pausat correctament.
             title: Període de votació
           vote_ended:
             error:
               fetch: Encara no hi ha resultats. Torna-ho a provar més tard.
-              invalid: Hi ha hagut un problema en publicar els resultats. Torna-ho a provar més tard.
+            invalid: S'ha produït un error en actualitzar aquesta votació
             submit: Publicar resultats
             success: Resultats publicats correctament
             text: El període de votació s'ha acabat. Pots publicar els resultats.
@@ -251,6 +340,11 @@ ca:
           update: "%{user_name} ha actualitzat l'elecció %{resource_name} a %{space_name}"
         wallet:
           create: "%{user_name} ha creat la cartera de l'organització per a l'API de Vocdoni"
+      census_authorization_modal:
+        not_authorized:
+          authorize: Authorize with "%{authorization}"
+          explanation: In order to perform this action, you need to be authorized with "%{authorization}".
+          title: Authorization required
       election_m:
         badge_name:
           canceled: Cancel·lada
@@ -275,6 +369,26 @@ ca:
           elections_count:
             one: "%{count} elecció"
             other: "%{count} eleccions"
+        election_m:
+          badge_name:
+            canceled: Canceled
+            finished: Finished
+            ongoing: Active
+            paused: Paused
+            upcoming: Upcoming
+        elections:
+          filters:
+            active: Active
+            all: All
+            canceled: Canceled
+            date: Date
+            finished: Finished
+            paused: Paused
+            upcoming: Upcoming
+        orders:
+          label: Orders
+          older: Older
+          recent: Recent
         preview:
           available_answers: 'Respostes disponibles:'
           description: 'Aquestes són les preguntes per aquest procés de votació:'
@@ -293,6 +407,7 @@ ca:
             vote_again: Votar de nou
           back: Eleccions disponibles
           canceled: S'ha cancel·lat aquesta elecció
+          description: Resultats de la votació en temps real
           paused: Aquesta elecció està pausada. Torna-ho a provar més tard.
           preview: Vista prèvia
           verify:
@@ -321,6 +436,17 @@ ca:
             answers: Respostes
             title: Títol
       votes:
+        check_census:
+          access: Access
+          close_modal: Close
+          description: To vote, we'll need to check that you're on the census
+          election_not_open: Currently the election is not open for voting. Try again later.
+          failed: The email or token is not valid. Please check these details and try again.
+          form_title: Enter your data
+          login_title: Verify your identity
+          title: Identification
+          verifications_check: We are verifying that you are eligible to vote in this election. Please wait a few seconds.
+          with_verifications: The administrator has not yet added your wallet to the census. Please try again later.
         confirm:
           answer: Resposta
           answer_number: resposta %{number}
@@ -342,13 +468,6 @@ ca:
           login: Identificació
           submitting: Enviant el vot
           vote_cast: El teu vot s'ha enviat
-        login:
-          access: Accedir
-          description: Per votar, haurem de comprovar que estàs al cens
-          election_not_open: Actualment l'elecció no està oberta. Torna-ho a provar més tard.
-          failed: Comprova que les dades proporcionades són correctes i torna-ho a provar
-          form_title: Introdueix les teves dades
-          title: Verifica la teva identitat
         login_fields:
           email: Correu electrònic
           email_placeholder: user@example.org
@@ -359,8 +478,10 @@ ca:
         modal:
           close: Tancar
         new:
-          already_voted: Ja has votat en aquesta elecció. Pots tornar a votar. El vot anterior s'anul·larà.
+          can_vote_again: Ja has votat en aquesta elecció. Pots tornar a votar %{votes_left} vegades.
+          can_vote_one_more_time: Ja has votat en aquesta elecció. Pots tornar a votar una vegada més.
           more_information: Més informació
+          no_more_votes_left: Ja has votat en aquesta elecció. No pots tornar a votar.
           preview_alert: Aquesta és una vista prèvia de la cabina de votació.
           question_steps: Pregunta %{current_step} de %{total_steps}
         submitting:
@@ -385,6 +506,7 @@ ca:
           continue: Següent
       warnings:
         no_elections_warning: No hi ha cap elecció programada.
+        no_scheduled_elections_warning: Currently, there are no scheduled elections, but here you can find all the past elections listed.
   layouts:
     decidim:
       vocdoni_votes_header:
