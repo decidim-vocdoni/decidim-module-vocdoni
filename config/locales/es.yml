@@ -103,10 +103,10 @@ es:
             internal_census_ready_to_setup_html: 'Censo seleccionado: <strong>Interno</strong>'
             no_additional_authorizations: no se requieren autorizaciones adicionales
             percentage_complete: Completado un %{percentage}% de %{count} registros en total.
-            processing_html: The census is currently being processed for its use in the Blockchain. Once it's ready, you will be able to create the election.
+            processing_html: Se está procesando el censo para su uso en la cadena de bloques (Blockchain). Una vez esté listo, podrás crear la elección.
             ready_to_setup_html: Los datos del censo se han subido y confirmado. Está <a href="%{steps_path}">todo listo para configurar la elección</a>.
             title: Datos de censo actuales
-            update_census_result_html: The census successfully updated.
+            update_census_result_html: El censo se ha actualizado correctamente.
         election_calendar:
           edit:
             after_voting_note: Mostrar los resultados solo cuando la elección está cerrada
@@ -138,10 +138,9 @@ es:
               <p>La elección ya está publicada. Aún puedes editarla o anular su publicación si aún no la has configurado.</p>
               <p>Para configurar la elección o para estar al tanto del ciclo electoral, ves a la página de pasos:</p>
             publish_text_html: |-
-              <p>If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.</p>
-              <p>To setup the election you must publish it first.</p>
-              <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
-              after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
+              <p>Si estás de acuerdo con la configuración (todavía puedes editar todos los pasos): es momento de publicar y enviar la elección.</p>
+              <p>Para enviar la elección, primero debe publicarla.</p>
+              <p>Al enviar de la elección, incluido el censo, la plataforma Vocdoni la procesará. Esto significa que no se podrá modificar una vez publicada, debido al uso de la cadena de blogs (Blockchain). Después de la configuración, la elección puede empezar (ya sea manual o automáticamente, según la configuración).</p>
             publish_title: '¡Enhorabuena! Todo hecho.'
             questions: Preguntas
             results: Calendario y resultados
@@ -191,17 +190,17 @@ es:
             success: La elección se ha cancelado correctamente.
             title: Cancelada
           census:
-            census_info_title: 'This election is using the census:'
-            description: It is possible to update it during the duration of the election but it requires your manual action as it might cost some credits.
-            last_update: Last census update
+            census_info_title: 'Esta elección está utilizando el censo:'
+            description: Es posible actualizar el censo durante el período de votación, pero requiere tu acción manual, ya que podría costar algunos créditos.
+            last_update: Última actualización del censo
             none: ninguno
             records_added: Registros añadidos
             title: Censo dinámico
             update_census: '¡Actualiza el censo ahora!'
-            users_awaiting_census: There are <strong>%{count}</strong> users waiting to be added to the census.
+            users_awaiting_census: Hay <strong>%{count}</strong>usuarias esperando para ser añadidas al censo.
           census_update:
-            invalid: There was a problem updating the census.
-            success: The census has been successfully updated.
+            invalid: Se ha producido un error al actualizar el censo.
+            success: El censo se ha actualizado correctamente.
           create_election:
             description: El proceso de votación es seguro utilizando la avanzada tecnología digital de votación del Protocolo de Vocdoni. Por favor, ten paciencia, ya que el proceso de configuración puede tardar algún tiempo.
             errors:
@@ -224,7 +223,7 @@ es:
             invalid: Se ha producido un error al configurar esta elección
             requirements:
               census_ready: El censo está <strong>listo</strong>.
-              internal_census_ready_html: 'The census is <strong>ready</strong>. Selected census is: <strong>Internal (%{verification_types}</strong>).'
+              internal_census_ready_html: 'El censo está <strong>listo</strong>. El censo seleccionado es: <strong>Interno (%{verification_types}</strong>).'
               manual_start: La elección <strong>debe iniciarse manualmente</strong>.
               minimum_answers: Cada pregunta tiene <strong>al menos dos respuestas</strong>.
               minimum_questions: La elección tiene <strong>al menos una pregunta</strong>.
@@ -254,10 +253,10 @@ es:
             copied: '¡Copiado!'
             copy_wallet: Copiar la dirección del monedero
             copy_wallet_clarification: Copiar dirección del monedero al portapapeles
-            copy_wallet_message: The wallet address has been successfully copied to clipboard.
+            copy_wallet_message: La dirección del monedero se ha copiado correctamente al portapapeles.
             dev_mode: Estás usando Vocdoni en el entorno %{env}. Es posible recoger créditos de forma gratuita (sin ninguna garantía)
             get_more: Obtener más créditos
-            prod_mode_html: 'The usage of the Vocdoni platform has costs. Please get in touch with <a href=''mailto:%{reseller_email}?subject=Decidim Vocdoni Inquiry&body=Please provide a quote for the Vocdoni platform usage. My organization Vocdoni address is: %{wallet_address}''>%{reseller_name}</a> to ask for a quote. You need to also tell them your organization address:'
+            prod_mode_html: 'El uso de la plataforma Vocdoni tiene costos. Por favor, ponte en contacto con <a href=''mailto:%{reseller_email}?subject=Decidim Vocdoni Inquiry&body=Por favor, facilitadme un presupuesto para usar la plataforma de voto Vocfoni, La Dirección de mi organización es: %{wallet_address}''>%{reseller_name}</a> para solicitar un presupuesto. También debes indicarles la dirección de tu organización:'
             warning: No te quedan créditos. Puedes obtener más créditos haciendo clic en el botón de abajo.
           danger_zone:
             action:
@@ -342,8 +341,8 @@ es:
           create: "%{user_name} creó la cartera de la organización para la API de Vocdoni"
       census_authorization_modal:
         not_authorized:
-          authorize: Authorize with "%{authorization}"
-          explanation: In order to perform this action, you need to be authorized with "%{authorization}".
+          authorize: Autorizar con "%{authorization}"
+          explanation: Para llevar a cabo esta acción, tienes que disponer de la autorización "%{authorization}".
           title: Autorización requerida
       election_m:
         badge_name:
@@ -371,24 +370,24 @@ es:
             other: "%{count} elecciones"
         election_m:
           badge_name:
-            canceled: Canceled
-            finished: Finished
-            ongoing: Active
-            paused: Paused
-            upcoming: Upcoming
+            canceled: Cancelada
+            finished: Finalizada
+            ongoing: Activa
+            paused: Pausada
+            upcoming: Próxima
         elections:
           filters:
-            active: Active
-            all: All
-            canceled: Canceled
-            date: Date
-            finished: Finished
-            paused: Paused
-            upcoming: Upcoming
+            active: Activa
+            all: Todas
+            canceled: Cancelada
+            date: Fecha
+            finished: Finalizada
+            paused: Pausada
+            upcoming: Próximamente
         orders:
           label: Orders
-          older: Older
-          recent: Recent
+          older: Más antigua
+          recent: Recientes
         preview:
           available_answers: 'Respuestas disponibles:'
           description: 'Estas son las preguntas para este proceso de votación:'
@@ -437,16 +436,16 @@ es:
             title: Título
       votes:
         check_census:
-          access: Access
-          close_modal: Close
-          description: To vote, we'll need to check that you're on the census
-          election_not_open: Currently the election is not open for voting. Try again later.
-          failed: The email or token is not valid. Please check these details and try again.
-          form_title: Enter your data
-          login_title: Verify your identity
-          title: Identification
-          verifications_check: We are verifying that you are eligible to vote in this election. Please wait a few seconds.
-          with_verifications: The administrator has not yet added your wallet to the census. Please try again later.
+          access: Acceder
+          close_modal: Cerrar
+          description: Para votar, tendremos que comprobar que estás en el censo
+          election_not_open: Actualmente la elección no está abierta. Inténtalo de nuevo más tarde.
+          failed: El correo electrónico o token no es válido. Por favor, comprueba estos detalles e inténtalo de nuevo.
+          form_title: Introduce tus datos
+          login_title: Verifica tu identidad
+          title: Identificación
+          verifications_check: Estamos verificando que eres elegible para votar en esta elección. Por favor espera unos segundos.
+          with_verifications: Des de la administración, aún no ha añadido tu monedero al censo. Inténtalo de nuevo más tarde.
         confirm:
           answer: Respuesta
           answer_number: respuesta %{number}
@@ -506,7 +505,7 @@ es:
           continue: Siguiente
       warnings:
         no_elections_warning: No hay ninguna elección programada.
-        no_scheduled_elections_warning: Currently, there are no scheduled elections, but here you can find all the past elections listed.
+        no_scheduled_elections_warning: Actualmente no hay elecciones programadas, pero puedes ver las anteriores.
   layouts:
     decidim:
       vocdoni_votes_header:
