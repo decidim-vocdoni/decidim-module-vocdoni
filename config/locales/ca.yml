@@ -61,8 +61,8 @@ ca:
             title: Editar resposta
             update: Actualitzar resposta
           index:
-            back: Back to questions
-            for_question_html: for question %{question}
+            back: Tornar a les preguntes
+            for_question_html: per la pregunta %{question}
             title: Respostes
           new:
             create: Crear resposta
@@ -72,11 +72,11 @@ ca:
             success: Resposta actualitzada correctament
         census:
           census_type:
-            external: External (upload a CSV file)
-            internal: Internal (registered participants)
+            external: Extern (pujar un arxiu CSV)
+            internal: Intern (participants registrades)
           create:
             error: Hi ha hagut un problema en importar o generar el cens.
-            submit_permissions: Save census
+            submit_permissions: Guardar cens
             success:
               import: S'han importat correctament %{count} elements (%{errors} errors)
           destroy:
@@ -85,9 +85,9 @@ ca:
           destroy_all:
             success: S'han eliminat totes les dades del cens
           index:
-            census_empty: The census is currently empty. When users pass the authorizations you selected, they will be added to the census.
-            census_warning_for_csv_html: The census is not ready yet. You can <b>upload the CSV file</b> to proceed.
-            census_warning_for_internal_census_html: The census is not ready yet. You need <b>save it</b> to proceed.
+            census_empty: El cens és buit. Quan les usuàries passin les autoritzacions seleccionades, s'afegiran al cens.
+            census_warning_for_csv_html: El cens encara no està a punt. Pots <b>penjar el fitxer CSV</b> per continuar.
+            census_warning_for_internal_census_html: El cens encara no està a punt. Cal que el<b>guardis</b> per continuar.
             info: Per configurar el cens per a una elecció de Vocdoni, has de pujar el cens i confirmar-lo.
             title: Cens per a una elecció de Vocdoni
           new:
@@ -95,23 +95,23 @@ ca:
             info: 'Ha de ser un fitxer en format CSV amb només dues columnes, una amb l''adreça de correu electrònic i una altra amb la data de naixement (format AAAA-MM-DD). Ha d''estar separat amb punt i coma (;):'
             submit: Pujar fitxer
             title:
-              external: Upload a CSV file
-              internal: Additional required authorizations to vote (optional)
-          permissions_warning_html: You can restrict participation in the election to participants who have an authorization.<br>Note that participants will need to fulfill the selected authorizations in order to vote. Leaving all checkboxes empty will allow to vote anyone registered.
+              external: Carregar un arxiu CSV
+              internal: Autoritzacions addicionals necessàries per votar (opcional)
+          permissions_warning_html: Pots restringir la participació en l'elecció a les participants que tinguin una autorització.<br>Tingues en compte que les participants hauran de complir les autoritzacions seleccionades per poder votar. Si deixes totes les caselles de verificació buides, podrà votar qualsevol persona registrada.
           status:
             data: Hi ha %{count} registres carregats en total. L'última data de pujada va ser el %{due_date}. Si vols modificar el cens (per exemple, afegir més participants), cal eliminar primer totes les dades carregades.
-            internal_census_ready_to_setup_html: 'Selected census: <strong>Internal</strong>'
-            no_additional_authorizations: no additional authorizations are required
-            percentage_complete: Completed %{percentage}% of %{count} total records.
-            processing_html: The census is currently being processed for its use in the Blockchain. Once it's ready, you will be able to create the election.
+            internal_census_ready_to_setup_html: 'Cens seleccionat: <strong>Intern</strong>'
+            no_additional_authorizations: no calen autoritzacions addicionals
+            percentage_complete: Completat un %{percentage}% de %{count} registres en total.
+            processing_html: S'està processant el cens per utilitzar-lo a la cadena de blocs (Blockchain). Un cop llest, podràs crear l'elecció.
             ready_to_setup_html: Les dades del cens s'han pujat i confirmat. Està <a href="%{steps_path}">tot llest per configurar l'elecció</a>.
             title: Dades de cens actuals
-            update_census_result_html: The census successfully updated.
+            update_census_result_html: El cens s'ha actualitzat correctament.
         election_calendar:
           edit:
-            after_voting_note: Show results only when the election is closed
-            calendar_title: Calendar
-            organization_time_zone: Check that the organization time zone is correct in the organization settings. The current configuration is %{time_zone} (%{time}).
+            after_voting_note: Mostrar els resultats només quan l'elecció estigui tancada
+            calendar_title: Calendari
+            organization_time_zone: Comprova que la zona horària estigui configurada correctament a la configuració de l'organització. La configuració actual és %{time_zone} (%{time}).
             real_time_note: Show results as soon as the first vote is submitted
             results_title: Results availability
             title: Edit election calendar
