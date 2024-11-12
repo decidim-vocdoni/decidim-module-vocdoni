@@ -385,7 +385,7 @@ es:
             paused: Pausada
             upcoming: Próximamente
         orders:
-          label: Orders
+          label: Ordenar
           older: Más antigua
           recent: Recientes
         preview:
