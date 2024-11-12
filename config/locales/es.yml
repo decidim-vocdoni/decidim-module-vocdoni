@@ -139,7 +139,7 @@ es:
               <p>Para configurar la elección o para estar al tanto del ciclo electoral, ves a la página de pasos:</p>
             publish_text_html: |-
               <p>Si estás de acuerdo con la configuración (todavía puedes editar todos los pasos): es momento de publicar y enviar la elección.</p>
-              <p>Para enviar la elección, primero debe publicarla.</p>
+              <p>Para enviar la elección, primero debes publicarla.</p>
               <p>Al enviar de la elección, incluido el censo, la plataforma Vocdoni la procesará. Esto significa que no se podrá modificar una vez publicada, debido al uso de la cadena de blogs (Blockchain). Después de la configuración, la elección puede empezar (ya sea manual o automáticamente, según la configuración).</p>
             publish_title: '¡Enhorabuena! Todo hecho.'
             questions: Preguntas
@@ -268,7 +268,7 @@ es:
             confirm: '¿Seguro que quieres realizar esta acción?'
             messages:
               cancel_end_html: La elección está en marcha en estos momentos. Pulsa el botón de cancelar para <strong>invalidarla (abortarla)</strong>.<br>Si solo quieres poner en pausa el período de votación y obtener los resultados, pulsa en el botón de finalizar.
-              created: Esta elección ha sido configurada para iniciar la manualmente. Pulsa el botón para comenzar el período de votación.
+              created: Esta elección ha sido configurada para comenzar manualmente. Pulse el botón para comenzar el período de votación.
               paused: La elección se está ejecutando. Pulse el botón para pausar la votación e impedir temporalmente que alguien vote.
               vote: La elección está actualmente en pausa. No se puede votar ahora. Pulsa el botón para reanudar la votación.
             title: Zona de peligro
