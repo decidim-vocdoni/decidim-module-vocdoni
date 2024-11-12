@@ -385,7 +385,7 @@ ca:
             paused: Pausada
             upcoming: Properament
         orders:
-          label: Orders
+          label: Ordenar
           older: Més antiga
           recent: Recents
         preview:
