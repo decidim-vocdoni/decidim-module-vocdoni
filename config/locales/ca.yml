@@ -268,7 +268,7 @@ ca:
             confirm: Segur que vols realitzar aquesta acció?
             messages:
               cancel_end_html: L'elecció està en marxa en aquests moments. Clica el botó de cancel·lar per a <strong>invalidar-la (avortar-la)</strong>.<br>Si només vols posar en pausa el període de votació i obtenir els resultats, clica al botó de finalitzar.
-              created: Aquesta elecció ha estat configurada per iniciar la manualment. Clica el botó per començar el període de votació.
+              created: Aquesta elecció ha estat configurada per iniciar-la manualment. Clica el botó per començar el període de votació.
               paused: L'elecció s'està executant. Clica el botó per posar en pausa la votació i impedir temporalment que algú voti.
               vote: L'elecció està actualment en pausa. No es pot votar ara. Clica el botó per reprendre la votació.
             title: Zona de perill
@@ -477,8 +477,8 @@ ca:
         modal:
           close: Tancar
         new:
-          can_vote_again: Ja has votat en aquesta elecció. Pots tornar a votar %{votes_left} vegades.
-          can_vote_one_more_time: Ja has votat en aquesta elecció. Pots tornar a votar una vegada més.
+          can_vote_again: Ja has votat en aquesta elecció. Pots modificar el teu vot fins a %{votes_left} vegades.
+          can_vote_one_more_time: Ja has votat en aquesta elecció. Pots modificar el teu vot una vegada.
           more_information: Més informació
           no_more_votes_left: Ja has votat en aquesta elecció. No pots tornar a votar.
           preview_alert: Aquesta és una vista prèvia de la cabina de votació.
