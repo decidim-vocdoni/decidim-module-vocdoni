@@ -140,8 +140,7 @@ it:
             publish_text_html: |-
               <p>If you are happy with your configuration (you can still edit all the steps), now it's time to publish and setup de election.</p>
               <p>To setup the election you must publish it first.</p>
-              <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable
-              after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
+              <p>The setup process is when the election configuration, including the census, will be sent to the Vocdoni platform. This means it will be unmodifiable after that, due the use of the blockchain. After the setup, the election can start (either manually or automatically depending on the configuration).</p>
             publish_title: Congratulations! All done.
             questions: Questions
             results: Calendar and results
@@ -458,7 +457,7 @@ it:
         modal:
           close: Close
         new:
-          can_vote_again: You have already voted on this election. You can vote again %{votes_left} times.
+          can_vote_again: You have already voted in this election. You can change your vote up to %{votes_left} times.
           can_vote_one_more_time: You have already voted on this election. You can vote again one more time.
           more_information: More information
           no_more_votes_left: You have already voted on this election. You can not vote again.
