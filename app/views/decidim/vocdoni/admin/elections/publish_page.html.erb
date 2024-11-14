@@ -14,11 +14,6 @@
         <h4 class="h4 my-4"><%= t("publish_title", scope: "decidim.vocdoni.admin.elections.new") %></h4>
         <%= t("publish_text_all_done_html", scope: "decidim.vocdoni.admin.elections.new") %>
       </div>
-      <div class="card-section">
-        <div class="mt-l">
-          <%= link_to t("next_button", scope: "decidim.vocdoni.admin.elections.new"), election_steps_path(election), class: "button button__sm button__secondary" %>
-        </div>
-      </div>
     <% else %>
       <div class="publish-text">
         <%= t("publish_text_html", scope: "decidim.vocdoni.admin.elections.new") %>
@@ -26,23 +21,22 @@
     <% end %>
   </div>
 </div>
-<% if allowed_to?(:publish, :election, election: election) %>
-  <div class="item__edit-sticky">
-    <div class="item__edit-sticky-container">
-      <% if election.published? %>
-        <% if allowed_to?(:unpublish, :election, election: election) %>
-          <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), url_for(action: :unpublish, id: election, controller: "elections"), class: "button button__sm button__secondary muted", method: :put %>
-        <% else %>
-          <%= link_to t("actions.unpublish", scope: "decidim.vocdoni"), "#", class: "button button__sm button__secondary muted disabled" %>
-        <% end %>
-      <% else %>
-        <% if allowed_to?(:publish, :election, election: election) %>
-          <%= link_to t("actions.publish", scope: "decidim.vocdoni"), url_for(action: :publish, id: election, controller: "elections"), class: "button button__sm button__secondary hollow", method: :put %>
-        <% else %>
-          <%= link_to t("actions.publish", scope: "decidim.vocdoni"), "#", class: "button button__sm button__secondary disabled" %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+
+<% if election.published? %>
+  <% if allowed_to?(:unpublish, :election, election: election) %>
+    <%= link_to url_for(action: :unpublish, id: election, controller: "elections"), class: "button button__sm button__secondary", method: :put do %>
+      <%= icon "close-line", role: "img", "aria-hidden": true %>
+      <%= t("actions.unpublish", scope: "decidim.vocdoni") %>
+    <% end %>
+  <% end %>
+<% else %>
+  <% if allowed_to?(:publish, :election, election: election) %>
+    <%= link_to url_for(action: :publish, id: election, controller: "elections"), class: "button button__sm button__secondary", method: :put do %>
+      <%= icon "check-line", role: "img", "aria-hidden": true %>
+      <%= t("actions.publish", scope: "decidim.vocdoni") %>
+    <% end %>
+  <% end %>
 <% end %>
+
+<%= render "decidim/vocdoni/admin/shared/next_wizard_step", path: election_steps_path(election) %>
 <%= append_javascript_pack_tag "decidim_vocdoni_admin" %>

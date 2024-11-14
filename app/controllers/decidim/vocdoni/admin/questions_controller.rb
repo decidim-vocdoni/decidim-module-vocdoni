@@ -22,9 +22,9 @@ module Decidim
           @form = form(QuestionForm).from_params(params, election:)
 
           CreateQuestion.call(@form) do
-            on(:ok) do
+            on(:ok) do |question|
               flash[:notice] = I18n.t("questions.create.success", scope: "decidim.vocdoni.admin")
-              redirect_to election_questions_path(election)
+              redirect_to election_question_answers_path(election, question)
             end
 
             on(:invalid) do

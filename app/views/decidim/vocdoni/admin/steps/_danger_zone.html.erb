@@ -4,7 +4,7 @@
   </div>
 
   <%
-    if election.auto_start?
+    if election.auto_start? && !election.started?
       action = nil
     elsif !election.started? || election.created?
       action = "created"

@@ -18,7 +18,7 @@ module Decidim
       delegate :organization, to: :election
 
       def total_votes
-        answers.sum(:votes)
+        answers.sum { |a| a.votes.to_i }
       end
 
       def slug

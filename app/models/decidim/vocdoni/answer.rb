@@ -21,6 +21,8 @@ module Decidim
       # A votes percentage relative to the question
       # Returns a Float.
       def votes_percentage
+        return unless question.total_votes.positive? && !votes.nil?
+
         @votes_percentage ||= (votes.to_f / question.total_votes * 100.0).round(2)
       end
 

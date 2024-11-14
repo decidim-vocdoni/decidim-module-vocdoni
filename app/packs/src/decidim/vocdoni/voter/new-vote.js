@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import { ElectionStatus, VocdoniSDKClient } from "@vocdoni/sdk";
 
-import VoteQuestionsComponent from "./vote_questions.component";
-import VoteComponent from "./setup-vote";
-import PreviewVoteComponent from "./setup-preview";
-import { walletFromLoginForm } from "./census-utils";
+import VoteQuestionsComponent from "src/decidim/vocdoni/voter/vote_questions.component";
+import VoteComponent from "src/decidim/vocdoni/voter/setup-vote";
+import PreviewVoteComponent from "src/decidim/vocdoni/voter/setup-preview";
+import { walletFromLoginForm } from "src/decidim/vocdoni/voter/census-utils";
 
 /*
  * Mount the VoteComponent object and bind the events to the UI

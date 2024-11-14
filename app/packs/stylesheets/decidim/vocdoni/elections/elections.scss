@@ -120,9 +120,11 @@
 
   th {
     @apply bg-gray-3 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider;
+
     &.w-3\/4 {
       width: 75%;
     }
+
     &.w-1\/4 {
       width: 25%;
     }
@@ -136,6 +138,7 @@
     &:nth-child(odd) {
       @apply bg-white;
     }
+
     &:nth-child(even) {
       @apply bg-gray-5;
     }
@@ -155,7 +158,9 @@
   line-height: 18px;
   font-weight: 600;
   text-transform: uppercase;
+
   --tw-text-opacity: 1;
+
   color: rgb(62 76 92 / 1);
 }
 
@@ -164,5 +169,5 @@
   width: 1rem;
   flex: none;
   fill: currentColor;
-  color: #6B7280CC;
+  color: #6b7280cc;
 }

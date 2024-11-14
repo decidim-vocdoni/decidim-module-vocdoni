@@ -30,8 +30,8 @@ describe Decidim::Vocdoni::Election do
   it { is_expected.not_to be_misconfigured }
   it { is_expected.not_to be_ongoing }
   it { is_expected.not_to be_finished }
-  it { is_expected.not_to be_auto_start }
-  it { is_expected.to be_manual_start }
+  it { is_expected.to be_auto_start }
+  it { is_expected.not_to be_manual_start }
   it { is_expected.to be_interruptible }
   it { is_expected.to be_secret_until_the_end }
 
@@ -202,10 +202,10 @@ describe Decidim::Vocdoni::Election do
     end
 
     context "when start time or end time is not present" do
-      subject(:election) { build(:vocdoni_election, :auto_start, start_time: nil, end_time: 1.day.from_now) }
+      subject(:election) { build(:vocdoni_election, start_time: nil, end_time: 1.day.from_now) }
 
-      it "returns false" do
-        expect(subject.times_set?).to be false
+      it "returns true" do
+        expect(subject.times_set?).to be true
       end
 
       context "when status" do
@@ -213,14 +213,6 @@ describe Decidim::Vocdoni::Election do
 
         it "returns true" do
           expect(subject.times_set?).to be true
-        end
-
-        context "and automaic start" do
-          subject(:election) { build(:vocdoni_election, start_time: nil, end_time: 1.day.from_now, status: "vote", election_type: { "auto_start" => true }) }
-
-          it "returns false" do
-            expect(subject.times_set?).to be false
-          end
         end
       end
     end
@@ -350,11 +342,11 @@ describe Decidim::Vocdoni::Election do
       expect(json["startDate"]).to eq(election.start_time.iso8601)
       expect(json["endDate"]).to eq(election.end_time.iso8601)
       expect(json["electionType"]).to eq({
-                                           "autoStart" => false,
                                            "interruptible" => true,
                                            "dynamicCensus" => true,
                                            "secretUntilTheEnd" => false,
-                                           "anonymous" => false
+                                           "anonymous" => false,
+                                           "metadata" => { "encrypted" => false, "password" => nil }
                                          })
       expect(json["voteType"]).to eq({
                                        "maxVoteOverwrites" => 10
@@ -378,11 +370,11 @@ describe Decidim::Vocdoni::Election do
       it "returns the election as json" do
         expect(json["startDate"]).to eq(election.start_time.iso8601)
         expect(json["electionType"]).to eq({
-                                             "autoStart" => true,
                                              "dynamicCensus" => true,
                                              "interruptible" => false,
                                              "secretUntilTheEnd" => true,
-                                             "anonymous" => true
+                                             "anonymous" => true,
+                                             "metadata" => { "encrypted" => false, "password" => nil }
                                            })
       end
     end

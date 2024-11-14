@@ -83,11 +83,11 @@ module Decidim::Vocdoni
     end
 
     def auto_start?
-      election_type&.fetch("auto_start", true)
+      start_time.present?
     end
 
     def manual_start?
-      auto_start? == false
+      !auto_start?
     end
 
     def interruptible?
@@ -176,6 +176,11 @@ module Decidim::Vocdoni
       questions.map(&:answers).flatten.pluck(:votes).any? Integer
     end
 
+    # Public: Checks if the election has all results correctly defined
+    def answers_have_results?
+      questions.map(&:answers).flatten.pluck(:votes).none? nil
+    end
+
     # Public: Gets the voting period status of the election
     #
     # Returns one of these symbols: upcoming, ongoing or finished
@@ -205,7 +210,7 @@ module Decidim::Vocdoni
     end
 
     # Public: the Vocdoni's format to create a new election
-    # @see https://developer.vocdoni.io/sdk#creating-a-voting-process
+    # @see https://developer.vocdoni.io/sdk/tutorial
     # The process to create an election still needs to add the keys "census" and "questions"
     # This is done using the Vocdoni SDK
     def to_vocdoni
@@ -217,12 +222,12 @@ module Decidim::Vocdoni
         "startDate" => start_time&.iso8601,
         "endDate" => end_time.iso8601,
         "electionType" => {
-          "autoStart" => auto_start?,
           # For the moment, we consider all censuses dynamic so admins can update them
           "dynamicCensus" => true,
           "interruptible" => interruptible?,
           "secretUntilTheEnd" => secret_until_the_end?,
-          "anonymous" => anonymous?
+          "anonymous" => anonymous?,
+          "metadata" => { "encrypted" => false, "password" => nil }
         },
         "voteType" => {
           # uniqueChoices: false, # if the choices are unique when voting

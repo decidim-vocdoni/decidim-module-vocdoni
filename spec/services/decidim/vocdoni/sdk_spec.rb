@@ -86,7 +86,7 @@ module Decidim
         expect(subject.info).to eq({
                                      "clientInfo" => {
                                        "address" => "7e5f4552091a69125d5dfcb7b8c2659029395bdf",
-                                       "balance" => 10_000,
+                                       "balance" => 9999,
                                        "electionIndex" => 0,
                                        "metadata" => {
                                          "description" => { "default" => "" },

@@ -29,10 +29,10 @@ FactoryBot.define do
     status { nil }
     election_type do
       {
-        "auto_start" => false,
         "dynamic_census" => false,
         "interruptible" => true,
-        "secret_until_the_end" => true
+        "secret_until_the_end" => true,
+        "anonymous" => false
       }
     end
     component { association :vocdoni_component, organization: }
@@ -57,25 +57,10 @@ FactoryBot.define do
 
     trait :auto_start do
       start_time { 15.minutes.from_now }
-      election_type do
-        {
-          "auto_start" => true,
-          "dynamic_census" => false,
-          "interruptible" => true,
-          "secret_until_the_end" => true
-        }
-      end
     end
 
     trait :manual_start do
-      election_type do
-        {
-          "auto_start" => false,
-          "dynamic_census" => false,
-          "interruptible" => true,
-          "secret_until_the_end" => true
-        }
-      end
+      start_time { nil }
     end
 
     trait :ongoing do
@@ -147,7 +132,7 @@ FactoryBot.define do
       end
     end
 
-    # everything in place exect the vocdoni_election_id
+    # everything in place except the vocdoni_election_id
     trait :ready_for_setup do
       upcoming
       published

@@ -14,7 +14,10 @@
       </div>
 
       <div class="flex justify-center">
-        <%= link_to t(".create"), wallets_path, method: :remote, class: "button button__lg button__tertiary" %>
+        <%= link_to wallets_path, method: :remote, class: "button button__lg button__tertiary" do %>
+          <%= icon "briefcase-2-line", role: "img", "aria-hidden": true %>
+          <%= t(".create") %>
+        <% end %>
       </div>
     </div>
   </div>

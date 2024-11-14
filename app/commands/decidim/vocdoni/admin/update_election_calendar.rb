@@ -48,7 +48,6 @@ module Decidim
         def election_type_attributes
           {
             election_type: {
-              auto_start: !form.manual_start,
               secret_until_the_end: form.result_type == "after_voting",
               interruptible: Decidim::Vocdoni.interruptible_elections,
               dynamic_census: election.internal_census?,

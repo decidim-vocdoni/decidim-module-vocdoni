@@ -33,7 +33,6 @@ describe Decidim::Vocdoni::Admin::UpdateElectionCalendar do
     expect(election.manual_start?).to be(false)
     expect(election.start_time).to be_within(1.second).of start_time
     expect(election.end_time).to be_within(1.second).of end_time
-    expect(election.election_type.fetch("auto_start")).to be_truthy
     expect(election.election_type.fetch("interruptible")).to be_truthy
     expect(election.election_type.fetch("dynamic_census")).to be_falsy
     expect(election.election_type.fetch("secret_until_the_end")).to eq(result_type == "after_voting")
@@ -42,7 +41,7 @@ describe Decidim::Vocdoni::Admin::UpdateElectionCalendar do
 
   it "traces the action", :versioning do
     expect(Decidim.traceability)
-      .to receive(:update!).with(election, user, hash_including(:start_time, :end_time, { election_type: { auto_start: true, anonymous: false, dynamic_census: false, interruptible: true, secret_until_the_end: (result_type == "after_voting") } }), visibility: "all").and_call_original
+      .to receive(:update!).with(election, user, hash_including(:start_time, :end_time, { election_type: { anonymous: false, dynamic_census: false, interruptible: true, secret_until_the_end: (result_type == "after_voting") } }), visibility: "all").and_call_original
 
     expect { subject.call }.to change(Decidim::ActionLog, :count)
     action_log = Decidim::ActionLog.last
