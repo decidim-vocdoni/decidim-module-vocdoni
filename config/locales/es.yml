@@ -489,10 +489,10 @@ es:
         modal:
           close: Cerrar
         new:
-          can_vote_again: Ya has votado en esta elección. Puedes volver a votar %{votes_left} veces.
-          can_vote_one_more_time: Ya has votado sobre esta elección. Puedes votar de nuevo una vez más.
+          can_vote_again: Ya has votado en esta elección. Puedes modificar tu voto hasta %{votes_left} veces.
+          can_vote_one_more_time: Ya has votado en esta elección. Puedes modificar tu voto una vez más.
           more_information: Más información
-          no_more_votes_left: Ya has votado en esta elección. No puedes volver a votar.
+          no_more_votes_left: Ya has votado en esta elección. No puedes modificar tu voto.
           preview_alert: Esta es una vista previa de la cabina de votación.
           question_steps: Pregunta %{current_step} de %{total_steps}
         submitting:
