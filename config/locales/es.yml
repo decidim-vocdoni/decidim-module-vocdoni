@@ -275,7 +275,7 @@ es:
           ended:
             title: Terminada
           index:
-            title: Voting control dashboard
+            title: Panel de control de votación
           invalid_status: La elección no se sincronizó con la API de Vocdoni. El estado ha sido actualizado a "%{status}". Por favor, actualiza la página.
           paused:
             invalid: Se ha producido un error al pausar esta votación
@@ -287,17 +287,17 @@ es:
           ready:
             title: Preparada
           results_published:
-            results_error: Some error occurred while publishing the results. Please try to publish them again.
-            submit: Re-Publish results
+            results_error: Se ha producido algún error mientras se publicaban los resultados. Por favor, intenta publicarlos de nuevo.
+            submit: Volver a publicar los resultados
             success: Los resultados de la elección se han publicado correctamente.
             title: Resultados publicados
           results_stats:
             answer: Respuesta
-            percentage: Percentage
+            percentage: Porcentaje (%)
             percentage_count: "%{count}%"
             question: Pregunta
             result: Resultado
-            results_error: Error!
+            results_error: '¡Error!'
           vote:
             invalid: Se ha producido un error al iniciar esta votación
             message: Estamos en el período de votación hasta %{end_time}.
@@ -400,7 +400,7 @@ es:
         results:
           description: 'Estos son los resultados de la votación, para cada pregunta:'
           percentage: "%{count}%"
-          results_error: There's been and error fetching the results. Please try again later.
+          results_error: Ha habido un error al obtener los resultados. Inténtalo de nuevo más tarde.
           title: Resultados de la elección
           votes:
             one: "%{count} voto"
@@ -414,11 +414,11 @@ es:
           canceled: Esta elección ha sido cancelada
           description: Resultados de la votación en tiempo real
           manual_start_status:
-            canceled: The election was canceled. It was meant to end on %{end_time}
-            finished: Voting began on %{start_time} and ended on %{end_time}
-            ongoing: 'Voting began on %{start_time}. Active voting until: %{end_time}'
-            paused: Voting began on %{start_time}. Voting is currently paused. It ends on %{end_time}
-            upcoming: Voting will start soon and will end on %{end_time}
+            canceled: La elección fue cancelada. Estaba previsto que terminara el %{end_time}
+            finished: La votación empezó el %{start_time} y finalizó el %{end_time}
+            ongoing: 'La votación empezó el %{start_time}. Se puede votar hasta el %{end_time}'
+            paused: La votación comenzó el %{start_time}. Ahora mismo está en pausa. La votación finalizará el %{end_time}
+            upcoming: La votación comenzará pronto y terminará el %{end_time}
           paused: Esta elección está pausada. Inténtalo de nuevo más tarde.
           preview: Previsualizar
           verify:
@@ -428,9 +428,9 @@ es:
           voting_period_status:
             canceled: La votación ha sido cancelada. Iba a empezar el %{start_time} y terminar el %{end_time}
             finished: La votación empezó el %{start_time} y finalizó el %{end_time}
-            ongoing: 'Voting began on %{start_time}. Active voting until: %{end_time}'
-            paused: Voting began on %{start_time}. Voting is currently paused. It ends on %{end_time}
-            upcoming: Voting begins on %{start_time} and ends on %{end_time}
+            ongoing: 'La votación empezó el %{start_time}. Se puede votar hasta el %{end_time}'
+            paused: La votación comenzó el %{start_time}. Ahora mismo está en pausa. La votación finalizará el %{end_time}
+            upcoming: La votación empieza el %{start_time} y finaliza el %{end_time}
       models:
         answer:
           fields:
