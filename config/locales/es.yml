@@ -43,8 +43,6 @@ es:
         destroy: Eliminar
         edit: Editar
         manage_answers: Gestionar respuestas
-        manage_census: Gestionar censo
-        manage_questions: Gestionar preguntas
         manage_steps: Gestionar pasos de la votación
         new: Nueva %{name}
         preview: Previsualizar
@@ -63,6 +61,8 @@ es:
             title: Editar respuesta
             update: Actualizar respuesta
           index:
+            back: Volver a las preguntas
+            for_question_html: para la pregunta %{question}
             title: Respuestas
           new:
             create: Crear respuesta
@@ -71,12 +71,13 @@ es:
             invalid: Se ha producido un error al actualizar esta respuesta
             success: Respuesta actualizada correctamente
         census:
-          confirm:
-            submit: Confirmar los datos del censo
+          census_type:
+            external: Externo (subir un archivo CSV)
+            internal: Interno (participantes registrados)
           create:
             error: Se ha producido un error al importar o generar el censo.
+            submit_permissions: Guardar censo
             success:
-              generate: Censo generado correctamente
               import: Se han importado correctamente %{count} elementos (%{errors} errores)
           destroy:
             confirm: Eliminar todo el censo no se puede deshacer. ¿Seguro que quieres continuar?
@@ -84,37 +85,72 @@ es:
           destroy_all:
             success: Se han eliminado todos los datos del censo
           index:
+            census_empty: El censo está vacío. Cuando las usuarias pasen las autorizaciones seleccionadas, se añadirán al censo.
+            census_warning_for_csv_html: El censo aún no está listo. Puedes <b>cargar el archivo CSV</b> para continuar.
+            census_warning_for_internal_census_html: El código no está listo aún. Necesitas <b>guardarlo</b> para continuar.
             info: Para crear el censo para una elección de Vocdoni, debes subir el censo y confirmarlo.
             title: Censo para una votación de Vocdoni
           new:
             file: "Archivo .csv con los correos electrónicos"
             info: 'Debe ser un archivo en formato CSV con sólo dos columnas, una con la dirección de correo electrónico y otra con la fecha de nacimiento (formato AAAA-MM-DD). Debe estar separado con punto y coma (;):'
             submit: Subir archivo
-            title: Subir un censo nuevo
+            title:
+              external: Cargar un archivo CSV
+              internal: Autorizaciones adicionales requeridas para votar (opcional)
+          permissions_warning_html: Puedes restringir la participación en la elección a las participantes que tengan una autorización. <br>Ten en cuenta que las participantes deberán cumplir con las autorizaciones seleccionadas para poder votar. Si dejas todas las casillas de verificación vacías, podrá votar cualquier persona registrada.
           status:
             data: Hay %{count} registros cargados en total. La última fecha de subida fue el %{due_date}. Si quieres modificar el censo (por ejemplo, agregar más participantes), es necesario eliminar primero todos los datos cargados.
+            internal_census_ready_to_setup_html: 'Censo seleccionado: <strong>Interno</strong>'
+            no_additional_authorizations: no se requieren autorizaciones adicionales
+            percentage_complete: Completado un %{percentage}% de %{count} registros en total.
+            processing_html: Se está procesando el censo para su uso en la cadena de bloques (Blockchain). Una vez esté listo, podrás crear la elección.
             ready_to_setup_html: Los datos del censo se han subido y confirmado. Está <a href="%{steps_path}">todo listo para configurar la elección</a>.
             title: Datos de censo actuales
+            update_census_result_html: El censo se ha actualizado correctamente.
+        election_calendar:
+          edit:
+            after_voting_note: Mostrar los resultados solo cuando la elección está cerrada
+            calendar_title: Calendario
+            organization_time_zone: Comprueba que la zona horaria está configurada correctamente en la configuración de la organización. La configuración actual es %{time_zone} (%{time}).
+            real_time_note: Mostrar los resultados tan pronto como se envíe la primera votación
+            results_title: Disponibilidad de los resultados
+            title: Editar calendario de elecciones (votaciones)
         elections:
           create:
             invalid: Se ha producido un error al crear la elección
             success: La elección se ha creado correctamente
+          credits:
+            success: Se han pedido más créditos. Estarán disponibles en breve. En caso de que no aparezcan pasado un rato, actualiza/refresca la página.
           destroy:
             invalid: Se ha producido un error al eliminar la elección
             success: La elección se ha eliminado correctamente
           edit:
             title: Editar elección
-            update: Actualizar
-          form:
-            organization_time_zone: Compruebe que la zona horaria de la organización es correcta en la configuración de la organización. La configuración actual es %{time_zone} (%{time}).
           index:
             description_html: Con este módulo de votación, puedes organizar fácilmente una amplia gama de procesos de votación con altas garantías. El módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones con los más altos estándares de seguridad, verificación universal, resistencia a la censura y anonimato. <a href="https://vocdoni.io" target="_blank" rel="noreferrer noopener">Más información sobre Vocdoni</a>.
             title: Elecciones (Vocdoni)
           new:
-            create: Crear
+            basic_info: Información básica
+            census: Censo
+            next_button: '¡Hecho! Ir al siguiente paso'
+            publish: Publicar
+            publish_text_all_done_html: |-
+              <p>La elección ya está publicada. Aún puedes editarla o anular su publicación si aún no la has configurado.</p>
+              <p>Para configurar la elección o para estar al tanto del ciclo electoral, ves a la página de pasos:</p>
+            publish_text_html: |-
+              <p>Si estás de acuerdo con la configuración (todavía puedes editar todos los pasos): es momento de publicar y enviar la elección.</p>
+              <p>Para enviar la elección, primero debes publicarla.</p>
+              <p>Al enviar de la elección, incluido el censo, la plataforma Vocdoni la procesará. Esto significa que no se podrá modificar una vez publicada, debido al uso de la cadena de blogs (Blockchain). Después de la configuración, la elección puede empezar (ya sea manual o automáticamente, según la configuración).</p>
+            publish_title: '¡Enhorabuena! Todo hecho.'
+            questions: Preguntas
+            results: Calendario y resultados
+            save_button: Guardar e ir al siguiente paso
             title: Nueva elección
           publish:
             success: La elección se ha publicado correctamente.
+            title: Publicar la elección
+          publish_page:
+            title: Publicar elección
           unpublish:
             success: La elección se ha despublicado correctamente.
           update:
@@ -139,6 +175,7 @@ es:
             title: Editar pregunta
             update: Actualizar pregunta
           index:
+            minimum_answers_warning: Las preguntas deben tener <strong>al menos dos respuestas</strong> para ir al siguiente paso.
             title: Preguntas
           new:
             create: Crear una pregunta
@@ -148,74 +185,125 @@ es:
             success: Pregunta correctamente actualizada
         steps:
           canceled:
+            invalid: Se ha producido un error al cancelar la elección
             message: Esta elección ha sido cancelada prematuramente. No hay resultados.
+            success: La elección se ha cancelado correctamente.
             title: Cancelada
+          census:
+            census_info_title: 'Esta elección está utilizando el censo:'
+            description: Es posible actualizar el censo durante el período de votación, pero requiere tu acción manual, ya que podría costar algunos créditos.
+            last_update: Última actualización del censo
+            none: ninguno
+            records_added: Registros añadidos
+            title: Censo dinámico
+            update_census: '¡Actualiza el censo ahora!'
+            users_awaiting_census: Hay <strong>%{count}</strong>usuarias esperando para ser añadidas al censo.
+          census_update:
+            invalid: Se ha producido un error al actualizar el censo.
+            success: El censo se ha actualizado correctamente.
           create_election:
             description: El proceso de votación es seguro utilizando la avanzada tecnología digital de votación del Protocolo de Vocdoni. Por favor, ten paciencia, ya que el proceso de configuración puede tardar algún tiempo.
             errors:
               census_ready: El censo <strong>no está listo</strong>. <a href=%{link}>Solucionarlo</a>.
+              fix_it_text: Arréglalo
               minimum_answers: Las preguntas deben tener <strong>al menos dos respuestas</strong>. <a href=%{link}>Solucionarlo</a>.
               minimum_questions: La elección <strong>debe tener al menos una pregunta</strong>. <a href=%{link}>Solucionarlo</a>.
               published: La elección <strong>no está publicada</strong>. <a href=%{link}>Solucionarlo</a>.
-              time_before: La configuración no se está haciendo <strong>al menos %{minutes} minutos</strong> antes de que comience la elección. <a href=%{link}>Solucionarlo</a>.
+              time_before: No se está configurando la elección <strong>como mínimo con %{minutes} minutos</strong> antes de su inicio.
+              valid_end_time: La <strong>hora de finalización</strong> de la elección no es válida.
             failed:
               details: Ver detalles
               message: Comprueba el mensaje de error de registro de la consola de Desarrollo Web, corrige el problema y vuelve a intentarlo.
               title: La elección tiene un error y no se ha podido crear
+            information_html: |-
+              <p><strong>¡Las elecciones se configuraron correctamente!</strong></p>
+              <p>En este punto, aún puedes realizar cambios si ves algo mal configurado. <a href="%{link}">Asegúrate de obtener una vista previa de las elecciones.</a></p>
+              <p>Si estás conforme con la configuración actual, haz clic en el botón "Configurar elecciones" para enviarla a la Blockchain de Vocdoni. Acto seguido, las elecciones podrán comenzar.</p>
+              <p><strong>Ten en cuenta que esta acción es irreversible y no se permitiran más modificaciones.</strong></p>
             invalid: Se ha producido un error al configurar esta elección
             requirements:
               census_ready: El censo está <strong>listo</strong>.
+              internal_census_ready_html: 'El censo está <strong>listo</strong>. El censo seleccionado es: <strong>Interno (%{verification_types}</strong>).'
+              manual_start: La elección <strong>debe iniciarse manualmente</strong>.
               minimum_answers: Cada pregunta tiene <strong>al menos dos respuestas</strong>.
               minimum_questions: La elección tiene <strong>al menos una pregunta</strong>.
               published: La elección está <strong>publicada</strong>.
               time_before: La configuración se está realizando <strong>al menos %{minutes} minutos</strong> antes de que comience la elección.
-            submit: Nueva elección
+              valid_end_time: La <strong>hora de finalización</strong> de la elección es válida.
+            submit: Configurar elección
             success: Elección enviada con éxito a la API de Vocdoni
             title: Configurar elección
           created:
+            creating: La elección se está enviando a la API de Vocdoni. Esto puede tardar unos momentos. Esta página se actualizará automáticamente.
+            error_vocdoni:
+              message: Se ha producido un problema al crear la elección. No se pudo obtener un ID para la elección en Vocdoni. Por favor, revisa los registros de la aplicación para más detalles.
+              title: Error de comunicación con Vocdoni
             explorer_vote: Ver en el explorador de voto
+            help:
+              auto_start: Estamos esperando que la elección comience el %{date}.
+              manual_start: La elección se ha de iniciar manualmente. Pulsa el botón "Iniciar elección" para dar inicio al período de votación.
+            invalid: Se ha producido un error al iniciar esta votación
             message: La elección ha sido creada. Estamos esperando a que llegue la fecha de inicio.
+            submit: Intenta reenviar los datos de la elección a la API de Vocdoni
+            success: Los datos de las elecciones se han enviado con éxito a la API de Vocdoni. Por favor, espera unos segundos para que la elección esté lista.
             title: Elección creada
             view: Ver página de inicio
           credits:
             available: Créditos disponibles
+            copied: '¡Copiado!'
+            copy_wallet: Copiar la dirección del monedero
+            copy_wallet_clarification: Copiar dirección del monedero al portapapeles
+            copy_wallet_message: La dirección del monedero se ha copiado correctamente al portapapeles.
+            dev_mode: Estás usando Vocdoni en el entorno %{env}. Es posible recoger créditos de forma gratuita (sin ninguna garantía)
             get_more: Obtener más créditos
+            prod_mode_html: 'El uso de la plataforma Vocdoni tiene costos. Por favor, ponte en contacto con <a href=''mailto:%{reseller_email}?subject=Decidim Vocdoni Inquiry&body=Por favor, facilitadme un presupuesto para usar la plataforma de voto Vocfoni, La Dirección de mi organización es: %{wallet_address}''>%{reseller_name}</a> para solicitar un presupuesto. También debes indicarles la dirección de tu organización:'
             warning: No te quedan créditos. Puedes obtener más créditos haciendo clic en el botón de abajo.
           danger_zone:
             action:
               cancel: Cancelar
-              continue: Continuar
+              created: Empezar la elección
               end: Finalizar
-              pause: Pausar
+              paused: Pausar la elección
+              vote: Continuar la elección
             confirm: '¿Seguro que quieres realizar esta acción?'
-            message: La elección puede interrumpirse
+            messages:
+              cancel_end_html: La elección está en marcha en estos momentos. Pulsa el botón de cancelar para <strong>invalidarla (abortarla)</strong>.<br>Si solo quieres poner en pausa el período de votación y obtener los resultados, pulsa en el botón de finalizar.
+              created: Esta elección ha sido configurada para comenzar manualmente. Pulse el botón para comenzar el período de votación.
+              paused: La elección se está ejecutando. Pulse el botón para pausar la votación e impedir temporalmente que alguien vote.
+              vote: La elección está actualmente en pausa. No se puede votar ahora. Pulsa el botón para reanudar la votación.
             title: Zona de peligro
           ended:
             title: Terminada
           index:
             title: Panel de control
+          invalid_status: La elección no se sincronizó con la API de Vocdoni. El estado ha sido actualizado a "%{status}". Por favor, actualiza la página.
           paused:
+            invalid: Se ha producido un error al pausar esta votación
             message: La elección está en pausa
+            submit: Intenta reenviar los datos de la elección a la API de Vocdoni
             success: La elección se ha reanudado correctamente.
             title: Pausada
           powered_by_html: Este módulo utiliza el Protocolo de Vocdoni, una tecnología de votación de código abierto para organizar elecciones<br>con los más altos estándares de seguridad, verificabilidad universal, resistencia a la censura y anonimato.
-          processing: Procesando...
           ready:
             title: Preparada
           results_published:
+            success: Los resultados de la elección se han publicado correctamente.
+            title: Resultados publicados
+          results_stats:
             answer: Respuesta
             question: Pregunta
             result: Resultado
-            title: Resultados publicados
           vote:
+            invalid: Se ha producido un error al iniciar esta votación
             message: Estamos en el período de votación hasta %{end_time}.
             secret_until_the_end: Los resultados de la elección serán secretos hasta el final del período de votación.
+            submit: Intenta reenviar los datos de la elección a la API de Vocdoni
             success: La elección se ha pausado correctamente.
             title: Período de votación
           vote_ended:
             error:
               fetch: Aún no hay resultados. Inténtalo de nuevo más tarde.
-              invalid: Hubo un problema al publicar los resultados. Inténtalo de nuevo más tarde.
+            invalid: Se ha producido un error al actualizar esta votación
             submit: Publicar resultados
             success: Resultados publicados correctamente
             text: El período de votación ha terminado. Puedes publicar los resultados.
@@ -251,6 +339,11 @@ es:
           update: "%{user_name} actualizó la elección %{resource_name} en %{space_name}"
         wallet:
           create: "%{user_name} creó la cartera de la organización para la API de Vocdoni"
+      census_authorization_modal:
+        not_authorized:
+          authorize: Autorizar con "%{authorization}"
+          explanation: Para llevar a cabo esta acción, tienes que disponer de la autorización "%{authorization}".
+          title: Autorización requerida
       election_m:
         badge_name:
           canceled: Cancelada
@@ -275,6 +368,26 @@ es:
           elections_count:
             one: "%{count} elección"
             other: "%{count} elecciones"
+        election_m:
+          badge_name:
+            canceled: Cancelada
+            finished: Finalizada
+            ongoing: Activa
+            paused: Pausada
+            upcoming: Próxima
+        elections:
+          filters:
+            active: Activa
+            all: Todas
+            canceled: Cancelada
+            date: Fecha
+            finished: Finalizada
+            paused: Pausada
+            upcoming: Próximamente
+        orders:
+          label: Ordenar
+          older: Más antigua
+          recent: Recientes
         preview:
           available_answers: 'Respuestas disponibles:'
           description: 'Estas son las preguntas para este proceso de votación:'
@@ -293,6 +406,7 @@ es:
             vote_again: Votar de nuevo
           back: Elecciones disponibles
           canceled: Esta elección ha sido cancelada
+          description: Resultados de la votación en tiempo real
           paused: Esta elección está pausada. Inténtalo de nuevo más tarde.
           preview: Previsualizar
           verify:
@@ -321,6 +435,17 @@ es:
             answers: Respuestas
             title: Título
       votes:
+        check_census:
+          access: Acceder
+          close_modal: Cerrar
+          description: Para votar, tendremos que comprobar que estás en el censo
+          election_not_open: Actualmente la elección no está abierta. Inténtalo de nuevo más tarde.
+          failed: El correo electrónico o token no es válido. Por favor, comprueba estos detalles e inténtalo de nuevo.
+          form_title: Introduce tus datos
+          login_title: Verifica tu identidad
+          title: Identificación
+          verifications_check: Estamos verificando que eres elegible para votar en esta elección. Por favor espera unos segundos.
+          with_verifications: Des de la administración, aún no ha añadido tu monedero al censo. Inténtalo de nuevo más tarde.
         confirm:
           answer: Respuesta
           answer_number: respuesta %{number}
@@ -342,13 +467,6 @@ es:
           login: Identificación
           submitting: Enviando el voto
           vote_cast: Tu voto ha sido emitido
-        login:
-          access: Acceder
-          description: Para votar, tendremos que comprobar que estás en el censo
-          election_not_open: Actualmente la elección no está abierta. Inténtalo de nuevo más tarde.
-          failed: Comprueba que los datos proporcionados son correctos e inténtalo de nuevo
-          form_title: Introduce tus datos
-          title: Verifica tu identidad
         login_fields:
           email: Correo electrónico
           email_placeholder: usuario@ejemplo.org
@@ -359,8 +477,10 @@ es:
         modal:
           close: Cerrar
         new:
-          already_voted: Ya has votado en esta elección. Puedes votar de nuevo. El voto anterior se anulará.
+          can_vote_again: Ya has votado en esta elección. Puedes volver a votar %{votes_left} veces.
+          can_vote_one_more_time: Ya has votado sobre esta elección. Puedes votar de nuevo una vez más.
           more_information: Más información
+          no_more_votes_left: Ya has votado en esta elección. No puedes volver a votar.
           preview_alert: Esta es una vista previa de la cabina de votación.
           question_steps: Pregunta %{current_step} de %{total_steps}
         submitting:
@@ -385,6 +505,7 @@ es:
           continue: Siguiente
       warnings:
         no_elections_warning: No hay ninguna elección programada.
+        no_scheduled_elections_warning: Actualmente no hay elecciones programadas, pero puedes ver las anteriores.
   layouts:
     decidim:
       vocdoni_votes_header:
