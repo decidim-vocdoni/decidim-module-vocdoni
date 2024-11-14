@@ -275,7 +275,7 @@ ca:
           ended:
             title: Finalitzada
           index:
-            title: Panell de control
+            title: Panell de control de votació
           invalid_status: L'elecció no es va sincronitzar amb l'API de Vocdoni. L'estat ha estat actualitzat a "%{status}". Si us plau, actualitza la pàgina.
           paused:
             invalid: S'ha produït un error en posar en pausa aquesta votació
@@ -287,12 +287,17 @@ ca:
           ready:
             title: Preparada
           results_published:
+            results_error: S'ha produït algun error mentre es publicaven els resultats. Si us plau, intenta publicar-los de nou.
+            submit: Tornar a publicar els resultats
             success: Els resultats de l'elecció s'han publicat correctament.
             title: Resultats publicats
           results_stats:
             answer: Resposta
+            percentage: Percentatge (%)
+            percentage_count: "%{count}%"
             question: Pregunta
             result: Resultat
+            results_error: Error!
           vote:
             invalid: S'ha produït un error en iniciar aquesta votació
             message: Estem en el període de votació fins a %{end_time}.
@@ -395,6 +400,7 @@ ca:
         results:
           description: 'Aquests són els resultats de la votació, per a cada pregunta:'
           percentage: "%{count}%"
+          results_error: Hi ha hagut un error en obtenir els resultats. Si us plau, torna-ho a provar més tard.
           title: Resultats de l'elecció
           votes:
             one: "%{count} vot"
@@ -407,6 +413,12 @@ ca:
           back: Eleccions disponibles
           canceled: S'ha cancel·lat aquesta elecció
           description: Resultats de la votació en temps real
+          manual_start_status:
+            canceled: L'elecció s'ha cancel·lat. Estava previst que finalitzés el %{end_time}
+            finished: La votació va començar el %{start_time} i va acabar el %{end_time}
+            ongoing: 'La votació es va iniciar el %{start_time}. Es pot votar fins al %{end_time}'
+            paused: La votació es va iniciar el %{start_time}. Ara mateix està en pausa. La votació finalitzarà el %{end_time}
+            upcoming: La votació s'iniciarà aviat i finalitzarà el %{end_time}
           paused: Aquesta elecció està pausada. Torna-ho a provar més tard.
           preview: Vista prèvia
           verify:
@@ -416,9 +428,9 @@ ca:
           voting_period_status:
             canceled: La votació ha estat cancel·lada. Anava a començar el %{start_time} i acabar el %{end_time}
             finished: La votació va començar el %{start_time} i va acabar el %{end_time}
-            ongoing: 'Votació activa fins: %{end_time}'
-            paused: La votació està pausada. Finalitza el %{end_time}
-            upcoming: La votació comença el %{start_time}
+            ongoing: 'La votació es va iniciar el %{start_time}. Es pot votar fins al %{end_time}'
+            paused: La votació es va iniciar el %{start_time}. Ara mateix està en pausa. La votació finalitzarà el %{end_time}
+            upcoming: La votació comença el %{start_time} i finalitza el %{end_time}
       models:
         answer:
           fields:
